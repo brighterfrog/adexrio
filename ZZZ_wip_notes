@@ -1,0 +1,61 @@
+
+TRUFFLE HELP
+WeirdFlex Club, [05.04.21 19:49]
+      THOR_IP: sync-testnet.vechain.org
+      THOR_PROTOCOL: https
+      THOR_PORT: 443
+ for my web3 gear settings
+
+WeirdFlex Club, [05.04.21 19:50]
+and a KEYSTORE and PASSWORD for that
+
+WeirdFlex Club, [05.04.21 19:50]
+with no provider in my truffle config lets me deploy to vechain testnet
+
+COOL TO HAVE:
+arena chat titles
+dashboard showing new wallets
+biggest payouts
+
+TODO:
+ENFORCE ON CONTRACT ISAUDIT GAME MAKE SURE VET AMOUNT IS ABOVE MINIMUM payouts
+ update contract with MIN VET X Player FOR less than 500 player games
+
+RANDOM.ORG NOTIFICATION WHEN I GET LOW ON MONEY
+ADMIN tooling to see games in limbo and run fix limbo service
+ADMIN TOOLING TO SEE RANDOM.ORG MONEY
+ADMIN TOOLING TO SEE OWNER CONTRACT VTHO / VET AMOUNT ( VTHO REQ'D FOR UPDATES )
+ADMIN TOOLING page to refund all active games while paused state
+
+
+      TEST:
+      joining game, having it add to your games
+      random no audit winner selection backend service
+
+      BUILD:
+
+
+BUGS:
+
+
+
+potential breaks
+
+Extension en sol Vechain notes:
+https://gist.github.com/laalaguer/ce1e996b88c11a374750f37307d68849
+https://docs.vechain.org/others/miscellaneous.html
+
+
+LONGTERM TO WORK OUT
+Random.org notification
+API KEY ROTATION -- replace with IAM
+
+MUST DO:
+on backend startup - auto process awaiting executiion states
+
+
+starting update
+test 1/2 player no audit
+test complete list
+test 1/2 player audit
+

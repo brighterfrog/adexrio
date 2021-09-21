@@ -1,0 +1,396 @@
+// SPDX-License-Identifier: MIT
+pragma solidity >=0.4.22 <0.9.0;
+
+interface Extension {
+    /// @notice blake2b256 computes blake2b-256 checksum for given data.
+
+    /// @notice These functions return corresponding block info from genesis to best block.
+    function blockID(uint256 num) external view returns (bytes32);
+
+    function blockTotalScore(uint256 num) external view returns (uint64);
+
+    function blockTime(uint256 num) external view returns (uint256);
+
+    function blockSigner(uint256 num) external view returns (address);
+
+    /// @return total supply of VET
+    function totalSupply() external view returns (uint256);
+
+    /// @notice These funtions return corresponding current transaction info.
+    function txProvedWork() external view returns (uint256);
+
+    function txID() external view returns (bytes32);
+
+    function txBlockRef() external view returns (bytes8);
+
+    function txExpiration() external view returns (uint256);
+
+    /// @notice Get the account that pays the TX fee at runtime.
+    function txGasPayer() external view returns (address);
+}
+
+contract RollItVetMultiPlayerGame {
+    // Contract Owner Settings
+    address owner;
+    address payable treasury;
+
+    Extension en;
+
+    enum GameStatus {COMPLETE, AWAITING_GAME_CRITIERA_MET, EXPIRED}
+    enum PlayerGameStatus {WIN, LOSE, TIE, PENDING_GAME_COMPLETION}
+
+    bool public gamePaused;
+    GameHouseRules public gameHouseRules;
+    Game[] public games;
+    uint256 public gamesTotalCount;
+
+    event GameStartedEvent(uint256);
+    event PlayerJoinedGameEvent(uint256);
+    event BeginningDiceRoll(uint256);
+    event GameCompleted(uint256);
+
+    struct GameHouseRules {
+        uint8 houseCommissionPercent;
+        uint256 minBetSize;
+        uint8 minGamePlayers;
+    }
+    struct GameCreatorSettings {
+        bool isExecutedOffPlayerCount;
+        bool isExecutedOffExpirationDateTime;
+        uint8 minGamePlayers;
+        uint256 expirationDateTime;
+    }
+    struct Game {
+        uint256 id;
+        GameStatus status;
+        GameCreatorSettings settings;
+        mapping(address => uint256) _players;
+        PlayerGameEntry[] players;
+        uint256 winningPayout;
+        uint256 winningPlayersCount;
+        uint256 totalGameWagers;
+    }
+
+    struct PlayerGameEntry {
+        address payable playerAddress;
+        uint256 betsize;
+        PlayerGameStatus playerGameStatus;
+        uint256 roll;
+        bool inCurrentGame;
+    }
+
+    modifier onlyOwner {
+        require(msg.sender == owner, "Only owner can call this function.");
+        _;
+    }
+    modifier onlyTreasury {
+        require(
+            msg.sender == treasury,
+            "Only treasury can call this function."
+        );
+        _;
+    }
+
+    modifier gameIsActive {
+        require(gamePaused == true, "Game is currently in the paused state");
+        _;
+    }
+
+    modifier gameIsValid(uint256 _expirationDateTime, uint8 _minGamePlayers) {
+        require(
+            msg.value >= gameHouseRules.minBetSize,
+            "Value is not above the minimum bet size"
+        );
+        require(
+            block.timestamp < _expirationDateTime,
+            "Expiration should be in the future"
+        );
+        require(
+            _minGamePlayers >= gameHouseRules.minGamePlayers,
+            "Game players should be above the house rules setting"
+        );
+        _;
+    }
+    modifier canJoinExistingGame(uint256 _gameId) {
+        require(
+            msg.value >= gameHouseRules.minBetSize,
+            "Value is not above the minimum bet size"
+        );
+        require(
+            games[_gameId].players[games[_gameId]._players[msg.sender]]
+                .inCurrentGame,
+            "Player is already participating in the current game"
+        );
+        require(
+            games[_gameId].players.length <
+                games[_gameId].settings.minGamePlayers,
+            "Game is at maximum players"
+        );
+        _;
+    }
+
+    // Create a new contract
+    constructor() public {
+        owner = msg.sender;
+        treasury = payable(msg.sender);
+
+        gamesTotalCount = 0;
+        uint8 houseCommissionPercent = 1;
+
+        // equivelent of 20 VET
+        uint256 minBetSize = 20000000000000000000;
+        uint8 minGamePlayers = 2;
+
+        gameHouseRules = GameHouseRules({
+            houseCommissionPercent: houseCommissionPercent,
+            minBetSize: minBetSize,
+            minGamePlayers: minGamePlayers
+        });
+    }
+
+    // get a number from [1, top]
+    function getRandomNumber(uint256 top) internal returns (uint256) {
+        require(top > 1, "top > 1 required");
+
+        address extension_native = 0x0000000000000000000000457874656E73696F6e;
+        en = Extension(extension_native);
+
+        uint256 counter = 5;
+        uint256 s;
+        for (uint256 i = 1; i < counter; i++) {
+            // uint256 s1 = uint256(en.blockSigner( (block.number - i) ));
+            // s = s ^ (s1);
+            uint256 s2 = uint256(en.blockID((block.number - i)));
+            s = s ^ (s2);
+        }
+
+        uint256 result = (s % top) + 1;
+
+        return result;
+    }
+
+    /// mark as payable
+    /// not only owner, users need to pay VET
+    ///gameIsValid(_betsize, _expirationDateTime, _minGamePlayers)
+    ///20000000000000000000 / 1000000000000000000 == 20
+    ///1000000000000000000
+
+    ///test values
+    ///1739964683, 2, true
+    function startGame(
+        uint256 _expirationDateTime,
+        uint8 _minGamePlayers,
+        bool _isExecutedOffPlayerCount
+    ) public payable gameIsValid(_expirationDateTime, _minGamePlayers) {
+        Game storage game = games[gamesTotalCount];
+
+        game.id = gamesTotalCount;
+        game.status = GameStatus.AWAITING_GAME_CRITIERA_MET;
+        game.settings = GameCreatorSettings({
+            isExecutedOffPlayerCount: _isExecutedOffPlayerCount,
+            isExecutedOffExpirationDateTime: !_isExecutedOffPlayerCount,
+            expirationDateTime: _expirationDateTime,
+            minGamePlayers: _minGamePlayers
+        });
+
+        game.winningPayout = 0;
+        game.totalGameWagers = msg.value;
+        game.winningPlayersCount = 0;
+
+        // create game with settings
+        //  games[nextGameId] = Game({
+        //     id: nextGameId,
+        //     status: GameStatus.AWAITING_GAME_CRITIERA_MET,
+        //     settings: GameCreatorSettings({ expirationDateTime: _expirationDateTime, minGamePlayers: _minGamePlayers}),
+        //     playerAddresses: new address payable[](_minGamePlayers),
+        //     winningPayout: 0,
+        //     totalGameWagers: msg.value,
+        //     winningPlayersCount: 0
+        // });
+
+        // create game entry for player
+
+        games[gamesTotalCount].players.push(
+            PlayerGameEntry({
+                playerAddress: payable(msg.sender),
+                betsize: msg.value,
+                playerGameStatus: PlayerGameStatus.PENDING_GAME_COMPLETION,
+                inCurrentGame: true,
+                roll: 0
+            })
+        );
+
+        games[gamesTotalCount]._players[msg.sender] =
+            games[gamesTotalCount].players.length -
+            1;
+
+        gamesTotalCount = gamesTotalCount + 1;
+        emit GameStartedEvent(gamesTotalCount);
+    }
+
+    function joinExistingGame(uint256 _gameId)
+        public
+        payable
+        canJoinExistingGame(_gameId)
+    {
+        Game storage existingGame = games[_gameId];
+
+        existingGame.players.push(
+            PlayerGameEntry({
+                playerAddress: payable(msg.sender),
+                betsize: msg.value,
+                playerGameStatus: PlayerGameStatus.PENDING_GAME_COMPLETION,
+                inCurrentGame: true,
+                roll: 0
+            })
+        );
+
+        existingGame._players[msg.sender] = existingGame.players.length - 1;
+
+        existingGame.totalGameWagers += msg.value;
+
+        emit PlayerJoinedGameEvent(_gameId);
+
+        if (gameMeetsCriteriaToStart(_gameId)) {
+            beginDiceRoll(_gameId);
+        }
+    }
+
+    function countPotsizeAndRollPlayerDice(uint256 _gameId) internal {
+        uint256 highRoll = 0;
+        Game storage existingGame = games[_gameId];
+        for (uint256 i = 0; i < existingGame.players.length; i++) {
+            uint256 playerRoll =
+                getRandomNumber(existingGame.players.length * 10);
+            if (playerRoll > highRoll) {
+                highRoll = playerRoll;
+            }
+
+            existingGame.players[i].roll = playerRoll;
+        }
+    }
+
+    function beginDiceRoll(uint256 _gameId) internal {
+        uint256 highRoll = 0;
+        Game storage existingGame = games[_gameId];
+
+        emit BeginningDiceRoll(_gameId);
+        ///count totalPot
+        ///assign player roll
+        ///track highest roll
+
+        for (uint256 i = 0; i < existingGame.players.length; i++) {
+            uint256 playerRoll =
+                getRandomNumber(existingGame.players.length * 10);
+            existingGame.players[i].roll = playerRoll;
+
+            if (playerRoll > highRoll) {
+                highRoll = playerRoll;
+            }
+        }
+
+        ///count winners & set status;
+        ///deduct from losing accounts
+        for (uint256 i = 0; i < existingGame.players.length; i++) {
+            if (existingGame.players[i].roll == highRoll) {
+                existingGame.winningPlayersCount++;
+                existingGame.players[i].playerGameStatus = PlayerGameStatus.WIN;
+            }
+        }
+
+        // withhold house percent and pay house
+        uint256 houseCommissionWitholdings =
+            (existingGame.totalGameWagers *
+                gameHouseRules.houseCommissionPercent) / 100;
+        treasury.transfer(houseCommissionWitholdings);
+
+        ///divide payout by winnerCount to send
+        existingGame.winningPayout =
+            existingGame.totalGameWagers -
+            houseCommissionWitholdings;
+
+        // calc individual payout
+        uint256 playerPayout =
+            existingGame.winningPayout / existingGame.winningPlayersCount;
+
+        ///loop over winners to payout pot over total winning players
+        for (uint256 i = 0; i < existingGame.players.length; i++) {
+            if (
+                existingGame.players[i].playerGameStatus == PlayerGameStatus.WIN
+            ) {
+                existingGame.players[i].playerAddress.transfer(playerPayout);
+            }
+        }
+
+        emit GameCompleted(_gameId);
+    }
+
+    function gameMeetsCriteriaToStart(uint256 _gameId)
+        internal
+        view
+        returns (bool)
+    {
+        Game storage existingGame = games[_gameId];
+        return
+            (existingGame.settings.isExecutedOffPlayerCount &&
+                existingGame.players.length ==
+                existingGame.settings.minGamePlayers) ||
+            (existingGame.settings.isExecutedOffExpirationDateTime &&
+                block.timestamp >= existingGame.settings.expirationDateTime);
+    }
+
+    function destroy() public onlyOwner {
+        selfdestruct(payable(msg.sender));
+    }
+
+    function getGameById(uint256 id) public view returns (uint256 gameId) {
+        require(gamesTotalCount > 0, "No games to return");
+        gameId = games[id].id;
+    }
+
+    // function getAllGames()
+    //     public
+    //     view
+    //     returns (
+    //         uint256[] memory gameIds,
+    //         GameStatus[] memory gameStatus,
+    //         uint256[] memory gameWinningPayout,
+    //         uint256[] memory gameWinningPlayersCount,
+    //         uint256[] memory gameTotalWagers,
+    //         bool[] memory gcsIsExecutedOffPlayerCount,
+    //         bool[] memory gcsIsExecutedOffExpirationDateTime,
+    //         uint8[] memory gcsMinGamePlayers,
+    //         uint256[] memory gcsExpirationDateTime
+    //     )
+    // {
+    //     gameIds = new uint256[](gamesTotalCount);
+    //     gameStatus = new GameStatus[](gamesTotalCount);
+    //     gameWinningPayout = new uint256[](gamesTotalCount);
+    //     gameWinningPlayersCount = new uint256[](gamesTotalCount);
+    //     gameTotalWagers = new uint256[](gamesTotalCount);
+
+    //     // GameCreatorSettings
+    //     gcsIsExecutedOffPlayerCount = new bool[](gamesTotalCount);
+    //     gcsIsExecutedOffExpirationDateTime = new bool[](gamesTotalCount);
+    //     gcsMinGamePlayers = new uint8[](gamesTotalCount);
+    //     gcsExpirationDateTime = new uint256[](gamesTotalCount);
+
+    //     for (uint256 i = 0; i < games.length; i++) {
+    //         gameIds[i] = games[i].id;
+    //         gameStatus[i] = games[i].status;
+    //         gameWinningPayout[i] = games[i].winningPayout;
+    //         gameWinningPlayersCount[i] = games[i].winningPlayersCount;
+    //         gameTotalWagers[i] = games[i].totalGameWagers;
+
+    //         // GameCreatorSettings
+    //         gcsIsExecutedOffPlayerCount[i] = games[i]
+    //             .settings
+    //             .isExecutedOffPlayerCount;
+    //         gcsIsExecutedOffExpirationDateTime[i] = games[i]
+    //             .settings
+    //             .isExecutedOffExpirationDateTime;
+    //         gcsMinGamePlayers[i] = games[i].settings.minGamePlayers;
+    //         gcsExpirationDateTime[i] = games[i].settings.expirationDateTime;
+    //     }
+    // }
+}
