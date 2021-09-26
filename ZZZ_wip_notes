@@ -59,3 +59,13 @@ test 1/2 player no audit
 test complete list
 test 1/2 player audit
 
+
+###
+aws-exports needs to be pulled from the environment in the pipeline pre-build
+finish adding repository branches, delete old branches, delete github app
+###
+
+
+aws amplify update-app --app-id d3nhl82tha81mm --repository https://github.com/brighterfrog/adexrio --access-token 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
+
+cd adexrio/application/angular-web-app/ && amplify pull --appId d3nhl82tha81mm --envName dev adexrio

@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "test": "NODE_ENV=dev mocha -r ts-node/register tests/**/*.spec.ts",
-    "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
+    "build:dev": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName dev && tsc",
+    "build:test": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName test && tsc",
+    "build:prod": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName prod && tsc",
+
     "local:dev": "NODE_ENV=dev ts-node-dev src/index.ts",
     "local:test": "NODE_ENV=test ts-node-dev src/index.ts",
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts",
-    "build": "rimraf ./dist && tsc",
+
+    "test": "NODE_ENV=dev mocha -r ts-node/register tests/**/*.spec.ts",
+    "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
+       
     "release:dev": "NODE_ENV=dev node dist/index.js",
     "release:test": "NODE_ENV=test node dist/index.js",
     "release:prod": "NODE_ENV=prod node dist/index.js"

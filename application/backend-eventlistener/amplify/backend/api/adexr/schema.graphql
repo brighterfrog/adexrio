@@ -22,7 +22,7 @@ type Message @model {
   id: ID!
   message: String!
   wallet: String!
-  createdAt: String
+  createdAt: String!
 }
 
 type GamesSummary @model @key(fields: ["id"]) {
@@ -35,6 +35,6 @@ type GamesSummary @model @key(fields: ["id"]) {
 
 type ErrorLog @model {
   id: ID!
-  createdAt: String
-  stackTrace: String
+  createdAt: String!
+  stackTrace: String!
 }

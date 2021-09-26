@@ -10,8 +10,8 @@
     "config": {
       "SourceDir": "src",
       "DistributionDir": "dist/adexr",
-      "BuildCommand": "",
-      "StartCommand": ""
+      "BuildCommand": "npm.cmd run-script build",
+      "StartCommand": "ng serve"
     }
   }
 }

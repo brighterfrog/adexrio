@@ -5,9 +5,9 @@
     "kng": "kill -9 $(lsof -i tcp:4200 -t)",
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
-    "build:test": "ng build -c=test",
-    "build:prod": "ng build -c=production",
+    "build": "amplify pull --appId d3nhl82tha81mm --envName dev && ng build",
+    "build:test": "amplify pull --appId d3nhl82tha81mm --envName test && ng build -c=test",
+    "build:prod": "amplify pull --appId d3nhl82tha81mm --envName prod && ng build -c=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"

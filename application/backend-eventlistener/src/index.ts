@@ -5,30 +5,26 @@ import { BlockChainService } from "./blockchain/blockchain-service";
 import { GameOrchestratorService } from "./game-orchestrator/game-orchestrator-service";
 import { GameSummaryApiService } from "./game-orchestrator/game-summary-api-service";
 import { GameEvent, GameStatus } from "./models/all-models";
-import { GlobalService } from "./globals/global-service";
+//import { GlobalService } from "./globals/global-service";
 import { GlobalErrorService } from "./globals/global-error-service";
-import API from "@aws-amplify/api";
+//import API from "@aws-amplify/api";
 import { APIService } from "./API";
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
-// import Amplify from 'aws-amplify';
+ import Amplify from 'aws-amplify';
+ const awsmobile = require('./aws-exports');
 
-// const awsmobile = require('./aws-exports');
+ Amplify.configure(awsmobile);
+
 // console.log(awsmobile);
 
 //COPIED VALUES FROM AMPLIFY aws-exports.js
 //FIGURE OUT BETTER WAY TO IMPORT
 //ALSO IN TESTS
-// Amplify.configure({
-//     "aws_project_region": "us-east-1",
-//     "aws_appsync_graphqlEndpoint": "https://3gukxpqnuvgqfhkl436otqudyi.appsync-api.us-east-1.amazonaws.com/graphql",
-//     "aws_appsync_region": "us-east-1",
-//     "aws_appsync_authenticationType": "API_KEY",
-//     "aws_appsync_apiKey": "da2-vvz752jasfaynfvshc4c3apwjy"
-// });
-const globalService = new GlobalService();
-globalService.registerAmplify();
+
+// const globalService = new GlobalService();
+// globalService.registerAmplify();
 
 // const { BlockChainService } = require("./blockchain-helpers/blockchain-service");
 // const { RollitBlockchainEventListener } = require("./blockchain-helpers/blockchain-event-listener");
