@@ -1,0 +1,118 @@
+# this is an auto generated file. This will be overwritten
+subscription OnCreateFeedback {
+  onCreateFeedback {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateFeedback {
+  onUpdateFeedback {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteFeedback {
+  onDeleteFeedback {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateMessage {
+  onCreateMessage {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateMessage {
+  onUpdateMessage {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteMessage {
+  onDeleteMessage {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateGamesSummary {
+  onCreateGamesSummary {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateGamesSummary {
+  onUpdateGamesSummary {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteGamesSummary {
+  onDeleteGamesSummary {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateErrorLog {
+  onCreateErrorLog {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}
+subscription OnUpdateErrorLog {
+  onUpdateErrorLog {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}
+subscription OnDeleteErrorLog {
+  onDeleteErrorLog {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}

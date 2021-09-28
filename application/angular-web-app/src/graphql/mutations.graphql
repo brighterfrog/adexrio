@@ -1,0 +1,154 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateFeedback(
+  $input: CreateFeedbackInput!
+  $condition: ModelFeedbackConditionInput
+) {
+  createFeedback(input: $input, condition: $condition) {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateFeedback(
+  $input: UpdateFeedbackInput!
+  $condition: ModelFeedbackConditionInput
+) {
+  updateFeedback(input: $input, condition: $condition) {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteFeedback(
+  $input: DeleteFeedbackInput!
+  $condition: ModelFeedbackConditionInput
+) {
+  deleteFeedback(input: $input, condition: $condition) {
+    id
+    comment
+    commentType
+    status
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateMessage(
+  $input: CreateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  createMessage(input: $input, condition: $condition) {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateMessage(
+  $input: UpdateMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  updateMessage(input: $input, condition: $condition) {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteMessage(
+  $input: DeleteMessageInput!
+  $condition: ModelMessageConditionInput
+) {
+  deleteMessage(input: $input, condition: $condition) {
+    id
+    message
+    wallet
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateGamesSummary(
+  $input: CreateGamesSummaryInput!
+  $condition: ModelGamesSummaryConditionInput
+) {
+  createGamesSummary(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateGamesSummary(
+  $input: UpdateGamesSummaryInput!
+  $condition: ModelGamesSummaryConditionInput
+) {
+  updateGamesSummary(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteGamesSummary(
+  $input: DeleteGamesSummaryInput!
+  $condition: ModelGamesSummaryConditionInput
+) {
+  deleteGamesSummary(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalUniquePlayers
+    totalPayouts
+    highestPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateErrorLog(
+  $input: CreateErrorLogInput!
+  $condition: ModelErrorLogConditionInput
+) {
+  createErrorLog(input: $input, condition: $condition) {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}
+mutation UpdateErrorLog(
+  $input: UpdateErrorLogInput!
+  $condition: ModelErrorLogConditionInput
+) {
+  updateErrorLog(input: $input, condition: $condition) {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}
+mutation DeleteErrorLog(
+  $input: DeleteErrorLogInput!
+  $condition: ModelErrorLogConditionInput
+) {
+  deleteErrorLog(input: $input, condition: $condition) {
+    id
+    createdAt
+    stackTrace
+    updatedAt
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "vechain",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "build:keys": "cd pre-deploy && node index.js",
+    "migrate:dev": "./node_modules/.bin/truffle migrate --network=development --reset",
+    "migrate:test": "./node_modules/.bin/truffle migrate --network=test --reset",
+    "migrate:prod": "./node_modules/.bin/truffle migrate --network=production --reset",
+    "test": "sharp-cli test",
+    "solo": "node -e \"setInterval(()=>{},1000);\"",
+    "sharp": "mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'",
+    "compile": "sharp-cli compile"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@truffle/hdwallet-provider": "^1.2.6",
+    "solc": "^0.5.17",
+    "thor-devkit": "^2.0.1",
+    "thorify": "^1.5.3",
+    "truffle": "^5.2.2",
+    "web3": "^1.3.4"
+  }
+}

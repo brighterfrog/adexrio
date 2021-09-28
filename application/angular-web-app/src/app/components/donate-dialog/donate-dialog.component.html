@@ -1,0 +1,33 @@
+<h1 mat-dialog-title>Community Support</h1>
+<div mat-dialog-content>
+  <form [formGroup]="donateForm">
+    <mat-form-field color="accent" appearance="standard">
+      <mat-label>Every little bit helps</mat-label>
+      <input matInput type="text" formControlName="donateVetControl" />
+      <p matSuffix>VET</p>
+      <mat-hint>Amount to donate</mat-hint>
+
+      <div
+        *ngIf="
+          donateForm.controls['donateVetControl'].dirty &&
+          donateForm.controls['donateVetControl'].invalid
+        "
+        class="alert"
+      >
+        <div *ngIf="donateForm.controls['donateVetControl'].errors?.required">
+          required
+        </div>
+        <div *ngIf="donateForm.controls['donateVetControl'].errors?.min">
+          minimum must be {{ minimumDonationAmount }}
+        </div>
+        <div *ngIf="donateForm.controls['donateVetControl'].errors?.pattern">
+          integers only
+        </div>
+      </div>
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="center">
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial>Ok</button>
+</div>
