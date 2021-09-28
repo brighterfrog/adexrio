@@ -6,9 +6,9 @@
     "ng": "ng",
     "start": "ng serve",
     "build:cicd": "ng build",
-    "build:dev": "amplify pull --appId d3nhl82tha81mm --envName dev && ng build",
-    "build:test": "amplify pull --appId d3nhl82tha81mm --envName test && ng build -c=test",
-    "build:prod": "amplify pull --appId d3nhl82tha81mm --envName prod && ng build -c=production",
+    "build:local_dev": "amplify pull --appId d3nhl82tha81mm --envName dev && ng build",
+    "build:local_test": "amplify pull --appId d3nhl82tha81mm --envName test && ng build -c=test",
+    "build:local_prod": "amplify pull --appId d3nhl82tha81mm --envName prod && ng build -c=production",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
