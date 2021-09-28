@@ -1,0 +1,90 @@
+<mat-toolbar color="primary" class="mat-elevation-z6 top-toolbar">
+  <button mat-flat-button color="primary" [routerLink]="['/']">adexr.io</button>
+  <button mat-flat-button color="primary" [routerLink]="['/games/dashboard']">
+    games
+  </button>
+  <button mat-flat-button color="primary" [routerLink]="['/about']">
+    about
+  </button>
+
+  <button
+    *ngIf="shellService.isUserAdmin()"
+   mat-flat-button color="primary" [routerLink]="['/admin']">
+    admin
+  </button>
+
+  <img
+        src="../../../assets/logo_512x512.png"
+        alt="adexr.io logo image"
+        class="adexrio-logo"
+        style="height:40px"
+  />
+
+  <!-- <span>adexr.io</span> -->
+  <span class="app-toolbar-spacer"></span>
+
+  <button
+    mat-icon-button
+    aria-label="icon-button with connect icon"
+    matTooltip="Coming Soon"
+  >
+    <mat-icon>connect_without_contact</mat-icon>
+  </button>
+
+  <button
+    [color]="shellService.feedbackIconThemeColoring"
+    color="accent"
+    (click)="shellService.openFeedbackDialog()"
+    mat-icon-button
+    aria-label="icon-button with feedback icon"
+    [matTooltip]="shellService.feedbackTooltipText"
+  >
+    <mat-icon>feedback</mat-icon>
+  </button>
+
+  <button
+    mat-icon-button
+    aria-label="icon-button with heart icon"
+    [color]="shellService.donateIconThemeColoring"
+    (click)="shellService.openDonationDialog()"
+    [matTooltip]="shellService.donateTooltipText"
+  >
+    <mat-icon>favorite</mat-icon>
+  </button>
+
+  <button
+    [color]="shellService.profileIconThemeColoring"
+    mat-fab
+    (click)="shellService.openUserWalletProfile()"
+    aria-label="icon-button with profile icon"
+    [matTooltip]="shellService.profileTooltipText"
+  >
+    <mat-icon>psychology</mat-icon>
+  </button>
+
+</mat-toolbar>
+
+<mat-toolbar color="primary">
+  <header class="header-width">
+    <div fxFlex fxLayout>
+      <div fxFlex>
+        <h1>{{ shellService.headerTitle }}</h1>
+      </div>
+
+
+      <div fxFlex fxLayoutAlign="flex-end center">
+
+        vetusdt:
+        {{
+          shellService.binanceApiService.binanceTickerResponseResult.price
+            | number: "0.6-6"
+        }}
+      </div>
+    </div>
+  </header>
+</mat-toolbar>
+
+<div class="router-outlet-container">
+  <router-outlet></router-outlet>
+</div>
+

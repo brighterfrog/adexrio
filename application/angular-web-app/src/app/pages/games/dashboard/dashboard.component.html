@@ -1,0 +1,141 @@
+
+ <div fxLayout="column" fxLayoutGap="30px">
+    <div fxLayout="row" fxLayoutGap="30px">
+      <mat-card fxFlex="50" class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            roll it
+              <mat-icon class="more-button">
+                casino
+              </mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayout="column">
+
+            <div fxFlex fxFlexAlign="start start">
+              <h4>Join the live lottery smart contract game and start winning
+                now!
+              </h4>
+
+              <span>
+                Execute your audited game with random.org to produce a verified audit trail that's also saved on-chain.
+                <br/><br/>
+              </span>
+
+
+              <span>
+                ...Or you can choose to execute the contract as a free game!
+                <br/><br/>
+              </span>
+
+            </div>
+
+            <div fxFlex fxFlexAlign="center">
+              <button mat-flat-button color="primary" [routerLink]="['/games/rollit']">
+                Go to game!
+              </button>
+            </div>
+
+          </div>
+        </mat-card-content>
+
+      </mat-card>
+
+      <mat-card fxFlex="50" class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            contact us
+              <mat-icon class="more-button">
+                message
+              </mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+
+          Are you a graphic designer / artist / enthusiast who would like to help out and contribute to the project?
+
+          Please contact us by logging in and using the feedback icon on the upper toolbar. Select 'Interest' and leave us your contact information !
+
+        </mat-card-content>
+
+      </mat-card>
+
+    </div>
+
+
+    <div fxLayout="row" fxLayoutGap="30px" fxLayout.xs="column"  fxLayoutAlign="center center">
+
+      <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            total games <mat-icon class="cursor" matTooltip="Total games played" inline="true">info</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutAlign="center" class="dashboard-game-counts">
+          {{totalGames | number}}
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            total players <mat-icon class="cursor" matTooltip="Total game players" inline="true">info</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutAlign="center" class="dashboard-game-counts">
+          {{totalPlayers | number}}
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            total payouts <mat-icon class="cursor" matTooltip="Total payouts in VET" inline="true">info</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutAlign="center" class="dashboard-game-counts">
+          {{totalPayouts | number}}
+        </mat-card-content>
+      </mat-card>
+      <mat-card class="mat-elevation-z8">
+        <mat-card-header>
+          <mat-card-title>
+            highest payout <mat-icon class="cursor" matTooltip="Highest game payout in VET" inline="true">info</mat-icon>
+          </mat-card-title>
+        </mat-card-header>
+        <mat-card-content fxLayout="row" fxLayoutAlign="center" class="dashboard-game-counts">
+          {{highestPayout | number}}
+        </mat-card-content>
+      </mat-card>
+    </div>
+
+
+    <div fxLayout="column" class="step-wizard">
+
+      <mat-horizontal-stepper>
+        <mat-step label="Step 1">
+          <p>Open the site in Sync with the upper LEFT showing a connection to {{ currentSyncTierName }}</p>
+        </mat-step>
+
+        <mat-step label="Step 2">
+          <p>Login to a wallet in the upper right to start using the dApp</p>
+        </mat-step>
+
+        <mat-step label="Step 3">
+          <p>Go to the open games tab to create or join a game or choose the arena to chat with other players</p>
+        </mat-step>
+
+        <mat-step label="Step 4">
+          <p>Integrated smart contract lotteries tie into Random.org so view the completed games tab to view transaction insights or Random.org Audited enabled games</p>
+        </mat-step>
+
+      </mat-horizontal-stepper>
+
+    </div>
+
+</div>
+
+
+
+

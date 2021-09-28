@@ -1,0 +1,82 @@
+.chat-make-scrollable{
+    height: 500px;
+    overflow-y:scroll;
+}
+.chat-arena-fromUser{
+    color: #8b8bff;
+}
+// .chat-arena-posted-message:nth-child(odd){
+//     background-color: #464441;
+//     border-radius: 30px;
+// }
+.mat-header-cell {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .mat-cell {
+    text-align: center;
+    justify-content:center;
+  }
+
+.example-container .mat-form-field + .mat-form-field {
+    margin-left: 8px;
+}
+.roll-it-table-full-width {
+    width: 100%;
+}
+.mat-footer-row,
+.mat-header-row,
+.mat-row {
+    display: inline-flex;
+    min-width: 100%;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.grid-icon-side-padding{
+    padding-left:5px;
+}
+
+.bet-container {
+    padding-top: 15px;
+}
+.chance-of-winning-slider {
+    width: 300px;
+}
+
+.bet-input-right-align {
+    text-align: right;
+}
+
+input.bet-input-right-align::-webkit-outer-spin-button,
+input.bet-input-right-align::-webkit-inner-spin-button {
+    display: none;
+}
+
+input.bet-input-right-align {
+    -moz-appearance: textfield;
+}
+button.bet-input-button {
+    margin: 0px 10px;
+}
+// .card-container {
+//     padding: 30px;
+// }
+.mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+}
+
+.accent-color {
+    color: white !important;
+  }
+
+//.rollit-recent-games-table {
+// width: 100%;
+//}
+// .rollit-upper-card {
+//     width: 100%;
+// }
+// .rollit-stats-tabs {
+//     width: 100%;
+// }

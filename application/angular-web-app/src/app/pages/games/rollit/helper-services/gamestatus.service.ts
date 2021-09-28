@@ -1,0 +1,28 @@
+import { Injectable } from '@angular/core';
+
+@Injectable({
+    providedIn: 'root'
+})
+export class GameStatusService {
+
+    COMPLETE = 'COMPLETE';
+    COMPLETE_VALUE = '0';
+
+    AWAITING_GAME_CRITERIA_MET = 'AWAITING_GAME_CRITERIA_MET';
+    AWAITING_GAME_CRITERIA_MET_VALUE = '1';
+
+    CRITERIA_MET_AWAITING_LOTTERY = 'CRITERIA_MET_AWAITING_LOTTERY';
+    CRITERIA_MET_AWAITING_LOTTERY_VALUE = '2';
+
+
+
+    TextToNumberMap = new Map()
+        .set(this.COMPLETE, this.COMPLETE_VALUE)
+        .set(this.AWAITING_GAME_CRITERIA_MET, this.AWAITING_GAME_CRITERIA_MET_VALUE)
+        .set(this.CRITERIA_MET_AWAITING_LOTTERY, this.CRITERIA_MET_AWAITING_LOTTERY_VALUE);
+    NumberToTextMap = new Map()
+        .set(this.COMPLETE_VALUE, this.COMPLETE)
+        .set(this.AWAITING_GAME_CRITERIA_MET_VALUE, this.AWAITING_GAME_CRITERIA_MET)
+        .set(this.CRITERIA_MET_AWAITING_LOTTERY_VALUE, this.CRITERIA_MET_AWAITING_LOTTERY);
+}
+
