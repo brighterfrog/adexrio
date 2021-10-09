@@ -211,12 +211,13 @@ export class ShellService {
 
   }
   isUserConnexAuthorized(): boolean {
-    // CAN BE DELETED AND REPLACED WITH LINES 207 WHEN SYNC2 IS RELEASED
-    const authorized = window.connex ? true : false;
+    // CAN BE DELETED AND REPLACED WITH LINES 207 WHEN SYNC2 IS RELEASED 
+    // For Sync1
+    //const authorized = window.connex ? true : false;
     // CAN BE DELETED AND REPLACED WITH LINES 207
 
     // For Sync2
-    // const authorized = this.userIsConnectedWithSync(this.blockChainService.connex);
+    const authorized = this.userIsConnectedWithSync(this.blockChainService.connex);
     if (environment.showDebug) {
       this.loggingService.writeDebug(authorized);
     }
