@@ -2,7 +2,7 @@ import { BlockChainService } from "../blockchain/blockchain-service";
 import { BlockchainEventListener } from "../blockchain/blockchain-event-listener";
 import {
     BlockchainResultGameDetails,
-    GameEvent, PerformLotteryFinalResult, SelectGameWinnerResult, SetGameWinnerRequest
+    GameEvent, PerformLotteryFinalResult, RandomOrgSecretDetails, SelectGameWinnerResult, SetGameWinnerRequest
 } from "../models/all-models";
 import { GameNoAuditService } from "./game-no-audit-service";
 import { RandomDrawRequestResult } from "../random_org/random-org-service";
@@ -15,6 +15,8 @@ import { GlobalErrorService } from "../globals/global-error-service";
 
 export class GameOrchestratorService {
 
+    secretsManager: any;
+
     blockChainService: BlockChainService;
     gameFactory: GameProcessorFactoryService;
     gameSummaryApiService: GameSummaryApiService;
@@ -22,7 +24,10 @@ export class GameOrchestratorService {
     apiService: APIService;
     errorService: GlobalErrorService;
 
-    constructor(apiService: APIService, errorService: GlobalErrorService) {
+    secretDetails: RandomOrgSecretDetails;
+
+    constructor(secretsManager: any, apiService: APIService, errorService: GlobalErrorService) {
+        this.secretsManager = secretsManager;
         this.blockChainService = new BlockChainService();
         this.gameFactory = new GameProcessorFactoryService(errorService);
         this.apiService = apiService;
@@ -31,6 +36,41 @@ export class GameOrchestratorService {
             this.blockChainService
         );
         this.errorService = errorService;
+    }
+
+    // registerApplicationSecrets(): void {
+    //     this.secretsManager.getSecretValue("apikeys/randomorg/account")
+    //     .then( (data) => {
+    //         console.log("secret result fetch block");
+    //         var secretDetails = JSON.parse(data.SecretString);
+    //         console.log(secretDetails.login);
+    //         console.log(secretDetails.password);
+
+    //         this.randomOrgApiLogin = secretDetails.login;
+    //         this.randomOrgApiPassword = secretDetails.password;
+
+
+    //     }).catch( (err) => {
+    //         console.log(err);    
+    //     });
+    // }
+
+    registerApplicationSecrets(): void {
+        this.secretsManager.getSecretValue("apikeys/randomorg/account")
+        .then( (data) => {
+            console.log("secret result fetch block");
+            
+            var secret = JSON.parse(data.SecretString);
+            console.log(secret.login);
+            console.log(secret.password);
+
+            this.secretDetails = secret;
+            
+
+        }).catch( (err) => {
+            console.log(err);  
+            this.errorService.logError(err);            
+        });
     }
 
     registerGameProcessLimboService(): void {
@@ -208,19 +248,21 @@ export class GameOrchestratorService {
                 switch (game.gameResult.decoded.gcsIsAuditEnabled) {
                     case true: {
 
-                        const service = new GameAuditEnabledService();
-                        service.selectWinner(game).then((winner) => {
-                            console.log(winner);
-                            resolve(winner);
-                        }).catch((err) => {
-                            this.errorService.logError(err);
-                            reject(err);
-                        }).catch((err) => {
-                            console.log(err);
-                            this.errorService.logError(err);
-                        });
+                        const service = new GameAuditEnabledService(this.secretDetails);
+                            service.selectWinner(game).then((winner) => {
+                                console.log(winner);
+                                resolve(winner);
+                            }).catch((err) => {
+                                this.errorService.logError(err);
+                                reject(err);
+                            }).catch((err) => {
+                                console.log(err);
+                                this.errorService.logError(err);
+                            });
+                                              
 
                         break;
+                        
                     }
 
                     case false: {

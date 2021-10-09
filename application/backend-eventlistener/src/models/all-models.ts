@@ -26,6 +26,11 @@ export class GameCreatedEvent {
     }
 }
 
+export interface RandomOrgSecretDetails {
+    login: string;
+    password: string;
+}
+
 export interface DecodedGameEntries {
     gameIds: number[];
     gameStatus: number[];

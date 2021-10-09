@@ -1,7 +1,7 @@
 import { RandomDrawGame, RandomDrawRequestResult, RandomOrgApiService } from "../random_org/random-org-service";
 import { BlockChainService } from "../blockchain/blockchain-service";
 import {
-    GameEvent, SelectGameWinnerResult
+    GameEvent, RandomOrgSecretDetails, SelectGameWinnerResult
 } from "../models/all-models";
 import { BlockchainResultGameDetails } from "../models/all-models";
 import { IGameService } from "./game-service-interface";
@@ -10,9 +10,9 @@ export class GameAuditEnabledService implements IGameService {
 
     randomOrgService: RandomOrgApiService;
 
-    constructor()
+    constructor(secretDetails: RandomOrgSecretDetails)
     {
-        this.randomOrgService = new RandomOrgApiService();
+        this.randomOrgService = new RandomOrgApiService(secretDetails);
     }
 
     getRandomOrgGameFromBlockchainResultGameDetails(game: BlockchainResultGameDetails): RandomDrawGame {

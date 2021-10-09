@@ -9,13 +9,25 @@ import { GameEvent, GameStatus } from "./models/all-models";
 import { GlobalErrorService } from "./globals/global-error-service";
 //import API from "@aws-amplify/api";
 import { APIService } from "./API";
+import { SecretsManager } from "./aws-services/secrets-manager";
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
- import Amplify from 'aws-amplify';
- const awsmobile = require('./aws-exports');
+import AWS from 'aws-sdk'
+import Amplify from 'aws-amplify';
 
- Amplify.configure(awsmobile);
+const awsmobile = require('./aws-exports');
+
+Amplify.configure(awsmobile);
+
+AWS.config.getCredentials(function(err) {
+  if (err) console.log(err.stack);
+  // credentials not loaded  
+  else {
+    console.log("Access key:", AWS.config.credentials.accessKeyId);
+  }
+});
+
 
 // console.log(awsmobile);
 
@@ -75,15 +87,18 @@ let app = http.createServer((req: any, res: any) => {
 // Start the server on port 3000
 app.listen(3000, '127.0.0.1');
 
+var secretsManager = new SecretsManager(AWS);
 var apiService = new APIService();
 var errorService = new GlobalErrorService(apiService);
-var gos = new GameOrchestratorService(apiService, errorService);
+var gos = new GameOrchestratorService(secretsManager, apiService, errorService);
+
 
 gos.blockChainService.walletService.importWalletFromKeystore()
     .then(() => {
         console.log('done importing wallet configuration');
         console.log('registering blockchain event listeners');
-
+        
+        gos.registerApplicationSecrets();
         gos.registerBlockchainEventSubscriptions();
         gos.registerGameSummaryApiToEvents();
         gos.registerGameProcessLimboService();

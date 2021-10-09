@@ -61,14 +61,14 @@ test 1/2 player audit
 
 
 ###
-aws-exports needs to be pulled from the environment in the pipeline pre-build
+aws-exports needs to be pulled from the environment in the pipeline pre-build -  DONE?
 finish adding repository branches, delete old branches, delete github app
 test backend-eventlistener
-delete all env file secrets
+delete all env file secrets from backend env   --IMPLEMENT AWS SECRETS MANAGER READ VALUE FOR ENVIRONMENT
 delete global service
 delete api keys
 
-swap wallet to v2 sync
+swap wallet to v2 sync - done
 truffle build output file prefix for dev/test/prod
 
 ###

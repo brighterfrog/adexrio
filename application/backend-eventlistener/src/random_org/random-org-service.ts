@@ -1,14 +1,18 @@
 import md5 = require("md5")
+import { RandomOrgSecretDetails } from "src/models/all-models";
 var request = require('request');
 
 export class RandomOrgApiService {
 
-    constructor() {
+    secretDetails: RandomOrgSecretDetails
+
+    constructor(secretDetails: RandomOrgSecretDetails) {
+        this.secretDetails = secretDetails;
     }
 
     // todo: implement logging
     getDrawRequestResultForGame(game: RandomDrawGame): Promise<RandomDrawRequestResult> {
-        const drawRequest = new RandomDrawRequest(game);
+        const drawRequest = new RandomDrawRequest(this.secretDetails, game);
         const self = this;
 
         const callBack = new Promise<RandomDrawRequestResult>(function (resolve, reject) {
@@ -75,11 +79,11 @@ export class RandomDrawRequest {
     params: RandomDrawRequestParams;
     id: number;
 
-    constructor(game: RandomDrawGame) {
+    constructor(secretDetails: RandomOrgSecretDetails, game: RandomDrawGame) {
         this.jsonrpc = "2.0";
         this.method = "holdDraw";
         this.id = game.gameId;
-        this.params = new RandomDrawRequestParams(game);
+        this.params = new RandomDrawRequestParams(secretDetails, game);
     }
 }
 export class RandomDrawRequestParams {
@@ -90,8 +94,8 @@ export class RandomDrawRequestParams {
     entriesDigest: string;
     winnerCount: number;
 
-    constructor(game: RandomDrawGame) {
-        this.credentials = new RandomDrawRequestCredentials();
+    constructor(secretDetails: RandomOrgSecretDetails, game: RandomDrawGame) {
+        this.credentials = new RandomDrawRequestCredentials(secretDetails);
         this.title = game.gameTitle;
         this.recordType = process.env.RECORD_TYPE;
         this.entries = game.playerAddresses;
@@ -104,9 +108,9 @@ export class RandomDrawRequestParams {
     }
 }
 export class RandomDrawRequestCredentials {
-    constructor() {
-        this.login = process.env.LOGIN;
-        this.password = process.env.PASSWORD;
+    constructor(secretDetails: RandomOrgSecretDetails) {
+        this.login = secretDetails.login;
+        this.password = secretDetails.password;
     }
     login: string;
     password: string;
