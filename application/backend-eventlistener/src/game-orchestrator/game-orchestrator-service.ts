@@ -2,7 +2,7 @@ import { BlockChainService } from "../blockchain/blockchain-service";
 import { BlockchainEventListener } from "../blockchain/blockchain-event-listener";
 import {
     BlockchainResultGameDetails,
-    GameEvent, PerformLotteryFinalResult, RandomOrgSecretDetails, SelectGameWinnerResult, SetGameWinnerRequest
+    GameEvent, PerformLotteryFinalResult, RandomOrgSecretDetails, SelectGameWinnerResult, SetGameWinnerRequest, WalletSecretDetails
 } from "../models/all-models";
 import { GameNoAuditService } from "./game-no-audit-service";
 import { RandomDrawRequestResult } from "../random_org/random-org-service";
@@ -14,21 +14,16 @@ import { GameProcessLimboService } from "./game-process-limbo-service";
 import { GlobalErrorService } from "../globals/global-error-service";
 
 export class GameOrchestratorService {
-
-    secretsManager: any;
-
+    
     blockChainService: BlockChainService;
     gameFactory: GameProcessorFactoryService;
     gameSummaryApiService: GameSummaryApiService;
     gameProcessLimboService: GameProcessLimboService;
     apiService: APIService;
     errorService: GlobalErrorService;
-
-    secretDetails: RandomOrgSecretDetails;
-
-    constructor(secretsManager: any, apiService: APIService, errorService: GlobalErrorService) {
-        this.secretsManager = secretsManager;
-        this.blockChainService = new BlockChainService();
+            
+    constructor(private walletSecretDetails: WalletSecretDetails, private randomOrgSecretDetails: RandomOrgSecretDetails, apiService: APIService, errorService: GlobalErrorService) {        
+        this.blockChainService = new BlockChainService(this.walletSecretDetails);
         this.gameFactory = new GameProcessorFactoryService(errorService);
         this.apiService = apiService;
         this.gameSummaryApiService = new GameSummaryApiService(
@@ -36,42 +31,7 @@ export class GameOrchestratorService {
             this.blockChainService
         );
         this.errorService = errorService;
-    }
-
-    // registerApplicationSecrets(): void {
-    //     this.secretsManager.getSecretValue("apikeys/randomorg/account")
-    //     .then( (data) => {
-    //         console.log("secret result fetch block");
-    //         var secretDetails = JSON.parse(data.SecretString);
-    //         console.log(secretDetails.login);
-    //         console.log(secretDetails.password);
-
-    //         this.randomOrgApiLogin = secretDetails.login;
-    //         this.randomOrgApiPassword = secretDetails.password;
-
-
-    //     }).catch( (err) => {
-    //         console.log(err);    
-    //     });
-    // }
-
-    registerApplicationSecrets(): void {
-        this.secretsManager.getSecretValue("apikeys/randomorg/account")
-        .then( (data) => {
-            console.log("secret result fetch block");
-            
-            var secret = JSON.parse(data.SecretString);
-            console.log(secret.login);
-            console.log(secret.password);
-
-            this.secretDetails = secret;
-            
-
-        }).catch( (err) => {
-            console.log(err);  
-            this.errorService.logError(err);            
-        });
-    }
+    }   
 
     registerGameProcessLimboService(): void {
         this.gameProcessLimboService = new GameProcessLimboService(this.blockChainService);
@@ -182,16 +142,13 @@ export class GameOrchestratorService {
 
     }
 
-    setWinnerOnBlockchain(
-        // game: BlockchainResultGameDetails,
-        // winner: string,
+    setWinnerOnBlockchain(        
         setGameWinnerRequest: SetGameWinnerRequest,
         blockchainService: BlockChainService): Promise<Connex.Vendor.TxResponse> {
 
         const resultPromise = new Promise<Connex.Vendor.TxResponse>(
             (resolve, reject) => {
-
-                // switch (game.gameResult.decoded.gcsIsAuditEnabled) {
+                
                 switch (setGameWinnerRequest.isAuditGame) {
                     case true: {
 
@@ -232,9 +189,7 @@ export class GameOrchestratorService {
     }
 
     selectGameWinner(game: BlockchainResultGameDetails): Promise<SelectGameWinnerResult> {
-
-        // Promise<string | RandomDrawRequestResult> {
-
+        
         console.log('selectGameWinner before logging game');
         console.log(game);
         console.log('logging game.gameResult.gcsIsAuditEnabled');
@@ -248,7 +203,7 @@ export class GameOrchestratorService {
                 switch (game.gameResult.decoded.gcsIsAuditEnabled) {
                     case true: {
 
-                        const service = new GameAuditEnabledService(this.secretDetails);
+                        const service = new GameAuditEnabledService(this.randomOrgSecretDetails);
                             service.selectWinner(game).then((winner) => {
                                 console.log(winner);
                                 resolve(winner);
@@ -312,7 +267,7 @@ export class GameProcessorFactoryService {
                     .getGameById(gameEvent.gameId)
                     .then((gameResult: Connex.VM.Output & Connex.Thor.Account.WithDecoded) => {
 
-                        const players = blockChainService
+                        blockChainService
                             .getEligiblePlayersForLotteryByGameId(gameEvent.gameId)
                             .catch((err) => {
                                 console.log('getEligiblePlayersForLotteryByGameId exception')

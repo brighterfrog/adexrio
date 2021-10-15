@@ -14,6 +14,6 @@ export class SecretsManager {
         });
 
        return (client.getSecretValue({SecretId: secretName}).promise());
-    }
+    }    
 
 }

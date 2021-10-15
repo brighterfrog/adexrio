@@ -30,6 +30,20 @@ export interface RandomOrgSecretDetails {
     login: string;
     password: string;
 }
+export interface WalletSecretDetails {
+    "development-network": WalletSecretDetailsNetwork;
+    "test-network":        WalletSecretDetailsNetwork;
+    "main-network":        WalletSecretDetailsNetwork;
+}
+export interface WalletSecretDetailsNetwork {
+    "contract-owner":        WalletInfo;
+    "donation-wallet-owner": WalletInfo;
+}
+export interface WalletInfo {
+    words:    string;
+    password: string;
+}
+
 
 export interface DecodedGameEntries {
     gameIds: number[];

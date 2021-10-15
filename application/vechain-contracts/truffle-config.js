@@ -66,7 +66,8 @@ module.exports = {
     },
 
     production: {
-      host: "https://mainnet.veblocks.net/:443",     // Localhost (default: none)
+      host: "127.0.0.1",
+      //host: "https://mainnet.veblocks.net/:443",     // Localhost (default: none)
       port: 8545,            // Standard Ethereum port (default: none)
       network_id: "*",
       // from: 'ee5d18eec6f51f57c7ec5bbea26715374e64e347',

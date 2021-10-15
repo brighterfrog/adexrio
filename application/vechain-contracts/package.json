@@ -9,13 +9,13 @@
     "migrate:prod": "./node_modules/.bin/truffle migrate --network=production --reset",
     "test": "sharp-cli test",
     "solo": "node -e \"setInterval(()=>{},1000);\"",
-    "sharp": "mocha --require ts-node/register --timeout 20000 --exit './tests/my-token.test.ts'",
     "compile": "sharp-cli compile"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "@truffle/hdwallet-provider": "^1.2.6",
+    "aws-sdk": "^2.1005.0",
     "solc": "^0.5.17",
     "thor-devkit": "^2.0.1",
     "thorify": "^1.5.3",

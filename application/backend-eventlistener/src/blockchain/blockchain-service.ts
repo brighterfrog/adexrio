@@ -1,10 +1,11 @@
-import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries } from "../models/all-models";
+import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, WalletSecretDetails } from "../models/all-models";
 import { thorify } from "thorify";
 
 const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json');
 
 import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
+import { SecretsManager } from "src/aws-services/secrets-manager";
 
 
 export class BlockChainService {
@@ -15,7 +16,7 @@ export class BlockChainService {
 
     contractWrappedEvents: ContractEvent[] = [];
 
-    constructor() {
+    constructor(private walletSecretDetails: WalletSecretDetails) {
         console.log('PROCESS ENV VECHAIN API NODE');
         console.log(process.env.VECHAIN_API_NODE);
 
@@ -30,7 +31,7 @@ export class BlockChainService {
         console.log(this.contractInstance);
 
         this.eventListener = new BlockchainEventListener(this.contractInstance);
-        this.walletService = new BlockchainWalletService();
+        this.walletService = new BlockchainWalletService(this.walletSecretDetails);
         this.contractWrappedEvents = this.getEventsFromContract();
     }
     private getEventsFromContract(): ContractEvent[] {

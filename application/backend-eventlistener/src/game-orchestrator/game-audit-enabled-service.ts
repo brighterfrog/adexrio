@@ -10,9 +10,9 @@ export class GameAuditEnabledService implements IGameService {
 
     randomOrgService: RandomOrgApiService;
 
-    constructor(secretDetails: RandomOrgSecretDetails)
+    constructor(randomOrgSecretDetails: RandomOrgSecretDetails)
     {
-        this.randomOrgService = new RandomOrgApiService(secretDetails);
+        this.randomOrgService = new RandomOrgApiService(randomOrgSecretDetails);
     }
 
     getRandomOrgGameFromBlockchainResultGameDetails(game: BlockchainResultGameDetails): RandomDrawGame {
