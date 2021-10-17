@@ -16,6 +16,7 @@ source .venv/bin/activate
 # For windows:
 # CD to %USERPROFILE%\.aws\config
 # CD to %USERPROFILE%\.aws\credentials
+
 export AWS_CONFIG_FILE=/mnt/c/users/<username>/.aws/config
 export AWS_SHARED_CREDENTIALS_FILE=/mnt/c/users/<username>/.aws/credentials
 

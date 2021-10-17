@@ -1,7 +1,7 @@
 NETWORK_CONSTANTS = {    
     'development': {
         'name': 'development-network',
-        'host': '127.0.0.1'
+        'host': 'http://0.0.0.0:8669'
     },
     'test': {
         'name': 'test-network',

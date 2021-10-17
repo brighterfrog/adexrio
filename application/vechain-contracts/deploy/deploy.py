@@ -20,7 +20,7 @@ all_secrets = json.loads(response['SecretString'])
 contract_owner = all_secrets[config.ENVIRONMENT['name']]['contract-owner']
 
 #connector = Connect(config.ENVIRONMENT['host'])
-connector = Connect('http://127.0.0.1') 
+connector = Connect(config.ENVIRONMENT['host']) 
 
 
 _wallet = Wallet.fromMnemonic(list(contract_owner['words'].split(" ")))
@@ -33,5 +33,5 @@ print(filename)
 _contract = Contract.fromFile(filename)
 
 # deploy
-res = connector.deploy(_wallet, _contract)
+res = connector.deploy(_wallet, _contract, value=10000)
 print(res)
