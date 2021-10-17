@@ -116,3 +116,7 @@ change backend event listener process to read from aws secrets and produce keyst
 CHANGE FRONTEND FILES TO READ CORRECT LOCATION
 
 WHEN CONFIRMED - DELETE wallets/old folder
+DEPLOY CONTRACT TO DEV, TEST
+
+CREATE ALL THE WALLETS MANUALLY
+CREATE A NEW WALLET FOR EACH ADDRESS
