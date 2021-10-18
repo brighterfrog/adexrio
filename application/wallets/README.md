@@ -5,5 +5,6 @@ vechain-contracts
 
 # Process for creating wallets
 
-# RUN wallets/index.js to generate pre-deploy files when deploying
+# RUN vechain-contracts/pre-deploy/index.js to generate pre-deploy files when deploying
+npm run build:keys 
 

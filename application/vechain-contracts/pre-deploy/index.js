@@ -42,6 +42,18 @@ buildKeystoreFilesAndAddressesFromSecretsManager( {
   outputPathKeystore: "./../../wallets/sync2/deployment_keystore/vechain.dev.owner.account.json",
   outputPathDonationAddress: "./../../wallets/sync2/addresses/vechain.dev.donation.address.json",
 });
+buildKeystoreFilesAndAddressesFromSecretsManager( {
+  secretName: 'adexrio/wallets/mnemonics',
+  network: 'test-network',
+  outputPathKeystore: "./../../wallets/sync2/deployment_keystore/vechain.test.owner.account.json",
+  outputPathDonationAddress: "./../../wallets/sync2/addresses/vechain.test.donation.address.json",
+});
+buildKeystoreFilesAndAddressesFromSecretsManager( {
+  secretName: 'adexrio/wallets/mnemonics',
+  network: 'main-network',
+  outputPathKeystore: "./../../wallets/sync2/deployment_keystore/vechain.main.owner.account.json",
+  outputPathDonationAddress: "./../../wallets/sync2/addresses/vechain.main.donation.address.json",
+});
 
 
 // OLD WAY OF EXPORTED KEYSTORE WRITING PK 

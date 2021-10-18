@@ -15,9 +15,14 @@ import { SyncNotConnectedDialogComponent } from '../components/sync-not-detected
 
 import { APIService, feedbackStatus } from '../API.service';
 
-import DonationKeystoreDevelopment from '../../../../wallets/keystore_donations/vechain.dev.donation.account.json';
-import DonationKeystoreTest from '../../../../wallets/keystore_donations/vechain.test.donation.account.json';
-import DonationKeystoreProduction from '../../../../wallets/keystore_donations/vechain.prod.donation.account.json';
+// import DonationKeystoreDevelopment from '../../../../wallets/keystore_donations/vechain.dev.donation.account.json';
+// import DonationKeystoreTest from '../../../../wallets/keystore_donations/vechain.test.donation.account.json';
+// import DonationKeystoreProduction from '../../../../wallets/keystore_donations/vechain.prod.donation.account.json';
+
+import DonationKeystoreDevelopment from '../../../../wallets/sync2/addresses/vechain.dev.donation.address.json';
+import DonationKeystoreTest from '../../../../wallets/sync2/addresses/vechain.test.donation.address.json';
+import DonationKeystoreProduction from '../../../../wallets/sync2/addresses/vechain.prod.donation.address.json';
+
 import { LoggingService } from './logging.service';
 
 
