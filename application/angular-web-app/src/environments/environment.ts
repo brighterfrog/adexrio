@@ -9,7 +9,7 @@ export const environment = {
   envName: 'local',
   syncTierName: 'SOLO',
   showDebug: true,
-  enforceSyncGuard: false,
+  enforceSyncGuard: true,
   veChain: {
     node: 'http://127.0.0.1:8669',
     network: {

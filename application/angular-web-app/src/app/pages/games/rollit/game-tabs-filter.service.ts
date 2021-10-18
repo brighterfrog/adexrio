@@ -218,6 +218,7 @@ export class GameTabsFilterService {
   }
 
   private async getDataForOpenGamesTab(): Promise<GameEntry[]> {
+    this.loggingService.writeDebug('getDataForOpenGamesTab PRE-CALL');
     const data = await this.blockChainService.getOpenGameData();
     return data;
   }

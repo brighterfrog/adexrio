@@ -54,6 +54,9 @@ export class ShellService {
   donateTooltipText!: string;
   donateIconThemeColoring!: string;
 
+  joinTheGameTooltipText!: string;
+  joinTheGameIconThemeColoring!: string;
+
   donationWalletAddress: string;
 
   constructor(
@@ -85,9 +88,12 @@ export class ShellService {
 
           this.donateTooltipText = 'Donate';
           this.donateIconThemeColoring = '';
+
+          this.joinTheGameTooltipText = 'Join the games here';
+          this.joinTheGameIconThemeColoring = 'accent';
         }
         else {
-          const loginText = 'Login to start using the dApp';
+          const loginText = 'Login first to start using the dApp';
 
           this.profileTooltipText = loginText;
           this.profileIconThemeColoring = 'warn';
@@ -97,6 +103,9 @@ export class ShellService {
 
           this.donateTooltipText = loginText;
           this.donateIconThemeColoring = 'warn';
+
+          this.joinTheGameTooltipText = loginText;
+          this.joinTheGameIconThemeColoring = 'warn';
         }
       },
       error: (error) => {

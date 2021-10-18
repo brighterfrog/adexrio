@@ -24,6 +24,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { ArenaChatBottomSheetComponent } from './games/rollit/components/arena-chat/arena-chat-bottomsheet.component';
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { AboutComponent } from './about/about.component';
+import { ConnexGuard } from '../guards/connex.guard';
 
 const routes: Routes = [
   {
@@ -32,7 +33,8 @@ const routes: Routes = [
   },
   {
     path: 'rollit',
-    component: RollitComponent
+    component: RollitComponent,
+    canActivate: [ConnexGuard]
   },
   {
     path: 'about',

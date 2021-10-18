@@ -211,6 +211,11 @@ export class BlockchainService {
 
   async getOpenDecodedGames(): Promise<DecodedGameEntries> {
 
+    console.log('getOpenDecodedGames()');
+    console.log(this.contractAddress);
+
+    debugger;
+
     const getGamesByStatus = this.connex.thor.account(this.contractAddress).method(this.getContractFunctionABIfor('getGamesByStatus'));
     const detail = await getGamesByStatus.call(
       this.gameStatusService.TextToNumberMap.get(this.gameStatusService.AWAITING_GAME_CRITERIA_MET)

@@ -3,11 +3,16 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } fro
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import '@vechain/connex';
+import { WalletService } from '../pages/games/rollit/helper-services/wallet-service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnexGuard implements CanActivate {
+
+  constructor (private walletService: WalletService) {
+
+  }
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -18,9 +23,7 @@ export class ConnexGuard implements CanActivate {
   private isUserAuthorized(): boolean {
     let authorized = false;
     if (environment.enforceSyncGuard) {
-      // const connex = window.connex as Connex;
-      // authorized = this.userIsConnectedWithSync(connex, authorized);
-      authorized = true;
+      return this.walletService.userIsLoggedInToWallet();
     }
     else {
       authorized = true;
@@ -29,16 +32,5 @@ export class ConnexGuard implements CanActivate {
       console.log(authorized);
     }
     return authorized;
-  }
-
-  private userIsConnectedWithSync(connex: Connex, authorized: boolean): boolean {
-    if (!connex) {
-      // location.href = environment.veChain.connexNode + encodeURIComponent(location.href);
-      authorized = false;
-    }
-    else {
-      authorized = true;
-    }
-    return authorized;
-  }
+  } 
 }
