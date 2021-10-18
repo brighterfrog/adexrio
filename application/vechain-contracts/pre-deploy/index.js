@@ -27,7 +27,9 @@ async function buildKeystoreFilesAndAddressesFromSecretsManager(input) {
     KS.encrypt(pkBytes, donationOwner.password).then( keystore => {
       console.log(pkBytes);
       console.log(keystore);  
-      fs.writeFileSync(input.outputPathDonationAddress, keystore.address);       
+      fs.writeFileSync(input.outputPathDonationAddress,
+        JSON.stringify( { address: keystore.address } )
+      );       
     });
 
   }).catch ((err) => {

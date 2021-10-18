@@ -21,7 +21,7 @@ import { APIService, feedbackStatus } from '../API.service';
 
 import DonationKeystoreDevelopment from '../../../../wallets/sync2/addresses/vechain.dev.donation.address.json';
 import DonationKeystoreTest from '../../../../wallets/sync2/addresses/vechain.test.donation.address.json';
-import DonationKeystoreProduction from '../../../../wallets/sync2/addresses/vechain.prod.donation.address.json';
+import DonationKeystoreProduction from '../../../../wallets/sync2/addresses/vechain.main.donation.address.json';
 
 import { LoggingService } from './logging.service';
 
