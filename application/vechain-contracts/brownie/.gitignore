@@ -3,4 +3,5 @@ __pycache__
 .history
 .hypothesis/
 build/
+!build/contracts/RollItVetMultiPlayerGame.json
 reports/
