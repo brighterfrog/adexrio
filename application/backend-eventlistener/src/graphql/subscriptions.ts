@@ -113,3 +113,33 @@ export const onDeleteGamesSummary = /* GraphQL */ `
     }
   }
 `;
+export const onCreateErrorLog = /* GraphQL */ `
+  subscription OnCreateErrorLog {
+    onCreateErrorLog {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
+export const onUpdateErrorLog = /* GraphQL */ `
+  subscription OnUpdateErrorLog {
+    onUpdateErrorLog {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
+export const onDeleteErrorLog = /* GraphQL */ `
+  subscription OnDeleteErrorLog {
+    onDeleteErrorLog {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;

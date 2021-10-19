@@ -18,21 +18,17 @@ import Amplify from 'aws-amplify';
 
 const awsmobile = require('./aws-exports');
 
-Amplify.configure(awsmobile);
+ AWS.config.getCredentials(function(err) {
+     if (err) console.log(err.stack);     
+     else {
+       console.log("Access key:", AWS.config.credentials.accessKeyId);
+     }
+ });
+Amplify.configure(awsmobile.default);
+Amplify.Auth.configure({
+  mandatorySignIn: false
+})
 
-AWS.config.getCredentials(function(err) {
-  if (err) console.log(err.stack);
-  // credentials not loaded  
-  else {
-    console.log("Access key:", AWS.config.credentials.accessKeyId);
-  }
-});
-
-
-// console.log(awsmobile);
-
-
-//FIGURE OUT BETTER WAY TO IMPORT
 //ALSO IN TESTS
 
 // const globalService = new GlobalService();
@@ -88,6 +84,7 @@ let app = http.createServer((req: any, res: any) => {
 app.listen(3000, '127.0.0.1');
 
 var secretsManager = new SecretsManager(AWS);
+
 var apiService = new APIService();
 var errorService = new GlobalErrorService(apiService);
 var randomOrgSecretDetails: RandomOrgSecretDetails;
@@ -126,7 +123,7 @@ function preLoadApplicationSecrets(): Promise<void> {
                           console.log(err);  
                           errorService.logError(err);            
                       })
-                    ])
+                     ])
       .then( ()=> {
         resolve();
       });
@@ -144,8 +141,8 @@ preLoadApplicationSecrets().then( () => {
   console.log(' RANDOMORG SECRET DETAILS:');
   console.log(randomOrgSecretDetails);
   
-  var gos = new GameOrchestratorService(walletSecretDetails, randomOrgSecretDetails, apiService, errorService);
-  
+  var gos = new GameOrchestratorService(walletSecretDetails, randomOrgSecretDetails, apiService, errorService);   
+    
       gos.blockChainService.walletService.importWalletFromKeystore()
       .then(() => {
           console.log('done importing wallet configuration');
@@ -153,8 +150,8 @@ preLoadApplicationSecrets().then( () => {
           
           gos.registerBlockchainEventSubscriptions();
           gos.registerGameSummaryApiToEvents();
-          gos.registerGameProcessLimboService();
-
+          gos.registerGameProcessLimboService();                      
+  
 
           // TEST Startup cases
           //  gos.blockChainService.getGameById(0).then((r) => {
@@ -208,14 +205,17 @@ preLoadApplicationSecrets().then( () => {
           //     console.log(g);
           // })
 
-      });
-});
+     
+
+      
+    });
+  });
 
 
 
 //var bcs = new BlockChainService();
 
-//TODO can remove below, just testing get game call for detail
+//testing get game call for detail
 // bcs.getGames().then(function (resp: any) {
 //     console.log(resp);
 //     console.log('worked 2');

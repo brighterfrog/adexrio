@@ -21,8 +21,8 @@
   "dependencies": {
     "@vechain/connex-driver": "^2.0.2",
     "@vechain/connex-framework": "^2.0.2",
-    "aws-amplify": "^3.3.27",
-    "aws-sdk": "^2.1004.0",
+    "aws-amplify": "^3.4.3",
+    "aws-sdk": "^2.1011.0",
     "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "request": "^2.88.2",

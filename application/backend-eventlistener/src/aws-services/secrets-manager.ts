@@ -1,4 +1,3 @@
-
 export class SecretsManager {
 
     AWS: any    
@@ -15,5 +14,4 @@ export class SecretsManager {
 
        return (client.getSecretValue({SecretId: secretName}).promise());
     }    
-
 }

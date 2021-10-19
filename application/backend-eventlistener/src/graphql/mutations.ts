@@ -140,3 +140,42 @@ export const deleteGamesSummary = /* GraphQL */ `
     }
   }
 `;
+export const createErrorLog = /* GraphQL */ `
+  mutation CreateErrorLog(
+    $input: CreateErrorLogInput!
+    $condition: ModelErrorLogConditionInput
+  ) {
+    createErrorLog(input: $input, condition: $condition) {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
+export const updateErrorLog = /* GraphQL */ `
+  mutation UpdateErrorLog(
+    $input: UpdateErrorLogInput!
+    $condition: ModelErrorLogConditionInput
+  ) {
+    updateErrorLog(input: $input, condition: $condition) {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
+export const deleteErrorLog = /* GraphQL */ `
+  mutation DeleteErrorLog(
+    $input: DeleteErrorLogInput!
+    $condition: ModelErrorLogConditionInput
+  ) {
+    deleteErrorLog(input: $input, condition: $condition) {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
