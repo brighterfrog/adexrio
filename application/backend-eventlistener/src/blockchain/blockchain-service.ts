@@ -2,6 +2,7 @@ import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, W
 import { thorify } from "thorify";
 
 const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
+const RollItDeployedContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json');
 
 import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
@@ -139,9 +140,9 @@ export class BlockChainService {
         const func = RollItVetMultiPlayerGameDefinition.abi.find((item: { name: string; type: string; }) => item.name === name && item.type === 'function');
         return func;
     }
-    private getContractAddressForRollIt(): string {
-        return RollItVetMultiPlayerGameDefinition.networks[5777].address;
-    }
+    private getContractAddressForRollIt(): string {    
+        return RollItDeployedContractAddress.address;
+      }
     private getSingleContractEventForName(eventName: string, wrappedEvents: ContractEvent[]): ContractEvent | undefined {
         const event = wrappedEvents.find((item) => {
           return item.abi.type === 'event' && item.abi.name === eventName;

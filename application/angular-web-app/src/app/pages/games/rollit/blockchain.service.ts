@@ -724,10 +724,7 @@ export class BlockchainService {
     const func = RollItVetMultiPlayerGameDefinition.abi.find(item => item.name === name && item.type === 'function');
     return func;
   }
-  private getContractAddressForRollIt(): string {
-    //
-    //truffle
-    //return RollItVetMultiPlayerGameDefinition.networks[5777].address;
+  private getContractAddressForRollIt(): string {    
     return RollItDeployedContractAddress.address;
   }
   private getEventsFromContract(): ContractEvent[] {

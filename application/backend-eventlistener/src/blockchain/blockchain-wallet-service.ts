@@ -25,16 +25,13 @@ export class BlockchainWalletService {
         let keyStore: any;
         
         switch (process.env.NODE_ENV) {
-            case 'dev':
-                //keyStore = require('./../../../wallets/keystore/vechain.dev.owner.account.json');
+            case 'dev':               
                 keyStore = this.buildKeystore(this.walletSecretDetails['development-network']['contract-owner']);
                 break;
-            case 'test':
-                //keyStore = require('./../../../wallets/keystore/vechain.test.owner.account.json');
+            case 'test':                
                 keyStore = this.buildKeystore(this.walletSecretDetails['test-network']['contract-owner']);
                 break;
-            case 'prod':
-                //keyStore = require('./../../../wallets/keystore/vechain.prod.owner.account.json');
+            case 'prod':                
                 keyStore = this.buildKeystore(this.walletSecretDetails['main-network']['contract-owner']);
                 break;
 
