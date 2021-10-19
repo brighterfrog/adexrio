@@ -1,7 +1,7 @@
 import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, WalletSecretDetails } from "../models/all-models";
 import { thorify } from "thorify";
 
-const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json');
+const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
 
 import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
@@ -34,21 +34,22 @@ export class BlockChainService {
         this.walletService = new BlockchainWalletService(this.walletSecretDetails);
         this.contractWrappedEvents = this.getEventsFromContract();
     }
+
     private getEventsFromContract(): ContractEvent[] {
-        const events = RollItVetMultiPlayerGameDefinition.networks[5777].events as EventObject<object>;
-        const eventKeys = Object.keys(events) as { [key: string]: any };
+    
         const wrappedEvents: ContractEvent[] = [];
-        eventKeys.forEach((key: string) => {
-          // console.log(events[key]);
-          const item = events[key];
+        const events = RollItVetMultiPlayerGameDefinition.abi.filter( f=> f.type == 'event');
+        events.forEach( (item) => {
+                
           wrappedEvents.push({
-            key,
+            key: item.name,
             abi: item
           });
+    
         });
-
-        return wrappedEvents;
-      }
+            
+       return wrappedEvents;   
+    }
 
     GetFilterForAllUnfinishedGameCompletedEvents(): any {
         const account = this.getContractAddressForRollIt();

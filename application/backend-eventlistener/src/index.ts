@@ -156,6 +156,7 @@ preLoadApplicationSecrets().then( () => {
           gos.registerGameProcessLimboService();
 
 
+          // TEST Startup cases
           //  gos.blockChainService.getGameById(0).then((r) => {
           //      console.log(r);
           //  });

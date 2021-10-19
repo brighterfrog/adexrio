@@ -1,8 +1,13 @@
 import { HostBinding, Injectable } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-// import { Connex } from '@vechain/connex';
+
 import { Subject } from 'rxjs';
-import RollItVetMultiPlayerGameDefinition from '../../../../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json';
+
+
+// import RollItVetMultiPlayerGameDefinition from '../../../../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json';
+import RollItVetMultiPlayerGameDefinition from '../../../../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json';
+import RollItDeployedContractAddress from '../../../../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json';
+
 import { ConnexService } from './helper-services/connex-service';
 import { DateConversionService } from './helper-services/date-conversion.service';
 import { GameStatusService } from './helper-services/gamestatus.service';
@@ -421,8 +426,7 @@ export class BlockchainService {
     batchSize: number): void {
     filter.apply(startPosition, batchSize).then((events) => {
 
-      this.loggingService.writeDebug(events);
-
+      this.loggingService.writeDebug(events);      
       this.createYourGamesEntryFromEvents(events);
 
       if (events.length === batchSize) {
@@ -476,6 +480,7 @@ export class BlockchainService {
       from: this.connex.thor.status.head.number,
       to: this.connex.thor.status.head.number
     });
+    
     return filter;
   }
 
@@ -536,7 +541,7 @@ export class BlockchainService {
       })
       .order('desc');
 
-    debugger;
+    
     return filter;
   }
 
@@ -720,20 +725,35 @@ export class BlockchainService {
     return func;
   }
   private getContractAddressForRollIt(): string {
-    return RollItVetMultiPlayerGameDefinition.networks[5777].address;
+    //
+    //truffle
+    //return RollItVetMultiPlayerGameDefinition.networks[5777].address;
+    return RollItDeployedContractAddress.address;
   }
   private getEventsFromContract(): ContractEvent[] {
-    const events = RollItVetMultiPlayerGameDefinition.networks[5777].events as EventObject<object>;
-    const eventKeys = Object.keys(events) as { [key: string]: any };
+    
     const wrappedEvents: ContractEvent[] = [];
-    eventKeys.forEach((key: string) => {
-      const item = events[key];
+    const events = RollItVetMultiPlayerGameDefinition.abi.filter( f=> f.type == 'event');
+    events.forEach( (item) => {
+            
       wrappedEvents.push({
-        key,
+        key: item.name,
         abi: item
       });
-    });
 
-    return wrappedEvents;
+    });
+        
+    // const events = RollItVetMultiPlayerGameDefinition.abi.filter( f=> f.type == 'event') as EventObject<object>;
+    // const eventKeys = Object.keys(events) as { [key: string]: any };
+    // const wrappedEvents: ContractEvent[] = [];
+    // eventKeys.forEach((key: string) => {
+    //   const item = events[key];
+    //   wrappedEvents.push({
+    //     key,
+    //     abi: item
+    //   });
+    // });
+
+   return wrappedEvents;   
   }
 }

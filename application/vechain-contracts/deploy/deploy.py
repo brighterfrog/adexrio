@@ -49,4 +49,5 @@ with open(contract_address_outputfile,'w') as output_file:
 },  output_file)
 
 
-print('Writing contract address to file Complete')
+print('Writing contract address to file')
+print('Complete')
