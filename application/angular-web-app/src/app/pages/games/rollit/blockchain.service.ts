@@ -210,12 +210,7 @@ export class BlockchainService {
   }
 
   async getOpenDecodedGames(): Promise<DecodedGameEntries> {
-
-    console.log('getOpenDecodedGames()');
-    console.log(this.contractAddress);
-
-    debugger;
-
+        
     const getGamesByStatus = this.connex.thor.account(this.contractAddress).method(this.getContractFunctionABIfor('getGamesByStatus'));
     const detail = await getGamesByStatus.call(
       this.gameStatusService.TextToNumberMap.get(this.gameStatusService.AWAITING_GAME_CRITERIA_MET)
@@ -318,6 +313,7 @@ export class BlockchainService {
         startPosition,
         batchSize);
 
+        
       if (this.walletService.walletCertificate) {
         this.processYourGamesEvents(
           this.buildFilterForYourGamesFromGameCreatedEvents(
@@ -540,6 +536,7 @@ export class BlockchainService {
       })
       .order('desc');
 
+    debugger;
     return filter;
   }
 

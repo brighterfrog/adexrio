@@ -24,3 +24,9 @@ export AWS_SHARED_CREDENTIALS_FILE=/mnt/c/users/<username>/.aws/credentials
 # docker solo node for development if deploying to dev must be running
 # docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:11235/udp vechain/thor solo --api-addr 0.0.0.0:8669 --api-cors "*"
 python3 deploy.py
+
+# UPDATE
+Deploying with a single shell script deploy.sh
+
+uses brownie compile to deploy, and write contract address output
+uses thor-requests.py ( deploy.sh )

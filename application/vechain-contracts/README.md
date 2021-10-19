@@ -50,9 +50,25 @@ web3-gear --keystore="../wallets/keystore/vechain.test.owner.account.json" --pas
 ./node_modules/.bin/truffle migrate --network development --reset
 ./node_modules/.bin/truffle migrate --network test --reset
 
+
+
+#### Web3-Gear REPLACEMENT with thor-requests.py package
+### https://github.com/laalaguer/thor-requests.py
+
+ # in the contract.py folder ie /home/user/.pyenv/versions/del-me-test/lib/python3.8/site-packages/thor_requests/contract.py
+ # Replaced the get_bytecode call with removing the 0x prefix
+
+ def get_bytecode(self, key: str = "bytecode") -> bytes:
+        """Get bytecode of this smart contract"""
+        return bytes.fromhex([self.contract_meta[key]][0][2:])
+        ##### return bytes.fromhex(self.contract_meta[key])
+
 ## HOW TO
 Wallets are manually created via Sync2
 Necessary information placed into encrypted secretsmanager
 This pre-deploy is to generate keystore files from secrets manager details to let web3-gear import the keystore for contract owner wallet deployment
 If a smart contract deployment is not being done, we do not need the creation of the keystore FILES
 The applications will read in address and keystore information in the front-end application and backend event listener to know where donation address location is, and know how to make calls as contract owner
+
+application/vechain-contracts/deploy$ python deploy.py
+
