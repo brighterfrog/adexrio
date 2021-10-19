@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build:dev": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName dev && tsc",
+    "build:dev": "rimraf ./dist && ./amplify_codebuild_helper.sh && tsc",
+    "old_build:dev": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName dev --providers   && tsc",
     "build:test": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName test && tsc",
     "build:prod": "rimraf ./dist && amplify pull --appId d3nhl82tha81mm --envName prod && tsc",
     "local:dev": "NODE_ENV=dev ts-node-dev src/index.ts",
