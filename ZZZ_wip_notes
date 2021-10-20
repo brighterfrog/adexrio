@@ -1,81 +1,15 @@
-
-TRUFFLE HELP
-      THOR_IP: sync-testnet.vechain.org
-      THOR_PROTOCOL: https
-      THOR_PORT: 443
-for my web3 gear settings
-and a KEYSTORE and PASSWORD for that
-with no provider in my truffle config lets me deploy to vechain testnet
-
-COOL TO HAVE:
-arena chat titles
-dashboard showing new wallets
-biggest payouts
-
-TODO:
-ENFORCE ON CONTRACT ISAUDIT GAME MAKE SURE VET AMOUNT IS ABOVE MINIMUM payouts
- update contract with MIN VET X Player FOR less than 500 player games
-
-RANDOM.ORG NOTIFICATION WHEN I GET LOW ON MONEY
-ADMIN tooling to see games in limbo and run fix limbo service
-ADMIN TOOLING TO SEE RANDOM.ORG MONEY
-ADMIN TOOLING TO SEE OWNER CONTRACT VTHO / VET AMOUNT ( VTHO REQ'D FOR UPDATES )
-ADMIN TOOLING page to refund all active games while paused state
-
-
-      TEST:
-      joining game, having it add to your games
-      random no audit winner selection backend service
-
-      BUILD:
-
-
-BUGS:
-
-
-
-potential breaks
-
 Extension en sol Vechain notes:
 https://gist.github.com/laalaguer/ce1e996b88c11a374750f37307d68849
 https://docs.vechain.org/others/miscellaneous.html
 
 
 LONGTERM TO WORK OUT
-Random.org notification
+Random.org notifications
 API KEY ROTATION -- replace with IAM
 
-MUST DO:
-on backend startup - auto process awaiting executiion states
 
-
-starting update
-test 1/2 player no audit
-test complete list
-test 1/2 player audit
-
-
-###
- DONE? aws-exports needs to be pulled from the environment in the pipeline pre-build - 
-finish adding repository branches, delete old branches, delete github app
-test backend-eventlistener
-DONE delete all env file secrets from backend env   --IMPLEMENT AWS SECRETS MANAGER READ VALUE FOR ENVIRONMENT -- done
-DONE delete global service  -- done
-DONE delete api keys  --
-REMOVE BlockchainWalletService IN BACKENDEVENT LISTENER WALLET PASSWORD
-
-DONE swap wallet to v2 sync
-truffle build output file prefix for dev/test/prod
-
-GENERATE NEW WALLETS WITH PASSWORD
-ADD JSON KEYSTORE JSON TO SECRETS MANAGER
-CHANGE APP TO READ FROM SECRETS MANAGER USING AWS-SDK
-REMOVE FROM ALL READMES KEYSTORE & PASSCODE REFERENCES
-
-###
 
 wallets are for contract owner backend-eventlistener calls as 'onlyOwner' and donation access
-
 
 aws amplify update-app --app-id d3nhl82tha81mm --repository https://github.com/brighterfrog/adexrio --access-token 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
 
@@ -90,53 +24,13 @@ WSL UBUNTU:
 source thor-venv/bin/activate
 web3-gear
 
-
-test web3-gear and thor node running
 docker run --rm -e THOR_IP=127.0.0.1 -e THOR_PORT=11235 vechain/web3-gear
 docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:11235/udp vechain/thor solo --api-addr 0.0.0.0:8669 --api-cors "\*"
 docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:11235/udp vechain/thor solo --api-addr 0.0.0.0:8669 --api-cors "*"   
 
 
-SMART CONTRACT DEPLOYMENT
-      need to output keystore file FOR CONTRACT-OWNER only for web3-gear deployment to dev/test/prod to make calls & act as owner wallet to smart contract
 
-APPLICATION FRONT END REQUIREMENT
-      read in donation address but not any other information
-
-APPLICATION BACKEND REQUIREMENT
-      read in memory keystore for owner contract wallet service caller
-
-THOUGHTS:
-produce keystore for owner contracts for deployment - DO NOT check in anything in the deployment_keystore folder
-write address files for front-end DONATION addresses - CHECK IN
-change backend event listener process to read from aws secrets and produce keystore in memory for CONTRACT OWNER - check in
+wallets are for contract owner backend-eventlistener calls as 'onlyOwner' and donation access
 
 
-CHANGE FRONTEND FILES TO READ CORRECT LOCATION
 
-WHEN CONFIRMED - DELETE wallets/old folder
-
-DEPLOY CONTRACT TO DEV
-DEPLOY CONTRACT TO TEST
-DEPLOY CONTRACT TO MAIN
-
-CREATE ALL THE WALLETS MANUALLY
-DEVELOPMENT:
-      CONTRACT OWNER
-      DONATION
-
- TEST:
-      CONTRACT OWNER
-      DONATION     
-
-MAIN:
-      CONTRACT OWNER
-      DONATION      
-CREATE A NEW WALLET FOR EACH ADDRESS
-
-10/19:
-deploy test
-deploy prod
-
-PR from dev into test
-PR from test into prod

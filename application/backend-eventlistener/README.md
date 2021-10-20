@@ -22,7 +22,7 @@ need to use these owner wallets
 
 # AMPLIFY INITIAL SETUP
 
-initial setup: `amplify pull --appId d3nhl82tha81mm --envName dev --profile cicd`
+initial setup: `amplify pull --appId <appId> --envName dev --profile cicd`
 sync upstream changes: `amplify pull`
 
 manually rename aws-exports.js to aws-exports.ts
