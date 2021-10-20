@@ -5,15 +5,13 @@ NETWORK_CONSTANTS = {
     },
     'test': {
         'name': 'test-network',
-        'host': 'https://testnet.veblocks.net'
+        'host': 'https://vethor-node-test.vechaindev.com'
     },
     'main': {
         'name': 'main-network',
-        'host': 'https://mainnet.veblocks.net'
+        'host': 'https://vethor-node.vechain.com'
     }
 }
 
-
-# read from "contract-owner", properties words | password
-
-ENVIRONMENT = NETWORK_CONSTANTS['test']
+# development | test | main
+ENVIRONMENT = NETWORK_CONSTANTS['development']

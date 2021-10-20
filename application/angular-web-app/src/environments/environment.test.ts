@@ -1,4 +1,5 @@
 export const environment = {
+    version: "1.1.13",
     production: false,
     test: true,
     local: false,
@@ -7,7 +8,7 @@ export const environment = {
     syncTierName: 'TEST',
     enforceSyncGuard: true,
      veChain: {
-         node: 'https://sync-testnet.vechain.org/',
+         node: 'https://vethor-node-test.vechaindev.com',
          network: 'test'
      }
 };
