@@ -39,7 +39,6 @@ txId = res.get('id')
 connector.wait_for_tx_receipt(tx_id=txId, timeout=20)
 
 receipt = connector.get_tx_receipt(txId) 
-print(receipt)
 deployed_contract_address = receipt.get('outputs')[0]['contractAddress']
 print('Contract deployed to address : {0}'.format(deployed_contract_address))
 
