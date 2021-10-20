@@ -26,6 +26,7 @@ docker run --rm -e THOR_IP=127.0.0.1 -e THOR_PORT=11235 vechain/web3-gear
 docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:11235/udp vechain/thor solo --api-addr 0.0.0.0:8669 --api-cors "\*"
 docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:11235/udp vechain/thor solo --api-addr 0.0.0.0:8669 --api-cors "*"   
 
+wallets are for contract owner backend-eventlistener calls as 'onlyOwner' and donation access
 
 
 
