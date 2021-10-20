@@ -9,7 +9,7 @@ Deploy changes to correct environment
 
 Development / Test/ Production
 
-Development uses localhost configs, and requires local solo node and local web3-gear running
+Development uses localhost configs, and requires local solo node 
 Test uses Testnet
 Production uses mainnet
 

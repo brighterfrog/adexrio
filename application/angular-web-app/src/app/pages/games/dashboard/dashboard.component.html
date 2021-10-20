@@ -41,7 +41,7 @@
               [matTooltip]="shellService.joinTheGameTooltipText"
               [routerLink]="['/games/rollit']"
               >
-                Join the game !
+                Join the games !
               </button>
             </div>
 
@@ -122,18 +122,14 @@
 
       <mat-horizontal-stepper>
         <mat-step label="Step 1">
-          <p>Open the site in Sync with the upper LEFT showing a connection to {{ currentSyncTierName }}</p>
+          <p>Login with a Sync2 wallet in the upper right to start using the dApp </p>
         </mat-step>
 
         <mat-step label="Step 2">
-          <p>Login to a wallet in the upper right to start using the dApp</p>
-        </mat-step>
-
-        <mat-step label="Step 3">
           <p>Go to the open games tab to create or join a game or choose the arena to chat with other players</p>
         </mat-step>
 
-        <mat-step label="Step 4">
+        <mat-step label="Step 3">
           <p>Integrated smart contract lotteries tie into Random.org so view the completed games tab to view transaction insights or Random.org Audited enabled games</p>
         </mat-step>
 
