@@ -4,7 +4,7 @@
   "scripts": {
     "kng": "kill -9 $(lsof -i tcp:4200 -t)",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve",    
     "build:cicd_dev": "ng build",
     "build:cicd_test": "ng build -c=test",
     "build:cicd_prod": "ng build -c=production",
