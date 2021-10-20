@@ -17,3 +17,5 @@ application/backend-eventlistener/dist
 
 cicd_service_codecommit_*
 
+application/wallets/sync2/deployment_keystore
+

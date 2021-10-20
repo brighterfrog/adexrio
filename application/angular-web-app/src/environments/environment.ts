@@ -9,12 +9,14 @@ export const environment = {
   envName: 'local',
   syncTierName: 'SOLO',
   showDebug: true,
-  enforceSyncGuard: false,
+  enforceSyncGuard: true,
   veChain: {
     node: 'http://127.0.0.1:8669',
     network: {
       number: 0,
-      id: '0x00000000973ceb7f343a58b08f0693d6701a5fd354ff73d7058af3fba222aea4',
+      //id: '0x00000000973ceb7f343a58b08f0693d6701a5fd354ff73d7058af3fba222aea4',
+      // ID comes from the running network solo node in the TERMINAL output
+      id: '0x00000000c05a20fbca2bf6ae3affba6af4a74b800b585bf7a4988aba7aea69f6',          
       size: 170,
       parentID: '0xffffffff00000000000000000000000000000000000000000000000000000000',
       timestamp: 1526400000,

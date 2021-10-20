@@ -45,10 +45,10 @@ export class DashboardComponent {
 
   private initialize(): void {
     this.apiService.GetGamesSummary(0).then((data) => {
-      this.totalGames = data.totalCompletedGames;
-      this.totalPayouts = data.totalPayouts;
-      this.totalPlayers = data.totalUniquePlayers;
-      this.highestPayout = data.highestPayout;
+      this.totalGames = data?.totalCompletedGames ?? 0;
+      this.totalPayouts = data?.totalPayouts ?? 0;
+      this.totalPlayers = data?.totalUniquePlayers ?? 0;
+      this.highestPayout = data?.highestPayout ?? 0;
     });
 
     this.apiService.OnUpdateGamesSummaryListener.subscribe((event: any) => {

@@ -31,6 +31,7 @@
     "@types/node": "^12.11.1",
     "@vechain/connex": "^2.0.3",
     "aws-amplify": "^3.3.26",
+    "aws-sdk": "^2.1005.0",
     "rxjs": "~6.6.0",
     "ts-node": "~8.3.0",
     "tslib": "^2.0.0",

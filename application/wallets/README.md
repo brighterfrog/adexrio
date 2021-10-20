@@ -3,6 +3,8 @@ Keystores For:
 backend-eventlistener
 vechain-contracts
 
-no dev account keystore since it uses the solo now default accounts
+# Process for creating wallets
 
-# RUN wallets/index.js to generate private key files
+# RUN vechain-contracts/pre-deploy/index.js to generate pre-deploy files when deploying
+npm run build:keys 
+

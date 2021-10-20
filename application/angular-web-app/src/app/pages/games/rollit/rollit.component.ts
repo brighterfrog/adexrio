@@ -118,6 +118,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
 
   openCreateArenaChatMessage(): void {
 
+    debugger;
     if (!this.shellService.isUserConnexAuthorized()) {
       const dialogRef = this.dialog.open(SyncNotConnectedDialogComponent);
     }

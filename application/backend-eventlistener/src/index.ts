@@ -4,23 +4,31 @@
 import { BlockChainService } from "./blockchain/blockchain-service";
 import { GameOrchestratorService } from "./game-orchestrator/game-orchestrator-service";
 import { GameSummaryApiService } from "./game-orchestrator/game-summary-api-service";
-import { GameEvent, GameStatus } from "./models/all-models";
+import { GameEvent, GameStatus, RandomOrgSecretDetails, WalletSecretDetails } from "./models/all-models";
 //import { GlobalService } from "./globals/global-service";
 import { GlobalErrorService } from "./globals/global-error-service";
 //import API from "@aws-amplify/api";
 import { APIService } from "./API";
+import { SecretsManager } from "./aws-services/secrets-manager";
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
 
- import Amplify from 'aws-amplify';
- const awsmobile = require('./aws-exports');
+import AWS from 'aws-sdk'
+import Amplify from 'aws-amplify';
 
- Amplify.configure(awsmobile);
+const awsmobile = require('./aws-exports');
 
-// console.log(awsmobile);
+ AWS.config.getCredentials(function(err) {
+     if (err) console.log(err.stack);     
+     else {
+       console.log("Access key:", AWS.config.credentials.accessKeyId);
+     }
+ });
+Amplify.configure(awsmobile.default);
+Amplify.Auth.configure({
+  mandatorySignIn: false
+})
 
-//COPIED VALUES FROM AMPLIFY aws-exports.js
-//FIGURE OUT BETTER WAY TO IMPORT
 //ALSO IN TESTS
 
 // const globalService = new GlobalService();
@@ -75,77 +83,139 @@ let app = http.createServer((req: any, res: any) => {
 // Start the server on port 3000
 app.listen(3000, '127.0.0.1');
 
+var secretsManager = new SecretsManager(AWS);
+
 var apiService = new APIService();
 var errorService = new GlobalErrorService(apiService);
-var gos = new GameOrchestratorService(apiService, errorService);
+var randomOrgSecretDetails: RandomOrgSecretDetails;
+var walletSecretDetails: WalletSecretDetails;
 
-gos.blockChainService.walletService.importWalletFromKeystore()
-    .then(() => {
-        console.log('done importing wallet configuration');
-        console.log('registering blockchain event listeners');
+function preLoadApplicationSecrets(): Promise<void> {
+  const resultPromise = new Promise<void>(
+    (resolve, reject) => {
 
-        gos.registerBlockchainEventSubscriptions();
-        gos.registerGameSummaryApiToEvents();
-        gos.registerGameProcessLimboService();
+      Promise.all([
+        secretsManager.getSecretValue("apikeys/randomorg/account")
+                      .then( (data) => {
+                          console.log("secret result fetch block");
+                          
+                          var secret = JSON.parse(data.SecretString);
+                          console.log(secret.login);
+                          console.log(secret.password);
+                  
+                          randomOrgSecretDetails = secret;
+                          
+                      }).catch( (err) => {
+                          console.log(err);  
+                          errorService.logError(err);            
+                      }),
+
+          secretsManager.getSecretValue("adexrio/wallets/mnemonics")
+                      .then( (data) => {
+                          console.log("secret result fetch block");
+                          
+                          var secret = JSON.parse(data.SecretString);
+                          console.log(secret);
+                          
+                          walletSecretDetails = secret;
+                          
+                      }).catch( (err) => {
+                          console.log(err);  
+                          errorService.logError(err);            
+                      })
+                     ])
+      .then( ()=> {
+        resolve();
+      });
+
+    }
+  )
+  return resultPromise;
+}
+
+preLoadApplicationSecrets().then( () => {
+  console.log('done with preLoadApplicationSecrets()');
+  console.log(' WALLET SECRET DETAILS:');
+  console.log(walletSecretDetails);
+
+  console.log(' RANDOMORG SECRET DETAILS:');
+  console.log(randomOrgSecretDetails);
+  
+  var gos = new GameOrchestratorService(walletSecretDetails, randomOrgSecretDetails, apiService, errorService);   
+    
+      gos.blockChainService.walletService.importWalletFromKeystore()
+      .then(() => {
+          console.log('done importing wallet configuration');
+          console.log('registering blockchain event listeners');
+          
+          gos.registerBlockchainEventSubscriptions();
+          gos.registerGameSummaryApiToEvents();
+          gos.registerGameProcessLimboService();                      
+  
+
+          // TEST Startup cases
+          //  gos.blockChainService.getGameById(0).then((r) => {
+          //      console.log(r);
+          //  });
+
+          //  gos.blockChainService.getGameById(1).then((r) => {
+          //     console.log(r);
+          //  });
+
+          // gos.blockChainService.TestGetALLEventsFor().then((r: any) => {
+          //     console.log(r);
+          //  })
+
+          //  gos.blockChainService.TestGetPausedMode().then((r) => {
+          //     console.log(r);
+          // }).then(() => {
+          //     return gos.blockChainService.TestSetPaused();
+          // }).then((r) => {
+          //     console.log(r);
+          // }).then(() => {
+          //     return gos.blockChainService.TestGetPausedMode();
+          // }).then((r) => {
+          //     console.log(r);
+          // });
 
 
-        //  gos.blockChainService.getGameById(0).then((r) => {
-        //      console.log(r);
-        //  });
 
-        //  gos.blockChainService.getGameById(1).then((r) => {
-        //     console.log(r);
-        //  });
+          //  gos.blockChainService.TestSetUnPaused().then((r) => {
+          //      console.log(r);
+          //  }).then(() => {
+          //          return gos.blockChainService.TestGetPausedMode();
+          // }).then((r) => {
+          //          console.log(r);
+          // });
 
-        // gos.blockChainService.TestGetALLEventsFor().then((r: any) => {
-        //     console.log(r);
-        //  })
-
-        //  gos.blockChainService.TestGetPausedMode().then((r) => {
-        //     console.log(r);
-        // }).then(() => {
-        //     return gos.blockChainService.TestSetPaused();
-        // }).then((r) => {
-        //     console.log(r);
-        // }).then(() => {
-        //     return gos.blockChainService.TestGetPausedMode();
-        // }).then((r) => {
-        //     console.log(r);
-        // });
+          //TEST
+          //  gos.blockChainService
+          //  .eventListener
+          //  .gameAwaitingLotteryEvent.next( new GameEvent(0, 2, 1617728440));
 
 
+          //TEST
+          // gos.blockChainService.getEligiblePlayersForLotteryByGameId(1).then((r) => {
+          //     console.log(r);
+          // }).catch((err) => {
+          //     console.log(err);
+          // });
 
-        //  gos.blockChainService.TestSetUnPaused().then((r) => {
-        //      console.log(r);
-        //  }).then(() => {
-        //          return gos.blockChainService.TestGetPausedMode();
-        // }).then((r) => {
-        //          console.log(r);
-        // });
+          // gos.blockChainService.getGameById(26).then((g) => {
+          //     console.log(g);
+          // })
 
-        //TEST
-        //  gos.blockChainService
-        //  .eventListener
-        //  .gameAwaitingLotteryEvent.next( new GameEvent(0, 2, 1617728440));
+     
 
-
-        //TEST
-        // gos.blockChainService.getEligiblePlayersForLotteryByGameId(1).then((r) => {
-        //     console.log(r);
-        // }).catch((err) => {
-        //     console.log(err);
-        // });
-
-        // gos.blockChainService.getGameById(26).then((g) => {
-        //     console.log(g);
-        // })
-
+      
     });
+  });
+
 
 
 //var bcs = new BlockChainService();
 
-//TODO can remove below, just testing get game call for detail
+//testing get game call for detail
 // bcs.getGames().then(function (resp: any) {
 //     console.log(resp);
 //     console.log('worked 2');

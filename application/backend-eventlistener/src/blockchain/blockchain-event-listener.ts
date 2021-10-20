@@ -9,7 +9,7 @@ import { GameAwaitingLotteryEvent, GameCompletedEvent, GameCreatedEvent, GameEve
 //     CreateGamesSummaryMutation
 // } from "../API";
 
-const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json');
+const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
 
 
 
@@ -67,7 +67,7 @@ export class BlockchainEventListener {
                 console.log('GameAwaitingLotteryEvent data');
                 console.log(event);
 
-                //TODO: log event to dynamo
+                //TODO: log event to dynamo, stream to analytics
                  console.log(event.returnValues.gameId);
                  console.log(event.returnValues.status);
                  console.log(event.returnValues.dateTime);
