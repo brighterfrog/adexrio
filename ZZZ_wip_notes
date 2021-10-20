@@ -32,5 +32,7 @@ docker run --rm --name mynode -p 127.0.0.1:8669:8669 -p 11235:11235 -p 11235:112
 
 wallets are for contract owner backend-eventlistener calls as 'onlyOwner' and donation access
 
+wallets are for contract owner backend-eventlistener calls as 'onlyOwner' and donation access
+
 
 
