@@ -6,7 +6,6 @@
   <button mat-flat-button color="primary" [routerLink]="['/about']">
     about
   </button>
-
   <button
     *ngIf="shellService.isUserAdmin()"
    mat-flat-button color="primary" [routerLink]="['/admin']">

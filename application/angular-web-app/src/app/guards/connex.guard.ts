@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, UrlTree, Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import '@vechain/connex';
@@ -10,14 +10,21 @@ import { WalletService } from '../pages/games/rollit/helper-services/wallet-serv
 })
 export class ConnexGuard implements CanActivate {
 
-  constructor (private walletService: WalletService) {
+  constructor (
+    private _router: Router,     
+    private walletService: WalletService)
+    {
 
-  }
+    }
 
-  canActivate(
+  canActivate(    
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    return this.isUserAuthorized();
+    const isAuthorized = this.isUserAuthorized();
+    if (!isAuthorized) {
+      this._router.navigate( ['/']);
+    }
+    return isAuthorized;
   }
 
   private isUserAuthorized(): boolean {

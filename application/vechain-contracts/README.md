@@ -1,67 +1,8 @@
-### Truffle Migrate
+### Keys
 
 From the vechain-contracts root workspace directory:
 
 `npm run build:keys`
-
-`npm run build:migrate`
-
-run the key generation first BEFORE a migrate is possible
-
-actual network deploy
-
-this is only valid for local, override migrate --network flag for real
-
-NOTES:
-
-local development deploy works
-
-need help to deploy to testnet and mainnet with truffle
-
-TRUFFLE HELP
-
-THOR_IP: sync-testnet.vechain.org
-THOR_PROTOCOL: https
-THOR_PORT: 443
-for my web3 gear settings
-
-
-and a KEYSTORE and PASSWORD for that
-
-with no provider in my truffle config lets me deploy to vechain testnet
-
-## DEPLOYMENT
-
-`Environment configs are different per branch`
-`manual deploys by branch`
-`run the cmds below after changing to the vechain-contracts project`
-`truffle compile`
-`truffle migrate`
-`check in build/contracts directory`
-
-./node_modules/.bin/truffle migrate --development --reset
-
-## DEPLOY TO TESTNET:
-
-#### FROM vechain-contracts directory:
-
-web3-gear --keystore="../wallets/keystore/vechain.test.owner.account.json" --passcode "<passcode from secrets manager>" --endpoint https://sync-testnet.vechain.org:443
-
-./node_modules/.bin/truffle migrate --network development --reset
-./node_modules/.bin/truffle migrate --network test --reset
-
-
-
-#### Web3-Gear REPLACEMENT with thor-requests.py package
-### https://github.com/laalaguer/thor-requests.py
-
- # in the contract.py folder ie /home/user/.pyenv/versions/del-me-test/lib/python3.8/site-packages/thor_requests/contract.py
- # Replaced the get_bytecode call with removing the 0x prefix
-
- def get_bytecode(self, key: str = "bytecode") -> bytes:
-        """Get bytecode of this smart contract"""
-        return bytes.fromhex([self.contract_meta[key]][0][2:])
-        ##### return bytes.fromhex(self.contract_meta[key])
 
 ## HOW TO
 Wallets are manually created via Sync2
@@ -71,4 +12,8 @@ If a smart contract deployment is not being done, we do not need the creation of
 The applications will read in address and keystore information in the front-end application and backend event listener to know where donation address location is, and know how to make calls as contract owner
 
 application/vechain-contracts/deploy$ python deploy.py
+
+From the vechain-contracts/deploy workspace directory:
+`./deploy.sh`
+
 
