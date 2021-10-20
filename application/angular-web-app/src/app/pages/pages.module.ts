@@ -25,6 +25,7 @@ import { ArenaChatBottomSheetComponent } from './games/rollit/components/arena-c
 import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { AboutComponent } from './about/about.component';
 import { ConnexGuard } from '../guards/connex.guard';
+import { GameplayHelpDialogComponent } from './games/rollit/components/gameplay-help-dialog/gameplay-help-dialog.component';
 
 const routes: Routes = [
   {
@@ -52,7 +53,8 @@ const routes: Routes = [
     RollitComponent,
     DashboardComponent,
     CreateGameDialogComponent,
-    ArenaChatBottomSheetComponent
+    ArenaChatBottomSheetComponent,
+    GameplayHelpDialogComponent
   ],
   imports: [
     RouterModule.forChild(routes),

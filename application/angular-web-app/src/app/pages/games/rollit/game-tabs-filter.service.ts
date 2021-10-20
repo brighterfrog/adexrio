@@ -47,6 +47,7 @@ export class GameTabsFilterService {
     this.openGameDisplayColumns = [
       'action',
       'id',
+      'gameBetSize',
       'totalGameWagers',
       'gameTotalEligiblePlayers',
       'minimumGamePlayers',

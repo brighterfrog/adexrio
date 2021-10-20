@@ -1,4 +1,3 @@
-<!-- *ngIf="walletService.walletCertificate !== undefined" -->
 <button
   *ngIf="walletService.walletCertificate !== undefined"
   mat-flat-button
@@ -6,6 +5,15 @@
   (click)="openCreateGameDialog()"
 >
   Create New Game
+</button>
+
+<button 
+  class="btn-transparent" 
+  mat-flat-button 
+  matTooltip="whats all this?"
+  (click)="openShowGameHelpDialog()"
+>
+  <mat-icon>help</mat-icon>
 </button>
 
 <!-- <button
@@ -44,6 +52,13 @@
           Game Id</mat-header-cell
         >
         <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="gameBetSize">
+        <mat-header-cell *matHeaderCellDef mat-sort-header>
+          Wager Size (VET)</mat-header-cell
+        >
+        <mat-cell *matCellDef="let game"> {{ wagerConversionService.convertWeiToVET(game.gameBetSize) }} </mat-cell>
       </ng-container>
 
       <ng-container matColumnDef="totalGameWagers">

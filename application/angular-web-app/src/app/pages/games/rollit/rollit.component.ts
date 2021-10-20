@@ -21,6 +21,8 @@ import { GameTabsFilterService } from './game-tabs-filter.service';
 import { GameStatusService } from './helper-services/gamestatus.service';
 import { WalletService } from './helper-services/wallet-service';
 import { GameEntry, RollItChatMessage } from './rollit_models';
+import { WagerConversionService } from './helper-services/wager-conversion.service'
+import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/gameplay-help-dialog.component';
 
 @Component({
   selector: 'app-rollit',
@@ -60,6 +62,8 @@ export class RollitComponent implements OnInit, AfterViewInit {
 
   gameDetailsRetrievedForYourGamesTab: boolean;
 
+  wagerConversionService: WagerConversionService;
+
   @ViewChild('openGamesPaginator') openGamesPaginator: MatPaginator;
   @ViewChild('completedGamesPaginator') completedGamesPaginator: MatPaginator;
   @ViewChild('yourGamesPaginator', { static: false }) yourGamesPaginator: MatPaginator;
@@ -79,7 +83,8 @@ export class RollitComponent implements OnInit, AfterViewInit {
     arenaChatService: ArenaChatService,
     formBuilder: FormBuilder,
     snackBar: MatSnackBar,
-    private loggingService: LoggingService
+    wagerConversionService: WagerConversionService,
+    private loggingService: LoggingService,    
   ) {
     this.gameDetailsRetrievedForYourGamesTab = false;
     this.shellService = shellService;
@@ -96,6 +101,8 @@ export class RollitComponent implements OnInit, AfterViewInit {
     this.gameFilterService = gameFilterService;
     this.gameStatusService = gameStatusService;
     this.arenaChatService = arenaChatService;
+
+    this.wagerConversionService = wagerConversionService;
 
     this.formBuilder = formBuilder;
 
@@ -325,6 +332,21 @@ export class RollitComponent implements OnInit, AfterViewInit {
       });
     }
   }
+
+  openShowGameHelpDialog(): void {
+    
+      const dialogRef = this.dialog.open(GameplayHelpDialogComponent, {});
+
+      dialogRef.afterClosed().subscribe({
+        next: dialogResult => {         
+        },
+        error: err => {
+          this.loggingService.writeDebug(err);
+        }
+      });
+  }
+  
+
 
   private createGame(wagerInVET: number, playerCount: number, isAuditEnabled: boolean): void {
 
