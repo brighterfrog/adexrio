@@ -5,7 +5,7 @@ NETWORK_CONSTANTS = {
     },
     'test': {
         'name': 'test-network',
-        'host': '"http://testnet.veblocks.net"'
+        'host': 'http://testnet.veblocks.net'
     },
     'main': {
         'name': 'main-network',
@@ -14,6 +14,6 @@ NETWORK_CONSTANTS = {
 }
 
 
-# read from "contract-owner", properties words | password
 
-ENVIRONMENT = NETWORK_CONSTANTS['development']
+# development | test | main
+ENVIRONMENT = NETWORK_CONSTANTS['main']
