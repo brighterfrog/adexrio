@@ -4,11 +4,11 @@ import { environment } from '../../../../../environments/environment';
 import { ThrowStmt } from '@angular/compiler';
 
 // CAN BE DELETED WHEN SYNC2 IS FULLY IMPLEMENTED
-declare global {
-    interface Window {
-        connex: any | undefined;
-    }
-}
+// declare global {
+//     interface Window {
+//         connex: any | undefined;
+//     }
+// }
 // CAN BE DELETED WHEN SYNC2 IS FULLY IMPLEMENTED
 
 @Injectable({

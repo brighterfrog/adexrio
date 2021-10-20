@@ -15,9 +15,14 @@ import { SyncNotConnectedDialogComponent } from '../components/sync-not-detected
 
 import { APIService, feedbackStatus } from '../API.service';
 
-import DonationKeystoreDevelopment from '../../../../wallets/keystore_donations/vechain.dev.donation.account.json';
-import DonationKeystoreTest from '../../../../wallets/keystore_donations/vechain.test.donation.account.json';
-import DonationKeystoreProduction from '../../../../wallets/keystore_donations/vechain.prod.donation.account.json';
+// import DonationKeystoreDevelopment from '../../../../wallets/keystore_donations/vechain.dev.donation.account.json';
+// import DonationKeystoreTest from '../../../../wallets/keystore_donations/vechain.test.donation.account.json';
+// import DonationKeystoreProduction from '../../../../wallets/keystore_donations/vechain.prod.donation.account.json';
+
+import DonationKeystoreDevelopment from '../../../../wallets/sync2/addresses/vechain.dev.donation.address.json';
+import DonationKeystoreTest from '../../../../wallets/sync2/addresses/vechain.test.donation.address.json';
+import DonationKeystoreProduction from '../../../../wallets/sync2/addresses/vechain.main.donation.address.json';
+
 import { LoggingService } from './logging.service';
 
 
@@ -48,6 +53,9 @@ export class ShellService {
 
   donateTooltipText!: string;
   donateIconThemeColoring!: string;
+
+  joinTheGameTooltipText!: string;
+  joinTheGameIconThemeColoring!: string;
 
   donationWalletAddress: string;
 
@@ -80,9 +88,12 @@ export class ShellService {
 
           this.donateTooltipText = 'Donate';
           this.donateIconThemeColoring = '';
+
+          this.joinTheGameTooltipText = 'Join the games here';
+          this.joinTheGameIconThemeColoring = 'accent';
         }
         else {
-          const loginText = 'Login to start using the dApp';
+          const loginText = 'Login first to start using the dApp';
 
           this.profileTooltipText = loginText;
           this.profileIconThemeColoring = 'warn';
@@ -92,6 +103,9 @@ export class ShellService {
 
           this.donateTooltipText = loginText;
           this.donateIconThemeColoring = 'warn';
+
+          this.joinTheGameTooltipText = loginText;
+          this.joinTheGameIconThemeColoring = 'warn';
         }
       },
       error: (error) => {
@@ -211,12 +225,13 @@ export class ShellService {
 
   }
   isUserConnexAuthorized(): boolean {
-    // CAN BE DELETED AND REPLACED WITH LINES 207 WHEN SYNC2 IS RELEASED
-    const authorized = window.connex ? true : false;
+    // CAN BE DELETED AND REPLACED WITH LINES 207 WHEN SYNC2 IS RELEASED 
+    // For Sync1
+    //const authorized = window.connex ? true : false;
     // CAN BE DELETED AND REPLACED WITH LINES 207
 
     // For Sync2
-    // const authorized = this.userIsConnectedWithSync(this.blockChainService.connex);
+    const authorized = this.userIsConnectedWithSync(this.blockChainService.connex);
     if (environment.showDebug) {
       this.loggingService.writeDebug(authorized);
     }

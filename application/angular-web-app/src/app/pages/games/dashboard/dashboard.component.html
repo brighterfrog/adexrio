@@ -33,8 +33,15 @@
             </div>
 
             <div fxFlex fxFlexAlign="center">
-              <button mat-flat-button color="primary" [routerLink]="['/games/rollit']">
-                Go to game!
+              
+              <button 
+              [color]="shellService.joinTheGameIconThemeColoring"                            
+              mat-raised-button
+              aria-label="join game button"
+              [matTooltip]="shellService.joinTheGameTooltipText"
+              [routerLink]="['/games/rollit']"
+              >
+                Join the game !
               </button>
             </div>
 

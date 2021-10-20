@@ -131,9 +131,10 @@ export class GameTabsFilterService {
     });
 
 
+    debugger;
     this.blockChainService.walletService.walletSubject.subscribe({
-      next: (walletCertificate) => {
-        if (walletCertificate) {
+      next: (walletCertificate) => {        
+        if (walletCertificate) {        
           this.getDataForYourGamesTab();
         }
         else {
@@ -210,14 +211,17 @@ export class GameTabsFilterService {
   }
 
   private async getInitialData(): Promise<void> {
-    this.loggingService.writeDebug('get initial data worked');
+    this.loggingService.writeDebug('get initial data');
 
     this.openGameEntriesSubject.next(await this.getDataForOpenGamesTab());
+    
+    this.getDataForYourGamesTab();
 
     this.getDataForCompletedGamesTabInBackground();
   }
 
   private async getDataForOpenGamesTab(): Promise<GameEntry[]> {
+    this.loggingService.writeDebug('getDataForOpenGamesTab PRE-CALL');
     const data = await this.blockChainService.getOpenGameData();
     return data;
   }

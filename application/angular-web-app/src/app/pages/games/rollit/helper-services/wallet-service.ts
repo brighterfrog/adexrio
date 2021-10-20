@@ -7,45 +7,24 @@ import { Subject } from 'rxjs';
     providedIn: 'root'
 })
 export class WalletService {
-
-    // connex2
-    // walletCertificate: Connex.Vendor.CertResponse | undefined;
+    
     walletCertificate: Connex.Vendor.CertResponse | undefined;
 
     walletSubject: Subject<Connex.Vendor.CertResponse | undefined>;
 
-    constructor() {
-        // this.updateProfileIdentityState();
+    constructor() {        
         this.walletSubject = new Subject<Connex.Vendor.CertResponse | undefined>();
     }
-
-    // connex2
-    // addNewSigningCertificate(certificateResponse: Connex.Vendor.CertResponse): void {
+    
     addNewSigningCertificate(certificateResponse: Connex.Vendor.CertResponse): void {
+        debugger;
         this.walletCertificate = certificateResponse;
-        this.walletSubject.next(this.walletCertificate);
-
-        // this.updateProfileIdentityState();
+        this.walletSubject.next(this.walletCertificate);        
     }
-
-    // updateProfileIdentityState(): void {
-    //     if (this.walletCertificate) {
-
-    //         this.profileTooltipText = 'profile settings';
-    //         this.profileIconThemeColoring = 'accent';
-
-    //     }
-    //     else {
-
-    //         this.profileTooltipText = 'Login to start using the dApp';
-    //         this.profileIconThemeColoring = 'warn';
-
-    //     }
-    // }
+    
     clearWalletCertificate(): void {
         this.walletCertificate = undefined;
-        this.walletSubject.next(this.walletCertificate);
-        // this.updateProfileIdentityState();
+        this.walletSubject.next(this.walletCertificate);        
     }
 
     userIsLoggedInToWallet(): boolean {

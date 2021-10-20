@@ -65,7 +65,7 @@ export const listMessages = /* GraphQL */ `
   }
 `;
 export const getGamesSummary = /* GraphQL */ `
-  query GetGamesSummary($id: ID!) {
+  query GetGamesSummary($id: Int!) {
     getGamesSummary(id: $id) {
       id
       totalCompletedGames
@@ -79,11 +79,19 @@ export const getGamesSummary = /* GraphQL */ `
 `;
 export const listGamesSummarys = /* GraphQL */ `
   query ListGamesSummarys(
+    $id: Int
     $filter: ModelGamesSummaryFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listGamesSummarys(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listGamesSummarys(
+      id: $id
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
         id
         totalCompletedGames
@@ -91,6 +99,33 @@ export const listGamesSummarys = /* GraphQL */ `
         totalPayouts
         highestPayout
         createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getErrorLog = /* GraphQL */ `
+  query GetErrorLog($id: ID!) {
+    getErrorLog(id: $id) {
+      id
+      createdAt
+      stackTrace
+      updatedAt
+    }
+  }
+`;
+export const listErrorLogs = /* GraphQL */ `
+  query ListErrorLogs(
+    $filter: ModelErrorLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listErrorLogs(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        id
+        createdAt
+        stackTrace
         updatedAt
       }
       nextToken

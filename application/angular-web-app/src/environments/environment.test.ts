@@ -5,7 +5,7 @@ export const environment = {
     envName: 'test',
     showDebug: true,
     syncTierName: 'TEST',
-    enforceSyncGuard: false,
+    enforceSyncGuard: true,
      veChain: {
          node: 'https://sync-testnet.vechain.org/',
          network: 'test'

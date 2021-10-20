@@ -209,3 +209,16 @@ topics: [
 ]
 }
 }
+
+$ pyenv virtualenv 3.6.8 myproject
+$ pyenv local myproject
+
+
+# How to run
+solo node - ubuntu docker
+Frontend - powershell
+backend-eventlistener - powershell
+deploys - python virtual environment (del-me-test) user@DESKTOP:/mnt/d/source/github/adexrio/application/vechain-contracts/deploy$ 
+        -  cd to /mnt/d/source/github/adexrio/application/vechain-contracts/deploy
+        -  pyenv local del-me-test
+        -  run deploy.sh

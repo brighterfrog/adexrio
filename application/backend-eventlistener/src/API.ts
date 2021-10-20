@@ -1,7 +1,6 @@
 /* tslint:disable */
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
-
 import API, { graphqlOperation, GraphQLResult } from "@aws-amplify/api-graphql";
 import { Observable } from "zen-observable-ts";
 
@@ -656,6 +655,7 @@ export type OnDeleteErrorLogSubscription = {
   stackTrace?: string | null;
   updatedAt: string;
 };
+
 
 export class APIService {
   async CreateFeedback(
