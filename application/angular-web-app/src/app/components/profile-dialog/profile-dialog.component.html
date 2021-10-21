@@ -1,0 +1,16 @@
+<div>
+<!-- <div *ngIf="data.isUserConnexAuthorized && data.walletService.walletCertificate !== undefined"> -->
+
+    <mat-card class="mat-elevation-z8">
+        <mat-card-title>primary wallet</mat-card-title>
+        <mat-card-subtitle>{{data.walletService.walletCertificate.annex.domain}}</mat-card-subtitle>
+        <mat-card-content>{{data.walletService.walletCertificate.annex.signer}}</mat-card-content>
+        <mat-card-actions class="mat-card-action-center-align">
+            <button (click)="logoutWallet()" mat-icon-button color="warn" aria-label="icon to logout"
+                matTooltip="Logout and disconnect wallet">
+                <mat-icon>logout</mat-icon>
+            </button>
+        </mat-card-actions>
+    </mat-card>
+
+</div>

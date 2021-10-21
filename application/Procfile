@@ -1,0 +1,1 @@
+web: cd backend-eventlistener && npm run release:dev

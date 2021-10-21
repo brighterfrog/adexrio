@@ -1,0 +1,15 @@
+.app-toolbar-spacer {
+    flex: 1 1 auto;
+}
+.top-toolbar {
+    position: relative;
+}
+.bottom-toolbar{
+    position: relative;
+}
+.router-outlet-container {
+    padding: 30px;
+}
+.header-width {
+    width: 100%;
+}

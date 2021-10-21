@@ -1,0 +1,43 @@
+
+<form [formGroup]="formGroup">
+    <div fxFill fxLayout="row">
+        <div fxFill fxLayout="column" >
+
+            <mat-form-field fxFill color="accent" appearance="standard">
+                <mat-label>Chat Room [Arena]</mat-label>
+                <textarea fxFill
+                        (keydown.enter)="enterKeyEvent($event)"
+                        #messageContentControlTextArea='cdkTextareaAutosize'
+                        cdkTextareaAutosize
+                        cdkAutosizeMinRows="1"
+                        cdkAutosizeMaxRows="5"
+                        [maxlength]="messageMaxLength"
+                        placeholder="{{ messageMaxLength }} character limit"
+                        matInput
+                        formControlName="messageContentControl" >
+                </textarea>
+                <mat-hint>Message content</mat-hint>
+
+
+                <div *ngIf="formGroup.controls['messageContentControl'].dirty && formGroup.controls['messageContentControl'].invalid" class="alert">
+                     <div *ngIf="formGroup.controls['messageContentControl'].hasError('required')">
+                        required
+                     </div>
+                    <div *ngIf="formGroup.controls['messageContentControl'].hasError('maxLength')">
+                            maximum length is {{messageMaxLength}}
+                    </div>
+                </div>
+                </mat-form-field>
+        </div>
+    </div>
+    <button
+        class="arena-chat-add-message-btn"
+        fxFill
+        mat-button
+        (click)="sendChatMessage()">
+        Send Message
+    </button>
+</form>
+
+
+
