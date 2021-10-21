@@ -1,0 +1,45 @@
+<h1 mat-dialog-title>Hi</h1>
+<div mat-dialog-content>
+  <p>
+    Have an issue or improvement you would like to pass along to us ? We want to
+    hear it!
+  </p>
+
+  <form [formGroup]="form">
+    <mat-form-field color="accent" appearance="standard">
+      <mat-label>Feedback category</mat-label>
+      <mat-select formControlName="feedbackTypeControl" required>
+        <mat-option *ngFor="let ft of feedbackTypes" [value]="ft.type">
+          {{ ft.name }}
+        </mat-option>
+      </mat-select>
+      <mat-error
+        *ngIf="form.controls['feedbackTypeControl'].hasError('required')"
+        >Please choose your feedback type</mat-error
+      >
+    </mat-form-field>
+
+    <mat-form-field color="accent" appearance="standard" class="feedback-width">
+      <mat-label>Your thoughts</mat-label>
+      <textarea
+        class="feedback-width"
+        matInput
+        type="text"
+        placeholder="Tell us how we're doing..."
+        formControlName="feedbackControl"
+      >
+      </textarea>
+      <mat-hint
+        >Earn rewards as your features will be prioritized and added in to our
+        platform</mat-hint
+      >
+      <mat-error *ngIf="form.controls['feedbackControl'].hasError('required')"
+        >required</mat-error
+      >
+    </mat-form-field>
+  </form>
+</div>
+<div mat-dialog-actions align="end">
+  <button mat-button (click)="onNoClick()">Cancel</button>
+  <button mat-button (click)="onOkClick()" cdkFocusInitial>Save</button>
+</div>

@@ -1,0 +1,40 @@
+type Feedback @model {
+  comment: String!
+  commentType: feedbackType!
+  status: feedbackStatus!
+  wallet: String!
+}
+
+enum feedbackStatus {
+  pending
+  reviewed
+  projectItem
+}
+
+enum feedbackType {
+  general
+  enhancement
+  bug
+  interest
+}
+
+type Message @model {
+  id: ID!
+  message: String!
+  wallet: String!
+  createdAt: String!
+}
+
+type GamesSummary @model @key(fields: ["id"]) {
+  id: Int!
+  totalCompletedGames: Int!
+  totalUniquePlayers: Int!
+  totalPayouts: Float!
+  highestPayout: Float!
+}
+
+type ErrorLog @model {
+  id: ID!
+  createdAt: String!
+  stackTrace: String!
+}
