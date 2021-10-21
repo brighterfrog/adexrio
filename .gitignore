@@ -1,0 +1,21 @@
+node_modules
+*.swp
+package-lock.json
+__pycache__
+.pytest_cache
+.env
+*.egg-info
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+.venv
+.vscode
+
+# vechain
+application/backend-eventlistener/dist
+
+cicd_service_codecommit_*
+
+application/wallets/sync2/deployment_keystore
+
