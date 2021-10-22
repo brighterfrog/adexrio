@@ -22,7 +22,12 @@
   <!-- <span>adexr.io</span> -->
   <span class="app-toolbar-spacer"></span>
 
-  <button
+  <div fxShow="true" fxHide.gt-xs="true">
+    <a class="mat-icon-button" (click)="sidenav.toggle()"> <mat-icon [color]="shellService.profileIconThemeColoring">menu</mat-icon></a>
+  </div>
+
+  <div fxShow="true" fxHide.lt-sm="true">
+    <button
     mat-icon-button
     aria-label="icon-button with connect icon"
     matTooltip="Coming Soon"
@@ -60,9 +65,57 @@
   >
     <mat-icon>psychology</mat-icon>
   </button>
+  </div>
 
 </mat-toolbar>
 
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav position="end" mode="side">
+    <mat-nav-list>
+      <a mat-list-item [matTooltip]="shellService.profileTooltipText" (click)="shellService.openUserWalletProfile()">
+        <mat-icon [color]="shellService.profileIconThemeColoring">login</mat-icon>        
+        <span class="sidebar-menu-item">account</span>        
+      </a>
+      <a mat-list-item [matTooltip]="shellService.donateTooltipText" (click)="shellService.openDonationDialog()" >
+        <mat-icon  [color]="shellService.donateIconThemeColoring">favorite</mat-icon>    
+        <span class="sidebar-menu-item">donate</span>
+      </a>
+      <a mat-list-item [matTooltip]="shellService.feedbackTooltipText"  (click)="shellService.openFeedbackDialog()">
+        <mat-icon [color]="shellService.feedbackIconThemeColoring">feedback</mat-icon>
+        <span class="sidebar-menu-item">feedback</span>  
+      </a>    
+      <a (click)="sidenav.toggle()" mat-list-item>
+        <mat-icon>close</mat-icon> 
+        <span class="sidebar-menu-item">close</span>  
+      </a> 
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    
+<mat-toolbar color="primary">
+  <header class="header-width">
+    <div fxFlex fxLayout>
+      <div fxFlex>
+        <h1>{{ shellService.headerTitle }}</h1>
+      </div>
+      <div fxFlex fxLayoutAlign="flex-end center">
+        vetusdt:
+        {{
+          shellService.binanceApiService.binanceTickerResponseResult.price
+            | number: "0.6-6"
+        }}
+      </div>
+    </div>
+  </header>
+</mat-toolbar>
+
+<div class="router-outlet-container">
+  <router-outlet></router-outlet>
+</div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<!-- 
 <mat-toolbar color="primary">
   <header class="header-width">
     <div fxFlex fxLayout>
@@ -85,5 +138,5 @@
 
 <div class="router-outlet-container">
   <router-outlet></router-outlet>
-</div>
+</div> -->
 

@@ -5,17 +5,15 @@
     </mat-card-title>
   </mat-card-header>
 
-  <mat-card-content>
+<mat-card-content>
 
-    <mat-list>
-      <mat-list-item
-       *ngFor="let question of questions; last as last">
-         <mat-icon mat-list-icon>help_center</mat-icon>
-         <p mat-line class="about-question">Q: {{question.question}}</p>
-         <p mat-line class="about-answer">A: {{question.answer}} </p>
-         <mat-divider [inset]="true" *ngIf="!last"></mat-divider>
-      </mat-list-item>
-   </mat-list>
+   <div fxFlex fxLayout="column">
+     <div class="question-answer-block" flex *ngFor="let question of questions; last as last">            
+        <mat-icon class="help_icon">help_center</mat-icon><span mat-line class="about-question"> {{question.question}}</span>
+        <p mat-line class="about-answer">A: {{question.answer}} </p>
+        <mat-divider [inset]="true" *ngIf="!last"></mat-divider>   
+     </div>
+   </div>
 
   </mat-card-content>
 </mat-card>
