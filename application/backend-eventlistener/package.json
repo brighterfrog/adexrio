@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.ts",
   "scripts": {
-    "build:dev": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName dev --useProfile true && cp .env.dev ./dist/.env.dev && tsc",    
-    "build:test": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName test --useProfile true  && cp .env.test ./dist/.env.test && tsc",   
-    "build:prod": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName prod --useProfile true  && cp .env.prod ./dist/.env.prod && tsc",
+    "build:dev": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName dev --useProfile true && tsc",    
+    "build:test": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName test --useProfile true && tsc",   
+    "build:prod": "rimraf ./dist && ./amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName prod --useProfile true && tsc",
     "local:dev": "NODE_ENV=dev ts-node-dev src/index.ts",
     "local:test": "NODE_ENV=test ts-node-dev src/index.ts",
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts",
