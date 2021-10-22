@@ -71,11 +71,13 @@
 
 <mat-sidenav-container fxFlexFill>
   <mat-sidenav #sidenav position="end" mode="side">
-    <mat-nav-list>
+    <mat-nav-list *ngIf="shellService.walletService.walletCertificate === undefined">      
       <a mat-list-item [matTooltip]="shellService.profileTooltipText" (click)="shellService.openUserWalletProfile()">
         <mat-icon [color]="shellService.profileIconThemeColoring">login</mat-icon>        
-        <span class="sidebar-menu-item">account</span>        
+        <span class="sidebar-menu-item">login</span>        
       </a>
+    </mat-nav-list>
+    <mat-nav-list *ngIf="shellService.walletService.walletCertificate !== undefined">           
       <a mat-list-item [matTooltip]="shellService.donateTooltipText" (click)="shellService.openDonationDialog()" >
         <mat-icon  [color]="shellService.donateIconThemeColoring">favorite</mat-icon>    
         <span class="sidebar-menu-item">donate</span>
