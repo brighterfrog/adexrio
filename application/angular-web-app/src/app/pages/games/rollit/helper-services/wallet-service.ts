@@ -16,8 +16,7 @@ export class WalletService {
         this.walletSubject = new Subject<Connex.Vendor.CertResponse | undefined>();
     }
     
-    addNewSigningCertificate(certificateResponse: Connex.Vendor.CertResponse): void {
-        debugger;
+    addNewSigningCertificate(certificateResponse: Connex.Vendor.CertResponse): void {        
         this.walletCertificate = certificateResponse;
         this.walletSubject.next(this.walletCertificate);        
     }
