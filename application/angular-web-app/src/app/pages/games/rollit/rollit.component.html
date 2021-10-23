@@ -1,57 +1,9 @@
-<!-- Smaller Displays -->
-<div fxHide.gt-md fxHide.md fxShow.lt-md>
-         
-  <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
-    <mat-icon>more_vert</mat-icon>
-    <span>menu</span>
-  </button>
-  <mat-menu #menu="matMenu">
-    <!-- <button 
-    *ngIf="walletService.walletCertificate !== undefined"    -->
-    <button      
-      mat-menu-item         
-      (click)="openCreateGameDialog()">
-      <mat-icon>add_circle_outline</mat-icon>
-      <span>New Lottery Pool</span>
-    </button>   
-    <button mat-menu-item >
-      <mat-icon>event_available</mat-icon>
-      <span>Open Pools</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>price_check</mat-icon>
-      <span>Completed Lottery Pools</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>account_circle</mat-icon>
-      <span>Your Lottery Pools</span>
-    </button>
-    <button mat-menu-item>
-      <mat-icon>forum</mat-icon>
-      <span>Arena</span>
-    </button>
-
-    <button     
-      mat-menu-item
-      matTooltip="whats all this?"    
-      (click)="openShowGameHelpDialog()">
-      <mat-icon>info</mat-icon>
-      <span>Whats this all about?</span>
-    </button>
-  </mat-menu>
-</div>
-<!-- End Smaller Displays -->
-
-
-
-<!-- Larger Displays -->
-<div fxHide.lt-md fxShow.md>
-
+<div>
   <button
-  *ngIf="walletService.walletCertificate !== undefined"
-  mat-flat-button
-  (click)="openCreateGameDialog()">
-  Create New Lottery Pool
+    *ngIf="walletService.walletCertificate !== undefined"
+    mat-flat-button
+    (click)="openCreateGameDialog()">
+   Create Pool
   </button>
 
   <button 
@@ -65,7 +17,7 @@
 
   <mat-tab-group>
     <!--OPEN GAMES -->
-    <mat-tab label="all open games" class="rollit-stats-tabs">
+    <mat-tab label="open pools" class="rollit-stats-tabs">
       <mat-table
         mat-table
         matSort
@@ -147,7 +99,7 @@
       ></mat-paginator>
     </mat-tab>
     <!--COMPLETED GAMES-->
-    <mat-tab label="all completed games" class="rollit-stats-tabs">
+    <mat-tab label="completed pools" class="rollit-stats-tabs">
       <mat-table
         class="roll-it-table-full-width"
         mat-table
@@ -272,7 +224,7 @@
       ></mat-paginator>
     </mat-tab>
     <!--YOUR GAMES-->
-    <mat-tab label="your games" class="rollit-stats-tabs">
+    <mat-tab label="your pools" class="rollit-stats-tabs">
       <mat-table
         class="roll-it-table-full-width"
         mat-table
@@ -284,7 +236,7 @@
           <mat-header-cell *matHeaderCellDef> </mat-header-cell>
           <mat-cell *matCellDef="let game">
             <button
-              matTooltip="Leave the game and refund your VET"
+              matTooltip="Leave the pool and refund your VET"
               *ngIf="
               walletService.walletCertificate !== undefined &&
               game.status === gameStatusService.AWAITING_GAME_CRITERIA_MET &&
@@ -450,7 +402,7 @@
       ></mat-paginator>
     </mat-tab>
   
-    <mat-tab label="arena">
+    <mat-tab label="chat">
   
       <button
         *ngIf="walletService.walletCertificate !== undefined"
