@@ -1,277 +1,128 @@
-<button
-  *ngIf="walletService.walletCertificate !== undefined"
-  mat-flat-button
+<div>
+  <button
+    *ngIf="walletService.walletCertificate !== undefined"
+    mat-flat-button
+    (click)="openCreateGameDialog()">
+   Create Pool
+  </button>
 
-  (click)="openCreateGameDialog()"
->
-  Create New Game
-</button>
+  <button 
+    class="btn-transparent" 
+    mat-flat-button 
+    matTooltip="whats all this?"
+    (click)="openShowGameHelpDialog()"
+  >
+    <mat-icon>info</mat-icon>
+  </button>
 
-<button 
-  class="btn-transparent" 
-  mat-flat-button 
-  matTooltip="whats all this?"
-  (click)="openShowGameHelpDialog()"
->
-  <mat-icon>help</mat-icon>
-</button>
-
-<!-- <button
-  mat-flat-button
-  color="accent"
-  (click)="blockChainService.testMethod(0)"
->
-  Test
-</button> -->
-
-<mat-tab-group>
-  <!--OPEN GAMES -->
-  <mat-tab label="all open games" class="rollit-stats-tabs">
-    <mat-table
-      mat-table
-      matSort
-      #openGamesSort="matSort"
-      [dataSource]="gameFilterService.openGameDataSource"
-    >
+  <mat-tab-group>
+    <!--OPEN GAMES -->
+    <mat-tab label="open pools" class="rollit-stats-tabs">
+      <mat-table
+        mat-table
+        matSort
+        #openGamesSort="matSort"
+        [dataSource]="gameFilterService.openGameDataSource"
+      >
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            <button
+              *ngIf="walletService.walletCertificate !== undefined"
+              mat-flat-button
+              color="accent"
+              (click)="joinOpenGame(game.id)"
+            >
+              Join
+            </button>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Game Id</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameBetSize">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Wager Size (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game"> {{ wagerConversionService.convertWeiToVET(game.gameBetSize) }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="totalGameWagers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total Wagers (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameTotalEligiblePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Current Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.gameTotalEligiblePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="minimumGamePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Minimum Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.minimumGamePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="isAuditEnabled">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Audit Protection
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
+        </ng-container>
+  
+        <mat-header-row
+          *matHeaderRowDef="gameFilterService.openGameDisplayColumns"
+        >
+        </mat-header-row>
+        <mat-row
+          *matRowDef="let game; columns: gameFilterService.openGameDisplayColumns"
+        ></mat-row>
+      </mat-table>
+      <mat-paginator
+        #openGamesPaginator
+        [pageSizeOptions]="[50, 100, 500]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-tab>
+    <!--COMPLETED GAMES-->
+    <mat-tab label="completed pools" class="rollit-stats-tabs">
+      <mat-table
+        class="roll-it-table-full-width"
+        mat-table
+        matSort
+        #completedGamesSort="matSort"
+        [dataSource]="gameFilterService.completedGamesDataSource"
+      >
       <ng-container matColumnDef="action">
         <mat-header-cell *matHeaderCellDef> </mat-header-cell>
         <mat-cell *matCellDef="let game">
-          <button
-            *ngIf="walletService.walletCertificate !== undefined"
-            mat-flat-button
-            color="accent"
-            (click)="joinOpenGame(game.id)"
-          >
-            Join
-          </button>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="id">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Game Id</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameBetSize">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Wager Size (VET)</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game"> {{ wagerConversionService.convertWeiToVET(game.gameBetSize) }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="totalGameWagers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Total Wagers (VET)</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameTotalEligiblePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Current Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.gameTotalEligiblePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="minimumGamePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Minimum Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.minimumGamePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="isAuditEnabled">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Audit Protection
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
-      </ng-container>
-
-      <mat-header-row
-        *matHeaderRowDef="gameFilterService.openGameDisplayColumns"
-      >
-      </mat-header-row>
-      <mat-row
-        *matRowDef="let game; columns: gameFilterService.openGameDisplayColumns"
-      ></mat-row>
-    </mat-table>
-    <mat-paginator
-      #openGamesPaginator
-      [pageSizeOptions]="[5, 15, 50]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-tab>
-  <!--COMPLETED GAMES-->
-  <mat-tab label="all completed games" class="rollit-stats-tabs">
-    <mat-table
-      class="roll-it-table-full-width"
-      mat-table
-      matSort
-      #completedGamesSort="matSort"
-      [dataSource]="gameFilterService.completedGamesDataSource"
-    >
-    <ng-container matColumnDef="action">
-      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-      <mat-cell *matCellDef="let game">
-
-        <button *ngIf="game.isAuditEnabled === true"
-        (click)="openRandomOrgAuditLinkByGameId(game.auditRecordDrawId)"
-        mat-icon-button>
-          <mat-icon
-          class="cursor-pointer"
-          [matTooltip]="openAuditGameLinkTooltip"
-        >
-          fact_check
-        </mat-icon>
-        </button>
-
-        <button (click)="openVeChainTransactionInsightByGameId(game.transactionId)"
-        mat-icon-button>
-          <mat-icon
-          class="cursor-pointer"
-          matTooltip="VeChain Insight"
-        >
-          receipt_long
-        </mat-icon>
-        </button>
-
-      </mat-cell>
-    </ng-container>
-
-    <ng-container matColumnDef="id">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>
-        Game Id</mat-header-cell
-      >
-      <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
-    </ng-container>
-
-      <ng-container matColumnDef="totalGameWagers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Total Wagers (VET)</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game">
-          {{ game.totalGameWagers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameWinningPayout">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Winning Payout (VET)</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game">
-          {{ game.gameWinningPayout }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameWinnerAddress">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Winning Address</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game">
-          {{ game.gameWinnerAddress.substring(0, 5) }}
-          {{ "..." }}
-          {{ game.gameWinnerAddress.slice(-4) }}
-
-          <mat-icon
-            class="cursor-pointer grid-icon-side-padding"
-            inline="true"
-            matTooltip="{{ game.gameWinnerAddress }}"
-            >info</mat-icon
-          >
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameTotalEligiblePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Current Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.gameTotalEligiblePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="minimumGamePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Minimum Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.minimumGamePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="isAuditEnabled">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Audit Protection
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.isAuditEnabled }}
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row
-        *matHeaderRowDef="gameFilterService.completedGamesDisplayColumns"
-      >
-      </mat-header-row>
-      <mat-row
-        *matRowDef="
-          let game;
-          columns: gameFilterService.completedGamesDisplayColumns
-        "
-      ></mat-row>
-    </mat-table>
-
-    <mat-paginator
-      #completedGamesPaginator
-      [pageSizeOptions]="[5, 15, 50]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-tab>
-  <!--YOUR GAMES-->
-  <mat-tab label="your games" class="rollit-stats-tabs">
-    <mat-table
-      class="roll-it-table-full-width"
-      mat-table
-      matSort
-      #yourGamesSort="matSort"
-      [dataSource]="gameFilterService.yourGamesDataSource"
-    >
-      <ng-container matColumnDef="action">
-        <mat-header-cell *matHeaderCellDef> </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          <button
-            matTooltip="Leave the game and refund your VET"
-            *ngIf="
-            walletService.walletCertificate !== undefined &&
-            game.status === gameStatusService.AWAITING_GAME_CRITERIA_MET &&
-            gameFilterService.hasCompletedRetrievingCurrentPlayersPlayerLeftGameEvents &&
-            game.hasPlayerLeftGameEvent !== true
-            "
-            mat-icon-button
-            color="warn"
-            (click)="leaveGame(game.id)"
-          >
-            <mat-icon>cancel</mat-icon>
-          </button>
-
-          <button *ngIf="game.isAuditEnabled === true && game.status === gameStatusService.COMPLETE"
-            (click)="openRandomOrgAuditLinkByGameId(game.auditRecordDrawId)"
-            mat-icon-button>
+  
+          <button *ngIf="game.isAuditEnabled === true"
+          (click)="openRandomOrgAuditLinkByGameId(game.auditRecordDrawId)"
+          mat-icon-button>
             <mat-icon
-              class="cursor-pointer"
-              matTooltip="Audit Enabled Game">
-              fact_check
-            </mat-icon>
+            class="cursor-pointer"
+            [matTooltip]="openAuditGameLinkTooltip"
+          >
+            fact_check
+          </mat-icon>
           </button>
-
-          <button
-          *ngIf="game.status === gameStatusService.COMPLETE"
-          (click)="openVeChainTransactionInsightByGameId(game.transactionId)"
+  
+          <button (click)="openVeChainTransactionInsightByGameId(game.transactionId)"
           mat-icon-button>
             <mat-icon
             class="cursor-pointer"
@@ -280,166 +131,309 @@
             receipt_long
           </mat-icon>
           </button>
-
-          <mat-icon
-          color="accent"
-            *ngIf="
-              game.gameWinnerAddress ===
-              walletService?.walletCertificate?.annex.signer
-            "
-            class="cursor-pointer"
-            matTooltip="You won"
-          >
-            paid
-          </mat-icon>
-
-          <mat-icon
-            *ngIf="game.status === gameStatusService.AWAITING_GAME_CRITERIA_MET"
-            class="cursor-pointer"
-            matTooltip="Awaiting Criteria Met"
-          >
-            pending_actions
-          </mat-icon>
-
-          <mat-icon
-            *ngIf="
-              game.status === gameStatusService.CRITERIA_MET_AWAITING_LOTTERY
-            "
-            class="cursor-pointer"
-            matTooltip="Criteria Met...Pending Execution"
-          >
-            bolt
-          </mat-icon>
+  
         </mat-cell>
       </ng-container>
-
+  
       <ng-container matColumnDef="id">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           Game Id</mat-header-cell
         >
         <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
       </ng-container>
-
-      <ng-container matColumnDef="totalGameWagers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Total Wagers (VET)</mat-header-cell
+  
+        <ng-container matColumnDef="totalGameWagers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total Wagers (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game">
+            {{ game.totalGameWagers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameWinningPayout">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Winning Payout (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game">
+            {{ game.gameWinningPayout }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameWinnerAddress">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Winning Address</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game">
+            {{ game.gameWinnerAddress.substring(0, 5) }}
+            {{ "..." }}
+            {{ game.gameWinnerAddress.slice(-4) }}
+  
+            <mat-icon
+              class="cursor-pointer grid-icon-side-padding"
+              inline="true"
+              matTooltip="{{ game.gameWinnerAddress }}"
+              >info</mat-icon
+            >
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameTotalEligiblePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Current Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.gameTotalEligiblePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="minimumGamePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Minimum Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.minimumGamePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="isAuditEnabled">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Audit Protection
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.isAuditEnabled }}
+          </mat-cell>
+        </ng-container>
+  
+        <mat-header-row
+          *matHeaderRowDef="gameFilterService.completedGamesDisplayColumns"
         >
-        <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameWinningPayout">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Winning Payout (VET)</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game">
-
-        <span *ngIf="
-        game.status === gameStatusService.COMPLETE
-      ">
-          {{ game.gameWinningPayout }}
-        </span>
-
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="gameWinnerAddress">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Winning Address</mat-header-cell
-        >
-        <mat-cell *matCellDef="let game">
+        </mat-header-row>
+        <mat-row
+          *matRowDef="
+            let game;
+            columns: gameFilterService.completedGamesDisplayColumns
+          "
+        ></mat-row>
+      </mat-table>
+  
+      <mat-paginator
+        #completedGamesPaginator
+        [pageSizeOptions]="[50, 100, 500]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-tab>
+    <!--YOUR GAMES-->
+    <mat-tab label="your pools" class="rollit-stats-tabs">
+      <mat-table
+        class="roll-it-table-full-width"
+        mat-table
+        matSort
+        #yourGamesSort="matSort"
+        [dataSource]="gameFilterService.yourGamesDataSource"
+      >
+        <ng-container matColumnDef="action">
+          <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            <button
+              matTooltip="Leave the pool and refund your VET"
+              *ngIf="
+              walletService.walletCertificate !== undefined &&
+              game.status === gameStatusService.AWAITING_GAME_CRITERIA_MET &&
+              gameFilterService.hasCompletedRetrievingCurrentPlayersPlayerLeftGameEvents &&
+              game.hasPlayerLeftGameEvent !== true
+              "
+              mat-icon-button
+              color="warn"
+              (click)="leaveGame(game.id)"
+            >
+              <mat-icon>cancel</mat-icon>
+            </button>
+  
+            <button *ngIf="game.isAuditEnabled === true && game.status === gameStatusService.COMPLETE"
+              (click)="openRandomOrgAuditLinkByGameId(game.auditRecordDrawId)"
+              mat-icon-button>
+              <mat-icon
+                class="cursor-pointer"
+                matTooltip="Audit Enabled Game">
+                fact_check
+              </mat-icon>
+            </button>
+  
+            <button
+            *ngIf="game.status === gameStatusService.COMPLETE"
+            (click)="openVeChainTransactionInsightByGameId(game.transactionId)"
+            mat-icon-button>
+              <mat-icon
+              class="cursor-pointer"
+              matTooltip="VeChain Insight"
+            >
+              receipt_long
+            </mat-icon>
+            </button>
+  
+            <mat-icon
+            color="accent"
+              *ngIf="
+                game.gameWinnerAddress ===
+                walletService?.walletCertificate?.annex.signer
+              "
+              class="cursor-pointer"
+              matTooltip="You won"
+            >
+              paid
+            </mat-icon>
+  
+            <mat-icon
+              *ngIf="game.status === gameStatusService.AWAITING_GAME_CRITERIA_MET"
+              class="cursor-pointer"
+              matTooltip="Awaiting Criteria Met"
+            >
+              pending_actions
+            </mat-icon>
+  
+            <mat-icon
+              *ngIf="
+                game.status === gameStatusService.CRITERIA_MET_AWAITING_LOTTERY
+              "
+              class="cursor-pointer"
+              matTooltip="Criteria Met...Pending Execution"
+            >
+              bolt
+            </mat-icon>
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="id">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Game Id</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game"> {{ game.id }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="totalGameWagers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Total Wagers (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameWinningPayout">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Winning Payout (VET)</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game">
+  
           <span *ngIf="
           game.status === gameStatusService.COMPLETE
-          ">
-
-          {{ game.gameWinnerAddress.substring(0, 5) }}
-          {{ "..." }}
-          {{ game.gameWinnerAddress.slice(-4) }}
-
-          <mat-icon
-            class="cursor-pointer grid-icon-side-padding"
-            inline="true"
-            matTooltip="{{ game.gameWinnerAddress }}"
-            >info</mat-icon
-          >
+        ">
+            {{ game.gameWinningPayout }}
           </span>
+  
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="gameWinnerAddress">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Winning Address</mat-header-cell
+          >
+          <mat-cell *matCellDef="let game">
+            <span *ngIf="
+            game.status === gameStatusService.COMPLETE
+            ">
+  
+            {{ game.gameWinnerAddress.substring(0, 5) }}
+            {{ "..." }}
+            {{ game.gameWinnerAddress.slice(-4) }}
+  
+            <mat-icon
+              class="cursor-pointer grid-icon-side-padding"
+              inline="true"
+              matTooltip="{{ game.gameWinnerAddress }}"
+              >info</mat-icon
+            >
+            </span>
+  
+          </mat-cell>
+  
+        </ng-container>
+  
+        <ng-container matColumnDef="gameTotalEligiblePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Current Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.gameTotalEligiblePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="minimumGamePlayers">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Minimum Players
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game">
+            {{ game.minimumGamePlayers }}
+          </mat-cell>
+        </ng-container>
+  
+        <ng-container matColumnDef="isAuditEnabled">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            Audit Protection
+          </mat-header-cell>
+          <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
+        </ng-container>
+  
+        <mat-header-row
+          *matHeaderRowDef="gameFilterService.yourGamesDisplayColumns"
+        >
+        </mat-header-row>
+        <mat-row
+          *matRowDef="
+            let game;
+            columns: gameFilterService.yourGamesDisplayColumns
+          "
+        ></mat-row>
+      </mat-table>
+  
+      <mat-paginator
+        #yourGamesPaginator
+        [pageSizeOptions]="[50, 100, 500]"
+        showFirstLastButtons
+      ></mat-paginator>
+    </mat-tab>
+  
+    <mat-tab label="chat">
+  
+      <button
+        *ngIf="walletService.walletCertificate !== undefined"
+        cdkFocusInitial
+        mat-button
+        matTooltip="Create Message"
+        color="accent"
+        (click)="openCreateArenaChatMessage()">
+        Add Message
+      </button>
+  
+      <mat-list class="chat-make-scrollable">
+        <mat-list-item class="chat-arena-posted-message" *ngFor="let item of arenaChatService?.chatMessages">
+  
+          <h3 matLine class="chat-arena-fromUser">
+  
+            {{ item.fromWallet.substring(0, 5) }}
+            {{ "..." }}
+            {{ item.fromWallet.slice(-4) }}
+  
+          </h3>
+          <p matLine>
+            <span> {{item.createdAt.toLocaleString() }} </span>
+            <span class=""> -- {{item.content}} </span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+  
+    </mat-tab>
+  
+  </mat-tab-group>
+</div>
 
-        </mat-cell>
 
-      </ng-container>
-
-      <ng-container matColumnDef="gameTotalEligiblePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Current Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.gameTotalEligiblePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="minimumGamePlayers">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Minimum Players
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game">
-          {{ game.minimumGamePlayers }}
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="isAuditEnabled">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          Audit Protection
-        </mat-header-cell>
-        <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
-      </ng-container>
-
-      <mat-header-row
-        *matHeaderRowDef="gameFilterService.yourGamesDisplayColumns"
-      >
-      </mat-header-row>
-      <mat-row
-        *matRowDef="
-          let game;
-          columns: gameFilterService.yourGamesDisplayColumns
-        "
-      ></mat-row>
-    </mat-table>
-
-    <mat-paginator
-      #yourGamesPaginator
-      [pageSizeOptions]="[5, 15, 50]"
-      showFirstLastButtons
-    ></mat-paginator>
-  </mat-tab>
-
-  <mat-tab label="arena">
-
-    <button
-      *ngIf="walletService.walletCertificate !== undefined"
-      cdkFocusInitial
-      mat-button
-      matTooltip="Create Message"
-      color="accent"
-      (click)="openCreateArenaChatMessage()">
-      Add Message
-    </button>
-
-    <mat-list class="chat-make-scrollable">
-      <mat-list-item class="chat-arena-posted-message" *ngFor="let item of arenaChatService?.chatMessages">
-
-        <h3 matLine class="chat-arena-fromUser">
-
-          {{ item.fromWallet.substring(0, 5) }}
-          {{ "..." }}
-          {{ item.fromWallet.slice(-4) }}
-
-        </h3>
-        <p matLine>
-          <span> {{item.createdAt.toLocaleString() }} </span>
-          <span class=""> -- {{item.content}} </span>
-        </p>
-      </mat-list-item>
-    </mat-list>
-
-  </mat-tab>
-
-</mat-tab-group>
