@@ -1,16 +1,9 @@
-import { NgModule } from '@angular/core';
+
 import { RollitComponent } from './games/rollit/rollit.component';
 import { DashboardComponent } from './games/dashboard/dashboard.component';
 import { RouterModule, Routes } from '@angular/router';
-// import { MatGridListModule } from '@angular/material/grid-list';
-// import { MatCardModule } from '@angular/material/card';
-// import { MatMenuModule } from '@angular/material/menu';
-// import { MatIconModule } from '@angular/material/icon';
-// import { MatButtonModule } from '@angular/material/button';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { WelcomeComponent } from './welcome/welcome.component';
 import { CommonModule } from '@angular/common';
-import { MatGridTile } from '@angular/material/grid-list';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AngularMaterialModule } from '../angular-material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -19,13 +12,14 @@ import { CreateGameDialogComponent } from './games/rollit/components/create-game
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatPaginatorModule } from '@angular/material/paginator';
-import { MatSortModule } from '@angular/material/sort';
+
 import { ArenaChatBottomSheetComponent } from './games/rollit/components/arena-chat/arena-chat-bottomsheet.component';
-import { MatBottomSheet, MatBottomSheetModule } from '@angular/material/bottom-sheet';
+
 import { AboutComponent } from './about/about.component';
 import { ConnexGuard } from '../guards/connex.guard';
 import { GameplayHelpDialogComponent } from './games/rollit/components/gameplay-help-dialog/gameplay-help-dialog.component';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 const routes: Routes = [
   {
@@ -67,7 +61,11 @@ const routes: Routes = [
     MatSnackBarModule,
     MatCardModule,
     MatFormFieldModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ScrollingModule  
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ],
   exports: [
 
@@ -75,5 +73,6 @@ const routes: Routes = [
   entryComponents: [
 
   ]
+ 
 })
 export class PagesModule { }
