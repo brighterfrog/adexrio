@@ -5,10 +5,6 @@
 .chat-arena-fromUser{
     color: #8b8bff;
 }
-// .chat-arena-posted-message:nth-child(odd){
-//     background-color: #464441;
-//     border-radius: 30px;
-// }
 .mat-header-cell {
     flex-direction: column;
     justify-content: center;
@@ -62,9 +58,7 @@ input.bet-input-right-align {
 button.bet-input-button {
     margin: 0px 10px;
 }
-// .card-container {
-//     padding: 30px;
-// }
+
 .mat-radio-button ~ .mat-radio-button {
     margin-left: 16px;
 }
@@ -73,12 +67,10 @@ button.bet-input-button {
     color: white !important;
   }
 
-//.rollit-recent-games-table {
-// width: 100%;
-//}
-// .rollit-upper-card {
-//     width: 100%;
-// }
-// .rollit-stats-tabs {
-//     width: 100%;
-// }
+.mat-row, .mat-header-row  {  
+    min-width: 730px;  
+    width: 100%;  
+ }  
+ .mat-table {
+    overflow-x: auto;
+}

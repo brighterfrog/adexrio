@@ -1,12 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild, QueryList } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatBottomSheet, MatBottomSheetRef } from '@angular/material/bottom-sheet';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSnackBar, MatSnackBarConfig, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Observable, from, Subject } from 'rxjs';
 import { CreateMessageMutation } from 'src/app/API.service';
 import { SyncNotConnectedDialogComponent } from 'src/app/components/sync-not-detected-dialog/sync-not-detected-dialog.component';
 import { CreateGameDialogComponent, CreateGameDialogData } from 'src/app/pages/games/rollit/components/create-game-dialog/create-game-dialog.component';
@@ -14,13 +13,13 @@ import { ArenaChatService } from 'src/app/services/arena-chat.service';
 import { LoggingService } from 'src/app/services/logging.service';
 import { ShellService } from 'src/app/services/shell.service';
 import { environment } from 'src/environments/environment';
-import { BinanceApiService } from './binance.api.service';
+
 import { BlockchainService } from './blockchain.service';
 import { ArenaChatBottomSheetComponent } from './components/arena-chat/arena-chat-bottomsheet.component';
 import { GameTabsFilterService } from './game-tabs-filter.service';
 import { GameStatusService } from './helper-services/gamestatus.service';
 import { WalletService } from './helper-services/wallet-service';
-import { GameEntry, RollItChatMessage } from './rollit_models';
+
 import { WagerConversionService } from './helper-services/wager-conversion.service'
 import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/gameplay-help-dialog.component';
 
@@ -30,7 +29,7 @@ import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/g
   styleUrls: ['./rollit.component.scss']
 })
 export class RollitComponent implements OnInit, AfterViewInit {
-
+  
   formBuilder: FormBuilder;
   rollItForm!: FormGroup;
 
@@ -84,7 +83,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
     formBuilder: FormBuilder,
     snackBar: MatSnackBar,
     wagerConversionService: WagerConversionService,
-    private loggingService: LoggingService,    
+    private loggingService: LoggingService    
   ) {
     this.gameDetailsRetrievedForYourGamesTab = false;
     this.shellService = shellService;
@@ -106,8 +105,9 @@ export class RollitComponent implements OnInit, AfterViewInit {
 
     this.formBuilder = formBuilder;
 
-    this.createGameTabFilterServiceSubscribers();
+    this.createGameTabFilterServiceSubscribers();          
   }
+  
 
   openRandomOrgAuditLinkByGameId(auditRecordDrawId: number): void {
     if (!environment.production) {
@@ -124,8 +124,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
   }
 
   openCreateArenaChatMessage(): void {
-
-    debugger;
+    
     if (!this.shellService.isUserConnexAuthorized()) {
       const dialogRef = this.dialog.open(SyncNotConnectedDialogComponent);
     }
@@ -157,8 +156,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
     }, (error) => {
       this.loggingService.writeDebug('observable subscribe error');
     });
-
-    // DO I NEED THIS?
+    
     this.gameFilterService.yourGamesEntriesSubject.subscribe((next) => {
       this.loggingService.writeDebug('yourGamesEntriesSubject subscriber worked');
       this.gameFilterService.yourGamesDataSource = new MatTableDataSource(next);
