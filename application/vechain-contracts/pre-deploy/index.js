@@ -56,4 +56,3 @@ buildKeystoreFilesAndAddressesFromSecretsManager( {
   outputPathKeystore: "./../../wallets/sync2/deployment_keystore/vechain.main.owner.account.json",
   outputPathDonationAddress: "./../../wallets/sync2/addresses/vechain.main.donation.address.json",
 });
-

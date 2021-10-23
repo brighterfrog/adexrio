@@ -1,6 +1,7 @@
-# Welcome to your CDK Python project!
 
-This is a blank project for Python development with CDK.
+VeChain Powered Blockchain Smart Contracts to hold high stakes lottery winnings integrated to leverage random.org for auditing game winners with random.org hosted reports of winner selection to prove there is unbiased selection of the winning players
+
+# Developer Notes
 
 The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
