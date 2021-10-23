@@ -17,6 +17,7 @@ export class GameTabsFilterService {
   walletService: WalletService;
 
   openGameDisplayColumns: string[] = [];
+  openGameMobileDisplayColumns: string[] = [];
   openGameEntriesSubject!: Subject<GameEntry[]>;
   openGameDataSource: MatTableDataSource<GameEntry>;
 
@@ -30,7 +31,7 @@ export class GameTabsFilterService {
 
   hasCompletedRetrievingCurrentPlayersPlayerLeftGameEvents: boolean;
 
-  eventsThePlayerHasLeftGame: Connex.Thor.Filter.Row<'event', Connex.Thor.Account.WithDecoded>[];
+  eventsThePlayerHasLeftGame: Connex.Thor.Filter.Row<'event', Connex.Thor.Account.WithDecoded>[];  
 
   constructor(
     gameStatusService: GameStatusService,
@@ -53,6 +54,11 @@ export class GameTabsFilterService {
       'minimumGamePlayers',
       'isAuditEnabled'
     ];
+    this.openGameMobileDisplayColumns = [
+      'action',
+      'mobileDetails',
+      'isAuditEnabled'
+    ]
 
     this.yourGamesDataSource = new MatTableDataSource([]);
     this.yourGamesEntriesSubject = new Subject();

@@ -1,20 +1,14 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-
-// import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ConnexGuard } from './guards/connex.guard';
-
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ShellService } from './services/shell.service';
 import { FeedbackDialogComponent } from './components/feedback-dialog/feedback-dialog.component';
-import { PagesModule } from './pages/pages.module';
 import { SharedModule } from './shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { CommonModule } from '@angular/common';
 import { AngularMaterialModule } from './angular-material.module';
 import { WelcomeComponent } from './pages/welcome/welcome.component';
-import { CardComponent } from './components/card/card.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { ProfileDialogComponent } from './components/profile-dialog/profile-dialog.component';
@@ -26,6 +20,7 @@ import { SyncNotConnectedDialogComponent } from './components/sync-not-detected-
 import { MAT_BOTTOM_SHEET_DEFAULT_OPTIONS } from '@angular/material/bottom-sheet';
 import { AboutComponent } from './pages/about/about.component';
 import { AdminComponent } from './pages/admin/admin.component';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 @NgModule({
   declarations: [
@@ -50,7 +45,8 @@ import { AdminComponent } from './pages/admin/admin.component';
     MatFormFieldModule,
     FlexLayoutModule,
     HttpClientModule,
-    MatTooltipModule
+    MatTooltipModule,
+    ScrollingModule
   ],
   providers: [
     ShellService,

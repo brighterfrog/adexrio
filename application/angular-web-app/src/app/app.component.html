@@ -92,53 +92,26 @@
       </a> 
     </mat-nav-list>
   </mat-sidenav>
-  <mat-sidenav-content fxFlexFill>
-    
-<mat-toolbar color="primary">
-  <header class="header-width">
-    <div fxFlex fxLayout>
-      <div fxFlex>
-        <h1>{{ shellService.headerTitle }}</h1>
-      </div>
-      <div fxFlex fxLayoutAlign="flex-end center">
-        vetusdt:
-        {{
-          shellService.binanceApiService.binanceTickerResponseResult.price
-            | number: "0.6-6"
-        }}
-      </div>
-    </div>
-  </header>
-</mat-toolbar>
+  <mat-sidenav-content fxFlexFill>    
+    <mat-toolbar color="primary">
+      <header class="header-width">
+        <div fxFlex fxLayout>
+          <div fxFlex>
+            <h1>{{ shellService.headerTitle }}</h1>
+          </div>
+          <div fxFlex fxLayoutAlign="flex-end center">
+            vetusdt:
+            {{
+              shellService.binanceApiService.binanceTickerResponseResult.price
+                | number: "0.6-6"
+            }}
+          </div>
+        </div>
+      </header>
+    </mat-toolbar>
 
-<div class="router-outlet-container">
-  <router-outlet></router-outlet>
-</div>
+    <div class="router-outlet-container">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
-
-<!-- 
-<mat-toolbar color="primary">
-  <header class="header-width">
-    <div fxFlex fxLayout>
-      <div fxFlex>
-        <h1>{{ shellService.headerTitle }}</h1>
-      </div>
-
-
-      <div fxFlex fxLayoutAlign="flex-end center">
-
-        vetusdt:
-        {{
-          shellService.binanceApiService.binanceTickerResponseResult.price
-            | number: "0.6-6"
-        }}
-      </div>
-    </div>
-  </header>
-</mat-toolbar>
-
-<div class="router-outlet-container">
-  <router-outlet></router-outlet>
-</div> -->
-

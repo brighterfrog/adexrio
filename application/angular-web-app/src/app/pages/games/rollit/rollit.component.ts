@@ -30,7 +30,7 @@ import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/g
   styleUrls: ['./rollit.component.scss']
 })
 export class RollitComponent implements OnInit, AfterViewInit {
-
+  
   formBuilder: FormBuilder;
   rollItForm!: FormGroup;
 
@@ -106,7 +106,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
 
     this.formBuilder = formBuilder;
 
-    this.createGameTabFilterServiceSubscribers();
+    this.createGameTabFilterServiceSubscribers();    
   }
 
   openRandomOrgAuditLinkByGameId(auditRecordDrawId: number): void {
@@ -124,8 +124,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
   }
 
   openCreateArenaChatMessage(): void {
-
-    debugger;
+    
     if (!this.shellService.isUserConnexAuthorized()) {
       const dialogRef = this.dialog.open(SyncNotConnectedDialogComponent);
     }
@@ -157,8 +156,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
     }, (error) => {
       this.loggingService.writeDebug('observable subscribe error');
     });
-
-    // DO I NEED THIS?
+    
     this.gameFilterService.yourGamesEntriesSubject.subscribe((next) => {
       this.loggingService.writeDebug('yourGamesEntriesSubject subscriber worked');
       this.gameFilterService.yourGamesDataSource = new MatTableDataSource(next);
