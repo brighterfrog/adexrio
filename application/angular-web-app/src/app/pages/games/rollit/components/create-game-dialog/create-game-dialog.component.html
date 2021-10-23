@@ -11,8 +11,8 @@
                         <mat-label>VET</mat-label>
                         <input (change)="commissionCritieraChanged()" matInput type="text"
                             formControlName="betValueControl" class="bet-input-right-align" />
-                        <mat-icon class="cursor-pointer" matSuffix matTooltip="VET amount to wager">info</mat-icon>
-                        <mat-hint>Place wager </mat-hint>
+                        <mat-icon class="cursor-pointer" matSuffix matTooltip="VET amount everyone must match">info</mat-icon>
+                        <mat-hint>entry fee </mat-hint>
                         <div *ngIf="createGameForm.controls['betValueControl'].invalid" class="alert">
                             <div *ngIf="createGameForm.controls['betValueControl'].errors?.required">
                                 required

@@ -16,8 +16,7 @@ export class GameTabsFilterService {
   blockChainService: BlockchainService;
   walletService: WalletService;
 
-  openGameDisplayColumns: string[] = [];
-  openGameMobileDisplayColumns: string[] = [];
+  openGameDisplayColumns: string[] = [];  
   openGameEntriesSubject!: Subject<GameEntry[]>;
   openGameDataSource: MatTableDataSource<GameEntry>;
 
@@ -54,11 +53,6 @@ export class GameTabsFilterService {
       'minimumGamePlayers',
       'isAuditEnabled'
     ];
-    this.openGameMobileDisplayColumns = [
-      'action',
-      'mobileDetails',
-      'isAuditEnabled'
-    ]
 
     this.yourGamesDataSource = new MatTableDataSource([]);
     this.yourGamesEntriesSubject = new Subject();
@@ -136,9 +130,7 @@ export class GameTabsFilterService {
       );
 
     });
-
-
-    debugger;
+    
     this.blockChainService.walletService.walletSubject.subscribe({
       next: (walletCertificate) => {        
         if (walletCertificate) {        
@@ -184,8 +176,7 @@ export class GameTabsFilterService {
       const index = dataSource.data.indexOf(foundGame);
       this.loggingService.writeDebug(index);
       this.loggingService.writeDebug(foundGame);
-      dataSource.data[index] = gameEntry;
-      // dataSource = new MatTableDataSource(dataSource.data);
+      dataSource.data[index] = gameEntry;      
 
       this.loggingService.writeDebug('logging dataSource');
       this.loggingService.writeDebug(dataSource.data);
