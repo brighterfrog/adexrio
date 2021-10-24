@@ -151,9 +151,9 @@ export class GameTabsFilterService {
     dataSource: MatTableDataSource<GameEntry>,
     events: Connex.Thor.Filter.Row<'event', Connex.Thor.Account.WithDecoded>[]
   ): void {
-
-    console.log('updateGameEntriesWithLeftGameEvent');
-    console.log(events);
+    
+    this.loggingService.writeDebug('updateGameEntriesWithLeftGameEvent');
+    this.loggingService.writeDebug(events);
     events.forEach((event) => {
       const eventGameId = event.decoded.gameId;
       const foundGame = dataSource.data.find((existingGame) => existingGame.id === eventGameId);
