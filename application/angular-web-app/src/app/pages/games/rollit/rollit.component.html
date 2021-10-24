@@ -47,14 +47,14 @@
   
         <ng-container matColumnDef="gameBetSize">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Wager Size (VET)</mat-header-cell
+            Entry Fee (VET)</mat-header-cell
           >
           <mat-cell *matCellDef="let game"> {{ wagerConversionService.convertWeiToVET(game.gameBetSize) }} </mat-cell>
         </ng-container>
   
         <ng-container matColumnDef="totalGameWagers">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Total Wagers (VET)</mat-header-cell
+            Pool Total (VET)</mat-header-cell
           >
           <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
         </ng-container>
@@ -144,7 +144,7 @@
   
         <ng-container matColumnDef="totalGameWagers">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Total Wagers (VET)</mat-header-cell
+            Pool Total (VET)</mat-header-cell
           >
           <mat-cell *matCellDef="let game">
             {{ game.totalGameWagers }}
@@ -313,7 +313,7 @@
   
         <ng-container matColumnDef="totalGameWagers">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Total Wagers (VET)</mat-header-cell
+            Pool Total (VET)</mat-header-cell
           >
           <mat-cell *matCellDef="let game"> {{ game.totalGameWagers }} </mat-cell>
         </ng-container>

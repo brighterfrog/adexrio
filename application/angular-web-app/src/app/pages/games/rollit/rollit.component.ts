@@ -87,7 +87,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
   ) {
     this.gameDetailsRetrievedForYourGamesTab = false;
     this.shellService = shellService;
-    shellService.headerTitle = 'roll it';
+    shellService.headerTitle = 'lottery pools';
     this.openAuditGameLinkTooltip = environment.production ? 'Audit Enabled Game' :
       'Audit Enabled Game - Demo mode [Non-Production]: Opens a demonstration of an audited report for a game since reports are billable';
 
@@ -270,8 +270,8 @@ export class RollitComponent implements OnInit, AfterViewInit {
         if (tx !== null) {
           clearInterval(timerId);
 
-          this.blockChainService.getGameByGameId(gameId).then((game) => {
-            console.log(game);
+          this.blockChainService.getGameByGameId(gameId).then((game) => {            
+            this.loggingService.writeDebug(game);
             this.blockChainService.yourGamesChanged?.next(game);
           });
 
