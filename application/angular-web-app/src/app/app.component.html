@@ -1,117 +1,128 @@
-<mat-toolbar color="primary" class="mat-elevation-z6 top-toolbar">
-  <button mat-flat-button color="primary" [routerLink]="['/']">adexr.io</button>
-  <button mat-flat-button color="primary" [routerLink]="['/games/dashboard']">
-    games
-  </button>
-  <button mat-flat-button color="primary" [routerLink]="['/about']">
-    about
-  </button>
-  <button
-    *ngIf="shellService.isUserAdmin()"
-   mat-flat-button color="primary" [routerLink]="['/admin']">
-    admin
-  </button>
+<mat-toolbar color="primary" class="mat-elevation-z6 top-toolbar" fxLayout="row">
 
-  <img
-        src="../../../assets/logo_512x512.png"
-        alt="adexr.io logo image"
-        class="adexrio-logo"
-        style="height:40px"
-  />
-
-  <!-- <span>adexr.io</span> -->
-  <span class="app-toolbar-spacer"></span>
-
-  <div fxShow="true" fxHide.gt-xs="true">
-    <a class="mat-icon-button" (click)="sidenav.toggle()"> <mat-icon [color]="shellService.profileIconThemeColoring">menu</mat-icon></a>
-  </div>
-
-  <div fxShow="true" fxHide.lt-sm="true">
+  
+    <button mat-flat-button color="primary" [routerLink]="['/']">adexr.io</button>
+    <button mat-flat-button color="primary" [routerLink]="['/games/dashboard']">
+      games
+    </button>
+    <button mat-flat-button color="primary" [routerLink]="['/about']">
+      about
+    </button>
     <button
-    mat-icon-button
-    aria-label="icon-button with connect icon"
-    matTooltip="Coming Soon"
-  >
-    <mat-icon>connect_without_contact</mat-icon>
-  </button>
+      *ngIf="shellService.isUserAdmin()"
+     mat-flat-button color="primary" [routerLink]="['/admin']">
+      admin
+    </button>
+  
+    <img
+         fxHide.lt-md fxShow.md
+          src="../../../assets/logo_512x512.png"
+          alt="adexr.io logo image"
+          class="adexrio-logo"
+          style="height:40px"
+    />
+  
+    <!-- <span>adexr.io</span> -->
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end center" fxHide.sm fxHide.lt-sm>
+      <button
+            [color]="shellService.feedbackIconThemeColoring"
+            color="accent"
+            (click)="shellService.openFeedbackDialog()"
+            mat-icon-button
+            aria-label="icon-button with feedback icon"
+            [matTooltip]="shellService.feedbackTooltipText">
+            <mat-icon>feedback</mat-icon>
+      </button>
+      <button
+              mat-icon-button
+              aria-label="icon-button with heart icon"
+              [color]="shellService.donateIconThemeColoring"
+              (click)="shellService.openDonationDialog()"
+              [matTooltip]="shellService.donateTooltipText"
+            >
+              <mat-icon>favorite</mat-icon>
+      </button>
+      <button
+              [color]="shellService.profileIconThemeColoring"
+              mat-fab
+              (click)="shellService.openUserWalletProfile()"
+              aria-label="icon-button with profile icon"
+              [matTooltip]="shellService.profileTooltipText"
+            >
+              <mat-icon>psychology</mat-icon>
+      </button>  
 
-  <button
-    [color]="shellService.feedbackIconThemeColoring"
-    color="accent"
-    (click)="shellService.openFeedbackDialog()"
-    mat-icon-button
-    aria-label="icon-button with feedback icon"
-    [matTooltip]="shellService.feedbackTooltipText"
-  >
-    <mat-icon>feedback</mat-icon>
-  </button>
+    </div>
 
-  <button
-    mat-icon-button
-    aria-label="icon-button with heart icon"
-    [color]="shellService.donateIconThemeColoring"
-    (click)="shellService.openDonationDialog()"
-    [matTooltip]="shellService.donateTooltipText"
-  >
-    <mat-icon>favorite</mat-icon>
-  </button>
+    <div fxFlex fxLayout="row" fxLayoutAlign="flex-end center" fxHide.gt-sm>
 
-  <button
-    [color]="shellService.profileIconThemeColoring"
-    mat-fab
-    (click)="shellService.openUserWalletProfile()"
-    aria-label="icon-button with profile icon"
-    [matTooltip]="shellService.profileTooltipText"
-  >
-    <mat-icon>psychology</mat-icon>
-  </button>
+      <!-- Not Logged In -->
+      <button        
+        *ngIf="shellService.walletService.walletCertificate === undefined"
+        [color]="shellService.profileIconThemeColoring"
+        mat-mini-fab     
+        aria-label="icon-button with profile icon"
+        [matTooltip]="shellService.profileTooltipText"
+        #mobileToolbarMenuTrigger        
+        (click)="shellService.openUserWalletProfile()"
+        >
+        <mat-icon>psychology</mat-icon>
+      </button> 
+  
+      <!-- Logged In -->
+      <button        
+        *ngIf="shellService.walletService.walletCertificate !== undefined"
+        [color]="shellService.profileIconThemeColoring"
+        mat-mini-fab     
+        aria-label="icon-button with profile icon"
+        [matTooltip]="shellService.profileTooltipText"
+        [matMenuTriggerFor]="mobileToolbarMenu"              
+        >
+        <mat-icon>psychology</mat-icon>
+      </button> 
+            
+      <mat-menu #mobileToolbarMenu="matMenu"> 
+        <button           
+            mat-menu-item                      
+            (click)="shellService.openFeedbackDialog()">
+          <mat-icon [color]="shellService.profileIconThemeColoring">feedback</mat-icon>
+          <span>Feedback</span>
+        </button>
+        <button           
+            mat-menu-item                      
+            (click)="shellService.openDonationDialog()">
+          <mat-icon [color]="shellService.profileIconThemeColoring">favorite</mat-icon>
+          <span>Donate</span>
+        </button>
+        <button           
+            mat-menu-item                      
+            (click)="shellService.openUserWalletProfile()">
+          <mat-icon [color]="shellService.profileIconThemeColoring">logout</mat-icon>
+          <span>Sign out</span>
+        </button>
+      </mat-menu>
+      
   </div>
-
+                  
 </mat-toolbar>
 
-<mat-sidenav-container fxFlexFill>
-  <mat-sidenav #sidenav position="end" mode="side">
-    <mat-nav-list *ngIf="shellService.walletService.walletCertificate === undefined">      
-      <a mat-list-item [matTooltip]="shellService.profileTooltipText" (click)="shellService.openUserWalletProfile()">
-        <mat-icon [color]="shellService.profileIconThemeColoring">login</mat-icon>        
-        <span class="sidebar-menu-item">login</span>        
-      </a>
-    </mat-nav-list>
-    <mat-nav-list *ngIf="shellService.walletService.walletCertificate !== undefined">           
-      <a mat-list-item [matTooltip]="shellService.donateTooltipText" (click)="shellService.openDonationDialog()" >
-        <mat-icon  [color]="shellService.donateIconThemeColoring">favorite</mat-icon>    
-        <span class="sidebar-menu-item">donate</span>
-      </a>
-      <a mat-list-item [matTooltip]="shellService.feedbackTooltipText"  (click)="shellService.openFeedbackDialog()">
-        <mat-icon [color]="shellService.feedbackIconThemeColoring">feedback</mat-icon>
-        <span class="sidebar-menu-item">feedback</span>  
-      </a>    
-      <a (click)="sidenav.toggle()" mat-list-item>
-        <mat-icon>close</mat-icon> 
-        <span class="sidebar-menu-item">close</span>  
-      </a> 
-    </mat-nav-list>
-  </mat-sidenav>
-  <mat-sidenav-content fxFlexFill>    
-    <mat-toolbar color="primary">
-      <header class="header-width">
-        <div fxFlex fxLayout>
-          <div fxFlex>
-            <h1>{{ shellService.headerTitle }}</h1>
-          </div>
-          <div fxFlex fxLayoutAlign="flex-end center">
-            vetusdt:
-            {{
-              shellService.binanceApiService.binanceTickerResponseResult.price
-                | number: "0.6-6"
-            }}
-          </div>
-        </div>
-      </header>
-    </mat-toolbar>
-
-    <div class="router-outlet-container">
-      <router-outlet></router-outlet>
+<mat-toolbar color="primary">
+  <header class="header-width">
+    <div fxFlex fxLayout>
+      <div fxFlex>
+        <h1>{{ shellService.headerTitle }}</h1>
+      </div>
+      <div fxFlex fxLayoutAlign="flex-end center">
+        vetusdt:
+        {{
+          shellService.binanceApiService.binanceTickerResponseResult.price
+            | number: "0.6-6"
+        }}
+      </div>
     </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+  </header>
+</mat-toolbar>
+
+<div class="router-outlet-container">
+  <router-outlet></router-outlet>
+</div>

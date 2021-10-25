@@ -1,4 +1,4 @@
-import { Injectable, Input, Output } from '@angular/core';
+import { Injectable, Input, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 
 import { environment } from 'src/environments/environment';
@@ -15,21 +15,20 @@ import { SyncNotConnectedDialogComponent } from '../components/sync-not-detected
 
 import { APIService, feedbackStatus } from '../API.service';
 
-// import DonationKeystoreDevelopment from '../../../../wallets/keystore_donations/vechain.dev.donation.account.json';
-// import DonationKeystoreTest from '../../../../wallets/keystore_donations/vechain.test.donation.account.json';
-// import DonationKeystoreProduction from '../../../../wallets/keystore_donations/vechain.prod.donation.account.json';
-
 import DonationKeystoreDevelopment from '../../../../wallets/sync2/addresses/vechain.dev.donation.address.json';
 import DonationKeystoreTest from '../../../../wallets/sync2/addresses/vechain.test.donation.address.json';
 import DonationKeystoreProduction from '../../../../wallets/sync2/addresses/vechain.main.donation.address.json';
 
 import { LoggingService } from './logging.service';
+import { MatMenuTrigger } from '@angular/material/menu';
 
 
 @Injectable({
   providedIn: 'root'
 })
 export class ShellService {
+
+  @ViewChild('mobileToolbarMenuTrigger') mobileToolbarMenuTrigger: MatMenuTrigger;
 
   @Output()
   headerTitle: string;
@@ -73,7 +72,7 @@ export class ShellService {
     this.blockChainService = blockChainService;
     this.binanceApiService = binanceApiService;
     this.dateConversionService = dateConversionService;
-    this.apiService = apiService;
+    this.apiService = apiService;    
 
     this.donationWalletAddress = this.getDonationWalletAddress();
 
@@ -147,11 +146,11 @@ export class ShellService {
           this.blockChainService.signAndSendDonation(
             result.donateVETAmount,
             this.donationWalletAddress).then((donationResult) => {
-              console.log('donation completed');
-              console.log(donationResult);
+              this.loggingService.writeDebug('donation completed');
+              this.loggingService.writeDebug(donationResult);              
             }).catch((err) => {
-              console.log('error occurred');
-              console.log(err);
+              this.loggingService.writeDebug('error occurred');
+              this.loggingService.writeDebug(err);              
             });
         }
       });
@@ -219,16 +218,23 @@ export class ShellService {
       }
     }
   }
+  processMobileToolbarMenuClick(): void {
+    if(this.walletService.userIsLoggedInToWallet()) {
+      debugger;
+      this.mobileToolbarMenuTrigger.openMenu();
+    }else {      
+      this.openUserWalletProfile();
+    }
+  }
 
   isUserAdmin(): boolean {
     return false;
-
   }
   isUserConnexAuthorized(): boolean {
     // CAN BE DELETED AND REPLACED WITH LINES 207 WHEN SYNC2 IS RELEASED 
     // For Sync1
     //const authorized = window.connex ? true : false;
-    // CAN BE DELETED AND REPLACED WITH LINES 207
+    // CAN BE DELETED AND REPLACED
 
     // For Sync2
     const authorized = this.userIsConnectedWithSync(this.blockChainService.connex);
