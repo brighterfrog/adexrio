@@ -8,7 +8,7 @@ export const environment = {
   test: false,
   local: true,
   envName: 'local',
-  syncTierName: 'SOLO',
+  syncTierName: 'solo',
   showDebug: true,
   enforceSyncGuard: true,
   veChain: {

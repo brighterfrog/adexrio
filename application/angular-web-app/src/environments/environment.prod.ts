@@ -5,9 +5,9 @@ export const environment = {
   local: false,
   envName: 'prod',
   showDebug: false,
-  syncTierName: 'MAIN',
+  syncTierName: 'main',
   enforceSyncGuard: true,
-   veChain: {
+  veChain: {
      node: 'https://vethor-node.vechain.com',
      // tslint:disable-next-line:quotemark
      network: "main" // defaults to mainnet, so it can be omitted here
