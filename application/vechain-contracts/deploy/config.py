@@ -14,8 +14,4 @@ NETWORK_CONSTANTS = {
 }
 
 # development | test | main
-<<<<<<< HEAD
 ENVIRONMENT = NETWORK_CONSTANTS['development']
-=======
-ENVIRONMENT = NETWORK_CONSTANTS['main']
->>>>>>> 3fa9647cced606c18bda254afb457b443eec6c5d
