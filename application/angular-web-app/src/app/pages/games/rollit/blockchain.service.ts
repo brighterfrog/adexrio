@@ -694,7 +694,7 @@ export class BlockchainService {
       this.connex.thor.account(this.getContractAddressForRollIt())
         .method(this.getContractFunctionABIfor('getGameById'));
     const detail = await getGameByIdMethod.call(gameId);
-    console.log(detail);
+    this.loggingService.writeDebug(detail);    
     const decodedGame = detail.decoded as DecodedGameEntity;
     const gameEntry = this.convertDecodedGameEntryToGameEntry(decodedGame);
 
