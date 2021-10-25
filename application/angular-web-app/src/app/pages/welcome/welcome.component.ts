@@ -11,11 +11,13 @@ export class WelcomeComponent implements OnInit {
 
   shellService: ShellService;
   version: string;
+  buildAndVersion: string;
 
   constructor(shellService: ShellService) {
     this.shellService = shellService;
     this.shellService.headerTitle = 'welcome';
     this.version = environment.version;
+    this.buildAndVersion = `${environment.syncTierName} network, ${environment.version}`;
   }
 
   ngOnInit(): void {
