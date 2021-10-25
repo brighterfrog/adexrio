@@ -13,13 +13,11 @@ import { ArenaChatService } from 'src/app/services/arena-chat.service';
 import { LoggingService } from 'src/app/services/logging.service';
 import { ShellService } from 'src/app/services/shell.service';
 import { environment } from 'src/environments/environment';
-
 import { BlockchainService } from './blockchain.service';
 import { ArenaChatBottomSheetComponent } from './components/arena-chat/arena-chat-bottomsheet.component';
 import { GameTabsFilterService } from './game-tabs-filter.service';
 import { GameStatusService } from './helper-services/gamestatus.service';
 import { WalletService } from './helper-services/wallet-service';
-
 import { WagerConversionService } from './helper-services/wager-conversion.service'
 import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/gameplay-help-dialog.component';
 
