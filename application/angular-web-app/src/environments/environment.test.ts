@@ -5,9 +5,9 @@ export const environment = {
     local: false,
     envName: 'test',
     showDebug: true,
-    syncTierName: 'TEST',
+    syncTierName: 'test',
     enforceSyncGuard: true,
-     veChain: {
+    veChain: {
          node: 'https://vethor-node-test.vechaindev.com',
          network: 'test'
      }
