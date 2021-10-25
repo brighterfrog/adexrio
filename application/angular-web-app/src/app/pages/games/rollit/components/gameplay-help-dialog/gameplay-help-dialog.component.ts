@@ -7,9 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class GameplayHelpDialogComponent implements OnInit {
 
+  disableAnimation = true;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+  
+  ngAfterViewInit(): void {    
+    setTimeout(() => this.disableAnimation = false);
   }
 
 }

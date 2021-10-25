@@ -414,8 +414,8 @@
         Add Message
       </button>
   
-      <mat-list class="chat-make-scrollable">
-        <mat-list-item class="chat-arena-posted-message" *ngFor="let item of arenaChatService?.chatMessages">
+      <!-- <mat-list role="list" class="chat-make-scrollable">
+        <mat-list-item  role="listitem" class="chat-arena-posted-message" *ngFor="let item of arenaChatService?.chatMessages">
   
           <h3 matLine class="chat-arena-fromUser">
   
@@ -429,7 +429,28 @@
             <span class=""> -- {{item.content}} </span>
           </p>
         </mat-list-item>
-      </mat-list>
+      </mat-list> -->
+
+      <div *ngFor="let item of arenaChatService?.chatMessages">
+        <div fxLayout="row wrap" class="chat-arena-posted-message"  fxLayoutAlign="start center" >
+          <h3 matLine class="chat-arena-fromUser">
+    
+            {{ item.fromWallet.substring(0, 5) }}
+            {{ "..." }}
+            {{ item.fromWallet.slice(-4) }}
+
+           </h3>
+           <h3 class="chat-arena-datetime"> {{item.createdAt.toLocaleString() }} </h3>  
+
+           <!-- <p class="chat-arena-white break-words">{{item.content}} </p> -->
+        </div>        
+        <div fxLayout="row wrap">
+          <p class="chat-arena-message">{{item.content}} </p>
+        </div>   
+        <!-- <div fxLayout="row wrap">          
+         
+        </div> -->
+      </div>
   
     </mat-tab>
   

@@ -5,6 +5,17 @@
 .chat-arena-fromUser{
     color: #8b8bff;
 }
+.chat-arena-datetime{
+    color:white;
+    padding-left:10px;
+}
+.chat-arena-message{
+    color:white;
+    white-space: pre-wrap !important;
+    overflow-x: hidden !important;
+    word-break: break-word;
+    margin-left:25px;
+}
 .mat-header-cell {
     flex-direction: column;
     justify-content: center;
