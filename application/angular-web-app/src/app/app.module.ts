@@ -45,12 +45,9 @@ import { ScrollingModule } from '@angular/cdk/scrolling';
     MatFormFieldModule,
     FlexLayoutModule,
     HttpClientModule,
-<<<<<<< HEAD
-    MatTooltipModule
-=======
+
     MatTooltipModule,
     ScrollingModule
->>>>>>> 51e5f49a9337d8bc2f3858f373b6926489f641f8
   ],
   providers: [
     ShellService,
