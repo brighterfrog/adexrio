@@ -42,7 +42,7 @@ receipt = connector.get_tx_receipt(txId)
 deployed_contract_address = receipt.get('outputs')[0]['contractAddress']
 print('Contract deployed to address : {0}'.format(deployed_contract_address))
 
-contract_address_outputfile = os.path.join(dirname, '../brownie/adexrio_contract_address/contract_address.json')
+contract_address_outputfile = os.path.join(dirname, '../brownie/adexrio_contract_address', config.ENVIRONMENT['outputFileName'])
 with open(contract_address_outputfile,'w') as output_file:
      json.dump({
         "address" : deployed_contract_address   

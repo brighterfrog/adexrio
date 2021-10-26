@@ -2,7 +2,11 @@ import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, W
 import { thorify } from "thorify";
 
 const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
-const RollItDeployedContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json');
+//const RollItDeployedContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json');
+
+const RollItDeployedDevelopmentContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/dev_contract_address.json');
+const RollItDeployedTestContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/test_contract_address.json');
+const RollItDeployedProductionContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/prod_contract_address.json');
 
 import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
@@ -140,9 +144,19 @@ export class BlockChainService {
         const func = RollItVetMultiPlayerGameDefinition.abi.find((item: { name: string; type: string; }) => item.name === name && item.type === 'function');
         return func;
     }
-    private getContractAddressForRollIt(): string {    
-        return RollItDeployedContractAddress.address;
-      }
+
+    private getContractAddressForRollIt(): string { 
+        
+        if(process.env.NODE_ENV.trim() === 'prod') {
+          return RollItDeployedProductionContractAddress.address;
+        }else if (process.env.NODE_ENV.trim() === 'test') {
+          return RollItDeployedTestContractAddress.address;
+        }
+        else {
+         return RollItDeployedDevelopmentContractAddress.address;
+        }                      
+    }
+
     private getSingleContractEventForName(eventName: string, wrappedEvents: ContractEvent[]): ContractEvent | undefined {
         const event = wrappedEvents.find((item) => {
           return item.abi.type === 'event' && item.abi.name === eventName;
