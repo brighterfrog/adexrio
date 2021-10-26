@@ -1,5 +1,20 @@
-<mat-accordion>
-  <mat-expansion-panel >
+<mat-accordion [@.disabled]="disableAnimation">
+  <mat-expansion-panel [expanded]="false">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        QuickStart
+      </mat-panel-title>
+      <mat-panel-description fxHide.lt-md fxShow.md>
+        What needs to happen to start playing?
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <p>
+        If no pools are visible on the 'Open Pools' tab, create a new pool for other players to join. Once you have created a pool, you are automatically added as a player. Once another player joins and hits the 'Player Count' on the pool size, the contract will execute and the pool will complete.
+        If there are pools visible on the 'Open Pools' tab, you are free to join any of the available pools. Each pool will have it's own fixed 'wager' that every player must match to join. This will build the pot size and ultimately be paid out to the winner
+    </p>
+  </mat-expansion-panel>
+  
+  <mat-expansion-panel [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Open Pools
@@ -16,7 +31,7 @@
     </p>
   </mat-expansion-panel>
 
-  <mat-expansion-panel>
+  <mat-expansion-panel [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Your Pools
@@ -30,7 +45,7 @@
     </p>
   </mat-expansion-panel>
 
-  <mat-expansion-panel >
+  <mat-expansion-panel [expanded]="false">
     <mat-expansion-panel-header>
       <mat-panel-title>
         Completed Pools
@@ -41,21 +56,6 @@
     </mat-expansion-panel-header>
     <p>
         Everything shown on the completed pools tab are all the historical completed pools. Players are able to view total wagers made, winning payouts, the minimum and current player counts, and access the vechain blockchain transaction insight for the pool execution. If the pool was a Random.org pool, a link to the random.org report and lottery execution audit will be provided
-    </p>
-  </mat-expansion-panel>
-
-  <mat-expansion-panel >
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        QuickStart
-      </mat-panel-title>
-      <mat-panel-description fxHide.lt-md fxShow.md>
-        What needs to happen to start playing?
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <p>
-        If no pools are visible on the 'Open Pools' tab, create a new pool for other players to join. Once you have created a pool, you are automatically added as a player. Once another player joins and hits the 'Player Count' on the pool size, the contract will execute and the pool will complete.
-        If there are pools visible on the 'Open Pools' tab, you are free to join any of the available pools. Each pool will have it's own fixed 'wager' that every player must match to join. This will build the pot size and ultimately be paid out to the winner
     </p>
   </mat-expansion-panel>
 
