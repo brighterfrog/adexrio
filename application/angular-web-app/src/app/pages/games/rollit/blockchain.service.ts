@@ -3,10 +3,10 @@ import { MatTableDataSource } from '@angular/material/table';
 
 import { Subject } from 'rxjs';
 
-
-// import RollItVetMultiPlayerGameDefinition from '../../../../../../vechain-contracts/build/contracts/RollItVetMultiPlayerGame.json';
 import RollItVetMultiPlayerGameDefinition from '../../../../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json';
-import RollItDeployedContractAddress from '../../../../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json';
+import RollItDeployedDevelopmentContractAddress from '../../../../../../vechain-contracts/brownie/adexrio_contract_address/dev_contract_address.json';
+import RollItDeployedTestContractAddress from '../../../../../../vechain-contracts/brownie/adexrio_contract_address/test_contract_address.json';
+import RollItDeployedProductionContractAddress from '../../../../../../vechain-contracts/brownie/adexrio_contract_address/prod_contract_address.json';
 
 import { ConnexService } from './helper-services/connex-service';
 import { DateConversionService } from './helper-services/date-conversion.service';
@@ -724,8 +724,15 @@ export class BlockchainService {
     const func = RollItVetMultiPlayerGameDefinition.abi.find(item => item.name === name && item.type === 'function');
     return func;
   }
-  private getContractAddressForRollIt(): string {    
-    return RollItDeployedContractAddress.address;
+  private getContractAddressForRollIt(): string {       
+   if(environment.production) {
+     return RollItDeployedProductionContractAddress.address;
+   }else if (environment.test) {
+     return RollItDeployedTestContractAddress.address;
+   }
+   else {
+    return RollItDeployedDevelopmentContractAddress.address;
+   }                      
   }
   private getEventsFromContract(): ContractEvent[] {
     
