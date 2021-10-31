@@ -17,6 +17,8 @@ import { ContractEvent, DecodedGameEntries as DecodedGameEntries, DecodedGameEnt
 import { environment } from '../../../../environments/environment';
 import { WalletService } from './helper-services/wallet-service';
 import { LoggingService } from 'src/app/services/logging.service';
+import { AuditFixFeeService } from './helper-services/audit-fix-fee.service';
+import { BinanceApiService } from './binance.api.service';
 
 
 @Injectable({
@@ -54,6 +56,8 @@ export class BlockchainService {
     dateConversionService: DateConversionService,
     connexService: ConnexService,
     walletService: WalletService,
+    private binanceApiService: BinanceApiService,
+    private auditFixFeeService: AuditFixFeeService,
     private loggingService: LoggingService
   ) {
     this.globalService = globalService;
@@ -73,6 +77,7 @@ export class BlockchainService {
     this.yourGamesChanged = new Subject<GameEntry>();
     this.completedGamesChanged = new Subject<GameEntry>();
     this.existingGamesChanged = new Subject<GameEntry>();
+
 
     this.retrieveCompletedForYourLeaveEvents = new
       Subject<Connex.Thor.Filter.Row<'event', Connex.Thor.Account.WithDecoded>[]>();
@@ -639,27 +644,42 @@ export class BlockchainService {
       .request();
   }
 
-  async joinOpenGame(
-    gameId: number,
-    gameBetSize: number): Promise<Connex.Vendor.TxResponse> {
+  async joinOpenGame(game: GameEntry): Promise<Connex.Vendor.TxResponse> {
 
-    const amount = gameBetSize / 1e18;
+      /* transfer abi */
+    const transferABI = {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"};
+    const transferMethod = this.connex.thor.account('0x80A14141080F878260340986C7cf6e4A6b2AC504').method(transferABI);
+
+    const currentPriceAuditFeeAmountInVetForGame = this.auditFixFeeService.getPlayerAuditFee(game, this.binanceApiService.binanceTickerResponseResult.price);
+
+    const amount = game.gameBetSize / 1e18;
     const joinGameMethod = this.connex.thor.account(
       this.getContractAddressForRollIt()
     )
       .method(this.getContractFunctionABIfor('joinExistingGame'))
-      .value(gameBetSize)
+      .value(game.gameBetSize)
       .caller(this.walletService.walletCertificate.annex.signer);
 
     return this.connex.vendor.sign('tx',
       [
         {
-          ...joinGameMethod.asClause(gameId),
-          comment: `Transfer ${amount} VET`
+          ...joinGameMethod.asClause(game.id),
+          comment: `Transfer ${amount} VET to join the pool ${game.id}`
+        },
+        
+        {
+          ...transferMethod.asClause(currentPriceAuditFeeAmountInVetForGame),
+          comment: `Transfer ${amount} VET to enable random.org lottery drawing for ${game.id}. This small fee portion will not be refundable if you 'Leave' the pool for a refund`,
+          value: currentPriceAuditFeeAmountInVetForGame,          
+          data: '0x',
         }
+
       ])
       .signer(this.walletService.walletCertificate.annex.signer)
-      .comment('Join Game')
+      .comment( game.isAuditEnabled ? 
+        `Joining VeChain executed Random.org audit pool drawing. Selects lottery winner with proof of an unbiased game ${game.isAuditEnabled}` :
+        `Join Game`
+      )
       .request();
   }
 

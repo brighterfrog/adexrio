@@ -9,7 +9,7 @@ import { HttpClient } from '@angular/common/http';
     providedIn: 'root'
 })
 export class BinanceApiService {
-    // priceTickerDataChanged: Subject<BinanceTickerResponse>;
+    
     httpClient: HttpClient;
     binanceTickerResponseResult: BinanceTickerResponse;
     vetPriceLoader: Subscription;
@@ -20,7 +20,7 @@ export class BinanceApiService {
         httpClient: HttpClient
     ) {
         this.httpClient = httpClient;
-        // this.priceTickerDataChanged = new Subject<BinanceTickerResponse>();
+        
         this.vetPriceLoader = timer(0, 1000)
             .subscribe((item) => this.getAndUpdateVetPrice());
 
@@ -34,7 +34,7 @@ export class BinanceApiService {
             .subscribe((response) => {
                 this.binanceTickerResponseResult = response;
                 this.binanceResponse.next(response);
-            });
+        });
     }
 }
 
