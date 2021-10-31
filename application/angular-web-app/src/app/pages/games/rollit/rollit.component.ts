@@ -171,8 +171,7 @@ export class RollitComponent implements OnInit, AfterViewInit {
   joinOpenGame(gameId: number): void {
     if (this.shellService.isUserConnexAuthorized() && this.walletService.userIsLoggedInToWallet()) {
       this.blockChainService.getGameByGameId(gameId).then((game) => {
-        this.blockChainService.joinOpenGame(game.id,
-          game.gameBetSize).then(result => {
+        this.blockChainService.joinOpenGame(game).then(result => {
             this.loggingService.writeDebug(result);
             this.createTransactionVisitorForJoiningGame(result.txid, gameId);
           }).catch(ex => {
