@@ -20,6 +20,7 @@ import { GameStatusService } from './helper-services/gamestatus.service';
 import { WalletService } from './helper-services/wallet-service';
 import { WagerConversionService } from './helper-services/wager-conversion.service'
 import { GameplayHelpDialogComponent } from './components/gameplay-help-dialog/gameplay-help-dialog.component';
+import { GameEntry } from './rollit_models';
 
 @Component({
   selector: 'app-rollit',
@@ -168,13 +169,12 @@ export class RollitComponent implements OnInit, AfterViewInit {
   testMethod(gameId: number): void {
     this.blockChainService.testMethod(gameId);
   }
-  joinOpenGame(gameId: number): void {
+  joinOpenGame(gameEntry: GameEntry): void {
     if (this.shellService.isUserConnexAuthorized() && this.walletService.userIsLoggedInToWallet()) {
-      this.blockChainService.getGameByGameId(gameId).then((game) => {
-        this.blockChainService.joinOpenGame(game.id,
-          game.gameBetSize).then(result => {
+      this.blockChainService.getGameByGameId(gameEntry.id).then((game) => {
+        this.blockChainService.joinOpenGame(game).then(result => {
             this.loggingService.writeDebug(result);
-            this.createTransactionVisitorForJoiningGame(result.txid, gameId);
+            this.createTransactionVisitorForJoiningGame(result.txid, gameEntry.id);
           }).catch(ex => {
             this.loggingService.writeDebug(ex);
           });

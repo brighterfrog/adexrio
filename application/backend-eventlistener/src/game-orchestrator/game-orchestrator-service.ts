@@ -35,8 +35,16 @@ export class GameOrchestratorService {
 
     registerGameProcessLimboService(): void {
         this.gameProcessLimboService = new GameProcessLimboService(this.blockChainService);
-        this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+                   
+        //this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+        this.startRepeatLimboCheck();
     }
+
+     startRepeatLimboCheck() {
+         setInterval( async ()=> {
+             await this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+         }, 7000)
+     }
 
     registerGameSummaryApiToEvents(): void {
         this.blockChainService.eventListener.gameCompletedEvent.subscribe({
@@ -54,10 +62,7 @@ export class GameOrchestratorService {
     registerBlockchainEventSubscriptions(): void {
         this.blockChainService.eventListener.gameCreatedEvent.subscribe({
             next: (item) => {
-
-                //gameId
-                //get game details - is game audit, get all player wallets
-                //log winner
+              
                 console.log('gameCreatedEvent subscribe');
                 console.log(item);
 

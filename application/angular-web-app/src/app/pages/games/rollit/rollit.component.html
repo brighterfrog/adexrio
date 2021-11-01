@@ -6,6 +6,17 @@
    Create Pool
   </button>
 
+  <button
+    *ngIf="walletService.walletCertificate !== undefined"
+    mat-flat-button
+    disabled="disabled"
+    matTooltip="coming soon"
+    class="new-pool-builder-btn">
+    Build Pool
+    <mat-icon>construction</mat-icon>
+  </button>
+  
+
   <button 
     class="btn-transparent" 
     mat-flat-button 
@@ -31,7 +42,7 @@
               *ngIf="walletService.walletCertificate !== undefined"
               mat-flat-button
               color="accent"
-              (click)="joinOpenGame(game.id)"
+              (click)="joinOpenGame(game)"
             >
               Join
             </button>
@@ -79,7 +90,7 @@
   
         <ng-container matColumnDef="isAuditEnabled">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Audit Protection
+            Audit
           </mat-header-cell>
           <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
         </ng-container>
@@ -198,7 +209,7 @@
   
         <ng-container matColumnDef="isAuditEnabled">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Audit Protection
+            Audit
           </mat-header-cell>
           <mat-cell *matCellDef="let game">
             {{ game.isAuditEnabled }}
@@ -255,7 +266,7 @@
               mat-icon-button>
               <mat-icon
                 class="cursor-pointer"
-                matTooltip="Audit Enabled Game">
+                matTooltip="Random.org Audit Game">
                 fact_check
               </mat-icon>
             </button>
@@ -378,7 +389,7 @@
   
         <ng-container matColumnDef="isAuditEnabled">
           <mat-header-cell *matHeaderCellDef mat-sort-header>
-            Audit Protection
+            Audit
           </mat-header-cell>
           <mat-cell *matCellDef="let game"> {{ game.isAuditEnabled }} </mat-cell>
         </ng-container>

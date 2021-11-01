@@ -70,11 +70,13 @@ export class ShellService {
     this.headerTitle = 'adexr.io';
     this.walletService = walletService;
     this.blockChainService = blockChainService;
+    
     this.binanceApiService = binanceApiService;
     this.dateConversionService = dateConversionService;
     this.apiService = apiService;    
 
     this.donationWalletAddress = this.getDonationWalletAddress();
+    this.blockChainService.donationWalletAddress = this.donationWalletAddress;
 
     this.walletService.walletSubject.subscribe({
       next: (item) => {

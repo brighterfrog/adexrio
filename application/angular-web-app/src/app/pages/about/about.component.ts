@@ -43,7 +43,7 @@ export class AboutComponent implements OnInit {
       ),
       new QuestionModel(
         'What are the steps to play a game?',
-        'You can either join an existing game on the "Open Games" tab, or Create a new game. Only once the player count is reached for that lottery will the smart contract execute and issue the payout to the winner. Games can be created with random.org audit protection hosting the winner selection on their reporting pages to verify they are indeed drawing the winners.'
+        'You can either join an existing game on the "Open Games" tab, or Create a new game. Only once the player count is reached for that lottery will the smart contract execute and issue the payout to the winner. Games can be created with random.org audits enabled where random.org holds and draws the winning address while also hosting the winner selection on their reporting pages to verify they are indeed drawing the winners. The contract is then updated and executes.'
       ),
       new QuestionModel(
         'Why arent all the games random.org audit hosted games?',
