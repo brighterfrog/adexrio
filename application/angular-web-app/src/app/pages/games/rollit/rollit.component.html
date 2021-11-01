@@ -6,6 +6,17 @@
    Create Pool
   </button>
 
+  <button
+    *ngIf="walletService.walletCertificate !== undefined"
+    mat-flat-button
+    disabled="disabled"
+    matTooltip="coming soon"
+    class="new-pool-builder-btn">
+    Build Pool
+    <mat-icon>construction</mat-icon>
+  </button>
+  
+
   <button 
     class="btn-transparent" 
     mat-flat-button 

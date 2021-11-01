@@ -701,7 +701,7 @@ export class BlockchainService {
     
     const transferABI = {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"};    
     const currentPriceAuditFeeAmountInVetForGame = this.auditFixFeeService.getPlayerAuditFeeInVet(minPlayers, this.binanceApiService.binanceTickerResponseResult.price);
-    const randomOrgVetinWeiFee = (currentPriceAuditFeeAmountInVetForGame).toString().padEnd(19, '0');          
+    const randomOrgVetinWeiFee = (currentPriceAuditFeeAmountInVetForGame).toString().padEnd(20, '0');          
     const transferMethod = this.connex.thor.account('0x' + this.donationWalletAddress).method(transferABI).value(randomOrgVetinWeiFee);       
     const randomOrgReadableAmount = parseInt(randomOrgVetinWeiFee) / 1e18;
 

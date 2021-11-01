@@ -35,9 +35,16 @@ export class GameOrchestratorService {
 
     registerGameProcessLimboService(): void {
         this.gameProcessLimboService = new GameProcessLimboService(this.blockChainService);
-          
-        setInterval(this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState, 5000);       
+                   
+        //this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+        this.startRepeatLimboCheck();
     }
+
+     startRepeatLimboCheck() {
+         setInterval( async ()=> {
+             await this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+         }, 7000)
+     }
 
     registerGameSummaryApiToEvents(): void {
         this.blockChainService.eventListener.gameCompletedEvent.subscribe({
