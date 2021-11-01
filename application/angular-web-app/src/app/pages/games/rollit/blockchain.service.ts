@@ -1,5 +1,4 @@
-import { HostBinding, Injectable } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
+import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
@@ -48,6 +47,8 @@ export class BlockchainService {
         Connex.Thor.Account.WithDecoded>[]>;
 
   globalService: GlobalService;
+  
+  donationWalletAddress: string;
 
   constructor(
     globalService: GlobalService,
@@ -177,21 +178,11 @@ export class BlockchainService {
     donationAddress: string
   ): Promise<Connex.Vendor.TxResponse> {
 
-    // const signingService = this.connex.vendor.sign('tx');
-    // signingService.comment(`Donate ${vetAmount} to adexr.io`);
-
-    // return signingService.request([{
-    //   to: donationAddress,
-    //   value: this.wagerConversionService.convertVETtoWei(vetAmount),
-    //   data: '0x',
-    // }]);
-
     return this.connex.vendor.sign('tx',
       [
         {
           to: `0x${donationAddress}`,
-          value: this.wagerConversionService.convertVETtoWei(vetAmount),
-          // data: '0x'
+          value: this.wagerConversionService.convertVETtoWei(vetAmount),          
           data: `0x`
         }
       ])
@@ -647,38 +638,56 @@ export class BlockchainService {
   async joinOpenGame(game: GameEntry): Promise<Connex.Vendor.TxResponse> {
 
       /* transfer abi */
-    const transferABI = {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"};
-    const transferMethod = this.connex.thor.account('0x80A14141080F878260340986C7cf6e4A6b2AC504').method(transferABI);
-
-    const currentPriceAuditFeeAmountInVetForGame = this.auditFixFeeService.getPlayerAuditFee(game, this.binanceApiService.binanceTickerResponseResult.price);
+    const transferABI = {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"};    
+    const currentPriceAuditFeeAmountInVetForGame = this.auditFixFeeService.getPlayerAuditFeeInVet(game.minimumGamePlayers, this.binanceApiService.binanceTickerResponseResult.price);
+    const randomOrgVetinWeiFee = (currentPriceAuditFeeAmountInVetForGame).toString().padEnd(20, '0');          
+    const transferMethod = this.connex.thor.account('0x' + this.donationWalletAddress).method(transferABI).value(randomOrgVetinWeiFee);       
+    const randomOrgReadableAmount = parseInt(randomOrgVetinWeiFee) / 1e18;
 
     const amount = game.gameBetSize / 1e18;
+    
     const joinGameMethod = this.connex.thor.account(
       this.getContractAddressForRollIt()
     )
       .method(this.getContractFunctionABIfor('joinExistingGame'))
       .value(game.gameBetSize)
+      
       .caller(this.walletService.walletCertificate.annex.signer);
 
-    return this.connex.vendor.sign('tx',
-      [
-        {
-          ...joinGameMethod.asClause(game.id),
-          comment: `Transfer ${amount} VET to join the pool ${game.id}`
-        },
-        
-        {
-          ...transferMethod.asClause(currentPriceAuditFeeAmountInVetForGame),
-          comment: `Transfer ${amount} VET to enable random.org lottery drawing for ${game.id}. This small fee portion will not be refundable if you 'Leave' the pool for a refund`,
-          value: currentPriceAuditFeeAmountInVetForGame,          
-          data: '0x',
-        }
+    let signer =  
+    game.isAuditEnabled ? 
+        this.connex.vendor.sign('tx',    
+          [
+            {
+              ...joinGameMethod.asClause(game.id),
+              comment: `Transfer ${amount} VET to join the pool id ${game.id}. This is refundable if you leave the pool before execution.`
+            },
+            
+            {
+              ...transferMethod.asClause('0x' + this.donationWalletAddress, '0x' + randomOrgVetinWeiFee),
+              comment: `Transfer ${randomOrgReadableAmount} VET to reserve a random.org lottery drawing for pool id ${game.id}. This small reservation fee will not be refundable if you leave the pool early before it executes. However, your primary entry fee is always refunded when you exit a pool.`,
+            }
 
-      ])
-      .signer(this.walletService.walletCertificate.annex.signer)
+          ])
+          .signer(this.walletService.walletCertificate.annex.signer) 
+          
+          :
+          
+          this.connex.vendor.sign('tx',    
+          [
+            {
+              ...joinGameMethod.asClause(game.id),
+              comment: `Transfer ${amount} VET to join the pool id ${game.id}. This is refundable if you leave the pool before execution.`
+            },                        
+
+          ])
+          .signer(this.walletService.walletCertificate.annex.signer);
+      
+
+      return signer
       .comment( game.isAuditEnabled ? 
-        `Joining VeChain executed Random.org audit pool drawing. Selects lottery winner with proof of an unbiased game ${game.isAuditEnabled}` :
-        `Join Game`
+        `You are joining a VeChain executed random.org audit protected pool drawing for pool ${game.id}. Provably unbiased. Random.org holds and selects the game winner and then the smart contract is updated for the pool. An audit link is provided by random.org once the game is completed. Intended for high stakes, unbiased, auditable protected drawings.` :
+        `You are joining a VeChain executed lottery drawing pool ${game.id}`
       )
       .request();
   }
@@ -688,6 +697,14 @@ export class BlockchainService {
     isAuditEnabled: boolean,
     wagerAmountInVET: number
   ): Promise<Connex.Vendor.TxResponse> {
+    
+    
+    const transferABI = {"constant":false,"inputs":[{"name":"_to","type":"address"},{"name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"name":"success","type":"bool"}],"payable":false,"stateMutability":"nonpayable","type":"function"};    
+    const currentPriceAuditFeeAmountInVetForGame = this.auditFixFeeService.getPlayerAuditFeeInVet(minPlayers, this.binanceApiService.binanceTickerResponseResult.price);
+    const randomOrgVetinWeiFee = (currentPriceAuditFeeAmountInVetForGame).toString().padEnd(19, '0');          
+    const transferMethod = this.connex.thor.account('0x' + this.donationWalletAddress).method(transferABI).value(randomOrgVetinWeiFee);       
+    const randomOrgReadableAmount = parseInt(randomOrgVetinWeiFee) / 1e18;
+
     const amount = wagerAmountInVET;
     const vetamount = '0x' + (amount * 1e18).toString(16);
 
@@ -697,15 +714,35 @@ export class BlockchainService {
       .value(vetamount)
       .caller(this.walletService.walletCertificate.annex.signer);
 
-    return this.connex.vendor.sign('tx', [
-      {
-        ...startGameMethod.asClause(minPlayers, isAuditEnabled),
-        comment: `Transfer ${amount} VET`
-      }
-    ]).signer(this.walletService.walletCertificate.annex.signer)
-      .comment('Create New Game')
-      .request();
+    let signer =  isAuditEnabled ? 
+    
+    this.connex.vendor.sign('tx', [
+        {
+          ...startGameMethod.asClause(minPlayers, isAuditEnabled),
+          comment: `Transfer ${amount} VET to create a new lottery pool. Fully refundable at anytime up until the lottery player limit is reached and the contract executes.`
+        },
+        {
+          ...transferMethod.asClause('0x' + this.donationWalletAddress, '0x' + randomOrgVetinWeiFee),
+          comment: `Transfer ${randomOrgReadableAmount} VET to reserve a random.org lottery drawing pool. This small reservation fee will not be refundable if you leave the pool early before it executes. However, your primary entry fee is always refunded when you exit a pool.`,
+        }
+      ]).signer(this.walletService.walletCertificate.annex.signer) 
 
+      :         
+      
+      this.connex.vendor.sign('tx', [
+        {
+          ...startGameMethod.asClause(minPlayers, isAuditEnabled),
+          comment: `Transfer ${amount} VET to create a new lottery pool. Fully refundable at anytime up until the lottery player limit is reached and the contract executes.`
+        }
+      ]).signer(this.walletService.walletCertificate.annex.signer) 
+    
+    return signer
+    .comment(isAuditEnabled ? 
+      `You are creating a VeChain executed random.org audit protected pool. Provably unbiased. Random.org holds and selects the game winner when the player limit is reached and then the smart contract is updated for the pool with results. An audit link is provided by random.org once the game is completed. Intended for high stakes, unbiased, auditable protected drawings.` :
+      `You are creating a VeChain executed lottery drawing pool.`
+    )
+    .request();
+   
   }
 
 
@@ -767,17 +804,6 @@ export class BlockchainService {
 
     });
         
-    // const events = RollItVetMultiPlayerGameDefinition.abi.filter( f=> f.type == 'event') as EventObject<object>;
-    // const eventKeys = Object.keys(events) as { [key: string]: any };
-    // const wrappedEvents: ContractEvent[] = [];
-    // eventKeys.forEach((key: string) => {
-    //   const item = events[key];
-    //   wrappedEvents.push({
-    //     key,
-    //     abi: item
-    //   });
-    // });
-
    return wrappedEvents;   
   }
 }

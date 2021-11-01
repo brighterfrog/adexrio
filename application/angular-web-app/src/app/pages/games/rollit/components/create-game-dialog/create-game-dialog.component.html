@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card class="mat-elevation-z8">
     <mat-card-title>create lottery pool</mat-card-title>
     <mat-card-subtitle>settings</mat-card-subtitle>
     <mat-card-content>
@@ -54,10 +54,9 @@
                         <mat-expansion-panel>
                             <mat-expansion-panel-header>
                                 <mat-panel-title>
-                                    random.org audit
+                                    random.org drawing
                                 </mat-panel-title>
-                                <mat-panel-description>
-                                    
+                                <mat-panel-description>                                    
                                 </mat-panel-description>
                                 <mat-icon *ngIf="!createGameForm.controls['isRandomOrgDrawingControl'].value" color="warn">
                                     lock_open
@@ -66,8 +65,7 @@
                                     lock
                                 </mat-icon>
                             </mat-expansion-panel-header>
-    
-                            <!-- <p>This is the primary content of the panel.</p> -->                            
+                                                          
                             <div fxLayout="row">
                                 <div fxLayout="column">
                                     <mat-checkbox formControlName="isRandomOrgDrawingControl"

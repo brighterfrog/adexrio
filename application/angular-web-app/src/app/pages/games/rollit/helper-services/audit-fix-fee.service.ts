@@ -9,12 +9,11 @@ export class AuditFixFeeService {
 
   constructor(private costPerGameService: CostPerGameService) { }
 
-  getPlayerAuditFee(game: GameEntry, vetPrice: number) {
-    let randomOrgFee = 10;
+  getPlayerAuditFeeInVet(minimumGamePlayers: number, vetPrice: number) {
+    let randomOrgDollarFee = 10;        
+    let vetQuantityForFee = randomOrgDollarFee / vetPrice;        
+    let singlePlayerVetFee = Math.round(vetQuantityForFee / minimumGamePlayers);
     
-    let fee = this.costPerGameService.getRandomOrgGameFeeBasedOnPlayers(game.minimumGamePlayers)
-    let totalFee = (fee * 1e18).toString(16);
-
-    return fee;  
+    return singlePlayerVetFee;  
   }
 }
