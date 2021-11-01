@@ -12,7 +12,7 @@ export class GameProcessLimboService {
 
     processAllGamesInTheAwaitingLotteryState(): void {
         this.blockChainService.getGamesAwaitingGameCriteriaMet().then((list) => {
-            console.log(`processAllGamesInTheAwaitingLotteryState ${list.gameIds.length}`)
+            console.log(`PROCESS ALL GAMES IN THE AWAITING LOTTERY STATE ${list.gameIds.length}`)
 
             for (let i = 0; i < list.gameIds.length; i++) {
 

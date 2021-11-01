@@ -121,8 +121,8 @@ export class GameTabsFilterService {
       this.updateDataSourceExistingItem(this.yourGamesDataSource, gameEntry);
     });
 
-    this.blockChainService.retrieveCompletedForYourLeaveEvents?.subscribe((events) => {
-      console.log('retrieveCompletedForYourLeaveEvents');
+    this.blockChainService.retrieveCompletedForYourLeaveEvents?.subscribe((events) => {      
+      this.loggingService.writeDebug('retrieveCompletedForYourLeaveEvents');
       this.eventsThePlayerHasLeftGame = events;
       this.updateGameEntriesWithLeftGameEvent(
         this.openGameDataSource,
