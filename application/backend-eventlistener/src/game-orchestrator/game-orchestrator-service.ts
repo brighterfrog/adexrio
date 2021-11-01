@@ -55,10 +55,7 @@ export class GameOrchestratorService {
     registerBlockchainEventSubscriptions(): void {
         this.blockChainService.eventListener.gameCreatedEvent.subscribe({
             next: (item) => {
-
-                //gameId
-                //get game details - is game audit, get all player wallets
-                //log winner
+              
                 console.log('gameCreatedEvent subscribe');
                 console.log(item);
 
