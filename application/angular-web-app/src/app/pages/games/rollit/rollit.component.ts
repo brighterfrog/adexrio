@@ -86,9 +86,9 @@ export class RollitComponent implements OnInit, AfterViewInit {
   ) {
     this.gameDetailsRetrievedForYourGamesTab = false;
     this.shellService = shellService;
-    shellService.headerTitle = 'lottery pools';
-    this.openAuditGameLinkTooltip = environment.production ? 'Audit Enabled Game' :
-      'Audit Enabled Game - Demo mode [Non-Production]: Opens a demonstration of an audited report for a game since reports are billable';
+    shellService.headerTitle = 'wager pools';
+    this.openAuditGameLinkTooltip = environment.production ? 'Random.org enabled pool' :
+      'Random.org enabled pool - Demo mode [Non-Production]: Opens a demonstration of an audited report for a game since reports are billable';
 
     this.snackBar = snackBar;
     const snackBarConfig = new MatSnackBarConfig();
@@ -110,9 +110,9 @@ export class RollitComponent implements OnInit, AfterViewInit {
 
   openRandomOrgAuditLinkByGameId(auditRecordDrawId: number): void {
     if (!environment.production) {
-      this.snackBar.open('not a real money game', 'test-mode drawing enabled');
+      this.snackBar.open('not a real money pool', 'test-mode drawing enabled');
       this.loggingService.writeDebug(`openRandomOrgAuditLinkByGameId ${auditRecordDrawId}`);
-      window.open(`https://www.random.org/draws/details/?draw=134655`);
+      window.open(`https://www.random.org/draws/details/?draw=145351`);
     }
     else {
       window.open(`https://www.random.org/draws/details/?draw=${auditRecordDrawId}`);

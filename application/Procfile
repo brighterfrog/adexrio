@@ -1,1 +1,1 @@
-web: cd backend-eventlistener && npm run release:test
+web:  cd backend-eventlistener && npm run release:elasticbeanstalk

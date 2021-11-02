@@ -12,9 +12,10 @@
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts",
     "test": "NODE_ENV=dev mocha -r ts-node/register tests/**/*.spec.ts",
     "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
-    "release:dev": "NODE_ENV=dev node dist/index.js",
-    "release:test": "NODE_ENV=test node dist/index.js",
-    "release:prod": "NODE_ENV=prod node dist/index.js"
+    "release:dev": "NODE_ENV=dev node --trace-warnings dist/index.js",
+    "release:test": "NODE_ENV=test node --trace-warnings dist/index.js",
+    "release:prod": "NODE_ENV=prod node --trace-warnings dist/index.js",
+    "release:elasticbeanstalk": "node --trace-warnings dist/index.js"
   },
   "author": "",
   "license": "ISC",
