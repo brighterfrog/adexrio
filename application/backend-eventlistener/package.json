@@ -14,7 +14,8 @@
     "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
     "release:dev": "NODE_ENV=dev node dist/index.js",
     "release:test": "NODE_ENV=test node dist/index.js",
-    "release:prod": "NODE_ENV=prod node dist/index.js"
+    "release:prod": "NODE_ENV=prod node dist/index.js",
+    "release:elasticbeanstalk": "node dist/index.js"
   },
   "author": "",
   "license": "ISC",
