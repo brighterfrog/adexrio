@@ -27,7 +27,10 @@ const awsmobile = require('./aws-exports');
 Amplify.configure(awsmobile.default);
 Amplify.Auth.configure({
   mandatorySignIn: false
-})
+});
+
+console.log(`ENVIRONMENT IS: ${process.env.NODE_ENV}`);
+
 
 //ALSO IN TESTS
 
