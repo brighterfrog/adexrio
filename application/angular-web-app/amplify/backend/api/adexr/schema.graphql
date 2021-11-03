@@ -38,3 +38,97 @@ type ErrorLog @model {
   createdAt: String!
   stackTrace: String!
 }
+
+
+
+enum poolType {
+  lottery
+  manual
+  api
+}
+enum poolStatus {
+  awaiting
+  completed
+  terminated
+}
+enum PlayerStatus {
+  pending_pool_completion,
+  withdrew
+  win
+  lose
+}
+
+type Player @model 
+ @key(name: "byPlayer", fields: ["wallet","status"]) {
+  id: ID!
+  wallet: String!    
+  status: PlayerStatus!
+}
+
+type ApiPoolAttributes @model {
+  id: ID!
+  entryFee: Int!
+  allowPlayerLeave: Boolean!
+  lockFundsDatetime: AWSDateTime!
+  executeWinnerDatetime: AWSDateTime!
+  apiUrlForResults: AWSURL!
+  verifiedUrl: Boolean!
+  poolCreatorPercentFeeToWithold: Int!
+  winnerOptionEntries: AWSJSON!
+
+  winnerResult: String!
+}
+type ApiPool @model{
+  id: ID!
+  poolId: Int!    
+  poolStatus: poolStatus!  
+  poolAttributes: LotteryPoolAttributes @connection
+  lastBlockProcessedForCreatedEvents: Int!
+  lastBlockProcessedForCompletedEvents: Int!
+  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
+  lastBlockProcessedForPlayerLeftPoolEvents: Int!
+  lastBlockProcessedForPoolAwaitingExecution: Int!
+  requestHash: String!
+  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
+}
+type LotteryPoolAttributes @model {
+  id: ID!
+  entryFee: Int!
+  allowPlayerLeave: Boolean!
+}
+type LotteryPool @model{
+  id: ID!
+  poolId: Int!    
+  poolStatus: poolStatus!  
+  poolAttributes: LotteryPoolAttributes @connection
+  lastBlockProcessedForCreatedEvents: Int!
+  lastBlockProcessedForCompletedEvents: Int!
+  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
+  lastBlockProcessedForPlayerLeftPoolEvents: Int!
+  lastBlockProcessedForPoolAwaitingExecution: Int!
+  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
+}
+type ManualPoolAttributes @model {
+  id: ID!
+  entryFee: Int!
+  allowPlayerLeave: Boolean!
+}
+type ManualPool @model{
+  id: ID!
+  poolId: Int!    
+  poolBrand: PoolBrand @connection
+  poolStatus: poolStatus!    
+  poolAttributes: ManualPoolAttributes @connection
+  lastBlockProcessedForCreatedEvents: Int!
+  lastBlockProcessedForCompletedEvents: Int!
+  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
+  lastBlockProcessedForPlayerLeftPoolEvents: Int!
+  lastBlockProcessedForPoolAwaitingExecution: Int!
+  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
+}
+type PoolBrand {
+  id: ID!
+  wallet: String!
+  name: String!
+  logo: AWSURL
+}
