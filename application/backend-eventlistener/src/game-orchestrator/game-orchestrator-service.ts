@@ -35,43 +35,49 @@ export class GameOrchestratorService {
 
     registerGameProcessLimboService(): void {
         this.gameProcessLimboService = new GameProcessLimboService(this.blockChainService);
-                   
+        this.gameProcessLimboService.startTicker();
+        
         //this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
-        this.startRepeatLimboCheck();
+        //this.startRepeatLimboCheck();
     }
 
-     startRepeatLimboCheck() {
-         setInterval( async ()=> {
-             await this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
-         }, 7000)
-     }
+    // async startRepeatLimboCheck() {
+    //       setInterval( ()=> {
+    //             this.gameProcessLimboService.processAllGamesInTheAwaitingLotteryState();
+    //       }, 15000)
+    // }
+
+
+    registerBlockchainTickerProcessor(): void {
+       
+    }
 
     registerGameSummaryApiToEvents(): void {
-        this.blockChainService.eventListener.gameCompletedEvent.subscribe({
-            next: (event) => {
-                console.log('game-summary-api-service process completed event');
-                this.gameSummaryApiService.processCompletedGameEvent(event);
-            },
-            error: (err) => {
-                console.log(err);
-                this.errorService.logError(err);
-            }
-        })
+        // this.blockChainService.eventListener.gameCompletedEvent.subscribe({
+        //     next: (event) => {
+        //         //console.log('game-summary-api-service process completed event');
+        //         //this.gameSummaryApiService.processCompletedGameEvent(event);
+        //     },
+        //     error: (err) => {
+        //         console.log(err);
+        //         this.errorService.logError(err);
+        //     }
+        // })
     }
 
     registerBlockchainEventSubscriptions(): void {
-        this.blockChainService.eventListener.gameCreatedEvent.subscribe({
-            next: (item) => {
+        // this.blockChainService.eventListener.gameCreatedEvent.subscribe({
+        //     next: (item) => {
               
-                console.log('gameCreatedEvent subscribe');
-                console.log(item);
+        //         console.log('gameCreatedEvent subscribe');
+        //         console.log(item);
 
-            },
-            error: (err) => {
-                console.log(err);
-                this.errorService.logError(err);
-            }
-        });
+        //     },
+        //     error: (err) => {
+        //         console.log(err);
+        //         this.errorService.logError(err);
+        //     }
+        // });
 
         this.blockChainService.eventListener.gameAwaitingLotteryEvent.subscribe({
             next: (item) => {
