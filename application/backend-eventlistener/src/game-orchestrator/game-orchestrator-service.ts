@@ -48,7 +48,7 @@ export class GameOrchestratorService {
     // }
 
 
-    registerBlockchainTickerProcessor(): void {
+    registerBlockchainTickerGamesEventProcessor(): void {
        
     }
 

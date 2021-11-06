@@ -116,3 +116,513 @@ subscription OnDeleteErrorLog {
     updatedAt
   }
 }
+subscription OnCreatePlayer {
+  onCreatePlayer {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePlayer {
+  onUpdatePlayer {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePlayer {
+  onDeletePlayer {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateApiPoolAttributes {
+  onCreateApiPoolAttributes {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateApiPoolAttributes {
+  onUpdateApiPoolAttributes {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteApiPoolAttributes {
+  onDeleteApiPoolAttributes {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreatePool {
+  onCreatePool {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePool {
+  onUpdatePool {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePool {
+  onDeletePool {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreatePoolSuccessfullBlockEventsProcessed {
+  onCreatePoolSuccessfullBlockEventsProcessed {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePoolSuccessfullBlockEventsProcessed {
+  onUpdatePoolSuccessfullBlockEventsProcessed {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePoolSuccessfullBlockEventsProcessed {
+  onDeletePoolSuccessfullBlockEventsProcessed {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreatePoolSummaries {
+  onCreatePoolSummaries {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdatePoolSummaries {
+  onUpdatePoolSummaries {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeletePoolSummaries {
+  onDeletePoolSummaries {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateUserWallet {
+  onCreateUserWallet {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateUserWallet {
+  onUpdateUserWallet {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteUserWallet {
+  onDeleteUserWallet {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+subscription OnCreateBrand {
+  onCreateBrand {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}
+subscription OnUpdateBrand {
+  onUpdateBrand {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}
+subscription OnDeleteBrand {
+  onDeleteBrand {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}

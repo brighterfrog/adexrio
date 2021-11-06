@@ -1,25 +1,29 @@
 import { GameAwaitingLotteryEvent } from "../models/all-models";
 import { BlockChainService } from "../blockchain/blockchain-service";
 
-export class GameProcessLimboService {
+export class PoolBlockEventsProcessorService {
 
     blockChainService: BlockChainService
 
     constructor(blockChainService: BlockChainService) {
         this.blockChainService = blockChainService;
-        console.log('GameProcessLimboService');       
-    }
+        console.log('GameProcessLimboService');
 
-    startTicker(): void {
+
         (async () => {
             const ticker = this.blockChainService.walletService.connex.thor.ticker()
             for (;;) {
-                await ticker.next()                
+                await ticker.next()
+                // do something here
                 this.processAllGamesInTheAwaitingLotteryState();
+
+                //fetch last block number without failure
+                //fetch all completed game events
+                //build CompletedPool
+                //funnel to Pool Summary Aggregate from dynamodb
             }
-        });
+        })
     }
-    
 
     processAllGamesInTheAwaitingLotteryState(): void {
 
