@@ -152,3 +152,585 @@ mutation DeleteErrorLog(
     updatedAt
   }
 }
+mutation CreatePlayer(
+  $input: CreatePlayerInput!
+  $condition: ModelPlayerConditionInput
+) {
+  createPlayer(input: $input, condition: $condition) {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePlayer(
+  $input: UpdatePlayerInput!
+  $condition: ModelPlayerConditionInput
+) {
+  updatePlayer(input: $input, condition: $condition) {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePlayer(
+  $input: DeletePlayerInput!
+  $condition: ModelPlayerConditionInput
+) {
+  deletePlayer(input: $input, condition: $condition) {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateApiPoolAttributes(
+  $input: CreateApiPoolAttributesInput!
+  $condition: ModelApiPoolAttributesConditionInput
+) {
+  createApiPoolAttributes(input: $input, condition: $condition) {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateApiPoolAttributes(
+  $input: UpdateApiPoolAttributesInput!
+  $condition: ModelApiPoolAttributesConditionInput
+) {
+  updateApiPoolAttributes(input: $input, condition: $condition) {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteApiPoolAttributes(
+  $input: DeleteApiPoolAttributesInput!
+  $condition: ModelApiPoolAttributesConditionInput
+) {
+  deleteApiPoolAttributes(input: $input, condition: $condition) {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreatePool(
+  $input: CreatePoolInput!
+  $condition: ModelPoolConditionInput
+) {
+  createPool(input: $input, condition: $condition) {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePool(
+  $input: UpdatePoolInput!
+  $condition: ModelPoolConditionInput
+) {
+  updatePool(input: $input, condition: $condition) {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePool(
+  $input: DeletePoolInput!
+  $condition: ModelPoolConditionInput
+) {
+  deletePool(input: $input, condition: $condition) {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+mutation CreatePoolSuccessfullBlockEventsProcessed(
+  $input: CreatePoolSuccessfullBlockEventsProcessedInput!
+  $condition: ModelPoolSuccessfullBlockEventsProcessedConditionInput
+) {
+  createPoolSuccessfullBlockEventsProcessed(
+    input: $input
+    condition: $condition
+  ) {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePoolSuccessfullBlockEventsProcessed(
+  $input: UpdatePoolSuccessfullBlockEventsProcessedInput!
+  $condition: ModelPoolSuccessfullBlockEventsProcessedConditionInput
+) {
+  updatePoolSuccessfullBlockEventsProcessed(
+    input: $input
+    condition: $condition
+  ) {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePoolSuccessfullBlockEventsProcessed(
+  $input: DeletePoolSuccessfullBlockEventsProcessedInput!
+  $condition: ModelPoolSuccessfullBlockEventsProcessedConditionInput
+) {
+  deletePoolSuccessfullBlockEventsProcessed(
+    input: $input
+    condition: $condition
+  ) {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+mutation CreatePoolSummaries(
+  $input: CreatePoolSummariesInput!
+  $condition: ModelPoolSummariesConditionInput
+) {
+  createPoolSummaries(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdatePoolSummaries(
+  $input: UpdatePoolSummariesInput!
+  $condition: ModelPoolSummariesConditionInput
+) {
+  updatePoolSummaries(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation DeletePoolSummaries(
+  $input: DeletePoolSummariesInput!
+  $condition: ModelPoolSummariesConditionInput
+) {
+  deletePoolSummaries(input: $input, condition: $condition) {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateUserWallet(
+  $input: CreateUserWalletInput!
+  $condition: ModelUserWalletConditionInput
+) {
+  createUserWallet(input: $input, condition: $condition) {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateUserWallet(
+  $input: UpdateUserWalletInput!
+  $condition: ModelUserWalletConditionInput
+) {
+  updateUserWallet(input: $input, condition: $condition) {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteUserWallet(
+  $input: DeleteUserWalletInput!
+  $condition: ModelUserWalletConditionInput
+) {
+  deleteUserWallet(input: $input, condition: $condition) {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+mutation CreateBrand(
+  $input: CreateBrandInput!
+  $condition: ModelBrandConditionInput
+) {
+  createBrand(input: $input, condition: $condition) {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateBrand(
+  $input: UpdateBrandInput!
+  $condition: ModelBrandConditionInput
+) {
+  updateBrand(input: $input, condition: $condition) {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteBrand(
+  $input: DeleteBrandInput!
+  $condition: ModelBrandConditionInput
+) {
+  deleteBrand(input: $input, condition: $condition) {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}

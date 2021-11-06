@@ -1,14 +1,14 @@
 {
-  "dev": {
+  "test": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-adexr-dev-180640-authRole",
-      "UnauthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-dev-180640-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-dev-180640-authRole",
+      "AuthRoleName": "amplify-adexr-test-14037-authRole",
+      "UnauthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-test-14037-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-test-14037-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-adexr-dev-180640-deployment",
-      "UnauthRoleName": "amplify-adexr-dev-180640-unauthRole",
-      "StackName": "amplify-adexr-dev-180640",
-      "StackId": "arn:aws:cloudformation:us-east-1:891289117461:stack/amplify-adexr-dev-180640/c3574070-8dbe-11eb-903d-12695902b27f",
+      "DeploymentBucketName": "amplify-adexr-test-14037-deployment",
+      "UnauthRoleName": "amplify-adexr-test-14037-unauthRole",
+      "StackName": "amplify-adexr-test-14037",
+      "StackId": "arn:aws:cloudformation:us-east-1:891289117461:stack/amplify-adexr-test-14037/686bebb0-a179-11eb-9ce8-1203de0f9227",
       "AmplifyAppId": "d3nhl82tha81mm"
     },
     "categories": {
@@ -20,16 +20,16 @@
       }
     }
   },
-  "test": {
+  "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-adexr-test-14037-authRole",
-      "UnauthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-test-14037-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-test-14037-authRole",
+      "AuthRoleName": "amplify-adexr-dev-145601-authRole",
+      "UnauthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-dev-145601-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::891289117461:role/amplify-adexr-dev-145601-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-adexr-test-14037-deployment",
-      "UnauthRoleName": "amplify-adexr-test-14037-unauthRole",
-      "StackName": "amplify-adexr-test-14037",
-      "StackId": "arn:aws:cloudformation:us-east-1:891289117461:stack/amplify-adexr-test-14037/686bebb0-a179-11eb-9ce8-1203de0f9227",
+      "DeploymentBucketName": "amplify-adexr-dev-145601-deployment",
+      "UnauthRoleName": "amplify-adexr-dev-145601-unauthRole",
+      "StackName": "amplify-adexr-dev-145601",
+      "StackId": "arn:aws:cloudformation:us-east-1:891289117461:stack/amplify-adexr-dev-145601/3d30f9f0-3da9-11ec-ae9f-12be366410af",
       "AmplifyAppId": "d3nhl82tha81mm"
     },
     "categories": {

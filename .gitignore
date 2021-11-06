@@ -19,3 +19,13 @@ cicd_service_codecommit_*
 
 application/wallets/sync2/deployment_keystore
 
+
+.terraform/.terraform/*
+
+# .tfstate files
+*.tfstate
+*.tfstate.*
+
+
+
+application/tf/.terraform/providers/registry.terraform.io/hashicorp/aws/3.64.2/windows_amd64/terraform-provider-aws_v3.64.2_x5.exe

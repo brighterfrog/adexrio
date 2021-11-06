@@ -39,12 +39,11 @@ type ErrorLog @model {
   stackTrace: String!
 }
 
-
-
 enum poolType {
   lottery
   manual
-  api
+  api  
+  custom_builder
 }
 enum poolStatus {
   awaiting
@@ -52,83 +51,91 @@ enum poolStatus {
   terminated
 }
 enum PlayerStatus {
-  pending_pool_completion,
+  pending_pool_completion
   withdrew
   win
   lose
 }
 
 type Player @model 
- @key(name: "byPlayer", fields: ["wallet","status"]) {
-  id: ID!
-  wallet: String!    
+ { 
+  userWallet: UserWallet! @connection
   status: PlayerStatus!
+  pool: Pool! @connection(name: "PoolPlayers")    
 }
 
-type ApiPoolAttributes @model {
-  id: ID!
-  entryFee: Int!
-  allowPlayerLeave: Boolean!
+type ApiPoolAttributes @model
+ {    
   lockFundsDatetime: AWSDateTime!
   executeWinnerDatetime: AWSDateTime!
   apiUrlForResults: AWSURL!
-  verifiedUrl: Boolean!
+  verifiedUrlSchema: Boolean!
   poolCreatorPercentFeeToWithold: Int!
-  winnerOptionEntries: AWSJSON!
+  apiWinnerOptionEntries: AWSJSON!
+  apiwinnerResult: String! 
+  poolApiDefaultSchema: AWSJSON!
+  poolApiCustomSchema: AWSJSON
+  pool: Pool @connection(name: "ApiPoolAttributes")
+}
 
-  winnerResult: String!
+enum PoolCategory {
+  other
+  sports
+  gaming
+  politics
+  grudge_match
 }
-type ApiPool @model{
-  id: ID!
-  poolId: Int!    
-  poolStatus: poolStatus!  
-  poolAttributes: LotteryPoolAttributes @connection
-  lastBlockProcessedForCreatedEvents: Int!
-  lastBlockProcessedForCompletedEvents: Int!
-  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
-  lastBlockProcessedForPlayerLeftPoolEvents: Int!
-  lastBlockProcessedForPoolAwaitingExecution: Int!
-  requestHash: String!
-  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
-}
-type LotteryPoolAttributes @model {
-  id: ID!
-  entryFee: Int!
+
+type Pool @model 
+{  
+  poolId: Int!  
+  poolTitle: String!   
+  poolCategory: PoolCategory! 
+  poolCreator: UserWallet! @connection 
+  poolType: poolType! 
+  poolStatus: poolStatus!
+  poolEntryFee: Int!
+  poolTotal: Int!
+  poolWinningPayout: Int!  
   allowPlayerLeave: Boolean!
+  apiPoolAttributes: ApiPoolAttributes @connection(name: "ApiPoolAttributes")
+  requestHash: String!  
+  players: [Player] @connection(name: "PoolPlayers")
 }
-type LotteryPool @model{
-  id: ID!
-  poolId: Int!    
-  poolStatus: poolStatus!  
-  poolAttributes: LotteryPoolAttributes @connection
+
+type PoolSuccessfullBlockEventsProcessed @model {
   lastBlockProcessedForCreatedEvents: Int!
   lastBlockProcessedForCompletedEvents: Int!
   lastBlockProcessedForPlayerJoinedPoolEvents: Int!
   lastBlockProcessedForPlayerLeftPoolEvents: Int!
-  lastBlockProcessedForPoolAwaitingExecution: Int!
-  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
+  lastBlockProcessedForPoolAwaitingExecution: Int!  
 }
-type ManualPoolAttributes @model {
+
+type PoolSummaries @model {
+  totalCompletedGames: Int!
+  totalPlayers: Int!
+  totalPayouts: Int!
+  highestSingleWinnerPayout: Int!
+  highestPoolPayout: Int!
+}
+
+type UserWallet @model
+{
   id: ID!
-  entryFee: Int!
-  allowPlayerLeave: Boolean!
+  wallet: String!
+  nickname: String!
+  chatlogo: AWSURL
+  brands: Brand @connection
+  totalWinnings: Int!
+  totalPools: Int!
+  totalCompletedPools: Int!
+  totalPoolsWon: Int!  
 }
-type ManualPool @model{
-  id: ID!
-  poolId: Int!    
-  poolBrand: PoolBrand @connection
-  poolStatus: poolStatus!    
-  poolAttributes: ManualPoolAttributes @connection
-  lastBlockProcessedForCreatedEvents: Int!
-  lastBlockProcessedForCompletedEvents: Int!
-  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
-  lastBlockProcessedForPlayerLeftPoolEvents: Int!
-  lastBlockProcessedForPoolAwaitingExecution: Int!
-  players: [Player] @connection(keyName: "byPlayer", fields: ["id"])
-}
-type PoolBrand {
+type Brand @model
+ {
   id: ID!
   wallet: String!
   name: String!
-  logo: AWSURL
+  rating: Int!
+  logo: AWSURL  
 }
