@@ -31,11 +31,11 @@ provider "aws" {
 #   }
 # }
 
-
-module "elastic_beanstalk" {
-  source  = "./modules/elastic-beanstalk"
+module "apigateway_lambda_proxies" {
+  source  = "./modules/apigateway"
   globals = var.globals
 }
+
 
 
 # resource "aws_elastic_beanstalk_application" "backend_ticker_subscriber" {
