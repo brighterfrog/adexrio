@@ -2,13 +2,6 @@ import { GameOrchestratorService } from "../game-orchestrator/game-orchestrator-
 import { Observable, Subject, Subscription, timer } from 'rxjs';
 import { GameAwaitingLotteryEvent, GameCompletedEvent, GameCreatedEvent, GameEvent } from "../models/all-models";
 
-
-// import {
-//     CreateGamesSummaryInput,
-//     GamesSummary,
-//     CreateGamesSummaryMutation
-// } from "../API";
-
 const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
 
 

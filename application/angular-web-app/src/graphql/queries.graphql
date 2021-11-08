@@ -113,3 +113,320 @@ query ListErrorLogs(
     nextToken
   }
 }
+query GetPlayer($id: ID!) {
+  getPlayer(id: $id) {
+    id
+    userWallet {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    status
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListPlayers(
+  $filter: ModelPlayerFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      status
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetApiPoolAttributes($id: ID!) {
+  getApiPoolAttributes(id: $id) {
+    id
+    lockFundsDatetime
+    executeWinnerDatetime
+    apiUrlForResults
+    verifiedUrlSchema
+    poolCreatorPercentFeeToWithold
+    apiWinnerOptionEntries
+    apiwinnerResult
+    poolApiDefaultSchema
+    poolApiCustomSchema
+    pool {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListApiPoolAttributess(
+  $filter: ModelApiPoolAttributesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listApiPoolAttributess(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetPool($id: ID!) {
+  getPool(id: $id) {
+    id
+    poolId
+    poolTitle
+    poolCategory
+    poolCreator {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    poolType
+    poolStatus
+    poolEntryFee
+    poolTotal
+    poolWinningPayout
+    allowPlayerLeave
+    apiPoolAttributes {
+      id
+      lockFundsDatetime
+      executeWinnerDatetime
+      apiUrlForResults
+      verifiedUrlSchema
+      poolCreatorPercentFeeToWithold
+      apiWinnerOptionEntries
+      apiwinnerResult
+      poolApiDefaultSchema
+      poolApiCustomSchema
+      createdAt
+      updatedAt
+    }
+    requestHash
+    players {
+      nextToken
+    }
+    createdAt
+    updatedAt
+  }
+}
+query ListPools(
+  $filter: ModelPoolFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPools(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      poolId
+      poolTitle
+      poolCategory
+      poolType
+      poolStatus
+      poolEntryFee
+      poolTotal
+      poolWinningPayout
+      allowPlayerLeave
+      requestHash
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetPoolSuccessfullBlockEventsProcessed($id: ID!) {
+  getPoolSuccessfullBlockEventsProcessed(id: $id) {
+    id
+    lastBlockProcessedForCreatedEvents
+    lastBlockProcessedForCompletedEvents
+    lastBlockProcessedForPlayerJoinedPoolEvents
+    lastBlockProcessedForPlayerLeftPoolEvents
+    lastBlockProcessedForPoolAwaitingExecution
+    createdAt
+    updatedAt
+  }
+}
+query ListPoolSuccessfullBlockEventsProcesseds(
+  $filter: ModelPoolSuccessfullBlockEventsProcessedFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPoolSuccessfullBlockEventsProcesseds(
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      lastBlockProcessedForCreatedEvents
+      lastBlockProcessedForCompletedEvents
+      lastBlockProcessedForPlayerJoinedPoolEvents
+      lastBlockProcessedForPlayerLeftPoolEvents
+      lastBlockProcessedForPoolAwaitingExecution
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetPoolSummaries($id: ID!) {
+  getPoolSummaries(id: $id) {
+    id
+    totalCompletedGames
+    totalPlayers
+    totalPayouts
+    highestSingleWinnerPayout
+    highestPoolPayout
+    createdAt
+    updatedAt
+  }
+}
+query ListPoolSummariess(
+  $filter: ModelPoolSummariesFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listPoolSummariess(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      totalCompletedGames
+      totalPlayers
+      totalPayouts
+      highestSingleWinnerPayout
+      highestPoolPayout
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetUserWallet($id: ID!) {
+  getUserWallet(id: $id) {
+    id
+    wallet
+    nickname
+    chatlogo
+    brands {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    totalWinnings
+    totalPools
+    totalCompletedPools
+    totalPoolsWon
+    createdAt
+    updatedAt
+  }
+}
+query ListUserWallets(
+  $filter: ModelUserWalletFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listUserWallets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      wallet
+      nickname
+      chatlogo
+      totalWinnings
+      totalPools
+      totalCompletedPools
+      totalPoolsWon
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
+query GetBrand($id: ID!) {
+  getBrand(id: $id) {
+    id
+    wallet
+    name
+    rating
+    logo
+    createdAt
+    updatedAt
+  }
+}
+query ListBrands(
+  $filter: ModelBrandFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listBrands(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      wallet
+      name
+      rating
+      logo
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}
