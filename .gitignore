@@ -33,3 +33,4 @@ application/terraform/.terraform/providers/registry.terraform.io/hashicorp/archi
 application/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/3.64.2/windows_amd64/terraform-provider-aws_v3.64.2_x5.exe
 application/lambda_load_historical/handler.zip
 application/terraform/tfplan
+application/terraform/.terraform/environment
