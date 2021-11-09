@@ -1,5 +1,5 @@
 key            = "adexrio.test/terraform.tfstate"
-bucket         = "tf-adexr-states-bucket" 
+bucket         = "tf-adexr-states-bucket"
 dynamodb_table = "tf-adexr-states-locks"
 region         = "us-east-1"
 encrypt        = true
