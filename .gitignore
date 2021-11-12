@@ -34,3 +34,4 @@ application/terraform/.terraform/providers/registry.terraform.io/hashicorp/aws/3
 application/lambda_load_historical/handler.zip
 application/terraform/tfplan
 application/terraform/.terraform/environment
+application/lambda_event_processor/handler.zip

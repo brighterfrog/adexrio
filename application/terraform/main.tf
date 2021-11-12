@@ -31,8 +31,13 @@ provider "aws" {
 #   }
 # }
 
-module "apigateway_lambda_proxies" {
-  source  = "./modules/apigateway"
+module "shared" {
+  source  = "./modules/shared"
+  globals = var.globals
+}
+
+module "historical_events" {
+  source  = "./modules/historical_events"
   globals = var.globals
 }
 

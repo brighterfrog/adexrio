@@ -13,6 +13,10 @@ variable "globals" {
     }
     "prod" = {
       "resource_suffix" = "prod"
+    },
+    "tags" = {
+      application : "adexrio",
     }
   }
 }
+
