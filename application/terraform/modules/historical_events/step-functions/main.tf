@@ -67,10 +67,4 @@ resource "aws_sfn_state_machine" "historical_step_function" {
 }
 EOF
 
-  logging_configuration {
-    log_destination        = "step-functions/historical_step_function_state_machine_${var.globals[terraform.workspace].resource_suffix}:*"
-    include_execution_data = true
-    level                  = "ERROR"
-  }
-
 }
