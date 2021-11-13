@@ -32,6 +32,13 @@ resource "aws_iam_role_policy" "step_function_policy" {
         ],
         "Effect": "Allow",
         "Resource": "*"
+      },
+      {
+        "Action": [
+          "logs:*"
+        ],
+        "Effect": "Allow",
+        "Resource": "*"
       }
     ]
   }
@@ -59,4 +66,11 @@ resource "aws_sfn_state_machine" "historical_step_function" {
   }
 }
 EOF
+
+  logging_configuration {
+    log_destination        = "step-functions/historical_step_function_state_machine_${var.globals[terraform.workspace].resource_suffix}:*"
+    include_execution_data = true
+    level                  = "ERROR"
+  }
+
 }
