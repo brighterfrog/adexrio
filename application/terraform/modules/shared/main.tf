@@ -21,33 +21,36 @@ module "kinesis_data_stream" {
   ))
 }
 
-# module "storage" {
-#   source  = "./storage"
-#   globals = var.globals
-#   tags = (merge(
-#     var.globals.tags,
-#     {
-#       environment = "${var.globals[terraform.workspace].resource_suffix}"
-#     }
-#   ))
-
-#   depends_on = [
-#     module.sqs
-#   ]
-# }
-
-module "sqs" {
-  source                         = "./sqs"
-  globals                        = var.globals
+module "storage" {
+  source  = "./storage"
+  globals = var.globals
   tags = (merge(
     var.globals.tags,
     {
       environment = "${var.globals[terraform.workspace].resource_suffix}"
     }
   ))
-  # firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-  # firehose_ingestion_bucket_id = module.storage.firehose_ingestion_bucket_id
- 
+
+  # single_block_queue_arn = module.sqs.single_block_queue_arn
+  # historical_queue_arn   = module.sqs.historical_queue_arn
+}
+
+module "sqs" {
+  source  = "./sqs"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+  firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
+  firehose_ingestion_bucket_id = module.storage.firehose_ingestion_bucket_id
+
+  depends_on = [
+    module.storage
+  ]
+
 }
 
 # module "kinesis_delivery_stream" {

@@ -16,7 +16,7 @@ variable "globals" {
     },
     "tags" = {
       application : "adexrio",
-    }    
+    }
   }
 }
 
