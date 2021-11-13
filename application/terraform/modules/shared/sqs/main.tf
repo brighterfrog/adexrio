@@ -40,21 +40,19 @@ resource "aws_sqs_queue" "single_block_queue" {
 POLICY
 }
 
-resource "aws_s3_bucket_notification" "historical_queue_notification" {
-  bucket =  var.firehose_ingestion_bucket_id #aws_s3_bucket.firehose_ingestion_bucket.id
+resource "aws_s3_bucket_notification" "queue_notifications" {  
+  bucket =  var.firehose_ingestion_bucket_id 
 
   queue {
-    queue_arn     = aws_sqs_queue.historical_queue.arn #var.historical_queue_arn
+    id = aws_sqs_queue.historical_queue.id
+    queue_arn     = aws_sqs_queue.historical_queue.arn
     events        = ["s3:ObjectCreated:*"]
     filter_prefix = "apigateway/ingest/block_history"
   }
-}
-
-resource "aws_s3_bucket_notification" "blocknumber_queue_notification" {
-  bucket = var.firehose_ingestion_bucket_id #aws_s3_bucket.firehose_ingestion_bucket.id
 
   queue {
-    queue_arn     = aws_sqs_queue.single_block_queue.arn #var.single_block_queue_arn
+    id = aws_sqs_queue.single_block_queue.id
+    queue_arn     = aws_sqs_queue.single_block_queue.arn
     events        = ["s3:ObjectCreated:*"]
     filter_prefix = "apigateway/ingest/block_number"
   }
