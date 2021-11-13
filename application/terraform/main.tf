@@ -41,3 +41,9 @@ module "historical_events" {
   globals = var.globals
 }
 
+
+# resource "aws_kinesis_firehose_delivery_stream" "deleteme" {
+#   name = "KDS-S3-qmMNe"
+#   destination = "extended_s3"
+
+# }
