@@ -1,7 +1,7 @@
 resource "aws_sqs_queue" "historical_queue" {
-  name                      = "historical_event_queue_${var.globals[terraform.workspace].resource_suffix}"
+  name = "historical_event_queue_${var.globals[terraform.workspace].resource_suffix}"
 
-policy = <<POLICY
+  policy = <<POLICY
 {
   "Version": "2012-10-17",
   "Statement": [
@@ -20,7 +20,7 @@ POLICY
 }
 
 resource "aws_sqs_queue" "single_block_queue" {
-  name                      = "single_block_event_queue_${var.globals[terraform.workspace].resource_suffix}"
+  name = "single_block_event_queue_${var.globals[terraform.workspace].resource_suffix}"
 
   policy = <<POLICY
 {

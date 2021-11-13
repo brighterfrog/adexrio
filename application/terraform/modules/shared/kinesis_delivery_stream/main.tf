@@ -1,43 +1,43 @@
 resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
   name        = "ingestion_delivery_${var.globals[terraform.workspace].resource_suffix}"
   destination = "extended_s3"
-  
+
   kinesis_source_configuration {
-    kinesis_stream_arn = "${var.ingestion_stream.arn}"
-    role_arn = aws_iam_role.firehose_role.arn
+    kinesis_stream_arn = var.ingestion_stream.arn
+    role_arn           = aws_iam_role.firehose_role.arn
   }
 
   extended_s3_configuration {
-    role_arn   = aws_iam_role.firehose_role.arn
-    bucket_arn = "${var.firehose_ingestion_bucket_arn}"
+    role_arn            = aws_iam_role.firehose_role.arn
+    bucket_arn          = var.firehose_ingestion_bucket_arn
     buffer_interval     = 60
     buffer_size         = 128
     compression_format  = "UNCOMPRESSED"
     prefix              = "apigateway/ingest/!{partitionKeyFromQuery:payload_event_name}/ !{partitionKeyFromQuery:year}/!{partitionKeyFromQuery:month}/!{partitionKeyFromQuery:day}"
     error_output_prefix = "apigateway/ingest/errors"
     s3_backup_mode      = "Disabled"
-    
+
     cloudwatch_logging_options {
-               enabled         = true    
-               log_group_name  = "/aws/kinesisfirehose/ingestion_delivery_${var.globals[terraform.workspace].resource_suffix}"
-               log_stream_name = "DestinationDelivery"
+      enabled         = true
+      log_group_name  = "/aws/kinesisfirehose/ingestion_delivery_${var.globals[terraform.workspace].resource_suffix}"
+      log_stream_name = "DestinationDelivery"
     }
 
     processing_configuration {
-      enabled = "true"      
+      enabled = "true"
       processors {
-          type = "MetadataExtraction"
-  
-          parameters {
-            parameter_name  = "MetadataExtractionQuery"
-            parameter_value = "{payload_event_name:.payload_event_name,year:.payload_event_timestamp| strftime(\"%Y\"),month:.payload_event_timestamp| strftime(\"%m\"),day:.payload_event_timestamp| strftime(\"%d\")}"
-          }
-  
-          parameters {
-            parameter_name  = "JsonParsingEngine"
-            parameter_value = "JQ-1.6"
-          }
+        type = "MetadataExtraction"
+
+        parameters {
+          parameter_name  = "MetadataExtractionQuery"
+          parameter_value = "{payload_event_name:.payload_event_name,year:.payload_event_timestamp| strftime(\"%Y\"),month:.payload_event_timestamp| strftime(\"%m\"),day:.payload_event_timestamp| strftime(\"%d\")}"
         }
+
+        parameters {
+          parameter_name  = "JsonParsingEngine"
+          parameter_value = "JQ-1.6"
+        }
+      }
 
     }
   }

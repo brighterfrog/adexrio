@@ -3,10 +3,10 @@ module "apigateway" {
   globals = var.globals
   tags = (merge(
     var.globals.tags,
-      {
-        environment = "${var.globals[terraform.workspace].resource_suffix}"
-      }
-    ))
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
   kinesis_data_stream = module.kinesis_data_stream.ingestion_stream
 }
 
@@ -15,10 +15,10 @@ module "kinesis_data_stream" {
   globals = var.globals
   tags = (merge(
     var.globals.tags,
-      {
-        environment = "${var.globals[terraform.workspace].resource_suffix}"
-      }
-    ))
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
 }
 
 module "storage" {
@@ -26,25 +26,25 @@ module "storage" {
   globals = var.globals
   tags = (merge(
     var.globals.tags,
-      {
-        environment = "${var.globals[terraform.workspace].resource_suffix}"
-      }
-    ))
-    single_block_queue_arn = module.sqs.single_block_queue_arn
-    historical_queue_arn = module.sqs.historical_queue_arn
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+  single_block_queue_arn = module.sqs.single_block_queue_arn
+  historical_queue_arn   = module.sqs.historical_queue_arn
 }
 
 module "sqs" {
-   source  = "./sqs"
-    globals = var.globals
-    payload_events_historical_arn = module.storage.payload_events_historical_bucket_arn
-    payload_events_blocknumber_arn = module.storage.payload_events_blocknumber_bucket_arn
-    tags = (merge(
+  source                         = "./sqs"
+  globals                        = var.globals
+  payload_events_historical_arn  = module.storage.payload_events_historical_bucket_arn
+  payload_events_blocknumber_arn = module.storage.payload_events_blocknumber_bucket_arn
+  tags = (merge(
     var.globals.tags,
-      {
-        environment = "${var.globals[terraform.workspace].resource_suffix}"
-      }
-    ))
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
 
 }
 
