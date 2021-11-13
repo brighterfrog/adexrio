@@ -1,6 +1,6 @@
 resource "aws_apigatewayv2_api" "api" {
-  name          = "adexrio_blockchain_apigw_${var.globals[terraform.workspace].resource_suffix}"
-  protocol_type = "HTTP"
+  name                       = "adexrio_blockchain_apigw_${var.globals[terraform.workspace].resource_suffix}"
+  protocol_type              = "HTTP"
   route_selection_expression = "$request.method $request.path"
 
   tags = var.tags
@@ -9,35 +9,35 @@ resource "aws_apigatewayv2_api" "api" {
 resource "aws_apigatewayv2_route" "route_events_historical" {
   api_id    = aws_apigatewayv2_api.api.id
   route_key = "POST /blockchain/events/historical"
-  target = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
 }
 
 resource "aws_apigatewayv2_route" "route_blocknumber" {
   api_id    = aws_apigatewayv2_api.api.id
   route_key = "POST /blockchain/events/blocknumber"
-  target = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
+  target    = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
 }
 
 resource "aws_apigatewayv2_stage" "stage" {
-  api_id = aws_apigatewayv2_api.api.id
-  name   = "adexrio-stage-${var.globals[terraform.workspace].resource_suffix}"
+  api_id      = aws_apigatewayv2_api.api.id
+  name        = "adexrio-stage-${var.globals[terraform.workspace].resource_suffix}"
   auto_deploy = true
 }
 
 resource "aws_apigatewayv2_integration" "kinesis_integration" {
-  api_id              = aws_apigatewayv2_api.api.id
-  credentials_arn     = aws_iam_role.api_gw_role.arn 
-  integration_type    = "AWS_PROXY"
+  api_id           = aws_apigatewayv2_api.api.id
+  credentials_arn  = aws_iam_role.api_gw_role.arn
+  integration_type = "AWS_PROXY"
 
-  integration_subtype  = "Kinesis-PutRecord"
-  request_parameters                        = {
-           "Data"         = "$request.body.Data"
-           "PartitionKey" = "$request.body.PartitionKey"
-           "Region"       = "us-east-1"
-           "StreamName"   = "adexrio_ingestion_stream_dev"
-        } 
-  request_templates                         = {}
-  timeout_milliseconds                      = 30000    
+  integration_subtype = "Kinesis-PutRecord"
+  request_parameters = {
+    "Data"         = "$request.body.Data"
+    "PartitionKey" = "$request.body.PartitionKey"
+    "Region"       = "us-east-1"
+    "StreamName"   = "adexrio_ingestion_stream_dev"
+  }
+  request_templates    = {}
+  timeout_milliseconds = 30000
 }
 
 # Permission
