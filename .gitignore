@@ -35,3 +35,6 @@ application/lambda_load_historical/handler.zip
 application/terraform/tfplan
 application/terraform/.terraform/environment
 application/lambda_event_processor/handler.zip
+application/lambda_block_event_processor/handler.zip
+application/lambda_event_bridge_block_poller/handler.zip
+application/lambda_historical_event_processor/handler.zip

@@ -53,15 +53,15 @@ module "sqs" {
 
 }
 
-# module "kinesis_delivery_stream" {
-#   source  = "./kinesis_delivery_stream"
-#   globals = var.globals
-#   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-#   ingestion_stream = module.kinesis_data_stream.ingestion_stream
-#   tags = (merge(
-#     var.globals.tags,
-#       {
-#         environment = "${var.globals[terraform.workspace].resource_suffix}"
-#       }
-#     ))  
-# }
+ module "kinesis_delivery_stream" {
+   source  = "./kinesis_delivery_stream"
+   globals = var.globals
+   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
+   ingestion_stream = module.kinesis_data_stream.ingestion_stream
+   tags = (merge(
+     var.globals.tags,
+       {
+         environment = "${var.globals[terraform.workspace].resource_suffix}"
+       }
+     ))  
+ }
