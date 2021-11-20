@@ -529,6 +529,8 @@ mutation CreatePoolSuccessfullBlockEventsProcessed(
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
@@ -547,6 +549,8 @@ mutation UpdatePoolSuccessfullBlockEventsProcessed(
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
@@ -565,6 +569,8 @@ mutation DeletePoolSuccessfullBlockEventsProcessed(
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }

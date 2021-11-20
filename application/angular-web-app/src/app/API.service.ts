@@ -373,8 +373,7 @@ export enum PoolCategory {
 export enum poolType {
   lottery = "lottery",
   manual = "manual",
-  api_default_schema = "api_default_schema",
-  api_custom_schema = "api_custom_schema",
+  api = "api",
   custom_builder = "custom_builder"
 }
 
@@ -543,6 +542,8 @@ export type CreatePoolSuccessfullBlockEventsProcessedInput = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
@@ -551,6 +552,8 @@ export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
   lastBlockProcessedForPlayerJoinedPoolEvents?: ModelIntInput | null;
   lastBlockProcessedForPlayerLeftPoolEvents?: ModelIntInput | null;
   lastBlockProcessedForPoolAwaitingExecution?: ModelIntInput | null;
+  lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null;
+  historicalLastBlockLoadedForEvents?: ModelIntInput | null;
   and?: Array<ModelPoolSuccessfullBlockEventsProcessedConditionInput | null> | null;
   or?: Array<ModelPoolSuccessfullBlockEventsProcessedConditionInput | null> | null;
   not?: ModelPoolSuccessfullBlockEventsProcessedConditionInput | null;
@@ -564,6 +567,8 @@ export type PoolSuccessfullBlockEventsProcessed = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -574,6 +579,8 @@ export type UpdatePoolSuccessfullBlockEventsProcessedInput = {
   lastBlockProcessedForPlayerJoinedPoolEvents?: number | null;
   lastBlockProcessedForPlayerLeftPoolEvents?: number | null;
   lastBlockProcessedForPoolAwaitingExecution?: number | null;
+  lambdaProcessorDecisionCheckForNextBlocknumber?: number | null;
+  historicalLastBlockLoadedForEvents?: number | null;
 };
 
 export type DeletePoolSuccessfullBlockEventsProcessedInput = {
@@ -836,6 +843,8 @@ export type ModelPoolSuccessfullBlockEventsProcessedFilterInput = {
   lastBlockProcessedForPlayerJoinedPoolEvents?: ModelIntInput | null;
   lastBlockProcessedForPlayerLeftPoolEvents?: ModelIntInput | null;
   lastBlockProcessedForPoolAwaitingExecution?: ModelIntInput | null;
+  lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null;
+  historicalLastBlockLoadedForEvents?: ModelIntInput | null;
   and?: Array<ModelPoolSuccessfullBlockEventsProcessedFilterInput | null> | null;
   or?: Array<ModelPoolSuccessfullBlockEventsProcessedFilterInput | null> | null;
   not?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null;
@@ -1380,6 +1389,8 @@ export type CreatePoolSuccessfullBlockEventsProcessedMutation = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -1392,6 +1403,8 @@ export type UpdatePoolSuccessfullBlockEventsProcessedMutation = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -1404,6 +1417,8 @@ export type DeletePoolSuccessfullBlockEventsProcessedMutation = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -1822,6 +1837,8 @@ export type GetPoolSuccessfullBlockEventsProcessedQuery = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -1836,6 +1853,8 @@ export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
     lastBlockProcessedForPlayerJoinedPoolEvents: number;
     lastBlockProcessedForPlayerLeftPoolEvents: number;
     lastBlockProcessedForPoolAwaitingExecution: number;
+    lambdaProcessorDecisionCheckForNextBlocknumber: number;
+    historicalLastBlockLoadedForEvents: number;
     createdAt: string;
     updatedAt: string;
   } | null> | null;
@@ -2417,6 +2436,8 @@ export type OnCreatePoolSuccessfullBlockEventsProcessedSubscription = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -2429,6 +2450,8 @@ export type OnUpdatePoolSuccessfullBlockEventsProcessedSubscription = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -2441,6 +2464,8 @@ export type OnDeletePoolSuccessfullBlockEventsProcessedSubscription = {
   lastBlockProcessedForPlayerJoinedPoolEvents: number;
   lastBlockProcessedForPlayerLeftPoolEvents: number;
   lastBlockProcessedForPoolAwaitingExecution: number;
+  lambdaProcessorDecisionCheckForNextBlocknumber: number;
+  historicalLastBlockLoadedForEvents: number;
   createdAt: string;
   updatedAt: string;
 };
@@ -3416,6 +3441,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -3446,6 +3473,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -3476,6 +3505,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -4280,6 +4311,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -4310,6 +4343,8 @@ export class APIService {
             lastBlockProcessedForPlayerJoinedPoolEvents
             lastBlockProcessedForPlayerLeftPoolEvents
             lastBlockProcessedForPoolAwaitingExecution
+            lambdaProcessorDecisionCheckForNextBlocknumber
+            historicalLastBlockLoadedForEvents
             createdAt
             updatedAt
           }
@@ -5233,6 +5268,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -5265,6 +5302,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }
@@ -5297,6 +5336,8 @@ export class APIService {
           lastBlockProcessedForPlayerJoinedPoolEvents
           lastBlockProcessedForPlayerLeftPoolEvents
           lastBlockProcessedForPoolAwaitingExecution
+          lambdaProcessorDecisionCheckForNextBlocknumber
+          historicalLastBlockLoadedForEvents
           createdAt
           updatedAt
         }

@@ -109,6 +109,9 @@ type PoolSuccessfullBlockEventsProcessed @model {
   lastBlockProcessedForPlayerJoinedPoolEvents: Int!
   lastBlockProcessedForPlayerLeftPoolEvents: Int!
   lastBlockProcessedForPoolAwaitingExecution: Int!  
+
+  lambdaProcessorDecisionCheckForNextBlocknumber: Int! 
+  historicalLastBlockLoadedForEvents: Int! 
 }
 
 type PoolSummaries @model {

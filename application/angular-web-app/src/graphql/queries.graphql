@@ -299,6 +299,8 @@ query GetPoolSuccessfullBlockEventsProcessed($id: ID!) {
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
@@ -320,6 +322,8 @@ query ListPoolSuccessfullBlockEventsProcesseds(
       lastBlockProcessedForPlayerJoinedPoolEvents
       lastBlockProcessedForPlayerLeftPoolEvents
       lastBlockProcessedForPoolAwaitingExecution
+      lambdaProcessorDecisionCheckForNextBlocknumber
+      historicalLastBlockLoadedForEvents
       createdAt
       updatedAt
     }
