@@ -460,6 +460,8 @@ subscription OnCreatePoolSuccessfullBlockEventsProcessed {
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
@@ -472,6 +474,8 @@ subscription OnUpdatePoolSuccessfullBlockEventsProcessed {
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
@@ -484,6 +488,8 @@ subscription OnDeletePoolSuccessfullBlockEventsProcessed {
     lastBlockProcessedForPlayerJoinedPoolEvents
     lastBlockProcessedForPlayerLeftPoolEvents
     lastBlockProcessedForPoolAwaitingExecution
+    lambdaProcessorDecisionCheckForNextBlocknumber
+    historicalLastBlockLoadedForEvents
     createdAt
     updatedAt
   }
