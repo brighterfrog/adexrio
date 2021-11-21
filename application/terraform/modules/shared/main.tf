@@ -45,7 +45,7 @@ module "sqs" {
     }
   ))
   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-  firehose_ingestion_bucket_id = module.storage.firehose_ingestion_bucket_id
+  firehose_ingestion_bucket_id  = module.storage.firehose_ingestion_bucket_id
 
   depends_on = [
     module.storage
@@ -53,15 +53,39 @@ module "sqs" {
 
 }
 
- module "kinesis_delivery_stream" {
-   source  = "./kinesis_delivery_stream"
-   globals = var.globals
-   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-   ingestion_stream = module.kinesis_data_stream.ingestion_stream
-   tags = (merge(
-     var.globals.tags,
-       {
-         environment = "${var.globals[terraform.workspace].resource_suffix}"
-       }
-     ))  
- }
+module "kinesis_delivery_stream" {
+  source                        = "./kinesis_delivery_stream"
+  globals                       = var.globals
+  firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
+  ingestion_stream              = module.kinesis_data_stream.ingestion_stream
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+}
+
+module "lambda_event_bridge_block_poller" {
+  source  = "./lambdas/event_bridge_block_poller"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+}
+
+module "event_bridge" {
+  source  = "./event_bridge"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+  event_bridge_block_poller_lambda = module.lambda_event_bridge_block_poller.event_bridge_block_poller_lambda
+}
+
