@@ -53,6 +53,17 @@ module "sqs" {
 
 }
 
+module "request_payload_transformer" {
+  source  = "./lambdas/request_payload_transformer"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+}
+
 module "kinesis_delivery_stream" {
   source                        = "./kinesis_delivery_stream"
   globals                       = var.globals
@@ -64,28 +75,8 @@ module "kinesis_delivery_stream" {
       environment = "${var.globals[terraform.workspace].resource_suffix}"
     }
   ))
+  request_payload_transformer_lambda = module.request_payload_transformer.request_payload_transformer_lambda
 }
 
-module "lambda_event_bridge_block_poller" {
-  source  = "./lambdas/event_bridge_block_poller"
-  globals = var.globals
-  tags = (merge(
-    var.globals.tags,
-    {
-      environment = "${var.globals[terraform.workspace].resource_suffix}"
-    }
-  ))
-}
 
-module "event_bridge" {
-  source  = "./event_bridge"
-  globals = var.globals
-  tags = (merge(
-    var.globals.tags,
-    {
-      environment = "${var.globals[terraform.workspace].resource_suffix}"
-    }
-  ))
-  event_bridge_block_poller_lambda = module.lambda_event_bridge_block_poller.event_bridge_block_poller_lambda
-}
 
