@@ -50,12 +50,13 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/../../../../lambda_event_processor/handler.zip"
 }
 resource "aws_lambda_function" "lambda" {
-  function_name = "event_processor${var.globals[terraform.workspace].resource_suffix}"
-  tags          = var.globals.tags
-  filename      = "${path.module}/../../../../lambda_event_processor/handler.zip"
-  role          = aws_iam_role.lambda_role.arn
-  handler       = "index.lambda_handler"
-  runtime       = "nodejs14.x"
-  publish       = true
-  depends_on    = [aws_iam_role_policy_attachment.lambda_policy_attach]
+  function_name    = "event_processor${var.globals[terraform.workspace].resource_suffix}"
+  tags             = var.globals.tags
+  filename         = "${path.module}/../../../../lambda_event_processor/handler.zip"
+  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
+  role             = aws_iam_role.lambda_role.arn
+  handler          = "index.lambda_handler"
+  runtime          = "nodejs14.x"
+  publish          = true
+  depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
 }

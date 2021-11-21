@@ -402,7 +402,7 @@ export type ApiPoolAttributes = {
 
 export type ModelPlayerConnection = {
   __typename: "ModelPlayerConnection";
-  items?: Array<Player | null> | null;
+  items: Array<Player>;
   nextToken?: string | null;
 };
 
@@ -574,6 +574,7 @@ export type PoolSuccessfullBlockEventsProcessed = {
 };
 
 export type UpdatePoolSuccessfullBlockEventsProcessedInput = {
+  id: string;
   lastBlockProcessedForCreatedEvents?: number | null;
   lastBlockProcessedForCompletedEvents?: number | null;
   lastBlockProcessedForPlayerJoinedPoolEvents?: number | null;
@@ -620,6 +621,7 @@ export type PoolSummaries = {
 };
 
 export type UpdatePoolSummariesInput = {
+  id: string;
   totalCompletedGames?: number | null;
   totalPlayers?: number | null;
   totalPayouts?: number | null;
@@ -714,7 +716,7 @@ export type ModelFeedbackFilterInput = {
 
 export type ModelFeedbackConnection = {
   __typename: "ModelFeedbackConnection";
-  items?: Array<Feedback | null> | null;
+  items: Array<Feedback>;
   nextToken?: string | null;
 };
 
@@ -746,7 +748,7 @@ export type ModelIDInput = {
 
 export type ModelMessageConnection = {
   __typename: "ModelMessageConnection";
-  items?: Array<Message | null> | null;
+  items: Array<Message>;
   nextToken?: string | null;
 };
 
@@ -768,7 +770,7 @@ export enum ModelSortDirection {
 
 export type ModelGamesSummaryConnection = {
   __typename: "ModelGamesSummaryConnection";
-  items?: Array<GamesSummary | null> | null;
+  items: Array<GamesSummary>;
   nextToken?: string | null;
 };
 
@@ -783,7 +785,7 @@ export type ModelErrorLogFilterInput = {
 
 export type ModelErrorLogConnection = {
   __typename: "ModelErrorLogConnection";
-  items?: Array<ErrorLog | null> | null;
+  items: Array<ErrorLog>;
   nextToken?: string | null;
 };
 
@@ -811,7 +813,7 @@ export type ModelApiPoolAttributesFilterInput = {
 
 export type ModelApiPoolAttributesConnection = {
   __typename: "ModelApiPoolAttributesConnection";
-  items?: Array<ApiPoolAttributes | null> | null;
+  items: Array<ApiPoolAttributes>;
   nextToken?: string | null;
 };
 
@@ -833,11 +835,12 @@ export type ModelPoolFilterInput = {
 
 export type ModelPoolConnection = {
   __typename: "ModelPoolConnection";
-  items?: Array<Pool | null> | null;
+  items: Array<Pool>;
   nextToken?: string | null;
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedFilterInput = {
+  id?: ModelIDInput | null;
   lastBlockProcessedForCreatedEvents?: ModelIntInput | null;
   lastBlockProcessedForCompletedEvents?: ModelIntInput | null;
   lastBlockProcessedForPlayerJoinedPoolEvents?: ModelIntInput | null;
@@ -852,11 +855,12 @@ export type ModelPoolSuccessfullBlockEventsProcessedFilterInput = {
 
 export type ModelPoolSuccessfullBlockEventsProcessedConnection = {
   __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection";
-  items?: Array<PoolSuccessfullBlockEventsProcessed | null> | null;
+  items: Array<PoolSuccessfullBlockEventsProcessed>;
   nextToken?: string | null;
 };
 
 export type ModelPoolSummariesFilterInput = {
+  id?: ModelIDInput | null;
   totalCompletedGames?: ModelIntInput | null;
   totalPlayers?: ModelIntInput | null;
   totalPayouts?: ModelIntInput | null;
@@ -869,7 +873,7 @@ export type ModelPoolSummariesFilterInput = {
 
 export type ModelPoolSummariesConnection = {
   __typename: "ModelPoolSummariesConnection";
-  items?: Array<PoolSummaries | null> | null;
+  items: Array<PoolSummaries>;
   nextToken?: string | null;
 };
 
@@ -889,7 +893,7 @@ export type ModelUserWalletFilterInput = {
 
 export type ModelUserWalletConnection = {
   __typename: "ModelUserWalletConnection";
-  items?: Array<UserWallet | null> | null;
+  items: Array<UserWallet>;
   nextToken?: string | null;
 };
 
@@ -906,7 +910,7 @@ export type ModelBrandFilterInput = {
 
 export type ModelBrandConnection = {
   __typename: "ModelBrandConnection";
-  items?: Array<Brand | null> | null;
+  items: Array<Brand>;
   nextToken?: string | null;
 };
 
@@ -1577,7 +1581,7 @@ export type GetFeedbackQuery = {
 
 export type ListFeedbacksQuery = {
   __typename: "ModelFeedbackConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "Feedback";
     id: string;
     comment: string;
@@ -1586,7 +1590,7 @@ export type ListFeedbacksQuery = {
     wallet: string;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1601,14 +1605,14 @@ export type GetMessageQuery = {
 
 export type ListMessagesQuery = {
   __typename: "ModelMessageConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "Message";
     id: string;
     message: string;
     wallet: string;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1625,7 +1629,7 @@ export type GetGamesSummaryQuery = {
 
 export type ListGamesSummarysQuery = {
   __typename: "ModelGamesSummaryConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "GamesSummary";
     id: number;
     totalCompletedGames: number;
@@ -1634,7 +1638,7 @@ export type ListGamesSummarysQuery = {
     highestPayout: number;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1648,13 +1652,13 @@ export type GetErrorLogQuery = {
 
 export type ListErrorLogsQuery = {
   __typename: "ModelErrorLogConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "ErrorLog";
     id: string;
     createdAt: string;
     stackTrace: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1697,13 +1701,13 @@ export type GetPlayerQuery = {
 
 export type ListPlayersQuery = {
   __typename: "ModelPlayerConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "Player";
     id: string;
     status: PlayerStatus;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1741,7 +1745,7 @@ export type GetApiPoolAttributesQuery = {
 
 export type ListApiPoolAttributessQuery = {
   __typename: "ModelApiPoolAttributesConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "ApiPoolAttributes";
     id: string;
     lockFundsDatetime: string;
@@ -1755,7 +1759,7 @@ export type ListApiPoolAttributessQuery = {
     poolApiCustomSchema?: string | null;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1810,7 +1814,7 @@ export type GetPoolQuery = {
 
 export type ListPoolsQuery = {
   __typename: "ModelPoolConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "Pool";
     id: string;
     poolId: number;
@@ -1825,7 +1829,7 @@ export type ListPoolsQuery = {
     requestHash: string;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1845,7 +1849,7 @@ export type GetPoolSuccessfullBlockEventsProcessedQuery = {
 
 export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
   __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "PoolSuccessfullBlockEventsProcessed";
     id: string;
     lastBlockProcessedForCreatedEvents: number;
@@ -1857,7 +1861,7 @@ export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
     historicalLastBlockLoadedForEvents: number;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1875,7 +1879,7 @@ export type GetPoolSummariesQuery = {
 
 export type ListPoolSummariessQuery = {
   __typename: "ModelPoolSummariesConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "PoolSummaries";
     id: string;
     totalCompletedGames: number;
@@ -1885,7 +1889,7 @@ export type ListPoolSummariessQuery = {
     highestPoolPayout: number;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1915,7 +1919,7 @@ export type GetUserWalletQuery = {
 
 export type ListUserWalletsQuery = {
   __typename: "ModelUserWalletConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "UserWallet";
     id: string;
     wallet: string;
@@ -1927,7 +1931,7 @@ export type ListUserWalletsQuery = {
     totalPoolsWon: number;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 
@@ -1944,7 +1948,7 @@ export type GetBrandQuery = {
 
 export type ListBrandsQuery = {
   __typename: "ModelBrandConnection";
-  items?: Array<{
+  items: Array<{
     __typename: "Brand";
     id: string;
     wallet: string;
@@ -1953,7 +1957,7 @@ export type ListBrandsQuery = {
     logo?: string | null;
     createdAt: string;
     updatedAt: string;
-  } | null> | null;
+  }>;
   nextToken?: string | null;
 };
 

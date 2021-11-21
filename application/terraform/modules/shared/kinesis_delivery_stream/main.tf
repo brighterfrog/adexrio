@@ -13,7 +13,7 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     buffer_interval     = 60
     buffer_size         = 128
     compression_format  = "UNCOMPRESSED"
-    prefix              = "apigateway/ingest/!{partitionKeyFromQuery:payload_event_name}/ !{partitionKeyFromQuery:year}/!{partitionKeyFromQuery:month}/!{partitionKeyFromQuery:day}"
+    prefix              = "apigateway/ingest/!{partitionKeyFromQuery:payload_stream_event}/ !{partitionKeyFromQuery:year}/!{partitionKeyFromQuery:month}/!{partitionKeyFromQuery:day}"
     error_output_prefix = "apigateway/ingest/errors"
     s3_backup_mode      = "Disabled"
 
@@ -26,11 +26,20 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
     processing_configuration {
       enabled = "true"
       processors {
+        type = "Lambda"
+
+        parameters {
+          parameter_name  = "LambdaArn"
+          parameter_value = "${var.request_payload_transformer_lambda.arn}:$LATEST"
+        }
+      }
+
+      processors {
         type = "MetadataExtraction"
 
         parameters {
           parameter_name  = "MetadataExtractionQuery"
-          parameter_value = "{payload_event_name:.payload_event_name,year:.payload_event_timestamp| strftime(\"%Y\"),month:.payload_event_timestamp| strftime(\"%m\"),day:.payload_event_timestamp| strftime(\"%d\")}"
+          parameter_value = "{payload_stream_event:.payload_stream_event,year:.payload_event_timestamp| strftime(\"%Y\"),month:.payload_event_timestamp| strftime(\"%m\"),day:.payload_event_timestamp| strftime(\"%d\")}"
         }
 
         parameters {
@@ -43,14 +52,14 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
 
     dynamic_partitioning_configuration {
       enabled = true
-      retry_options {
-        duration_in_seconds = 300
-      }
+      # retry_options {
+      #   duration_in_seconds = 300
+      # }
     }
-
-    tags = var.tags
   }
+  tags = var.tags
 }
+
 
 resource "aws_iam_role" "firehose_role" {
   name = "ingestion_delivery_firehose_${var.globals[terraform.workspace].resource_suffix}"
