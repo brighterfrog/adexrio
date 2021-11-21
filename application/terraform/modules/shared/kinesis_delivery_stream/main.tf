@@ -40,9 +40,16 @@ resource "aws_kinesis_firehose_delivery_stream" "extended_s3_stream" {
       }
 
     }
-  }
 
-  tags = var.tags
+    dynamic_partitioning_configuration {
+      enabled = true
+      retry_options {
+        duration_in_seconds = 300
+      }
+    }
+
+    tags = var.tags
+  }
 }
 
 resource "aws_iam_role" "firehose_role" {
@@ -94,6 +101,7 @@ resource "aws_iam_policy" "firehose_policy" {
 }
 EOF
 }
+
 resource "aws_iam_role_policy_attachment" "firehose_policy_attach" {
   role       = aws_iam_role.firehose_role.name
   policy_arn = aws_iam_policy.firehose_policy.arn
