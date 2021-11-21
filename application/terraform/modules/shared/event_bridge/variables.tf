@@ -1,3 +1,2 @@
 variable "globals" {}
 variable "tags" {}
-
