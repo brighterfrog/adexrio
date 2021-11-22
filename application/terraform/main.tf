@@ -47,8 +47,3 @@ module "historical_events" {
 #   destination = "extended_s3"
 
 # }
-
-resource "aws_appsync_graphql_api" "appsync_api" {
-  authentication_type = "API_KEY"
-  name                = "adexr-${var.globals[terraform.workspace].resource_suffix}"
-}
