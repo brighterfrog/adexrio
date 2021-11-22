@@ -55,6 +55,13 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "${var.stream_ingestion_bucket.arn}/*",
       "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "dynamodb:*"       
+      ],
+      "Resource": "${var.stream_ingestion_bucket.arn}/*",
+      "Effect": "Allow"
     }
   ]
 }
@@ -135,3 +142,18 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
     aws_iam_role_policy_attachment.lambda_policy_attach
   ]
 }
+
+data "template_file" "amplify_appId_stdout" {  
+  //filename   = "${path.module}/amplify_dynamodb_appId"
+  template = ""
+}
+
+ resource "null_resource" "lookup_amplify_dynamodb_table" {
+   provisioner "local-exec" {
+     command = "aws appsync list-graphql-apis --query 'graphqlApis[?name==`adexr-${var.globals[terraform.workspace].resource_suffix}`].apiId | [0]' > ${data.template_file.amplify_appId_stdout.rendered}"
+   }
+}
+#  locals {
+#    is_windows                   = dirname("/") == "\\"
+#  }
+
