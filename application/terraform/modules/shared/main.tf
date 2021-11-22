@@ -44,8 +44,8 @@ module "sqs" {
       environment = "${var.globals[terraform.workspace].resource_suffix}"
     }
   ))
-  firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-  firehose_ingestion_bucket_id  = module.storage.firehose_ingestion_bucket_id
+  stream_ingestion_bucket_arn = module.storage.stream_ingestion_bucket_arn
+  stream_ingestion_bucket_id  = module.storage.stream_ingestion_bucket_id
 
   depends_on = [
     module.storage
@@ -62,21 +62,23 @@ module "request_payload_transformer" {
       environment = "${var.globals[terraform.workspace].resource_suffix}"
     }
   ))
+  kinesis_data_stream     = module.kinesis_data_stream.ingestion_stream
+  stream_ingestion_bucket = module.storage.stream_ingestion_bucket
 }
 
-module "kinesis_delivery_stream" {
-  source                        = "./kinesis_delivery_stream"
-  globals                       = var.globals
-  firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-  ingestion_stream              = module.kinesis_data_stream.ingestion_stream
-  tags = (merge(
-    var.globals.tags,
-    {
-      environment = "${var.globals[terraform.workspace].resource_suffix}"
-    }
-  ))
-  request_payload_transformer_lambda = module.request_payload_transformer.request_payload_transformer_lambda
-}
+# module "kinesis_delivery_stream" {
+#   source                        = "./kinesis_delivery_stream"
+#   globals                       = var.globals
+#   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
+#   ingestion_stream              = module.kinesis_data_stream.ingestion_stream
+#   tags = (merge(
+#     var.globals.tags,
+#     {
+#       environment = "${var.globals[terraform.workspace].resource_suffix}"
+#     }
+#   ))
+#   request_payload_transformer_lambda = module.request_payload_transformer.request_payload_transformer_lambda
+# }
 
 
 

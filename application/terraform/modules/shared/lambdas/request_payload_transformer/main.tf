@@ -34,6 +34,27 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "kinesis:*"       
+      ],
+      "Resource": "${var.kinesis_data_stream.arn}",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "sqs:*"       
+      ],
+      "Resource": "${aws_sqs_queue.dlq_request_payload_transformer.arn}",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "s3:*"       
+      ],
+      "Resource": "${var.stream_ingestion_bucket.arn}/*",
+      "Effect": "Allow"
     }
   ]
 }
@@ -43,6 +64,7 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   role       = aws_iam_role.lambda_role.name
   policy_arn = aws_iam_policy.lambda_policy.arn
 }
+
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
@@ -56,9 +78,60 @@ resource "aws_lambda_function" "lambda" {
   filename         = "${path.module}/../../../../../lambda_request_payload_transformer/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
-  handler          = "index.lambda_handler"
+  handler          = "index.handler"
   runtime          = "nodejs14.x"
   publish          = true
   timeout          = 65
   depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
+
+  environment {
+    variables = {
+      SHARD_TO_PROCESS            = "SHARD_1_INGESTION",
+      "BLOCK_LOOKUP_TABLE_NAME"   = "PoolSuccessfullBlockEventsProcessed",
+      "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
+      "PREFIX_BLOCK_HISTORY" = "block_history",
+      "PREFIX_BLOCK_NUMBER" = "block_number",
+    }
+  }
+}
+
+resource "aws_sqs_queue" "dlq_request_payload_transformer" {
+  name = "request_payload_transformer_dlq_${var.globals[terraform.workspace].resource_suffix}"
+
+  #   policy = <<POLICY
+  # {
+  #   "Version": "2012-10-17",
+  #   "Statement": [
+  #     {
+  #       "Effect": "Allow",
+  #       "Principal": "*",
+  #       "Action": "sqs:SendMessage",
+  #       "Resource": "${aws_lambda_function.lambda.arn}",
+  #       "Condition": {
+  #         "ArnEquals": { "aws:SourceArn": "${aws_lambda_function.lambda.arn}" }
+  #       }
+  #     }
+  #   ]
+  # }
+  # POLICY
+}
+
+resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
+  batch_size             = 1
+  event_source_arn       = var.kinesis_data_stream.arn
+  enabled                = true
+  function_name          = aws_lambda_function.lambda.arn
+  starting_position      = "LATEST"
+  maximum_retry_attempts = 1000
+
+  destination_config {
+    on_failure {
+      destination_arn = aws_sqs_queue.dlq_request_payload_transformer.arn
+    }
+  }
+
+  depends_on = [
+    aws_iam_policy.lambda_policy,
+    aws_iam_role_policy_attachment.lambda_policy_attach
+  ]
 }

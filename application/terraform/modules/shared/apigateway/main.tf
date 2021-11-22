@@ -22,6 +22,22 @@ resource "aws_apigatewayv2_stage" "stage" {
   api_id      = aws_apigatewayv2_api.api.id
   name        = "adexrio-stage-${var.globals[terraform.workspace].resource_suffix}"
   auto_deploy = true
+
+  access_log_settings {
+    destination_arn = aws_cloudwatch_log_group.apigw_log_group.arn
+    format = jsonencode(
+      {
+        httpMethod     = "$context.httpMethod"
+        ip             = "$context.identity.sourceIp"
+        protocol       = "$context.protocol"
+        requestId      = "$context.requestId"
+        requestTime    = "$context.requestTime"
+        responseLength = "$context.responseLength"
+        routeKey       = "$context.routeKey"
+        status         = "$context.status"
+      }
+    )
+  }
 }
 
 resource "aws_apigatewayv2_integration" "kinesis_integration" {
@@ -91,4 +107,11 @@ EOF
 resource "aws_iam_role_policy_attachment" "apigw_policy_attach" {
   role       = aws_iam_role.api_gw_role.name
   policy_arn = aws_iam_policy.apigw_policy.arn
+}
+
+resource "aws_cloudwatch_log_group" "apigw_log_group" {
+  name = "/apigateway/${aws_apigatewayv2_api.api.name}"
+  tags = var.tags
+
+  retention_in_days = 365
 }
