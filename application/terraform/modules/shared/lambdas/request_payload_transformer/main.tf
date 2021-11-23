@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  name               = "request_payloard_transformer_${var.globals[terraform.workspace].resource_suffix}"
+  name               = "request_payload_transformer_role_${var.globals[terraform.workspace].resource_suffix}"
   tags               = var.globals.tags
   assume_role_policy = <<EOF
 {
@@ -18,7 +18,7 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 resource "aws_iam_policy" "lambda_policy" {
-  name        = "request_payloard_transformer_${var.globals[terraform.workspace].resource_suffix}"
+  name        = "request_payload_transformer_policy_${var.globals[terraform.workspace].resource_suffix}"
   tags        = var.globals.tags
   path        = "/"
   description = "lambda request payload transform"
@@ -60,7 +60,7 @@ resource "aws_iam_policy" "lambda_policy" {
       "Action": [
         "dynamodb:*"       
       ],
-      "Resource": "${var.stream_ingestion_bucket.arn}/*",
+      "Resource": "${data.aws_dynamodb_table.dynamodb_amplify_table.arn}",
       "Effect": "Allow"
     }
   ]
@@ -89,19 +89,18 @@ resource "aws_lambda_function" "lambda" {
   runtime          = "nodejs14.x"
   publish          = true
   timeout          = 65
-  depends_on       = [
+  depends_on = [
     aws_iam_role_policy_attachment.lambda_policy_attach,
-    data.local_file.amplify_appsync_appId
+    data.aws_dynamodb_table.dynamodb_amplify_table
   ]
 
   environment {
     variables = {
       SHARD_TO_PROCESS            = "SHARD_1_INGESTION",
-      "BLOCK_LOOKUP_TABLE_NAME"   = "PoolSuccessfullBlockEventsProcessed",
+      "BLOCK_LOOKUP_TABLE_NAME"   = "${data.aws_dynamodb_table.dynamodb_amplify_table.name}",
       "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
-      "PREFIX_BLOCK_HISTORY" = "block_history",
-      "PREFIX_BLOCK_NUMBER" = "block_number",
-      "AMPLIFY_APP_ID" = "${data.local_file.amplify_appsync_appId.content}",
+      "PREFIX_BLOCK_HISTORY"      = "block_history",
+      "PREFIX_BLOCK_NUMBER"       = "block_number"
     }
   }
 }
@@ -148,24 +147,28 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
 }
 
 data "local_file" "amplify_appsync_appId" {
-    filename = "${path.module}/lookup_amplify_dynamodb_table_id"
-    depends_on = [
-      null_resource.lookup_amplify_dynamodb_table
-    ]
+  filename = "${path.module}/lookup_amplify_dynamodb_table_id.txt"
+  depends_on = [
+    null_resource.lookup_amplify_dynamodb_table
+  ]
 }
 
-  # locals {
-  #   is_windows                   = dirname("/") == "\\"
-  # }
+data "aws_dynamodb_table" "dynamodb_amplify_table" {
+  name = "PoolSuccessfullBlockEventsProcessed-${data.local_file.amplify_appsync_appId.content}-${var.globals[terraform.workspace].resource_suffix}"
 
- resource "null_resource" "lookup_amplify_dynamodb_table" {
-      triggers = {
-        build_number = "${timestamp()}"
-    }
+  depends_on = [
+    data.local_file.amplify_appsync_appId
+  ]
+}
 
-   provisioner "local-exec" {
-     interpreter = ["powershell"]     
-     command = "(aws appsync list-graphql-apis --query 'graphqlApis[?name==`adexr-${var.globals[terraform.workspace].resource_suffix}`].apiId') | ConvertFrom-Json | out-file -encoding utf8 ${path.module}/lookup_amplify_dynamodb_table_id"     
-   }
+resource "null_resource" "lookup_amplify_dynamodb_table" {
+  triggers = {
+    build_number = "${timestamp()}"
+  }
+
+  provisioner "local-exec" {
+    interpreter = ["pwsh", "-Command"]
+    command     = "((aws appsync list-graphql-apis --query 'graphqlApis[?name==`adexr-${var.globals[terraform.workspace].resource_suffix}`].apiId') | ConvertFrom-Json).Trim() | Out-File -Encoding utf8NoBOM -NoNewLine -FilePath ${path.module}/lookup_amplify_dynamodb_table_id.txt"
+  }
 }
 
