@@ -44,4 +44,4 @@ application/terraform/.terraform/providers/registry.terraform.io/hashicorp/exter
 application/terraform/.terraform/providers/registry.terraform.io/hashicorp/local/2.1.0/windows_amd64/terraform-provider-local_v2.1.0_x5.exe
 application/terraform/.terraform/providers/registry.terraform.io/hashicorp/null/3.1.0/windows_amd64/terraform-provider-null_v3.1.0_x5.exe
 application/terraform/.terraform/providers/registry.terraform.io/hashicorp/template/2.2.0/windows_amd64/terraform-provider-template_v2.2.0_x4.exe
-application/terraform/modules/shared/lambdas/request_payload_transformer/lookup_amplify_dynamodb_table_id
+application/terraform/modules/shared/lambdas/request_payload_transformer/lookup_amplify_dynamodb_table_id.txt
