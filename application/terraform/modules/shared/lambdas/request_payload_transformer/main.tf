@@ -89,7 +89,10 @@ resource "aws_lambda_function" "lambda" {
   runtime          = "nodejs14.x"
   publish          = true
   timeout          = 65
-  depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
+  depends_on       = [
+    aws_iam_role_policy_attachment.lambda_policy_attach,
+    data.local_file.amplify_appsync_appId
+  ]
 
   environment {
     variables = {
@@ -98,6 +101,7 @@ resource "aws_lambda_function" "lambda" {
       "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
       "PREFIX_BLOCK_HISTORY" = "block_history",
       "PREFIX_BLOCK_NUMBER" = "block_number",
+      "AMPLIFY_APP_ID" = "${data.local_file.amplify_appsync_appId.content}",
     }
   }
 }
@@ -143,17 +147,25 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
   ]
 }
 
-data "template_file" "amplify_appId_stdout" {  
-  //filename   = "${path.module}/amplify_dynamodb_appId"
-  template = ""
+data "local_file" "amplify_appsync_appId" {
+    filename = "${path.module}/lookup_amplify_dynamodb_table_id"
+    depends_on = [
+      null_resource.lookup_amplify_dynamodb_table
+    ]
 }
 
+  # locals {
+  #   is_windows                   = dirname("/") == "\\"
+  # }
+
  resource "null_resource" "lookup_amplify_dynamodb_table" {
+      triggers = {
+        build_number = "${timestamp()}"
+    }
+
    provisioner "local-exec" {
-     command = "aws appsync list-graphql-apis --query 'graphqlApis[?name==`adexr-${var.globals[terraform.workspace].resource_suffix}`].apiId | [0]' > ${data.template_file.amplify_appId_stdout.rendered}"
+     interpreter = ["powershell"]     
+     command = "(aws appsync list-graphql-apis --query 'graphqlApis[?name==`adexr-${var.globals[terraform.workspace].resource_suffix}`].apiId') | ConvertFrom-Json | out-file -encoding utf8 ${path.module}/lookup_amplify_dynamodb_table_id"     
    }
 }
-#  locals {
-#    is_windows                   = dirname("/") == "\\"
-#  }
 
