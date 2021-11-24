@@ -7,12 +7,6 @@ exports.handler = async (event, context) => {
 
 
 
-
-
-
-
-
-
 /*
 INPUT
 payload: {

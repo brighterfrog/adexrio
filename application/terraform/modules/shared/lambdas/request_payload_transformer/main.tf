@@ -96,11 +96,12 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
-      SHARD_TO_PROCESS            = "SHARD_1_INGESTION",
+      "SHARD_TO_PROCESS"            = "SHARD_1_INGESTION",
       "BLOCK_LOOKUP_TABLE_NAME"   = "${data.aws_dynamodb_table.dynamodb_amplify_table.name}",
       "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
       "PREFIX_BLOCK_HISTORY"      = "block_history",
       "PREFIX_BLOCK_NUMBER"       = "block_number"
+      "INGESTION_BUCKET"          = "${var.stream_ingestion_bucket.bucket}"
     }
   }
 }
