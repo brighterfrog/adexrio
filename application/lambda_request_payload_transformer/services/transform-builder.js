@@ -36,7 +36,7 @@ function build(record, context, lastBlock) {
 
      function getBucketKey(prefix) {
         let current_datetime = new Date();
-        let formatted_date = current_datetime.getFullYear() + "_" + (current_datetime.getMonth() + 1) + "_" + current_datetime.getDate() + "_" + current_datetime.getHours() + ":" + current_datetime.getMinutes() + ":" + current_datetime.getSeconds()  + ":" + current_datetime.getMilliseconds()
+        let formatted_date = current_datetime.getFullYear() + "_" + (current_datetime.getMonth() + 1) + "_" + current_datetime.getDate() + "_" + current_datetime.getUTCHours + ":" + current_datetime.getUTCMinutes() + ":" + current_datetime.getUTCSeconds()  + ":" + current_datetime.getMilliseconds()
 
          return `${prefix}/${formatted_date}.json`;
      }
