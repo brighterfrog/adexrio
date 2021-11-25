@@ -47,13 +47,13 @@ resource "aws_s3_bucket_notification" "queue_notifications" {
     id            = aws_sqs_queue.historical_queue.id
     queue_arn     = aws_sqs_queue.historical_queue.arn
     events        = ["s3:ObjectCreated:*"]
-    filter_prefix = "block_history"
+    filter_prefix = "BLOCK_HISTORY_EVENT"
   }
 
   queue {
     id            = aws_sqs_queue.single_block_queue.id
     queue_arn     = aws_sqs_queue.single_block_queue.arn
     events        = ["s3:ObjectCreated:*"]
-    filter_prefix = "block_number"
+    filter_prefix = "BLOCK_NUMBER_EVENT"
   }
 }
