@@ -75,8 +75,14 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "${path.module}/../../../../../lambda_request_payload_transformer/index.js"
+  
+  source_dir = "${path.module}/../../../../../lambda_request_payload_transformer/"
   output_path = "${path.module}/../../../../../lambda_request_payload_transformer/handler.zip"
+  excludes = [
+    "test/*",
+    ".mocharc.js",
+    "handler.zip",
+  ]
 }
 
 resource "aws_lambda_function" "lambda" {
@@ -96,7 +102,7 @@ resource "aws_lambda_function" "lambda" {
 
   environment {
     variables = {
-      "SHARD_TO_PROCESS"            = "SHARD_1_INGESTION",
+      "SHARD_TO_PROCESS"          = "SHARD_1_INGESTION",
       "BLOCK_LOOKUP_TABLE_NAME"   = "${data.aws_dynamodb_table.dynamodb_amplify_table.name}",
       "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
       "PREFIX_BLOCK_HISTORY"      = "block_history",
@@ -133,7 +139,8 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
   enabled                = true
   function_name          = aws_lambda_function.lambda.arn
   starting_position      = "LATEST"
-  maximum_retry_attempts = 1000
+  parallelization_factor = 1
+  maximum_retry_attempts = 1
 
   destination_config {
     on_failure {

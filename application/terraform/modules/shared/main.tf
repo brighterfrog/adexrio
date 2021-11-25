@@ -66,19 +66,5 @@ module "request_payload_transformer" {
   stream_ingestion_bucket = module.storage.stream_ingestion_bucket
 }
 
-# module "kinesis_delivery_stream" {
-#   source                        = "./kinesis_delivery_stream"
-#   globals                       = var.globals
-#   firehose_ingestion_bucket_arn = module.storage.firehose_ingestion_bucket_arn
-#   ingestion_stream              = module.kinesis_data_stream.ingestion_stream
-#   tags = (merge(
-#     var.globals.tags,
-#     {
-#       environment = "${var.globals[terraform.workspace].resource_suffix}"
-#     }
-#   ))
-#   request_payload_transformer_lambda = module.request_payload_transformer.request_payload_transformer_lambda
-# }
-
 
 

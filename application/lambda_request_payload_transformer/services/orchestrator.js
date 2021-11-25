@@ -6,21 +6,18 @@ const s3Storage = require('./s3-storage-service');
 
 
 exports.handleEvent = async (event, context) => {  
-    
+        
     var lastBlock = await dbClient.readLastBlockForEventsProcessed();
+    console.log(`Last block for events processed: ' ${lastBlock}`);
+            
+    event.Records.forEach(async (record) => {
     
-    event.Records.forEach(function(record) {
-    
-        var shard = record.PartitionKey;
-
-        if(shard === process.env.SHARD_TO_PROCESS) {                
-            var transformedEvent = transformer.build(record, context, lastBlock);            
-            s3Storage.addMessage(
-               transformedEvent
-            );            
+        console.log(`Record: ${JSON.stringify(record)}`);
+                                     
+        if(record.kinesis.partitionKey === process.env.SHARD_TO_PROCESS) {                                               
+            await s3Storage.addMessage( transformer.build(record, context, lastBlock) );            
         }
-        else {
-            console.log('shard processor not found');
+        else {          
             throw new Error('shard processor not found');
         }
                
