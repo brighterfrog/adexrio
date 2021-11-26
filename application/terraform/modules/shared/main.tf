@@ -66,5 +66,30 @@ module "request_payload_transformer" {
   stream_ingestion_bucket = module.storage.stream_ingestion_bucket
 }
 
+module "historical_event_processor" {
+  source  = "./lambdas/historical_event_processor"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+  historical_queue_arn = module.sqs.historical_queue_arn 
+}
+
+
+# module "historical_events" {
+#   source  = "./historical_events"
+#   globals = var.globals
+#   tags = (merge(
+#     var.globals.tags,
+#     {
+#       environment = "${var.globals[terraform.workspace].resource_suffix}"
+#     }
+#   ))
+#   
+# }
+
 
 

@@ -34,7 +34,14 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
-    }
+    },
+    {
+      "Action": [
+        "sqs:*"   
+      ],
+      "Resource": "${var.historical_queue_arn}",
+      "Effect": "Allow"
+    }    
   ]
 }
 EOF
@@ -46,17 +53,26 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "${path.module}/../../../../lambda_event_processor/index.js"
-  output_path = "${path.module}/../../../../lambda_event_processor/handler.zip"
+  source_dir = "${path.module}/../../../../../lambda_historical_event_processor/"
+  output_path = "${path.module}/../../../../../lambda_historical_event_processor/handler.zip"
+  excludes = [
+    "test/*",    
+    "handler.zip",
+  ]
 }
 resource "aws_lambda_function" "lambda" {
-  function_name    = "event_processor${var.globals[terraform.workspace].resource_suffix}"
+  function_name    = "historical_event_processor${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags
-  filename         = "${path.module}/../../../../lambda_event_processor/handler.zip"
+  filename         = "${path.module}/../../../../../lambda_historical_event_processor/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   publish          = true
   depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
+}
+
+resource "aws_lambda_event_source_mapping" "sqs_lambda_event_mapping" {
+ event_source_arn = var.historical_queue_arn
+ function_name    = aws_lambda_function.lambda.arn
 }

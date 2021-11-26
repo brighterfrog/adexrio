@@ -140,7 +140,7 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
   function_name          = aws_lambda_function.lambda.arn
   starting_position      = "LATEST"
   parallelization_factor = 1
-  maximum_retry_attempts = 1
+  maximum_retry_attempts = 10
 
   destination_config {
     on_failure {
