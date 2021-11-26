@@ -15,7 +15,7 @@ function build(record, context, lastBlock) {
  function buildTransformedRecordFromEventType(record, payload, eventType, lastBlock) {               
     function buildTransformedResult(record, payload, eventType, lastBlock) {
         var result = {
-            Key: getBucketKey(eventType),
+            Key: getBucketKey(eventType, record.kinesis.sequenceNumber),
             Bucket: process.env.INGESTION_BUCKET,
             Body: getBucketBody(record, payload, eventType, lastBlock)
         };
@@ -34,11 +34,11 @@ function build(record, context, lastBlock) {
          return bucketBody;
      }     
 
-     function getBucketKey(prefix) {
+     function getBucketKey(prefix, sequenceNumber) {
         let current_datetime = new Date();
-        let formatted_date = current_datetime.getFullYear() + "_" + (current_datetime.getMonth() + 1) + "_" + current_datetime.getDate() + "_" + current_datetime.getUTCHours() + ":" + current_datetime.getUTCMinutes() + ":" + current_datetime.getUTCSeconds()  + ":" + current_datetime.getUTCMilliseconds()
+        let formatted_eventName = current_datetime.getFullYear() + "_" + (current_datetime.getMonth() + 1) + "_" + current_datetime.getDate() + "/" + sequenceNumber
 
-         return `${prefix}/${formatted_date}.json`;
+         return `${prefix}/${formatted_eventName}.json`;
      }
 
      return buildTransformedResult(record, payload, eventType, lastBlock);

@@ -1,5 +1,7 @@
 resource "aws_sqs_queue" "historical_queue" {
-  name = "historical_event_queue_${var.globals[terraform.workspace].resource_suffix}"
+  name = "historical_event_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
+  fifo_queue                  = true
+  content_based_deduplication = true
 
   policy = <<POLICY
 {
@@ -20,7 +22,9 @@ POLICY
 }
 
 resource "aws_sqs_queue" "single_block_queue" {
-  name = "single_block_event_queue_${var.globals[terraform.workspace].resource_suffix}"
+  name = "single_block_event_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
+  fifo_queue                  = true
+  content_based_deduplication = true
 
   policy = <<POLICY
 {

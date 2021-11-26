@@ -1,11 +1,6 @@
 "use strict";
+const orchestrator = require('./services/orchestrator');
 
-const AWS = require("aws-sdk");
-
-exports.handler =  async (event) => {
-    const payload = {
-      date: new Date(),
-      message: 'Hello Terraform World'
-    };
-    return JSON.stringify(payload);
-  };
+exports.handler = async (event, context) => {    
+  await orchestrator.Test();
+};
