@@ -109,8 +109,7 @@
         },
         "DataSourceName": "S3IngestionRequestBucket",
         "FieldName": "createIngestionEvent",
-        "TypeName": "Mutation",
-        "Kind": "PIPELINE",
+        "TypeName": "Mutation",        
         "RequestMappingTemplateS3Location": {
           "Fn::Sub": [
             "s3://${S3DeploymentBucket}/${S3DeploymentRootKey}/resolvers/${ResolverFileName}",

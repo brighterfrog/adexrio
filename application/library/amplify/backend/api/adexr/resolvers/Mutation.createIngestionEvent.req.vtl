@@ -4,7 +4,7 @@ $util.qr($ctx.stash.put("payloadId", $util.autoId()))
   ## put the object in the bucket
   "method": "PUT",
   ## specify the name of the object in the resource path
-  "resourcePath": "/${ctx.stash.payloadId}.json",
+  "resourcePath": "/block_ticker/${ctx.stash.payloadId}.json",
   "params": {
     "headers": {
       ## specify the content type of the object, e.g. JSON
