@@ -1,2 +1,2 @@
-variable "globals" {}
-variable "tags" {}
+# variable "globals" {}
+# variable "tags" {}
