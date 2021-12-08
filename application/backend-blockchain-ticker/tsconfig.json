@@ -10,13 +10,18 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "rootDir": "src",
+        // "rootDirs": ["src", "../library/src"],
         "baseUrl": "."
     },
     "include": [
          "src/*",
          "node_modules/*"
-     ]
+     ],
+    //  "references": [
+    //     {
+    //       "path": "../../library/src"
+    //     }
+    //   ]
     // "include": [
     //     "**/*.ts"
     // ]

@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  name               = "request_payload_transformer_role_${var.globals[terraform.workspace].resource_suffix}"
+  name               = "${var.name}_role_${var.globals[terraform.workspace].resource_suffix}"
   tags               = var.globals.tags
   assume_role_policy = <<EOF
 {
@@ -18,7 +18,7 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 resource "aws_iam_policy" "lambda_policy" {
-  name        = "request_payload_transformer_policy_${var.globals[terraform.workspace].resource_suffix}"
+  name        = "${var.name}_policy_${var.globals[terraform.workspace].resource_suffix}"
   tags        = var.globals.tags
   path        = "/"
   description = "lambda request payload transform"
@@ -46,14 +46,14 @@ resource "aws_iam_policy" "lambda_policy" {
       "Action": [
         "sqs:*"       
       ],
-      "Resource": "${aws_sqs_queue.dlq_request_payload_transformer.arn}",
+      "Resource": "${aws_sqs_queue.dlq_kinesis_event_transformer.arn}",
       "Effect": "Allow"
     },
     {
       "Action": [
         "s3:*"       
       ],
-      "Resource": "${var.stream_ingestion_bucket.arn}/*",
+      "Resource": "${var.stream_ingestion_egress_bucket.arn}/*",
       "Effect": "Allow"
     },
     {
@@ -74,10 +74,10 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 
 
 data "archive_file" "lambda_zip" {
-  type        = "zip"
-  
-  source_dir = "${path.module}/../../../../../lambda_request_payload_transformer/"
-  output_path = "${path.module}/../../../../../lambda_request_payload_transformer/handler.zip"
+  type = "zip"
+
+  source_dir  = "${path.module}/../../../../../lambda_${var.name}/"
+  output_path = "${path.module}/../../../../../lambda_${var.name}/handler.zip"
   excludes = [
     "test/*",
     ".mocharc.js",
@@ -86,9 +86,9 @@ data "archive_file" "lambda_zip" {
 }
 
 resource "aws_lambda_function" "lambda" {
-  function_name    = "request_payload_transformer_${var.globals[terraform.workspace].resource_suffix}"
+  function_name    = "${var.name}_${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags
-  filename         = "${path.module}/../../../../../lambda_request_payload_transformer/handler.zip"
+  filename         = "${path.module}/../../../../../lambda_${var.name}/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
@@ -107,30 +107,30 @@ resource "aws_lambda_function" "lambda" {
       "BLOCK_LOOKUP_TABLE_ID_KEY" = "0",
       "PREFIX_BLOCK_HISTORY"      = "block_history",
       "PREFIX_BLOCK_NUMBER"       = "block_number"
-      "INGESTION_BUCKET"          = "${var.stream_ingestion_bucket.bucket}"
+      "INGESTION_EGRESS_BUCKET"   = "${var.stream_ingestion_egress_bucket.bucket}"
     }
   }
 }
 
-resource "aws_sqs_queue" "dlq_request_payload_transformer" {
-  name = "request_payload_transformer_dlq_${var.globals[terraform.workspace].resource_suffix}"
+resource "aws_sqs_queue" "dlq_kinesis_event_transformer" {
+  name = "${var.name}_dlq_${var.globals[terraform.workspace].resource_suffix}"
 
-  #   policy = <<POLICY
-  # {
-  #   "Version": "2012-10-17",
-  #   "Statement": [
-  #     {
-  #       "Effect": "Allow",
-  #       "Principal": "*",
-  #       "Action": "sqs:SendMessage",
-  #       "Resource": "${aws_lambda_function.lambda.arn}",
-  #       "Condition": {
-  #         "ArnEquals": { "aws:SourceArn": "${aws_lambda_function.lambda.arn}" }
-  #       }
-  #     }
-  #   ]
-  # }
-  # POLICY
+  # policy = <<POLICY
+  #  {
+  #    "Version": "2012-10-17",
+  #    "Statement": [
+  #      {
+  #        "Effect": "Allow",
+  #        "Principal": "*",
+  #        "Action": "sqs:SendMessage",
+  #        "Resource": "${aws_lambda_function.lambda.arn}",
+  #        "Condition": {
+  #          "ArnEquals": { "aws:SourceArn": "${aws_lambda_function.lambda.arn}" }
+  #        }
+  #      }
+  #    ]
+  #  }
+  #  POLICY
 }
 
 resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
@@ -140,11 +140,11 @@ resource "aws_lambda_event_source_mapping" "kinesis_lambda_event_mapping" {
   function_name          = aws_lambda_function.lambda.arn
   starting_position      = "LATEST"
   parallelization_factor = 1
-  maximum_retry_attempts = 10
+  maximum_retry_attempts = 1
 
   destination_config {
     on_failure {
-      destination_arn = aws_sqs_queue.dlq_request_payload_transformer.arn
+      destination_arn = aws_sqs_queue.dlq_kinesis_event_transformer.arn
     }
   }
 

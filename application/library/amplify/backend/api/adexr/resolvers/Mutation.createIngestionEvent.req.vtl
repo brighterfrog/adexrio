@@ -1,0 +1,15 @@
+$util.qr($ctx.stash.put("payloadId", $util.autoId()))
+{
+  "version": "2018-05-29",
+  ## put the object in the bucket
+  "method": "PUT",
+  ## specify the name of the object in the resource path
+  "resourcePath": "/${ctx.stash.payloadId}.json",
+  "params": {
+    "headers": {
+      ## specify the content type of the object, e.g. JSON
+      "Content-Type" : "application/json"
+    },
+    "body": $util.toJson($ctx.args.input.payload)
+  }
+}

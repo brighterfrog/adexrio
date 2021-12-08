@@ -34,14 +34,7 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
-    },
-    {
-      "Action": [
-        "sqs:*"   
-      ],
-      "Resource": "${var.historical_queue_arn}",
-      "Effect": "Allow"
-    }    
+    }   
   ]
 }
 EOF
@@ -53,10 +46,10 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir = "${path.module}/../../../../../lambda_historical_event_processor/"
+  source_dir  = "${path.module}/../../../../../lambda_historical_event_processor/"
   output_path = "${path.module}/../../../../../lambda_historical_event_processor/handler.zip"
   excludes = [
-    "test/*",    
+    "test/*",
     "handler.zip",
   ]
 }
@@ -72,7 +65,7 @@ resource "aws_lambda_function" "lambda" {
   depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
 }
 
-resource "aws_lambda_event_source_mapping" "sqs_lambda_event_mapping" {
- event_source_arn = var.historical_queue_arn
- function_name    = aws_lambda_function.lambda.arn
-}
+# resource "aws_lambda_event_source_mapping" "sqs_lambda_event_mapping" {
+#  event_source_arn = var.historical_queue_arn
+#  function_name    = aws_lambda_function.lambda.arn
+# }
