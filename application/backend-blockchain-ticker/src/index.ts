@@ -13,20 +13,30 @@ const initialize = async () => {
     await blockchainTicker.loadConnexDriver();
     const ticker = blockchainTicker.getTicker();
 
+    // const test = {
+    //     typeName: "CreateIngestionBucketPayload",
+    //     details : JSON.stringify({ "testkey": "testkeyvalue"})
+    // };
+
     for (; ;) {
         var head = await ticker.next()
         console.log('here', head);
 
         try {
-            const appsyncresult = await library.API.graphql(library.graphqlOperation(createIngestionEvent, {
-                input: {
-                    payload: JSON.stringify({
-                        head: head,
-                        application: 'adexrio-backend-blockchain-ticker',
-                        event_name: 'block_ticker'
-                    })
-                }
-            }));
+            const appsyncresult = await library.API.graphql(
+                library.graphqlOperation(
+                    createIngestionEvent, 
+                    {                   
+                        input: {
+                            details: JSON.stringify({                        
+                                head: head,
+                                application: 'adexrio-backend-blockchain-ticker',
+                                event_name: 'block_ticker'
+                            })
+                        }                                                                              
+                    }
+                )
+            );
             console.log('completed appsync mutation', appsyncresult);
         }
         catch (e) {

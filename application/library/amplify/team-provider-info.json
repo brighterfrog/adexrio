@@ -17,6 +17,16 @@
           "appId": "d3nhl82tha81mm",
           "type": "cicd"
         }
+      },
+      "function": {
+        "addBlocktickerEventToS3": {
+          "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
+          "s3Key": "amplify-builds/addBlocktickerEventToS3-472f487161744e644e73-build.zip"
+        },
+        "addBlocktickerEventToSQS": {
+          "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
+          "s3Key": "amplify-builds/addBlocktickerEventToSQS-6839392b424367704d66-build.zip"
+        }
       }
     }
   }

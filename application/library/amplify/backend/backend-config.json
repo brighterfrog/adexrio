@@ -23,5 +23,18 @@
       }
     }
   },
-  "function": {}
+  "function": {
+    "addBlocktickerEventToS3": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    },
+    "addBlocktickerEventToSQS": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda",
+      "dependsOn": []
+    }
+  }
 }

@@ -2,13 +2,14 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateIngestionBucketPayload = {
-  payload: string,
+export type CreateIngestionBucketEventInput = {
+  event: string,
 };
 
 export type IngestionBucketResponse = {
   __typename: "IngestionBucketResponse",
-  payloadId: string,
+  s3Id?: string | null,
+  sqsId?: string | null,
 };
 
 export type CreateFeedbackInput = {
@@ -889,13 +890,14 @@ export type ModelBrandConnection = {
 };
 
 export type CreateIngestionEventMutationVariables = {
-  input: CreateIngestionBucketPayload,
+  input: CreateIngestionBucketEventInput,
 };
 
 export type CreateIngestionEventMutation = {
   createIngestionEvent?:  {
     __typename: "IngestionBucketResponse",
-    payloadId: string,
+    s3Id?: string | null,
+    sqsId?: string | null,
   } | null,
 };
 
