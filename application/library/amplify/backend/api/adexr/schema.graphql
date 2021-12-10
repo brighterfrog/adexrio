@@ -146,13 +146,16 @@ type Brand @model
 }
 
 # S3 event ingestion
-input CreateIngestionBucketPayload {
-	payload: AWSJSON!
+input CreateIngestionBucketEventInput {
+  event: AWSJSON!
 }
 type IngestionBucketResponse {	
-  payloadId: String!
+  s3Id: String
+  sqsId: String
 }
 type Mutation {
-  createIngestionEvent(input: CreateIngestionBucketPayload!): IngestionBucketResponse
+  createIngestionEvent(input: CreateIngestionBucketEventInput!): IngestionBucketResponse 
+    @function(name: "addBlocktickerEventToS3-${env}")
+    @function(name: "addBlocktickerEventToSQS-${env}")
 }
 

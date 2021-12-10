@@ -3,9 +3,10 @@
 // this is an auto generated file. This will be overwritten
 
 export const createIngestionEvent = /* GraphQL */ `
-  mutation CreateIngestionEvent($input: CreateIngestionBucketPayload!) {
+  mutation CreateIngestionEvent($input: CreateIngestionBucketEventInput!) {
     createIngestionEvent(input: $input) {
-      payloadId
+      s3Id
+      sqsId
     }
   }
 `;
