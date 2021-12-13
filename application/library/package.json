@@ -1,8 +1,8 @@
 {
   "name": "adexrio-backend-library",
   "version": "1.0.0",
-  "description": "",    
-  "scripts": {    
+  "description": "",
+  "scripts": {
     "build:dev": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName dev --useProfile true && tsc",
     "build:test": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName test --useProfile true && tsc",
     "build:prod": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName prod --useProfile true && tsc",
@@ -19,6 +19,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@aws-sdk/client-sqs": "^3.43.0",
     "@vechain/connex-driver": "^2.0.2",
     "@vechain/connex-framework": "^2.0.2",
     "aws-amplify": "^3.4.3",
