@@ -17,19 +17,13 @@ function build(record, context, lastBlock) {
         var result = {
             Key: getBucketKey(eventType, record.kinesis.sequenceNumber),
             Bucket: process.env.INGESTION_BUCKET,
-            Body: getBucketBody(record, payload, eventType, lastBlock)
+            Body: getBucketBody(event)
         };
                                                
         return result;
     }
-     function getBucketBody(record, payload, eventType, lastBlock) {
-        let bucketBody = JSON.stringify({             
-             payload_headblock: payload.payload_headblock,             
-             payload_event_name: payload.payload_event_name,
-             stream_event_type: eventType,
-             stream_approximate_arrival_timestamp: record.kinesis.approximateArrivalTimestamp,
-             dynamodb_last_block_processed: lastBlock,             
-         });
+     function getBucketBody(event) {
+        let bucketBody = JSON.stringify(event);
          console.log('getBucketBody', bucketBody);         
          return bucketBody;
      }     

@@ -15,6 +15,12 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "ingestionBucket": {
+      "Type": "String"
+    },
+    "bucketPrefix": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -69,6 +75,12 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "IngestionBucket": {
+              "Ref": "ingestionBucket"
+            },
+            "BucketPrefix": {
+              "Ref": "bucketPrefix"
             }
           }
         },
@@ -156,6 +168,22 @@
                     },
                     "lambda": {
                       "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "s3:*"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:s3:::ingestion-ingress-bucket-${env}/*",
+                  {
+                    "env": {
+                      "Ref": "env"
                     }
                   }
                 ]

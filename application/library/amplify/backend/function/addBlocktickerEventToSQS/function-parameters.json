@@ -1,3 +1,13 @@
 {
-  "lambdaLayers": []
+  "lambdaLayers": [],
+  "environmentVariableList": [
+    {
+      "cloudFormationParameterName": "historicalFifoQueue",
+      "environmentVariableName": "HistoricalFifoQueue"
+    },
+    {
+      "cloudFormationParameterName": "currentBlockQueue",
+      "environmentVariableName": "CurrentBlockQueue"
+    }
+  ]
 }

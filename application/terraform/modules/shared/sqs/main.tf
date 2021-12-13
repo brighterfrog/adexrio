@@ -1,24 +1,47 @@
-resource "aws_sqs_queue" "ingestion_ingress_sqs_fifo_queue" {
-  name                        = "ingestion_ingress_sqs_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
+resource "aws_sqs_queue" "ingestion_ingress_sqs_historical_fifo_queue" {
+  name                        = "ingestion_ingress_historical_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
   fifo_queue                  = true
   content_based_deduplication = true
 
-#   policy = <<POLICY
-# {
-#   "Version": "2012-10-17",
-#   "Statement": [
-#     {
-#       "Effect": "Allow",
-#       "Principal": "*",
-#       "Action": "sqs:SendMessage",
-#       "Resource": "arn:aws:sqs:*:*:ingestion_ingress_sqs_fifo_queue_${var.globals[terraform.workspace].resource_suffix}",
-#       "Condition": {
-#         "ArnEquals": { "aws:SourceArn": "${var.kinesis_ingestion_stream.arn}" }
-#       }
-#     }
-#   ]
-# }
-# POLICY
+  policy = <<POLICY
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "sqs:SendMessage",
+         "Resource": "arn:aws:sqs:*:*:ingestion_ingress_historical_fifo_queue_${var.globals[terraform.workspace].resource_suffix}",
+         "Condition": {
+           "ArnEquals": { "aws:SourceArn": " arn:aws:lambda:us-east-1:891289117461:function:addBlocktickerEventToSQS-${var.globals[terraform.workspace].resource_suffix}" }           
+         }
+       }
+     ]
+   }
+   POLICY
+}
+
+resource "aws_sqs_queue" "ingestion_ingress_sqs_current_block_fifo_queue" {
+  name                        = "ingestion_ingress_current_block_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
+  fifo_queue                  = true
+  content_based_deduplication = true
+
+  policy = <<POLICY
+   {
+     "Version": "2012-10-17",
+     "Statement": [
+       {
+         "Effect": "Allow",
+         "Principal": "*",
+         "Action": "sqs:SendMessage",
+         "Resource": "arn:aws:sqs:*:*:ingestion_ingress_sqs_fifo_queue_${var.globals[terraform.workspace].resource_suffix}",
+         "Condition": {
+            "ArnEquals": { "aws:SourceArn": " arn:aws:lambda:us-east-1:891289117461:function:addBlocktickerEventToSQS-${var.globals[terraform.workspace].resource_suffix}" }       
+         }
+       }
+     ]
+   }
+   POLICY
 }
 
 # resource "aws_sqs_queue" "ingestion_replay_sqs_fifo_queue" {

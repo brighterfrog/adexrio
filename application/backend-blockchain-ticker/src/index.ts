@@ -19,8 +19,7 @@ const initialize = async () => {
     // };
 
     for (; ;) {
-        var head = await ticker.next()
-        console.log('here', head);
+        var head = await ticker.next();
 
         try {
             const appsyncresult = await library.API.graphql(
@@ -28,7 +27,7 @@ const initialize = async () => {
                     createIngestionEvent, 
                     {                   
                         input: {
-                            details: JSON.stringify({                        
+                            event: JSON.stringify({                        
                                 head: head,
                                 application: 'adexrio-backend-blockchain-ticker',
                                 event_name: 'block_ticker'
@@ -39,8 +38,9 @@ const initialize = async () => {
             );
             console.log('completed appsync mutation', appsyncresult);
         }
-        catch (e) {
-            console.log(e);
+        catch (err) {
+            console.log(err);
+            throw err;          
         }
 
     }

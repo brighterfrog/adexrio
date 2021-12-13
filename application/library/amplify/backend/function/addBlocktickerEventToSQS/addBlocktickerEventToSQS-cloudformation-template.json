@@ -15,6 +15,12 @@
     },
     "s3Key": {
       "Type": "String"
+    },
+    "historicalFifoQueue": {
+      "Type": "String"
+    },
+    "currentBlockQueue": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -69,6 +75,15 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "HistoricalFifoQueue": {
+              "Ref": "historicalFifoQueue"
+            },
+            "CurrentBlockQueue": {
+              "Ref": "currentBlockQueue"
+            },
+            "ACCOUNTID": {
+              "Ref": "AWS::AccountId"
             }
           }
         },
@@ -160,6 +175,40 @@
                   }
                 ]
               }
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "sqs:SendMessage"
+              ],
+              "Resource": [
+                {
+                  "Fn::Sub": [
+                    "arn:aws:sqs:${region}:${account}:ingestion_ingress_current_block_fifo_queue_dev.fifo",
+                    {
+                      "region": {
+                        "Ref": "AWS::Region"
+                      },
+                      "account": {
+                        "Ref": "AWS::AccountId"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "Fn::Sub": [
+                    "arn:aws:sqs:${region}:${account}:ingestion_ingress_historical_fifo_queue_dev.fifo",
+                    {
+                      "region": {
+                        "Ref": "AWS::Region"
+                      },
+                      "account": {
+                        "Ref": "AWS::AccountId"
+                      }
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
