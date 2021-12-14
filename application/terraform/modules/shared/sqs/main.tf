@@ -1,3 +1,4 @@
+# name used in addBlocktickerEventToSQS lambda
 resource "aws_sqs_queue" "ingestion_ingress_sqs_historical_fifo_queue" {
   name                        = "ingestion_ingress_historical_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
   fifo_queue                  = true
@@ -21,6 +22,7 @@ resource "aws_sqs_queue" "ingestion_ingress_sqs_historical_fifo_queue" {
    POLICY
 }
 
+# name used in addBlocktickerEventToSQS lambda
 resource "aws_sqs_queue" "ingestion_ingress_sqs_current_block_fifo_queue" {
   name                        = "ingestion_ingress_current_block_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
   fifo_queue                  = true

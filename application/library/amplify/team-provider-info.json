@@ -27,9 +27,11 @@
         },
         "addBlocktickerEventToSQS": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/addBlocktickerEventToSQS-31556b43566f41474e47-build.zip",
+          "s3Key": "amplify-builds/addBlocktickerEventToSQS-2f5939304b6244526762-build.zip",
           "historicalFifoQueue": "ingestion_ingress_historical_fifo_queue_",
-          "currentBlockQueue": "ingestion_ingress_current_block_fifo_queue_"
+          "currentBlockQueue": "ingestion_ingress_current_block_fifo_queue_",
+          "blockLookupTableName": "PoolSuccessfullBlockEventsProcessed",
+          "blockLookupTableIdKey": "0"
         }
       }
     }
