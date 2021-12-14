@@ -21,6 +21,12 @@
     },
     "currentBlockQueue": {
       "Type": "String"
+    },
+    "blockLookupTableName": {
+      "Type": "String"
+    },
+    "blockLookupTableIdKey": {
+      "Type": "String"
     }
   },
   "Conditions": {
@@ -76,14 +82,20 @@
             "REGION": {
               "Ref": "AWS::Region"
             },
+            "ACCOUNTID": {
+              "Ref": "AWS::AccountId"
+            },
             "HistoricalFifoQueue": {
               "Ref": "historicalFifoQueue"
             },
             "CurrentBlockQueue": {
               "Ref": "currentBlockQueue"
             },
-            "ACCOUNTID": {
-              "Ref": "AWS::AccountId"
+            "BLOCK_LOOKUP_TABLE_NAME": {
+              "Ref": "blockLookupTableName"
+            },
+            "BLOCK_LOOKUP_TABLE_ID_KEY": {
+              "Ref": "blockLookupTableIdKey"
             }
           }
         },

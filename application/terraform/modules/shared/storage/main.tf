@@ -1,3 +1,4 @@
+# used in addBlocktickerEventToS3
 resource "aws_s3_bucket" "ingestion_ingress_bucket" {
   bucket = "ingestion-ingress-bucket-${var.globals[terraform.workspace].resource_suffix}"
   acl    = "private"
