@@ -1,0 +1,3 @@
+variable "globals" {}
+variable "tags" {}
+

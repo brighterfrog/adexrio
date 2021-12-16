@@ -8,8 +8,8 @@ export type CreateIngestionBucketEventInput = {
 
 export type IngestionBucketResponse = {
   __typename: "IngestionBucketResponse",
-  s3Id?: string | null,
-  sqsId?: string | null,
+  s3: string,
+  sqs: string,
 };
 
 export type CreateFeedbackInput = {
@@ -896,8 +896,8 @@ export type CreateIngestionEventMutationVariables = {
 export type CreateIngestionEventMutation = {
   createIngestionEvent?:  {
     __typename: "IngestionBucketResponse",
-    s3Id?: string | null,
-    sqsId?: string | null,
+    s3: string,
+    sqs: string,
   } | null,
 };
 

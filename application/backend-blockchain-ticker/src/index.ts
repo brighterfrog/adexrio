@@ -13,11 +13,6 @@ const initialize = async () => {
     await blockchainTicker.loadConnexDriver();
     const ticker = blockchainTicker.getTicker();
 
-    // const test = {
-    //     typeName: "CreateIngestionBucketPayload",
-    //     details : JSON.stringify({ "testkey": "testkeyvalue"})
-    // };
-
     for (; ;) {
         var head = await ticker.next();
 
@@ -36,38 +31,14 @@ const initialize = async () => {
                     }
                 )
             );
-            console.log('completed appsync mutation', appsyncresult);
+            console.log('completed appsync mutation', appsyncresult);            
         }
         catch (err) {
             console.log(err);
             throw err;          
         }
-
     }
 }
 
 initialize();
-
-
-
-
-// const testObject = {
-//     payload: JSON.stringify({
-//         blocknumber: 123456,
-//         application: "adexrio"
-//     })
-//};
-//const intervalTicker = async () => {
-    // try{
-    //     const foobar = await library.API.graphql(library.graphqlOperation(createIngestionEvent, { input: testObject }));
-    //     console.log('completed', foobar);
-    // }
-    // catch(e) {
-    //     console.log(e);
-    // }    
-//};
-
-
-
-//setInterval(intervalTicker, 10000);
 
