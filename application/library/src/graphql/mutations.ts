@@ -5,8 +5,8 @@
 export const createIngestionEvent = /* GraphQL */ `
   mutation CreateIngestionEvent($input: CreateIngestionBucketEventInput!) {
     createIngestionEvent(input: $input) {
-      s3Id
-      sqsId
+      s3
+      sqs
     }
   }
 `;

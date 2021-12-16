@@ -10,10 +10,6 @@
       "environmentVariableName": "CurrentBlockQueue"
     },
     {
-      "cloudFormationParameterName": "blockLookupTableName",
-      "environmentVariableName": "BLOCK_LOOKUP_TABLE_NAME"
-    },
-    {
       "cloudFormationParameterName": "blockLookupTableIdKey",
       "environmentVariableName": "BLOCK_LOOKUP_TABLE_ID_KEY"
     }

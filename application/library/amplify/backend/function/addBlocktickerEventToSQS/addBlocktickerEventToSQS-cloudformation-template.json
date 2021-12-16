@@ -22,8 +22,17 @@
     "currentBlockQueue": {
       "Type": "String"
     },
-    "blockLookupTableName": {
-      "Type": "String"
+    "devSSMAmplifyPoolKeyValue": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/adexrio/amplify_dynamodb_pool_table_dev"
+    },
+    "testSSMAmplifyPoolKeyValue": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/adexrio/amplify_dynamodb_pool_table_test"
+    },
+    "prodSSMAmplifyPoolKeyValue": {
+      "Type": "AWS::SSM::Parameter::Value<String>",
+      "Default": "/adexrio/amplify_dynamodb_pool_table_prod"
     },
     "blockLookupTableIdKey": {
       "Type": "String"
@@ -36,6 +45,30 @@
           "Ref": "env"
         },
         "NONE"
+      ]
+    },
+    "IsDev": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "dev"
+      ]
+    },
+    "IsTest": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "test"
+      ]
+    },
+    "IsProd": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "prod"
       ]
     }
   },
@@ -92,7 +125,29 @@
               "Ref": "currentBlockQueue"
             },
             "BLOCK_LOOKUP_TABLE_NAME": {
-              "Ref": "blockLookupTableName"
+              "Fn::If": [
+                "IsDev",
+                {
+                  "Ref": "devSSMAmplifyPoolKeyValue"
+                },
+                {
+                  "Fn::If": [
+                    "IsTest",
+                    {
+                      "Ref": "testSSMAmplifyPoolKeyValue"
+                    },
+                    {
+                      "Fn::If": [
+                        "IsProd",
+                        {
+                          "Ref": "prodSSMAmplifyPoolKeyValue"
+                        },
+                        "NONE"
+                      ]
+                    }
+                  ]
+                }
+              ]
             },
             "BLOCK_LOOKUP_TABLE_ID_KEY": {
               "Ref": "blockLookupTableIdKey"
@@ -221,6 +276,25 @@
                   ]
                 }
               ]
+            },
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:GetItem"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:dynamodb:${region}:${account}:table/PoolSuccessfullBlockEventsProcessed-*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    }
+                  }
+                ]
+              }
             }
           ]
         }

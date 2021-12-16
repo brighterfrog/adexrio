@@ -69,6 +69,17 @@ module "sqs" {
 
 }
 
+module "ssm" {
+  source = "./ssm"
+  globals = var.globals
+  tags = (merge(
+    var.globals.tags,
+    {
+      environment = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  ))
+}
+
 # module "lambda_kinesis_event_transformer" {
 #   name = "kinesis_event_transformer"
 #   source  = "./lambdas/kinesis_event_transformer"

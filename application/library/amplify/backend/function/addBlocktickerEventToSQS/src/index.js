@@ -14,12 +14,11 @@ exports.handler = async (event, context) => {
     const eventType = sqsDecisionService.getEventTypeBasedOnBlocksProcessed(event.arguments.input.event.head.number, lastBlock);
 
     //write event to queue
-    const sendMessageSqsResult = sqsService.sendMessage(eventType, event);
-
-    //{ s3Id: null, sqsId: null }
+    const sendMessageSqsResult = await sqsService.sendMessage(eventType, event);
+    
     return {
-        s3Id: event.prev.result.ETag,
-        sqsId: sendMessageSqsResult.MessageId
+        s3: event.prev.result,
+        sqs: sendMessageSqsResult
     };
 
     

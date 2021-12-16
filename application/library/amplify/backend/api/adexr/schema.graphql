@@ -150,8 +150,8 @@ input CreateIngestionBucketEventInput {
   event: AWSJSON!
 }
 type IngestionBucketResponse {	
-  s3Id: String
-  sqsId: String
+  s3: AWSJSON!
+  sqs: AWSJSON!
 }
 type Mutation {
   createIngestionEvent(input: CreateIngestionBucketEventInput!): IngestionBucketResponse 
