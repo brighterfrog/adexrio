@@ -1,7 +1,0 @@
-{
-    "Data": {
-        "payload_headblock": 1232131,
-        "payload_event_name": "block_ticker"
-    },
-    "PartitionKey": "SHARD_1_INGESTION"
-}

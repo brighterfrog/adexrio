@@ -1,5 +1,5 @@
 {
-  "name": "lambda_load_historical",
+  "name": "test",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "aws-sdk": "^2.1024.0"
+    "aws-sdk": "^2.1024.0",
+    "deep-equal-in-any-order": "^1.1.15"
   },
   "devDependencies": {
     "chai": "^4.3.4",

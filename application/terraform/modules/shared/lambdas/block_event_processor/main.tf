@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  name               = "event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
+  name               = "block_event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags               = var.globals.tags
   assume_role_policy = <<EOF
 {
@@ -18,7 +18,7 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 resource "aws_iam_policy" "lambda_policy" {
-  name        = "event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
+  name        = "block_event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags        = var.globals.tags
   path        = "/"
   description = "lambda event queue processor"
@@ -50,9 +50,9 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/../../../../lambda_event_processor/handler.zip"
 }
 resource "aws_lambda_function" "lambda" {
-  function_name    = "event_processor${var.globals[terraform.workspace].resource_suffix}"
+  function_name    = "block_event_processor${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags
-  filename         = "${path.module}/../../../../lambda_event_processor/handler.zip"
+  filename         = "${path.module}/../../../../lambda_block_event_processor/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"

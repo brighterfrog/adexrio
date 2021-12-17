@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda_role" {
-  name               = "event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
+  name               = "historical_event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags               = var.globals.tags
   assume_role_policy = <<EOF
 {
@@ -18,10 +18,10 @@ resource "aws_iam_role" "lambda_role" {
 EOF
 }
 resource "aws_iam_policy" "lambda_policy" {
-  name        = "event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
+  name        = "historical_event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags        = var.globals.tags
   path        = "/"
-  description = "lambda event queue processor"
+  description = "historical lambda event queue processor"
   policy      = <<EOF
 {
   "Version": "2012-10-17",
