@@ -1,18 +1,18 @@
 "use strict";
-var AWS = require("aws-sdk");
-const StepFunctions = new AWS.StepFunctions()
+const { SFNClient, StartExecutionCommand  } = require("@aws-sdk/client-sfn");
+const client = new SFNClient({ region: process.env.REGION });
 
-exports.startStepFn = async (event, context) => {  
+exports.startStepFn = async (event, context) => {
+  console.log('starting historical step function:', process.env.stateMachineArnHistorical)
+  var input = {
+    stateMachineArn: process.env.stateMachineArnHistorical,
+    input: JSON.stringify(event)
+  };
+  console.log('input is', input);
+  
+  const command = new StartExecutionCommand(input);
+  const response = await client.send(command);
 
-    var params = {
-        stateMachineArn: 'STRING_VALUE', /* required */
-        input: 'STRING_VALUE',
-        name: 'STRING_VALUE',
-        traceHeader: 'STRING_VALUE'
-      };
-    
-      result = await StepFunctions.startExecution(params).promise();
-      
-
-}
-
+  console.log('StartExecutionCommand response', response);
+  return response;
+};

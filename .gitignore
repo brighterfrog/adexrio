@@ -48,3 +48,4 @@ application/terraform/modules/shared/lambdas/request_payload_transformer/lookup_
 application/lambda_kinesis_event_transformer/handler.zip
 application/lambda_apigw_proxy/handler.zip
 application/terraform/modules/shared/ssm/lookup_amplify_dynamodb_table_id.txt
+application/lambda_historical_step_fn_get_lowest_block/handler.zip

@@ -31,15 +31,18 @@ provider "aws" {
 #   }
 # }
 
-module "shared" {
-  source  = "./modules/shared"
-  globals = var.globals
-}
-
 module "historical_events" {
   source  = "./modules/historical_events"
   globals = var.globals
 }
+
+module "shared" {
+  source  = "./modules/shared"
+  globals = var.globals  
+  historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn
+}
+
+
 
 
 # resource "aws_kinesis_firehose_delivery_stream" "deleteme" {

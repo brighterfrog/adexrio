@@ -9,7 +9,5 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@aws-sdk/client-sfn": "^3.43.0",
-    "aws-sdk": "^2.1024.0"
   }
 }
