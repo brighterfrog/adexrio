@@ -59,9 +59,6 @@ module "sqs" {
       environment = "${var.globals[terraform.workspace].resource_suffix}"
     }
   ))
-  # kinesis_ingestion_stream = module.kinesis_data_stream.ingestion_stream
-  # stream_ingestion_bucket_arn = module.storage.stream_ingestion_bucket_arn
-  # stream_ingestion_bucket_id  = module.storage.stream_ingestion_bucket_id
 
   depends_on = [
     module.storage
@@ -98,17 +95,18 @@ module "ssm" {
 
 
 
-# module "historical_event_processor" {
-#   source  = "./lambdas/historical_event_processor"
-#   globals = var.globals
-#   tags = (merge(
-#     var.globals.tags,
-#     {
-#       environment = "${var.globals[terraform.workspace].resource_suffix}"
-#     }
-#   ))
-#   //historical_queue_arn = module.sqs.historical_queue_arn 
-# }
+ module "historical_event_processor" {
+   source  = "./lambdas/historical_event_processor"
+   globals = var.globals
+   tags = (merge(
+     var.globals.tags,
+     {
+       environment = "${var.globals[terraform.workspace].resource_suffix}"
+     }
+   ))
+   historical_step_function_state_machine_arn = var.historical_step_function_state_machine_arn
+   ingestion_ingress_sqs_historical_fifo_queue = module.sqs.ingestion_ingress_sqs_historical_fifo_queue   
+ }
 
 
 # module "historical_events_workflow" {

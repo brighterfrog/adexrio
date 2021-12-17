@@ -158,4 +158,3 @@ type Mutation {
     @function(name: "addBlocktickerEventToS3-${env}")
     @function(name: "addBlocktickerEventToSQS-${env}")
 }
-
