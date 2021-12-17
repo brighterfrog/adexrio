@@ -1,8 +1,0 @@
-{
-    "Data": {
-        "payload_headblock": 1232131,
-        "payload_event_name": "block_ticker",
-        "payload_source_application": "adexrio"        
-    },
-    "PartitionKey": "SHARD_1_INGESTION"
-}
