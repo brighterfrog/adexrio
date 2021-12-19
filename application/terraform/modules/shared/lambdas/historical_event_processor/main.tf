@@ -82,12 +82,12 @@ resource "aws_lambda_function" "lambda" {
   environment {
     variables = {
       stateMachineArnHistorical = "${var.historical_step_function_state_machine_arn}"
-      REGION = "us-east-1"
-      ENV = "${var.globals[terraform.workspace].resource_suffix}"
+      REGION                    = "us-east-1"
+      ENV                       = "${var.globals[terraform.workspace].resource_suffix}"
     }
   }
 
-  depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
+  depends_on = [aws_iam_role_policy_attachment.lambda_policy_attach]
 }
 
 resource "aws_lambda_event_source_mapping" "queue_event_trigger" {

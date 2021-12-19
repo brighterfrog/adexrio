@@ -32,15 +32,16 @@ provider "aws" {
 # }
 
 module "historical_events" {
-  source  = "./modules/historical_events"
-  globals = var.globals
+  source                                      = "./modules/historical_events"
+  globals                                     = var.globals
   ingestion_ingress_sqs_historical_fifo_queue = module.shared.ingestion_ingress_sqs_historical_fifo_queue
+  ingestion_ingress_current_block_fifo_queue  = module.shared.ingestion_ingress_current_block_fifo_queue
 }
 
 module "shared" {
-  source  = "./modules/shared"
-  globals = var.globals  
-  historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn  
+  source                                     = "./modules/shared"
+  globals                                    = var.globals
+  historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn
 }
 
 
