@@ -21,6 +21,7 @@ provider "registry.terraform.io/hashicorp/archive" {
 
 provider "registry.terraform.io/hashicorp/aws" {
 <<<<<<< HEAD
+<<<<<<< HEAD
   version     = "3.70.0"
   constraints = "3.70.0"
   hashes = [
@@ -37,6 +38,8 @@ provider "registry.terraform.io/hashicorp/aws" {
     "zh:aef9482332bf43d0b73317f5909dec9e95b983c67b10d72e75eacc7c4f37d084",
     "zh:fc3f3cad84f2eebe566dd0b65904c934093007323b9b85e73d9dd4535ceeb29d",
 =======
+=======
+>>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
   version     = "3.66.0"
   constraints = "3.66.0"
   hashes = [
@@ -70,6 +73,9 @@ provider "registry.terraform.io/hashicorp/external" {
     "zh:c8966f69b7eccccb771704fd5335923692eccc9e0e90cb95d14538fe2e92a3b8",
     "zh:d5fe68850d449b811e633a300b114d0617df6d450305e8251643b4d143dc855b",
     "zh:ddebfd1e674ba336df09b1f27bbaa0e036c25b7a7087dc8081443f6e5954028b",
+<<<<<<< HEAD
+>>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
+=======
 >>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
   ]
 }
@@ -110,7 +116,10 @@ provider "registry.terraform.io/hashicorp/null" {
   ]
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
+=======
+>>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
 
 provider "registry.terraform.io/hashicorp/template" {
   version = "2.2.0"
@@ -128,4 +137,7 @@ provider "registry.terraform.io/hashicorp/template" {
     "zh:c979425ddb256511137ecd093e23283234da0154b7fa8b21c2687182d9aea8b2",
   ]
 }
+<<<<<<< HEAD
+>>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
+=======
 >>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
