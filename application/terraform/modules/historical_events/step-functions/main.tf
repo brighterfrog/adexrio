@@ -72,7 +72,8 @@ resource "aws_sfn_state_machine" "historical_step_function_state_machine" {
       "Next": "CallWriteToCurrentBlockSQS",
       "Retry": [ {   
             "ErrorEquals": ["States.ALL"],      
-            "IntervalSeconds": 1
+            "IntervalSeconds": 1,
+            "MaxAttempts": 5
          } ]
     },
     "CallWriteToCurrentBlockSQS": {
@@ -80,8 +81,9 @@ resource "aws_sfn_state_machine" "historical_step_function_state_machine" {
       "Resource": "${module.lambda_fn_lambda_write_to_current_block_queue.lambda.arn}",
       "Next": "Hello",
       "Retry": [ {   
-            "ErrorEquals": ["States.TaskFailed"],      
-            "IntervalSeconds": 1
+            "ErrorEquals": ["States.ALL"],      
+            "IntervalSeconds": 1,
+            "MaxAttempts": 5
          } ]
     },
     "Hello": {
@@ -131,7 +133,7 @@ module "lambda_fn_get_highest_block" {
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_fn_get_highest_block_policy_document.json
   lambda_directory_name               = "lambda_historical_step_fn_get_highest_block"
   lambda_description                  = "Step fn lambda to get the highest current head block number from a batch of messages in queue when the lambda triggers"
-  lambda_timeout_in_minutes           = 3
+  lambda_timeout_in_minutes           = 60
   environment_variables = {
     "ENV"    = "${var.globals[terraform.workspace].resource_suffix}"
     "REGION" = "us-east-1"
@@ -175,7 +177,7 @@ module "lambda_fn_lambda_write_to_current_block_queue" {
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_fn_lambda_write_to_current_block_queue_policy_document.json
   lambda_directory_name               = "lambda_historical_step_fn_write_to_current_block_queue"
   lambda_description                  = "Step fn lambda to write event to current block fifo sqs queue to process sequentially"
-  lambda_timeout_in_minutes           = 15
+  lambda_timeout_in_minutes           = 900
   environment_variables = {
     "ENV"               = "${var.globals[terraform.workspace].resource_suffix}"
     "REGION"            = "us-east-1"
