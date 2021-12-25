@@ -131,14 +131,9 @@ module "lambda_fn_get_highest_block" {
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_fn_get_highest_block_policy_document.json
   lambda_directory_name               = "lambda_historical_step_fn_get_highest_block"
   lambda_description                  = "Step fn lambda to get the highest current head block number from a batch of messages in queue when the lambda triggers"
-<<<<<<< HEAD
   lambda_timeout_in_minutes           = 3
   environment_variables = {
     "ENV"    = "${var.globals[terraform.workspace].resource_suffix}"
-=======
-  environment_variables = {  
-    "ENV" = "${var.globals[terraform.workspace].resource_suffix}"
->>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
     "REGION" = "us-east-1"
   }
 }
@@ -147,11 +142,6 @@ module "lambda_fn_get_highest_block" {
 
 
 data "aws_iam_policy_document" "lambda_fn_lambda_write_to_current_block_queue_policy_document" {
-<<<<<<< HEAD
-
-=======
-    
->>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
   statement {
     actions = [
       "logs:CreateLogGroup",
@@ -160,11 +150,7 @@ data "aws_iam_policy_document" "lambda_fn_lambda_write_to_current_block_queue_po
     ]
     resources = ["arn:aws:logs:*:*:*"]
     effect    = "Allow"
-<<<<<<< HEAD
   }
-=======
-  } 
->>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
 
   statement {
     actions = [
@@ -172,11 +158,7 @@ data "aws_iam_policy_document" "lambda_fn_lambda_write_to_current_block_queue_po
     ]
     resources = [var.ingestion_ingress_current_block_fifo_queue.arn]
     effect    = "Allow"
-<<<<<<< HEAD
   }
-=======
-  } 
->>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
 
 }
 
@@ -193,7 +175,6 @@ module "lambda_fn_lambda_write_to_current_block_queue" {
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_fn_lambda_write_to_current_block_queue_policy_document.json
   lambda_directory_name               = "lambda_historical_step_fn_write_to_current_block_queue"
   lambda_description                  = "Step fn lambda to write event to current block fifo sqs queue to process sequentially"
-<<<<<<< HEAD
   lambda_timeout_in_minutes           = 15
   environment_variables = {
     "ENV"               = "${var.globals[terraform.workspace].resource_suffix}"
@@ -202,14 +183,6 @@ module "lambda_fn_lambda_write_to_current_block_queue" {
     "ACCOUNTID"         = "${var.globals[terraform.workspace].account_id}"
   }
 
-=======
-  environment_variables = {  
-    "ENV" = "${var.globals[terraform.workspace].resource_suffix}"
-    "REGION" = "us-east-1"
-    "CurrentBlockQueue" = var.ingestion_ingress_current_block_fifo_queue.name
-    "ACCOUNTID" = "${var.globals[terraform.workspace].account_id}"
-  }
->>>>>>> 17454d56a3fcda9912896b60f17dba705f841582
 }
 
 
