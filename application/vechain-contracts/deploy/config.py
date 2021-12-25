@@ -17,4 +17,4 @@ NETWORK_CONSTANTS = {
 }
 
 # development | test | main
-ENVIRONMENT = NETWORK_CONSTANTS['main']
+ENVIRONMENT = NETWORK_CONSTANTS['development']

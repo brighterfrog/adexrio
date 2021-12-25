@@ -92,5 +92,5 @@ resource "aws_lambda_function" "lambda" {
 
 resource "aws_lambda_event_source_mapping" "queue_event_trigger" {
   event_source_arn = var.ingestion_ingress_sqs_historical_fifo_queue.arn
-  function_name    = aws_lambda_function.lambda.arn
+  function_name    = aws_lambda_function.lambda.arn  
 }

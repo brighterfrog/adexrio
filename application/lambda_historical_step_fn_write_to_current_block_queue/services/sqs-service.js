@@ -16,7 +16,7 @@ async function sendMessage(event) {
     return responseFromSqs;    
 }
 
-function getSendMessageCommand(eventType, event, messageDeduplicationId) {    
+function getSendMessageCommand(event, messageDeduplicationId) {    
 
     let sendMessageInput = {
         MessageBody: JSON.stringify(event),

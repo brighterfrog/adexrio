@@ -7,15 +7,15 @@ variable "globals" {
   default = {
     "dev" = {
       "resource_suffix" = "dev"
-      "account_id" = "891289117461"
+      "account_id"      = "891289117461"
     }
     "test" = {
       "resource_suffix" = "test"
-      "account_id" = "891289117461"
+      "account_id"      = "891289117461"
     }
     "prod" = {
       "resource_suffix" = "prod"
-      "account_id" = "891289117461"
+      "account_id"      = "891289117461"
     },
     "tags" = {
       application : "adexrio",

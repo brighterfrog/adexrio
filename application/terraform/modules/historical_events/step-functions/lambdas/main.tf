@@ -48,9 +48,10 @@ resource "aws_lambda_function" "lambda" {
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   publish          = true
+  timeout          = var.lambda_timeout_in_minutes
 
   environment {
-    variables = var.environment_variables                
+    variables = var.environment_variables
   }
 
   depends_on = [aws_iam_role_policy_attachment.lambda_attachment]

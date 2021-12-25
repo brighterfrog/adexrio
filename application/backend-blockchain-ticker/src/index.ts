@@ -15,6 +15,8 @@ const initialize = async () => {
 
     for (; ;) {
         var head = await ticker.next();
+        
+        console.log('head result from ticker is', head);
 
         try {
             const appsyncresult = await library.API.graphql(
@@ -30,8 +32,8 @@ const initialize = async () => {
                         }                                                                              
                     }
                 )
-            );
-            console.log('completed appsync mutation', appsyncresult);            
+            );            
+            console.log('completed appsync mutation', appsyncresult);                        
         }
         catch (err) {
             console.log(err);

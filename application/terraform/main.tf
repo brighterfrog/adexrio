@@ -2,11 +2,11 @@ terraform {
   required_providers {
     aws = {
       source  = "hashicorp/aws"
-      version = "3.66.0"
+      version = "3.70.0"
     }
   }
 
-  required_version = "1.0.11"
+  required_version = "1.1.2"
   backend "s3" {} #comment out to initialize, uncomment dynamodb table block  
 }
 
