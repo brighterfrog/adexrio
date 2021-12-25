@@ -21,6 +21,7 @@ application/wallets/sync2/deployment_keystore
 
 
 .terraform/.terraform/*
+.terraform/*
 
 # .tfstate files
 *.tfstate
