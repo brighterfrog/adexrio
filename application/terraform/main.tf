@@ -38,10 +38,17 @@ module "historical_events" {
   ingestion_ingress_current_block_fifo_queue  = module.shared.ingestion_ingress_current_block_fifo_queue
 }
 
+module "current_events" {
+  source                                     = "./modules/current_events"
+  globals                                    = var.globals
+  ingestion_ingress_current_block_fifo_queue = module.shared.ingestion_ingress_current_block_fifo_queue
+}
+
 module "shared" {
   source                                     = "./modules/shared"
   globals                                    = var.globals
   historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn
+  block_event_step_function_state_machine_arn = module.current_events.current_events_step_function_state_machine_arn
 }
 
 

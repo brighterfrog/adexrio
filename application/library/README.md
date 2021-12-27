@@ -1,1 +1,1 @@
-Anything in library is pushed by amplify
+## index.ts is for testing the library

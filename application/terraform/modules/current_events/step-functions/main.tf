@@ -1,6 +1,6 @@
 
 resource "aws_iam_role" "step_function_role" {
-  name               = "historical_step_function_role_${var.globals[terraform.workspace].resource_suffix}"
+  name               = "current_block_step_function_role_${var.globals[terraform.workspace].resource_suffix}"
   assume_role_policy = <<-EOF
   {
     "Version": "2012-10-17",
@@ -19,7 +19,7 @@ resource "aws_iam_role" "step_function_role" {
 }
 
 resource "aws_iam_role_policy" "step_function_policy" {
-  name = "historical_step_function_policy_${var.globals[terraform.workspace].resource_suffix}"
+  name = "current_block_step_function_policy_${var.globals[terraform.workspace].resource_suffix}"
   role = aws_iam_role.step_function_role.id
 
   policy = <<-EOF
@@ -38,13 +38,13 @@ resource "aws_iam_role_policy" "step_function_policy" {
   EOF
 }
 
-resource "aws_sfn_state_machine" "historical_step_function" {
-  name     = "historical_step_function_state_machine"
+resource "aws_sfn_state_machine" "current_block_step_function" {
+  name     = "current_block_step_function_state_machine"
   role_arn = aws_iam_role.step_function_role.arn
 
   definition = <<EOF
 {
-  "Comment": "A Hello World example of the Amazon States Language using Pass states",
+  "Comment": "Current block step function process all events",
   "StartAt": "Hello",
   "States": {
     "Hello": {

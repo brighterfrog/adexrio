@@ -21,7 +21,7 @@ resource "aws_iam_policy" "lambda_policy" {
   name        = "block_event_queue_lambda_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags        = var.globals.tags
   path        = "/"
-  description = "lambda event queue processor"
+  description = "block lambda event queue processor"
   policy      = <<EOF
 {
   "Version": "2012-10-17",
@@ -34,7 +34,23 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
-    }
+    },
+    {
+      "Action": [
+        "states:Start*"        
+      ],
+      "Resource": "${var.block_event_step_function_state_machine_arn}",
+      "Effect": "Allow"
+    },
+    {
+      "Action": [
+        "sqs:ReceiveMessage",
+        "sqs:DeleteMessage",
+        "sqs:GetQueueAttributes"
+      ],
+      "Resource": "${var.ingestion_ingress_current_block_fifo_queue.arn}",
+      "Effect": "Allow"
+    }          
   ]
 }
 EOF
@@ -46,17 +62,35 @@ resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_file = "${path.module}/../../../../lambda_event_processor/index.js"
-  output_path = "${path.module}/../../../../lambda_event_processor/handler.zip"
+  source_dir  = "${path.module}/../../../../../lambda_block_event_processor/"
+  output_path = "${path.module}/../../../../../lambda_block_event_processor/handler.zip"
+  excludes = [
+    "test/*",
+    "handler.zip",
+  ]
 }
 resource "aws_lambda_function" "lambda" {
-  function_name    = "block_event_processor${var.globals[terraform.workspace].resource_suffix}"
+  function_name    = "block_event_processor_${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags
-  filename         = "${path.module}/../../../../lambda_block_event_processor/handler.zip"
+  filename         = "${path.module}/../../../../../lambda_block_event_processor/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   publish          = true
-  depends_on       = [aws_iam_role_policy_attachment.lambda_policy_attach]
+
+  environment {
+    variables = {
+      stateMachineArn = "${var.block_event_step_function_state_machine_arn}"
+      REGION          = "us-east-1"
+      ENV             = "${var.globals[terraform.workspace].resource_suffix}"
+    }
+  }
+
+  depends_on = [aws_iam_role_policy_attachment.lambda_policy_attach]
+}
+
+resource "aws_lambda_event_source_mapping" "queue_event_trigger" {
+  event_source_arn = var.ingestion_ingress_current_block_fifo_queue.arn
+  function_name    = aws_lambda_function.lambda.arn
 }

@@ -18,8 +18,7 @@ exports.handler = async (event, context) => {
   const currentBlockHeadNumber = stepInput.bodyObject.arguments.input.event.head.number;
   console.log('currentBlockHeadNumber', currentBlockHeadNumber);
 
-  const expectedBatchCount =
-    currentBlockHeadNumber - lambdaProcessorDecisionCheckForNextBlocknumber;
+  const expectedBatchCount = (currentBlockHeadNumber - lambdaProcessorDecisionCheckForNextBlocknumber) + 1;
   
   console.log('Entering loop for expectedBatchCount of', expectedBatchCount);
 

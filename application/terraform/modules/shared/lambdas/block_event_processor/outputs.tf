@@ -1,3 +1,3 @@
-output "lambda_historical_proxy" {
-  value = aws_lambda_function.lambda_historical_proxy
-}
+# output "lambda_block_event_processor" {
+#   value = aws_lambda_function.lambda
+# }

@@ -1,11 +1,10 @@
 "use strict";
+const stepFnService = require('./services/step-function-service');
 
-const AWS = require("aws-sdk");
+exports.handler = async (event, context) => {    
+  console.log('lambda block event processor started with event ', event);  
+  
+  const response = await stepFnService.startStepFn(event, context);  
 
-exports.handler =  async (event) => {
-    const payload = {
-      date: new Date(),
-      message: 'Hello Terraform World'
-    };
-    return JSON.stringify(payload);
-  };
+  console.log('done with response', response);
+};
