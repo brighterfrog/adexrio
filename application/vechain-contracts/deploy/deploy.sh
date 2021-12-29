@@ -1,2 +1,1 @@
-cd ../brownie && brownie compile
-cd ../deploy && python deploy.py
+cd ../brownie && brownie compile && cd ../deploy && python3 deploy.py

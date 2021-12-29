@@ -37,13 +37,6 @@ resource "aws_iam_policy" "lambda_policy" {
     },
     {
       "Action": [
-        "states:Start*"        
-      ],
-      "Resource": "${var.block_event_step_function_state_machine_arn}",
-      "Effect": "Allow"
-    },
-    {
-      "Action": [
         "sqs:ReceiveMessage",
         "sqs:DeleteMessage",
         "sqs:GetQueueAttributes"
@@ -54,6 +47,38 @@ resource "aws_iam_policy" "lambda_policy" {
   ]
 }
 EOF
+  #   policy      = <<EOF
+  # {
+  #   "Version": "2012-10-17",
+  #   "Statement": [
+  #     {
+  #       "Action": [
+  #         "logs:CreateLogGroup",
+  #         "logs:CreateLogStream",
+  #         "logs:PutLogEvents"
+  #       ],
+  #       "Resource": "arn:aws:logs:*:*:*",
+  #       "Effect": "Allow"
+  #     },
+  #     {
+  #       "Action": [
+  #         "states:Start*"        
+  #       ],
+  #       "Resource": "${var.block_event_step_function_state_machine_arn}",
+  #       "Effect": "Allow"
+  #     },
+  #     {
+  #       "Action": [
+  #         "sqs:ReceiveMessage",
+  #         "sqs:DeleteMessage",
+  #         "sqs:GetQueueAttributes"
+  #       ],
+  #       "Resource": "${var.ingestion_ingress_current_block_fifo_queue.arn}",
+  #       "Effect": "Allow"
+  #     }          
+  #   ]
+  # }
+  # EOF
 }
 resource "aws_iam_role_policy_attachment" "lambda_policy_attach" {
   role       = aws_iam_role.lambda_role.name
@@ -77,13 +102,13 @@ resource "aws_lambda_function" "lambda" {
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
+  architectures    = ["arm64"]
   publish          = true
 
   environment {
     variables = {
-      stateMachineArn = "${var.block_event_step_function_state_machine_arn}"
-      REGION          = "us-east-1"
-      ENV             = "${var.globals[terraform.workspace].resource_suffix}"
+      REGION = "us-east-1"
+      ENV    = "${var.globals[terraform.workspace].resource_suffix}"
     }
   }
 

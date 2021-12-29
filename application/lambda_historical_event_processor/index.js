@@ -1,10 +1,20 @@
 "use strict";
-const stepFnService = require('./services/step-function-service');
+const historicalService = require('./services/historical-service');
+const blockEventService = require('./services/block-event-service');
 
 exports.handler = async (event, context) => {    
   console.log('lambda historical event process ', event);  
-  
-  const response = await stepFnService.startStepFn(event, context);  
+     
+//get highest block
+//write to current block queue
 
-  console.log('done with response', response);
+  const highestBlockMessageFromBatch = historicalService.getHighestBlockNumberFromRecordBatch(event)
+  const result = blockEventService.buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch);
+
+  console.log('done with processing historical event batch with result ', result);
+
+  return {
+    completed: true
+  }; 
+  
 };

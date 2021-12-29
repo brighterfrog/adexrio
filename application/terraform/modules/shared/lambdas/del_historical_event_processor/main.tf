@@ -34,14 +34,7 @@ resource "aws_iam_policy" "lambda_policy" {
       ],
       "Resource": "arn:aws:logs:*:*:*",
       "Effect": "Allow"
-    },
-    {
-      "Action": [
-        "states:Start*"        
-      ],
-      "Resource": "${var.historical_step_function_state_machine_arn}",
-      "Effect": "Allow"
-    },
+    },    
     {
       "Action": [
         "sqs:ReceiveMessage",
@@ -77,13 +70,15 @@ resource "aws_lambda_function" "lambda" {
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
+  architectures    = ["arm64"]
   publish          = true
 
   environment {
     variables = {
-      stateMachineArnHistorical = "${var.historical_step_function_state_machine_arn}"
-      REGION                    = "us-east-1"
-      ENV                       = "${var.globals[terraform.workspace].resource_suffix}"
+      REGION            = "us-east-1"
+      ENV               = "${var.globals[terraform.workspace].resource_suffix}"
+      HISTORICAL_QUEUE  = var.ingestion_ingress_sqs_historical_fifo_queue.arn
+      BLOCK_EVENT_QUEUE = var.ingestion_ingress_block_event_fifo_queue.arn
     }
   }
 

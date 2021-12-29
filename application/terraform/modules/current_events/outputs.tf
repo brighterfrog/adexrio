@@ -1,3 +1,0 @@
-output "current_events_step_function_state_machine_arn" {
-  value = module.current_events_step_function.current_events_step_function_state_machine_arn
-}

@@ -48,7 +48,8 @@ resource "aws_lambda_function" "lambda" {
   handler          = "index.handler"
   runtime          = "nodejs14.x"
   publish          = true
-  timeout          = var.lambda_timeout_in_minutes
+  timeout          = var.lambda_timeout_in_seconds
+  architectures    = ["arm64"]
 
   environment {
     variables = var.environment_variables

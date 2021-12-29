@@ -1,22 +1,18 @@
 "use strict";
-const { write } = require("fs");
-const util = require("util");
 const sqsService = require("./services/sqs-service");
 
-exports.handler = async (event, context) => {
+function buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch) {
 
   console.log("lambda historical step fn write to current block queue with event", event);
+  
+  console.log('highestBlockMessageFromBatch', highestBlockMessageFromBatch);
 
-  const stepInput = event.highestBlockMessageFromBatch;
-
-  console.log('stepInput', stepInput);
-
-  const lambdaProcessorDecisionCheckForNextBlocknumber = stepInput.bodyObject.lambdaProcessorDecisionCheckForNextBlocknumber;  
+  const lambdaProcessorDecisionCheckForNextBlocknumber = highestBlockMessageFromBatch.bodyObject.lambdaProcessorDecisionCheckForNextBlocknumber;  
 
   console.log('lambdaProcessorDecisionCheckForNextBlocknumber', lambdaProcessorDecisionCheckForNextBlocknumber);
 
-  const currentBlockHeadNumber = stepInput.bodyObject.arguments.input.event.head.number;
-  console.log('currentBlockHeadNumber', currentBlockHeadNumber);
+  const currentBlockHeadNumber = highestBlockMessageFromBatch.bodyObject.arguments.input.event.head.number;
+  console.log('currentBlockHeadNumber', currentBlockHeadNumber);  
 
   const expectedBatchCount = (currentBlockHeadNumber - lambdaProcessorDecisionCheckForNextBlocknumber) + 1;
   
@@ -31,8 +27,7 @@ exports.handler = async (event, context) => {
   ) {
     let blockNumber = i;
 
-    const eventToWrite = {
-      createdFromHistoricalQueue: true,
+    const eventToWrite = {      
       historicalEventPayload: event, 
       blockNumberToProcess: blockNumber
     };
@@ -46,6 +41,9 @@ exports.handler = async (event, context) => {
     if (sqsResponse.$metadata.httpStatusCode === 200) {
       actualBatchCount++;
     }
+    else {
+        throw new Error(JSON.stringify(sqsResponse));
+    }
   } //endfor
 
   const result = {
@@ -58,3 +56,7 @@ exports.handler = async (event, context) => {
 
   return result;
 };
+
+module.exports = {
+    buildAndWriteAllBlockEvents   
+}

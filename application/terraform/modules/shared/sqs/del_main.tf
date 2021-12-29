@@ -1,5 +1,5 @@
 # name used in addBlocktickerEventToSQS lambda
-resource "aws_sqs_queue" "ingestion_ingress_sqs_historical_fifo_queue" {
+resource "aws_sqs_queue" "ingestion_ingress_historical_fifo_queue" {
   name                        = "ingestion_ingress_historical_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
   fifo_queue                  = true
   content_based_deduplication = true
@@ -23,8 +23,8 @@ resource "aws_sqs_queue" "ingestion_ingress_sqs_historical_fifo_queue" {
 }
 
 # name used in addBlocktickerEventToSQS lambda
-resource "aws_sqs_queue" "ingestion_ingress_sqs_current_block_fifo_queue" {
-  name                        = "ingestion_ingress_current_block_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
+resource "aws_sqs_queue" "ingestion_ingress_block_event_fifo_queue" {
+  name                        = "ingestion_ingress_block_event_fifo_queue_${var.globals[terraform.workspace].resource_suffix}.fifo"
   fifo_queue                  = true
   content_based_deduplication = true
 

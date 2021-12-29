@@ -35,9 +35,11 @@ function getSendMessageCommand(eventType, event) {
 
     if(eventType === CONSTANTS.EVENT_TYPE.CURRENT_BLOCK) {
         sendMessageInput.QueueUrl = current_block_fifo_url;
+        sendMessageInput.createdFromHistoricalQueue = false;
     }
     else if(eventType === CONSTANTS.EVENT_TYPE.HISTORICAL_BLOCKS) {
         sendMessageInput.QueueUrl = historical_fifo_url;
+        sendMessageInput.createdFromHistoricalQueue = true;
     }
     else {
         throw Error(`UNKNOWN EVENT - FAILED TO WRITE TO SQS WITH eventType ${eventType}`);

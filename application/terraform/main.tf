@@ -31,24 +31,29 @@ provider "aws" {
 #   }
 # }
 
-module "historical_events" {
-  source                                      = "./modules/historical_events"
-  globals                                     = var.globals
-  ingestion_ingress_sqs_historical_fifo_queue = module.shared.ingestion_ingress_sqs_historical_fifo_queue
-  ingestion_ingress_current_block_fifo_queue  = module.shared.ingestion_ingress_current_block_fifo_queue
+
+# queue_name used in addBlocktickerEventToSQS lambda
+module "block_events" {
+  source                              = "./modules/block_events"
+  globals                             = var.globals
+  queue_name                          = "block_events"
+  lambda_and_queue_timeout_in_seconds = 300
 }
 
-module "current_events" {
-  source                                     = "./modules/current_events"
-  globals                                    = var.globals
-  ingestion_ingress_current_block_fifo_queue = module.shared.ingestion_ingress_current_block_fifo_queue
+# queue_name used in addBlocktickerEventToSQS lambda
+module "historical_events" {
+  source                              = "./modules/historical_events"
+  globals                             = var.globals
+  queue_name                          = "historical_events"
+  block_event_queue                   = module.block_events.queue
+  lambda_and_queue_timeout_in_seconds = 300
 }
 
 module "shared" {
-  source                                     = "./modules/shared"
-  globals                                    = var.globals
-  historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn
-  block_event_step_function_state_machine_arn = module.current_events.current_events_step_function_state_machine_arn
+  source  = "./modules/shared"
+  globals = var.globals
+  # historical_step_function_state_machine_arn = module.historical_events.historical_step_function_state_machine_arn
+  # block_event_step_function_state_machine_arn = module.block_events.block_events_step_function_state_machine_arn
 }
 
 
