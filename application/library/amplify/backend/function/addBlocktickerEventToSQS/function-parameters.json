@@ -2,16 +2,16 @@
   "lambdaLayers": [],
   "environmentVariableList": [
     {
-      "cloudFormationParameterName": "historicalFifoQueue",
-      "environmentVariableName": "HistoricalFifoQueue"
-    },
-    {
-      "cloudFormationParameterName": "currentBlockQueue",
-      "environmentVariableName": "CurrentBlockQueue"
-    },
-    {
       "cloudFormationParameterName": "blockLookupTableIdKey",
       "environmentVariableName": "BLOCK_LOOKUP_TABLE_ID_KEY"
+    },
+    {
+      "cloudFormationParameterName": "blockEventQueueName",
+      "environmentVariableName": "BLOCK_EVENT_QUEUE_NAME"
+    },
+    {
+      "cloudFormationParameterName": "historicalEventQueueName",
+      "environmentVariableName": "HISTORICAL_EVENT_QUEUE_NAME"
     }
   ]
 }

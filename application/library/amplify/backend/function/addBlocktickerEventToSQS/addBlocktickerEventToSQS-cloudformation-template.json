@@ -16,12 +16,6 @@
     "s3Key": {
       "Type": "String"
     },
-    "historicalFifoQueue": {
-      "Type": "String"
-    },
-    "currentBlockQueue": {
-      "Type": "String"
-    },
     "devSSMAmplifyPoolKeyValue": {
       "Type": "AWS::SSM::Parameter::Value<String>",
       "Default": "/adexrio/amplify_dynamodb_pool_table_dev"
@@ -35,6 +29,12 @@
       "Default": "/adexrio/amplify_dynamodb_pool_table_prod"
     },
     "blockLookupTableIdKey": {
+      "Type": "String"
+    },
+    "blockEventQueueName": {
+      "Type": "String"
+    },
+    "historicalEventQueueName": {
       "Type": "String"
     }
   },
@@ -118,12 +118,6 @@
             "ACCOUNTID": {
               "Ref": "AWS::AccountId"
             },
-            "HistoricalFifoQueue": {
-              "Ref": "historicalFifoQueue"
-            },
-            "CurrentBlockQueue": {
-              "Ref": "currentBlockQueue"
-            },
             "BLOCK_LOOKUP_TABLE_NAME": {
               "Fn::If": [
                 "IsDev",
@@ -151,6 +145,12 @@
             },
             "BLOCK_LOOKUP_TABLE_ID_KEY": {
               "Ref": "blockLookupTableIdKey"
+            },
+            "BLOCK_EVENT_QUEUE_NAME": {
+              "Ref": "blockEventQueueName"
+            },
+            "HISTORICAL_EVENT_QUEUE_NAME": {
+              "Ref": "historicalEventQueueName"
             }
           }
         },
@@ -251,7 +251,7 @@
               "Resource": [
                 {
                   "Fn::Sub": [
-                    "arn:aws:sqs:${region}:${account}:ingestion_ingress_current_block_fifo_queue_dev.fifo",
+                    "arn:aws:sqs:${region}:${account}:block_events_dev.fifo",
                     {
                       "region": {
                         "Ref": "AWS::Region"
@@ -264,7 +264,7 @@
                 },
                 {
                   "Fn::Sub": [
-                    "arn:aws:sqs:${region}:${account}:ingestion_ingress_historical_fifo_queue_dev.fifo",
+                    "arn:aws:sqs:${region}:${account}:historical_events_dev.fifo",
                     {
                       "region": {
                         "Ref": "AWS::Region"

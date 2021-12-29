@@ -6,7 +6,7 @@ const block_events_queue = `${process.env.BLOCK_EVENT_QUEUE_NAME}`;
 const block_events_queue_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${block_events_queue}`;
 
 console.log('block_events_queue', block_events_queue);
-console.log("ingestion_ingress_current_block_fifo_queue url:", current_block_fifo_url);
+console.log("block_events_queue_url", block_events_queue_url);
     
 
 async function sendMessage(event) {                 

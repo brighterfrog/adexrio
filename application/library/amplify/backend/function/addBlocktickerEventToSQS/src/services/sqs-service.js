@@ -4,17 +4,17 @@ const client = new SQSClient();
 
 const CONSTANTS = require('./constants');
 
-const ingestion_ingress_current_block_fifo_queue = `${process.env.CurrentBlockQueue}${process.env.ENV}`; 
-const current_block_fifo_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${ingestion_ingress_current_block_fifo_queue}.fifo`;
+const block_events_queue = `${process.env.BLOCK_EVENT_QUEUE_NAME}_${process.env.ENV}`; 
+const block_events_queue_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${block_events_queue}.fifo`;
 
-console.log('ingestion_ingress_current_block_fifo_queue', ingestion_ingress_current_block_fifo_queue);
-console.log("ingestion_ingress_current_block_fifo_queue url:", current_block_fifo_url);
+console.log('block_events_queue', block_events_queue);
+console.log("block_events_queue_url", block_events_queue_url);
     
-const ingestion_ingress_historical_fifo_queue = `${process.env.HistoricalFifoQueue}${process.env.ENV}`;
-const historical_fifo_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${ingestion_ingress_historical_fifo_queue}.fifo`;
+const historical_events_queue = `${process.env.HISTORICAL_EVENT_QUEUE_NAME}_${process.env.ENV}`;
+const historical_events_queue_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${historical_events_queue}.fifo`;
     
-console.log('ingestion_ingress_historical_fifo_queue', ingestion_ingress_historical_fifo_queue);
-console.log("ingestion_ingress_historical_fifo_queue url:", historical_fifo_url);
+console.log('historical_events_queue', historical_events_queue);
+console.log("historical_events_queue_url url", historical_events_queue_url);
 
 
 async function sendMessage(eventType, event) {                 
@@ -34,11 +34,11 @@ function getSendMessageCommand(eventType, event) {
     };
 
     if(eventType === CONSTANTS.EVENT_TYPE.CURRENT_BLOCK) {
-        sendMessageInput.QueueUrl = current_block_fifo_url;
+        sendMessageInput.QueueUrl = block_events_queue_url;
         sendMessageInput.createdFromHistoricalQueue = false;
     }
     else if(eventType === CONSTANTS.EVENT_TYPE.HISTORICAL_BLOCKS) {
-        sendMessageInput.QueueUrl = historical_fifo_url;
+        sendMessageInput.QueueUrl = historical_events_queue_url;
         sendMessageInput.createdFromHistoricalQueue = true;
     }
     else {
