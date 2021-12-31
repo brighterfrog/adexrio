@@ -11,7 +11,7 @@ module "sqs_template_block_event_queue" {
   name                           = "${var.queue_name}_${var.globals[terraform.workspace].resource_suffix}"
   is_fifo                        = true
   is_content_based_deduplication = true
-  visibility_timeout_seconds     = var.lambda_and_queue_timeout_in_seconds
+  visibility_timeout_seconds     = var.queue_timeout_in_seconds
   policy_string                  = <<POLICY
    {
      "Version": "2012-10-17",
@@ -66,7 +66,7 @@ module "lambda_template_block_event_processor" {
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_template_block_event_processor_policy_document.json
   lambda_directory_name               = "lambda_block_event_processor"
   lambda_description                  = "Function processes everything from the FIFO block event queue"
-  lambda_timeout_in_seconds           = var.lambda_and_queue_timeout_in_seconds
+  lambda_timeout_in_seconds           = var.lambda_timeout_in_seconds
   environment_variables = {
     "ENV"       = "${var.globals[terraform.workspace].resource_suffix}"
     "REGION"    = "us-east-1"

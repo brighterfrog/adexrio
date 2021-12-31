@@ -27,7 +27,7 @@
         },
         "addBlocktickerEventToSQS": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/addBlocktickerEventToSQS-56302f713631304f3647-build.zip",
+          "s3Key": "amplify-builds/addBlocktickerEventToSQS-75334f78673172687274-build.zip",
           "blockLookupTableIdKey": "0",
           "blockEventQueueName": "block_events",
           "historicalEventQueueName": "historical_events"

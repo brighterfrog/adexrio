@@ -1,7 +1,7 @@
 "use strict";
-const sqsService = require("./services/sqs-service");
+const sqsService = require("./sqs-service");
 
-function buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch) {
+async function buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch) {
 
   console.log("lambda historical step fn write to current block queue with event", event);
   
@@ -32,7 +32,7 @@ function buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch) {
       blockNumberToProcess: blockNumber
     };
     
-    console.log("Sending message with event to write of", eventToWrite);
+    console.log("Sending message with event to write of", JSON.stringify(eventToWrite));
     
     const sqsResponse = await sqsService.sendMessage(eventToWrite, blockNumber);
 
@@ -58,5 +58,5 @@ function buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch) {
 };
 
 module.exports = {
-    buildAndWriteAllBlockEvents   
+  buildAndWriteAllBlockEvents   
 }

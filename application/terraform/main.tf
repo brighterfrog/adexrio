@@ -34,19 +34,21 @@ provider "aws" {
 
 # queue_name used in addBlocktickerEventToSQS lambda
 module "block_events" {
-  source                              = "./modules/block_events"
-  globals                             = var.globals
-  queue_name                          = "block_events"
-  lambda_and_queue_timeout_in_seconds = 300
+  source                    = "./modules/block_events"
+  globals                   = var.globals
+  queue_name                = "block_events"
+  lambda_timeout_in_seconds = 30
+  queue_timeout_in_seconds  = 0
 }
 
 # queue_name used in addBlocktickerEventToSQS lambda
 module "historical_events" {
-  source                              = "./modules/historical_events"
-  globals                             = var.globals
-  queue_name                          = "historical_events"
-  block_event_queue                   = module.block_events.queue
-  lambda_and_queue_timeout_in_seconds = 300
+  source                    = "./modules/historical_events"
+  globals                   = var.globals
+  queue_name                = "historical_events"
+  block_event_queue         = module.block_events.queue
+  lambda_timeout_in_seconds = 30
+  queue_timeout_in_seconds  = 0
 }
 
 module "shared" {

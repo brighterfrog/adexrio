@@ -9,7 +9,7 @@ exports.handler = async (event, context) => {
 //write to current block queue
 
   const highestBlockMessageFromBatch = historicalService.getHighestBlockNumberFromRecordBatch(event)
-  const result = blockEventService.buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch);
+  const result = await blockEventService.buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch);
 
   console.log('done with processing historical event batch with result ', result);
 

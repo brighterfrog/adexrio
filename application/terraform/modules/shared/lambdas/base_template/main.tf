@@ -50,6 +50,7 @@ resource "aws_lambda_function" "lambda" {
   publish          = true
   timeout          = var.lambda_timeout_in_seconds
   architectures    = ["arm64"]
+  description      = var.lambda_description
 
   environment {
     variables = var.environment_variables

@@ -1,5 +1,4 @@
 "use strict";
-const util = require('util');
 
 function getHighestBlockNumberFromRecordBatch(eventPayload) {
   console.log(
@@ -29,7 +28,7 @@ function getHighestBlockNumberFromRecordBatch(eventPayload) {
     }
   });
   
-  console.log("highest block number event is", util.inspect(temporaryHighestBlock, false, null, true /* enable colors */))
+  console.log("highest block number event is", JSON.stringify(temporaryHighestBlock))
 
   return temporaryHighestBlock;
 }

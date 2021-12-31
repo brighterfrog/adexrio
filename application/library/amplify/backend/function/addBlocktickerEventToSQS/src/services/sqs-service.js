@@ -14,7 +14,7 @@ const historical_events_queue = `${process.env.HISTORICAL_EVENT_QUEUE_NAME}_${pr
 const historical_events_queue_url = `https://sqs.${process.env.REGION}.amazonaws.com/${process.env.ACCOUNTID}/${historical_events_queue}.fifo`;
     
 console.log('historical_events_queue', historical_events_queue);
-console.log("historical_events_queue_url url", historical_events_queue_url);
+console.log("historical_events_queue_url", historical_events_queue_url);
 
 
 async function sendMessage(eventType, event) {                 
@@ -51,10 +51,3 @@ function getSendMessageCommand(eventType, event) {
 module.exports = {
     sendMessage   
 }
-
- // const input = {            
-    //      MessageBody: JSON.stringify(event),
-    //      MessageDeduplicationId: event.arguments.input.event.head.number,  // Required for FIFO queues
-    //      MessageGroupId: "Group1",  // Required for FIFO queues
-    //      QueueUrl: historical_fifo_url
-    //    };
