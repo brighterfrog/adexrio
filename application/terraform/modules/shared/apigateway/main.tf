@@ -6,16 +6,11 @@ resource "aws_apigatewayv2_api" "api" {
   tags = var.tags
 }
 
-resource "aws_apigatewayv2_route" "route_events_historical" {
+resource "aws_apigatewayv2_route" "route_nft_metadata" {
   api_id    = aws_apigatewayv2_api.api.id
-  route_key = "POST /blockchain/events/historical"
-  target    = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
-}
-
-resource "aws_apigatewayv2_route" "route_blocknumber" {
-  api_id    = aws_apigatewayv2_api.api.id
-  route_key = "POST /blockchain/events/blocknumber"
-  target    = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
+  route_key = "GET /blockchain/nft/vebrand"
+  # target    = "integrations/${aws_apigatewayv2_integration.kinesis_integration.id}"
+  # lambda integration
 }
 
 resource "aws_apigatewayv2_stage" "stage" {
@@ -95,9 +90,9 @@ resource "aws_iam_policy" "apigw_policy" {
     },
     {
       "Action": [
-        "kinesis:*"        
+        "lambda:*"        
       ],
-      "Resource": "${var.kinesis_data_stream.arn}",
+      "Resource": "${var.lambda.arn}",
       "Effect": "Allow"
     }        
   ]

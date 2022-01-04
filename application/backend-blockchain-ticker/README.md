@@ -25,5 +25,4 @@ need to use these owner wallets
 initial setup: `amplify pull --appId <appId> --envName dev --profile cicd`
 sync upstream changes: `amplify pull`
 
-manually rename aws-exports.js to aws-exports.ts
-manually copy API.ts from angular-web project
+`npm run compile or build:tsc`

@@ -32,8 +32,8 @@ resource "aws_iam_role_policy_attachment" "lambda_attachment" {
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}/../../../../../${var.lambda_directory_name}/"
-  output_path = "${path.module}/../../../../../${var.lambda_directory_name}/handler.zip"
+  source_dir  = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}"
+  output_path = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}/handler.zip"
   excludes = [
     "test/*",
     "handler.zip",
@@ -42,7 +42,7 @@ data "archive_file" "lambda_zip" {
 resource "aws_lambda_function" "lambda" {
   function_name    = "${var.lambda_name}_${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags
-  filename         = "${path.module}/../../../../../${var.lambda_directory_name}/handler.zip"
+  filename         = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}/handler.zip"
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"

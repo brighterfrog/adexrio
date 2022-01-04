@@ -1,7 +1,7 @@
-import { createIngestionEvent, createErrorLog } from '../../library/src/graphql/mutations';
+import { createIngestionEvent, createErrorLog } from '../../library/dist/graphql/mutations';
 import { BlockchainSimpleTickerService } from './services/blockchain-simple-ticker.service'
 
-const library = require('../../library/src/bootstrapper/bootstrap');
+const library = require('../../library/dist/bootstrapper/bootstrap');
 
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });

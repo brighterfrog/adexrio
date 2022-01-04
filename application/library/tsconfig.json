@@ -1,6 +1,7 @@
 {
     "compilerOptions": {
         "types": ["node"],
+        "typeRoots": [ "../node_modules/@types" ],
         "module": "commonjs",
         "esModuleInterop": true,
         "allowJs": true,
@@ -9,9 +10,9 @@
         "noImplicitAny": false,
         "moduleResolution": "node",
         "sourceMap": true,
-        "outDir": "dist",
-        "rootDir": "src",
-        "baseUrl": "."
+        "outDir": "dist", 
+        // "rootDir": "src",
+        // "baseUrl": "."        
     },
     "include": [
          "src/*",

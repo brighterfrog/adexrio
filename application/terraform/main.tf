@@ -37,8 +37,8 @@ module "block_events" {
   source                    = "./modules/block_events"
   globals                   = var.globals
   queue_name                = "block_events"
-  lambda_timeout_in_seconds = 30
-  queue_timeout_in_seconds  = 0
+  lambda_timeout_in_seconds = 3
+  queue_timeout_in_seconds  = 3
 }
 
 # queue_name used in addBlocktickerEventToSQS lambda
@@ -47,8 +47,8 @@ module "historical_events" {
   globals                   = var.globals
   queue_name                = "historical_events"
   block_event_queue         = module.block_events.queue
-  lambda_timeout_in_seconds = 30
-  queue_timeout_in_seconds  = 0
+  lambda_timeout_in_seconds = 900
+  queue_timeout_in_seconds  = 900
 }
 
 module "shared" {

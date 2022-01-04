@@ -1,22 +1,28 @@
 import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, WalletSecretDetails } from "../models/all-models";
-import { thorify } from "thorify";
+// import { thorify } from "thorify";
 
-const RollItVetMultiPlayerGameDefinition = require('./../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
+const RollItVetMultiPlayerGameDefinition = require('./../../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
 //const RollItDeployedContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json');
 
-const RollItDeployedDevelopmentContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/dev_contract_address.json');
-const RollItDeployedTestContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/test_contract_address.json');
-const RollItDeployedProductionContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/prod_contract_address.json');
+const RollItDeployedDevelopmentContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/dev_contract_address.json');
+const RollItDeployedTestContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/test_contract_address.json');
+const RollItDeployedProductionContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/prod_contract_address.json');
 
-import { BlockchainEventListener } from "./blockchain-event-listener";
+// import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
-import { SecretsManager } from "src/aws-services/secrets-manager";
+import { SecretsManager } from "../aws-services/secrets-manager";
 
+
+export interface GetFilterForEventRequest {  
+  eventName: string;
+  startBlock: number;
+  endBlock: number;
+}
 
 export class BlockChainService {
 
     contractInstance: any;
-    eventListener: BlockchainEventListener;
+    // eventListener: BlockchainEventListener;
     walletService: BlockchainWalletService;
 
     contractWrappedEvents: ContractEvent[] = [];
@@ -25,22 +31,27 @@ export class BlockChainService {
         console.log('PROCESS ENV VECHAIN API NODE');
         console.log(process.env.VECHAIN_API_NODE);
 
-        const Web3 = require("web3");
-        const web3 = thorify(new Web3(), process.env.VECHAIN_API_NODE);
+        // const Web3 = require("web3");
+        // const web3 = thorify(new Web3(), process.env.VECHAIN_API_NODE);
 
-        this.contractInstance = new web3.eth.Contract(
-            RollItVetMultiPlayerGameDefinition.abi,
-            this.getContractAddressForRollIt()
-        );
+        // this.contractInstance = new web3.eth.Contract(
+        //     RollItVetMultiPlayerGameDefinition.abi,
+        //     this.getContractAddressForRollIt()
+        // );
 
-        console.log(this.contractInstance);
+        // console.log(this.contractInstance);
 
-        this.eventListener = new BlockchainEventListener(this.contractInstance);
+        // this.eventListener = new BlockchainEventListener(this.contractInstance);
+        
         this.walletService = new BlockchainWalletService(this.walletSecretDetails);
-        this.contractWrappedEvents = this.getEventsFromContract();
+        this.contractWrappedEvents = this.getAndBuildEventsFromContract();
     }
 
-    private getEventsFromContract(): ContractEvent[] {
+    async initializeWallet(): Promise<any> {
+      await this.walletService.importWalletFromKeystore();
+    }
+
+    private getAndBuildEventsFromContract(): ContractEvent[] {
     
         const wrappedEvents: ContractEvent[] = [];
         const events = RollItVetMultiPlayerGameDefinition.abi.filter( f=> f.type == 'event');
@@ -56,17 +67,62 @@ export class BlockChainService {
        return wrappedEvents;   
     }
 
-    GetFilterForAllUnfinishedGameCompletedEvents(): any {
-        const account = this.getContractAddressForRollIt();
-        const event = this.getSingleContractEventForName('GameCompletedEvent', this.contractWrappedEvents);
 
-        if (!event) {
-            throw Error('Cant find GameCompletedEvent');
+    // private buildFilterForGettingGameCompletedEvents(
+    //     eventToFilterOn: ContractEvent
+    //   ): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded> {
+    //     const filter = this.connex.thor
+    //       .account(this.getContractAddressForRollIt()).event(eventToFilterOn.abi).filter([{}]);
+    
+    //     filter.range({
+    //       unit: 'block',
+    //       from: this.connex.thor.status.head.number,
+    //       to: this.connex.thor.status.head.number
+    //     });
+    //     return filter;
+    //   }
+    //GetFilterForEventRequest
+
+    getFilterForEvent(request: GetFilterForEventRequest): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded>  {
+    // getFilterForEvent(eventName: string, startBlock: number, endBlock: number): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded>  {
+        const account = this.getContractAddressForRollIt();
+        const eventToFilterOn = this.getSingleContractEventForName(request.eventName, this.contractWrappedEvents);
+
+        if (!eventToFilterOn) {
+            throw Error(`Cant find ${request.eventName}`);
         }
 
-        return this.walletService.connex.thor.account(account).event(
-            event.abi
-        ).filter([]);
+        const filter = this.walletService.connex.thor
+          .account(account).event(eventToFilterOn.abi).filter([{}]);
+    
+        filter.range({
+          unit: 'block',
+          from: request.startBlock,
+          to: request.endBlock
+        });
+
+        return filter;
+    }
+
+    async executeFilterForEvent(
+      filter: Connex.Thor.Filter<'event',
+        Connex.Thor.Account.WithDecoded>,
+      batchStartPosition: number,
+      batchSize: number,
+      callbackProcessingFunction: Function): Promise<void> {
+      
+      const filterResultEvents = await filter.apply(batchStartPosition, batchSize);
+
+      //filterResultEvents
+  
+        // this.loggingService.writeDebug('processCompletedGamesEvents');
+        // this.loggingService.writeDebug(events);
+  
+      await callbackProcessingFunction(filterResultEvents);  
+       
+      if (filterResultEvents.length === batchSize) {
+        await this.executeFilterForEvent(filter, batchStartPosition + batchSize, batchSize, callbackProcessingFunction);
+      }
 
     }
 
@@ -96,8 +152,7 @@ export class BlockChainService {
         return this.walletService.connex.thor.account(account).method(testCallOnlyOwner).call();
     }
 
-    async TestSetPaused(): Promise<any> {
-        //return this.contractInstance.methods.getGames().call();
+    async TestSetPaused(): Promise<any> {        
         const account = this.getContractAddressForRollIt();
         const testCallOnlyOwner = this.getContractFunctionABIfor('setPauseModeEnabled');
 
@@ -106,8 +161,7 @@ export class BlockChainService {
             .transact().request();
     }
 
-    async TestSetUnPaused(): Promise<any> {
-        //return this.contractInstance.methods.getGames().call();
+    async TestSetUnPaused(): Promise<any> {        
         const account = this.getContractAddressForRollIt();
         const testCallOnlyOwner = this.getContractFunctionABIfor('setPauseModeDisabled');
 
@@ -115,16 +169,6 @@ export class BlockChainService {
             .method(testCallOnlyOwner)
             .transact().request();
     }
-
-    // async getGames(): Promise<void> {
-    //     //return this.contractInstance.methods.getGames().call();
-    //     const account = this.getContractAddressForRollIt();
-    //     const testCallOnlyOwner = this.getContractFunctionABIfor('setPauseModeEnabled');
-
-    //this.connex.thor.account(account).method(testCallOnlyOwner).transact();
-    //for now hard code account
-    //this.walletService.connex.thor.account(
-    //}
 
     async getGameById(gameId: number): Promise<Connex.VM.Output & Connex.Thor.Account.WithDecoded> {
         const account = this.getContractAddressForRollIt();

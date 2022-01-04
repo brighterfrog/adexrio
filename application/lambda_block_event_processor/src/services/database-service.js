@@ -1,6 +1,6 @@
 "use strict";
 const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocument, GetCommand  } = require("@aws-sdk/lib-dynamodb");
+const { DynamoDBDocument, GetCommand } = require("@aws-sdk/lib-dynamodb");
 
 const client = new DynamoDBClient({ region: `${process.env.REGION}` });
 
@@ -22,34 +22,34 @@ const translateConfig = { marshallOptions, unmarshallOptions };
 
 const ddbDocClient = DynamoDBDocument.from(client, translateConfig);
 
+async function addRecordToTable() {
+  console.log("start addRecordToTable");
+  let result;
+}
+
 async function readLastBlockForEventsProcessed() {
   console.log("start readLastBlockForEventsProcessed");
   let result;
 
-  try {
-    var input = {
-      Key: {
-        id: process.env.BLOCK_LOOKUP_TABLE_ID_KEY,
-      },
-      TableName: `${process.env.BLOCK_LOOKUP_TABLE_NAME}`,
-    };
-    const command = new GetCommand(input);
-    const response = await ddbDocClient.send(command);
+  var input = {
+    Key: {
+      id: process.env.BLOCK_LOOKUP_TABLE_ID_KEY,
+    },
+    TableName: `${process.env.BLOCK_LOOKUP_TABLE_NAME}`,
+  };
+  const command = new GetCommand(input);
+  const response = await ddbDocClient.send(command);
 
-    console.log("readLastBlockForEventsProcessed response", response);
+  console.log("readLastBlockForEventsProcessed response", response);
 
-    if (!response.Item) {
-      console.log(`No last block found, returning 0`);
-      result = 0;
-    } else {
-      console.log(
-        `last block found ${response.Item.lambdaProcessorDecisionCheckForNextBlocknumber}`
-      );
-      result = response.Item.lambdaProcessorDecisionCheckForNextBlocknumber;
-    }
-  } catch (err) {
-    console.log(err);
-    throw err;
+  if (!response.Item) {
+    console.log(`No last block found, returning 0`);
+    result = 0;
+  } else {
+    console.log(
+      `last block found ${response.Item.lambdaProcessorDecisionCheckForNextBlocknumber}`
+    );
+    result = response.Item.lambdaProcessorDecisionCheckForNextBlocknumber;
   }
 
   return result;
