@@ -31,19 +31,30 @@ resource "aws_iam_role_policy_attachment" "lambda_attachment" {
 }
 
 data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}"
-  output_path = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}/handler.zip"
-  excludes = [
-    "test/*",
-    "handler.zip",
-  ]
+   type        = "zip"
+   source_dir  = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/"
+   output_path = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/handler.zip"
+   excludes = [
+     "test/*",
+     "handler.zip",    
+   ]
+ }
+
+resource null_resource "test" {
+  triggers {
+    always_run = "${uuid()}"
+  }
+  provisioner "local-exec" {
+    command = ""
+  }
 }
+
 resource "aws_lambda_function" "lambda" {
   function_name    = "${var.lambda_name}_${var.globals[terraform.workspace].resource_suffix}"
-  tags             = var.globals.tags
-  filename         = "${path.module}/../../../../../${var.lambda_directory_name}/${var.lambda_source_location}/handler.zip"
-  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
+  tags             = var.globals.tags                      
+  filename         = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/handler.zip"
+  # filename         = "${path.module}/../../../../../typescript/dist/test.zip"  
+  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)  
   role             = aws_iam_role.lambda_role.arn
   handler          = "index.handler"
   runtime          = "nodejs14.x"
@@ -56,5 +67,5 @@ resource "aws_lambda_function" "lambda" {
     variables = var.environment_variables
   }
 
-  depends_on = [aws_iam_role_policy_attachment.lambda_attachment]
+  depends_on = [aws_iam_role_policy_attachment.lambda_attachment, data.archive_file.lambda_zip]
 }

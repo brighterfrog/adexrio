@@ -1,5 +1,5 @@
 NETWORK_CONSTANTS = {    
-    'development': {
+    'dev': {
         'name': 'development-network',
         'host': 'http://0.0.0.0:8669',
         'outputFileName': 'dev_contract_address.json'
@@ -9,12 +9,12 @@ NETWORK_CONSTANTS = {
         'host': 'https://vethor-node-test.vechaindev.com',
         'outputFileName': 'test_contract_address.json'
     },
-    'main': {
+    'prod': {
         'name': 'main-network',
         'host': 'https://vethor-node.vechain.com',
-        'outputFileName': 'main_contract_address.json'
+        'outputFileName': 'prod_contract_address.json'
     }
 }
 
-# development | test | main
-ENVIRONMENT = NETWORK_CONSTANTS['development']
+# dev | test | prod
+ENVIRONMENT = NETWORK_CONSTANTS['dev']

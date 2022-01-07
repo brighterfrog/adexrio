@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+      "types": ["node"],
+    //   "typeRoots": [
+    //     "node_modules/@types"
+    // ],
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "allowJs": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es2017",
+      "noImplicitAny": false,
+      "moduleResolution": "node",
+      "sourceMap": true,
+      // "outDir": "../dist/lambda_block_event_processor/src",
+      // "rootDir": "src",      
+      "outDir": "dist",
+      "rootDir": "src",
+      // "composite": true,
+      // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
+  },  
+  "include": [
+    "**/*.ts",
+    "package.json"
+    //  "node_modules/*"
+]
+}

@@ -1,0 +1,34 @@
+{
+    "compilerOptions": {
+         "types": ["node"],
+      //    "typeRoots": [
+      //       "node_modules/@types"
+      //   ],
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "noImplicitAny": false,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "rootDir": "src"
+        // "composite": true,
+        // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
+        // "outDir": "../dist/backend-blockchain-ticker/src",
+        //  "rootDir": "src",
+        // "composite": true  ,        
+        // "tsBuildInfoFile": "./../dist/backend-blockchain-ticker/tsconfig.buildinfo"   
+     }
+     ,
+      "include": [
+            "**/*.ts",
+            "package.json"
+            //  "node_modules/*"
+       ]
+       //,
+    //  "include": [
+    //      "**/*.ts"
+    //  ]
+}

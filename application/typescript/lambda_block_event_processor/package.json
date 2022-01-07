@@ -1,0 +1,24 @@
+{
+  "name": "lambda_block_event_processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "compile": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adexr/library": "file:../library/adexr-library-1.0.14.tgz",
+    "@aws-sdk/client-dynamodb": "^3.44.0",
+    "@aws-sdk/client-sfn": "^3.43.0",
+    "@aws-sdk/lib-dynamodb": "^3.44.0",
+    "@types/aws-lambda": "^8.10.89",
+    "library": "file:../library/library-1.0.11.tgz",
+    "typescript": "^4.5.4"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.7"
+  }
+}

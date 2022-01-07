@@ -1,0 +1,25 @@
+{
+  "name": "lambda_historical_event_processor",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:tsc": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "local:dev": "NODE_ENV=dev ts-node-dev src/index.ts",
+    "local:test": "NODE_ENV=test ts-node-dev src/index.ts --unhandled-rejections=strict",
+    "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts --unhandled-rejections=strict"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@adexr/library": "file:../library/adexr-library-1.0.14.tgz",
+    "@aws-sdk/client-dynamodb": "^3.44.0",
+    "@aws-sdk/lib-dynamodb": "^3.44.0",
+    "@types/aws-lambda": "^8.10.89",
+    "library": "file:../library/library-1.0.11.tgz"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.7"
+  }
+}

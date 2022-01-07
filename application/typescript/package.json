@@ -1,0 +1,28 @@
+{
+  "name": "adexr_backend_node_builder",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "compile:windows": "pwsh ./step_1_compile.ps1 -ExecutionPolicy Unrestricted -NoProfile",
+    "compile:linux": "./step_1_compile.sh",    
+    "library:up_windows": "pwsh ./step_2_library-update.ps1 -ExecutionPolicy Unrestricted -NoProfile",
+    "library:up_linux": "./step_2_library-update.sh",
+    "build:dev": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName dev --useProfile true && tsc",
+    "build:test": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName test --useProfile true && tsc",
+    "build:prod": "rimraf ./dist && amplify_codebuild_helper.sh --appId d3nhl82tha81mm --envName prod --useProfile true && tsc",
+    "local:dev": "NODE_ENV=dev ts-node-dev src/index.ts",
+    "local:test": "NODE_ENV=test ts-node-dev src/index.ts",
+    "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts",
+    "test": "NODE_ENV=dev mocha -r ts-node/register tests/**/*.spec.ts",
+    "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
+    "release:dev": "NODE_ENV=dev node --trace-warnings dist/index.js",
+    "release:test": "NODE_ENV=test node --trace-warnings dist/index.js",
+    "release:prod": "NODE_ENV=prod node --trace-warnings dist/index.js",
+    "release:elasticbeanstalk": "node --trace-warnings dist/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "copyfiles": "^2.4.1" 
+  }  
+}

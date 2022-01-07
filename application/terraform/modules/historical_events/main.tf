@@ -67,7 +67,6 @@ module "lambda_template_historical_event_processor" {
   lambda_name                         = "lambda_historical_event_processor"
   lambda_iam_aws_policy_document_json = data.aws_iam_policy_document.lambda_template_historical_events_processor_policy_document.json
   lambda_directory_name               = "lambda_historical_event_processor"
-  lambda_source_location              = "dist"
   lambda_description                  = "Function processes everything from the FIFO historical event queue"
   lambda_timeout_in_seconds           = var.lambda_timeout_in_seconds
   environment_variables = {

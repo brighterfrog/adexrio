@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "types": ["node"],
+    // "typeRoots": ["node_modules/@types"],
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "noImplicitAny": false,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    // "composite": true,
+    // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
+  },
+  //  "include": [
+  //       "src/*",
+  //       "node_modules/*"
+  //   ]
+  "include": [
+    "**/*.ts",
+    "package.json"
+    //  "node_modules/*"
+  ]  
+}

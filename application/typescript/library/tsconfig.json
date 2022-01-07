@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "types": ["node"],
+        // "typeRoots": [ "node_modules/@types" ],
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "noImplicitAny": false,
+        "moduleResolution": "node",
+        "sourceMap": true,
+        "outDir": "dist",
+        "rootDir": ".",
+        "declaration": true,
+        // "composite": true,
+        // "tsBuildInfoFile": "./dist/library/tsconfig.buildinfo"     
+    },
+      "include": [
+           "src/**/*"           
+       ]     
+    //  "include": [
+    //      "**/*.ts"
+    //  ]
+    }
