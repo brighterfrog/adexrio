@@ -1,17 +1,13 @@
 import { ContractEvent, EventObject, SetGameWinnerRequest, DecodedGameEntries, WalletSecretDetails } from "../models/all-models";
-// import { thorify } from "thorify";
 
-const RollItVetMultiPlayerGameDefinition = require('./../../../../vechain-contracts/brownie/build/contracts/RollItVetMultiPlayerGame.json');
-//const RollItDeployedContractAddress = require('./../../../vechain-contracts/brownie/adexrio_contract_address/contract_address.json');
+const RollItVetMultiPlayerGameDefinition = require('../../contract-builds/contracts/RollItVetMultiPlayerGame.json');
 
-const RollItDeployedDevelopmentContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/dev_contract_address.json');
-const RollItDeployedTestContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/test_contract_address.json');
-const RollItDeployedProductionContractAddress = require('./../../../../vechain-contracts/brownie/adexrio_contract_address/prod_contract_address.json');
+const RollItDeployedDevelopmentContractAddress = require('../../contract-builds/adexrio_contract_address/dev_contract_address.json');
+const RollItDeployedTestContractAddress = require('../../contract-builds/adexrio_contract_address/test_contract_address.json');
+const RollItDeployedProductionContractAddress = require('../../contract-builds/adexrio_contract_address/prod_contract_address.json');
 
 // import { BlockchainEventListener } from "./blockchain-event-listener";
 import { BlockchainWalletService } from "./blockchain-wallet-service";
-import { SecretsManager } from "../aws-services/secrets-manager";
-
 
 export interface GetFilterForEventRequest {  
   eventName: string;

@@ -15,5 +15,10 @@ application/vechain-contracts/deploy$ python deploy.py
 
 From the vechain-contracts/deploy workspace directory:
 `./deploy.sh`
+`Immediately update the library package, and the subscriber version numbers`
+
+From the typescript directory
+`npm run compile`
+`npm run library:up_windows`
 
 

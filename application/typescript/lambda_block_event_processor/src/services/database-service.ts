@@ -1,6 +1,6 @@
 "use strict";
-const { DynamoDBClient } = require("@aws-sdk/client-dynamodb");
-const { DynamoDBDocument, GetCommand } = require("@aws-sdk/lib-dynamodb");
+import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
+import { DynamoDBDocument, GetCommand } from "@aws-sdk/lib-dynamodb";
 
 const client = new DynamoDBClient({ region: `${process.env.REGION}` });
 

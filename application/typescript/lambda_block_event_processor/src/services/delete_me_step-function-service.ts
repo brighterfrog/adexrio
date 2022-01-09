@@ -1,5 +1,5 @@
 "use strict";
-const { SFNClient, StartExecutionCommand  } = require("@aws-sdk/client-sfn");
+import { SFNClient, StartExecutionCommand  } from "@aws-sdk/client-sfn";
 const client = new SFNClient({ region: process.env.REGION });
 
 exports.startStepFn = async (event, context) => {

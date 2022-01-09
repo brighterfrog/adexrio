@@ -6,20 +6,23 @@
         "esModuleInterop": true,
         "allowJs": true,
         "allowSyntheticDefaultImports": true,
-        "target": "es2017",
+        // "target": "es2017",
+        "target": "es2017",        
         "noImplicitAny": false,
         "moduleResolution": "node",
-        "sourceMap": true,
+        // "sourceMap": true,
+        "inlineSourceMap": true,
         "outDir": "dist",
-        "rootDir": ".",
+        "rootDir": "src",
         "declaration": true,
-        // "composite": true,
+        "resolveJsonModule": true,
+        "skipDefaultLibCheck": true,
+        "composite": true,
         // "tsBuildInfoFile": "./dist/library/tsconfig.buildinfo"     
     },
       "include": [
-           "src/**/*"           
-       ]     
-    //  "include": [
-    //      "**/*.ts"
-    //  ]
+           "src/**/*",
+           "src/**/*.json",
+           "env.*"
+       ]   
     }

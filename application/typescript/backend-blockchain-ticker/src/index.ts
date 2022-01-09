@@ -1,5 +1,5 @@
 // import { createIngestionEvent, createErrorLog } from './../../library/src/graphql/mutations';
-import { createIngestionEvent, createErrorLog } from '@adexr/library/dist/src/graphql/mutations';
+import { createIngestionEvent, createErrorLog } from '@adexr/library/dist/graphql/mutations';
 
 // import { BlockchainSimpleTickerService } from './services/blockchain-simple-ticker.service'
 const BlockchainSimpleTickerService = require('./services/blockchain-simple-ticker.service')

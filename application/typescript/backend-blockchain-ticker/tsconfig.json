@@ -13,7 +13,8 @@
         "moduleResolution": "node",
         "sourceMap": true,
         "outDir": "dist",
-        "rootDir": "src"
+        "rootDir": "src",
+        "skipLibCheck": true
         // "composite": true,
         // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
         // "outDir": "../dist/backend-blockchain-ticker/src",
@@ -21,12 +22,12 @@
         // "composite": true  ,        
         // "tsBuildInfoFile": "./../dist/backend-blockchain-ticker/tsconfig.buildinfo"   
      }
-     ,
-      "include": [
-            "**/*.ts",
-            "package.json"
-            //  "node_modules/*"
-       ]
+   //   ,
+   //    "include": [
+   //          "**/*.ts",
+   //          "package.json"
+   //          //  "node_modules/*"
+   //     ]
        //,
     //  "include": [
     //      "**/*.ts"

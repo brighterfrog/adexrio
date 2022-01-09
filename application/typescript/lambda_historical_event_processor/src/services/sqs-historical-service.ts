@@ -1,6 +1,6 @@
 "use strict";
 
-function getHighestBlockNumberFromRecordBatch(eventPayload) {
+export function getHighestBlockNumberFromRecordBatch(eventPayload) {
   console.log(
     "Beginning loop iteration in getHighestBlockNumberFromRecordBatch"
   );
@@ -33,6 +33,6 @@ function getHighestBlockNumberFromRecordBatch(eventPayload) {
   return temporaryHighestBlock;
 }
 
-module.exports = {
-    getHighestBlockNumberFromRecordBatch   
-}
+// module.exports = {
+//     getHighestBlockNumberFromRecordBatch   
+// }

@@ -1,28 +1,30 @@
 "use strict";
 
-import constants from "@adexr/library/dist/src/backend/blockchain/constants";
-import secretsMgr from  "@adexr/library/dist/src/backend/aws-services/secrets-manager";
-import blockchainSrvc from "@adexr/library/dist/src/backend/blockchain/blockchain-service";
+import { EVENTS } from "../../../library/dist/backend/blockchain/constants";
+import { SecretsManager } from  "../../../library/dist/backend/aws-services/secrets-manager";
+import { BlockChainService } from "../../../library/dist/backend/blockchain/blockchain-service";
+
+// delete when confirmed
 // const constants = require("../../../library/src/backend/blockchain/constants/");
 // const secretsMgr = require("../../../library/src/backend/aws-services/secrets-manager");
 // const blockchainSrvc = require("../../../library/src/backend/blockchain/blockchain-service");
 
-const sm = new secretsMgr.SecretsManager();
+const sm = new SecretsManager();
 
-async function test() {
+export async function test() {
 
   let allEventsArray: any[] = [];
 
   const walletSecretDetails = await sm.getSecretValue(
     "adexrio/wallets/mnemonics"
   );
-  const blockchainService = new blockchainSrvc.BlockChainService(
+  const blockchainService = new BlockChainService(
     JSON.parse(walletSecretDetails.SecretString)
   );
   await blockchainService.initializeWallet();
 
   const filter = blockchainService.getFilterForEvent({
-    eventName: constants.EVENTS.GameCompletedEvent,
+    eventName: EVENTS.GameCompletedEvent,
     startBlock: 0,
     endBlock: blockchainService.walletService.connex.thor.status.head.number,
   });
@@ -49,7 +51,7 @@ async function test() {
   });
 }
 
-async function processEvents(customEvents: any) {}
+export async function processEvents(customEvents: any) {}
 
 // async function buildAndWriteAllBlockEvents(
 //   event,
@@ -141,7 +143,7 @@ async function processEvents(customEvents: any) {}
 //   return result;
 // }
 
-module.exports = {
-  test,
-  processEvents,
-};
+// module.exports = {
+//   test,
+//   processEvents,
+// };

@@ -2,10 +2,12 @@ import { Injectable } from '@angular/core';
 
 import { Subject } from 'rxjs';
 
-import RollItVetMultiPlayerGameDefinition from '../../../../adexr_contract_output/dist/contracts/RollItVetMultiPlayerGame.json';
-import RollItDeployedDevelopmentContractAddress from '../../../../adexr_contract_output/dist/addresses/dev_contract_address.json';
-import RollItDeployedTestContractAddress from '../../../../adexr_contract_output/dist/addresses/test_contract_address.json';
-import RollItDeployedProductionContractAddress from '../../../../adexr_contract_output/dist/addresses/prod_contract_address.json';
+
+import RollItVetMultiPlayerGameDefinition from '@adexr/library/dist/src/contract-builds/contracts/RollItVetMultiPlayerGame.json';
+
+import RollItDeployedDevelopmentContractAddress from '@adexr/library/dist/src/contract-builds/adexrio_contract_address/dev_contract_address.json';
+import RollItDeployedTestContractAddress from '@adexr/library/dist/src/contract-builds/adexrio_contract_address/test_contract_address.json';
+import RollItDeployedProductionContractAddress from '@adexr/library/dist/src/contract-builds/adexrio_contract_address/prod_contract_address.json';
 
 import { ConnexService } from './helper-services/connex-service';
 import { DateConversionService } from './helper-services/date-conversion.service';

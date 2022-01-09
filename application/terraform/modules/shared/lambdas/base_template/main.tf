@@ -32,31 +32,26 @@ resource "aws_iam_role_policy_attachment" "lambda_attachment" {
 
 data "archive_file" "lambda_zip" {
    type        = "zip"
-   source_dir  = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/"
-   output_path = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/handler.zip"
+   source_dir  = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/"
+   output_path = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"
    excludes = [
      "test/*",
      "handler.zip",    
+     "src/*",
+     "*.zip",
+     "README.md",
+     "tsconfig.json",
+     "package*.json"
    ]
  }
-
-resource null_resource "test" {
-  triggers {
-    always_run = "${uuid()}"
-  }
-  provisioner "local-exec" {
-    command = ""
-  }
-}
 
 resource "aws_lambda_function" "lambda" {
   function_name    = "${var.lambda_name}_${var.globals[terraform.workspace].resource_suffix}"
   tags             = var.globals.tags                      
-  filename         = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/dist/handler.zip"
-  # filename         = "${path.module}/../../../../../typescript/dist/test.zip"  
+  filename         = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"   
   source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)  
   role             = aws_iam_role.lambda_role.arn
-  handler          = "index.handler"
+  handler          = "dist/index.handler"
   runtime          = "nodejs14.x"
   publish          = true
   timeout          = var.lambda_timeout_in_seconds
