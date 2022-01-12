@@ -27,6 +27,10 @@ export class BlockChainService {
         console.log('PROCESS ENV VECHAIN API NODE');
         console.log(process.env.VECHAIN_API_NODE);
 
+        console.log('RollItDeployedDevelopmentContractAddress', RollItDeployedDevelopmentContractAddress);
+        console.log('RollItDeployedTestContractAddress', RollItDeployedTestContractAddress);
+        console.log('RollItDeployedProductionContractAddress', RollItDeployedProductionContractAddress);
+
         // const Web3 = require("web3");
         // const web3 = thorify(new Web3(), process.env.VECHAIN_API_NODE);
 
@@ -43,7 +47,7 @@ export class BlockChainService {
         this.contractWrappedEvents = this.getAndBuildEventsFromContract();
     }
 
-    async initializeWallet(): Promise<any> {
+    async initializeWallet(): Promise<void> {
       await this.walletService.importWalletFromKeystore();
     }
 
@@ -108,12 +112,7 @@ export class BlockChainService {
       callbackProcessingFunction: Function): Promise<void> {
       
       const filterResultEvents = await filter.apply(batchStartPosition, batchSize);
-
-      //filterResultEvents
-  
-        // this.loggingService.writeDebug('processCompletedGamesEvents');
-        // this.loggingService.writeDebug(events);
-  
+       
       await callbackProcessingFunction(filterResultEvents);  
        
       if (filterResultEvents.length === batchSize) {

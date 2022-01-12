@@ -1,57 +1,92 @@
-"use strict";
+'use strict';
 
-import { EVENTS } from "../../../library/dist/backend/blockchain/constants";
-import { SecretsManager } from  "../../../library/dist/backend/aws-services/secrets-manager";
-import { BlockChainService } from "../../../library/dist/backend/blockchain/blockchain-service";
+import {
+  SecretsManager,
+} from '../../../library/dist/backend/aws-services/secrets-manager';
+import {
+  BlockChainService,
+} from '../../../library/dist/backend/blockchain/blockchain-service';
 
-// delete when confirmed
-// const constants = require("../../../library/src/backend/blockchain/constants/");
-// const secretsMgr = require("../../../library/src/backend/aws-services/secrets-manager");
-// const blockchainSrvc = require("../../../library/src/backend/blockchain/blockchain-service");
 
-const sm = new SecretsManager();
+/**
+ * Service to interact with chain events
+ */
+export class BlockchainEventProcessorService {
+  private secretsManager: SecretsManager;
+  private blockchainService: BlockChainService;
+  private walletSecretDetails: any;
 
-export async function test() {
+  constructor() {
+    this.secretsManager = new SecretsManager();
+  }
 
-  let allEventsArray: any[] = [];
+  async initialize(): Promise<void> {
 
-  const walletSecretDetails = await sm.getSecretValue(
-    "adexrio/wallets/mnemonics"
-  );
-  const blockchainService = new BlockChainService(
-    JSON.parse(walletSecretDetails.SecretString)
-  );
-  await blockchainService.initializeWallet();
+        this.walletSecretDetails = await this.secretsManager.getSecretValue(
+          'adexrio/wallets/mnemonics',
+        );
+        this.blockchainService = new BlockChainService(
+          JSON.parse(this.walletSecretDetails.SecretString),
+        );
 
-  const filter = blockchainService.getFilterForEvent({
-    eventName: EVENTS.GameCompletedEvent,
-    startBlock: 0,
-    endBlock: blockchainService.walletService.connex.thor.status.head.number,
-  });
+      await this.blockchainService.initializeWallet();     
+  }
 
-  console.log("filter is", filter);
+  /**
+   * Gets all the events by the name passed in starting
+   * at the starting block and processing until the head block
+   * @async
+   * @method
+   * @param {string} eventName
+   * @param {number} startingBlock
+   */
+  async getAllEventsByNameStartingFromBlock(
+    eventName: string,
+    startingBlock: number,
+  ): Promise<any> {
 
-  const result = await blockchainService.executeFilterForEvent(
-    filter,
-    0,
-    255,
-    async (events: any) => {
-      console.log(events.length);
-      events.map((event: any) => {
-        allEventsArray.push(event);
+    return new Promise(async (resolve, reject) => {
+
+      try{
+      const allEventsArray: any[] = [];
+
+      const filter = this.blockchainService.getFilterForEvent({
+        eventName: eventName,
+        startBlock: startingBlock,
+        endBlock: this.blockchainService.walletService.connex.thor.status.head.number,
       });
-    }
-  );
-  //* data from filter
 
-  console.log("TestArray Length", allEventsArray.length);
+      console.log('filter is', filter);
 
-  allEventsArray.forEach((item) => {
-    console.log(item.decoded);
-  });
+      const result = await this.blockchainService.executeFilterForEvent(
+        filter,
+        0,
+        255,
+        async (events: any) => {
+          //console.log(events.length);
+          events.map((event: any) => {
+            allEventsArray.push(event);
+          });
+          console.log('done 4');        
+        },
+      );
+       
+      resolve(allEventsArray);
+
+      }
+      catch(err) {
+        reject(err);
+      }
+    });
+    
+  }
 }
 
-export async function processEvents(customEvents: any) {}
+/**
+ * not sure yet
+ * @param {any} customEvents
+ */
+export async function processEvents(customEvents: any) { }
 
 // async function buildAndWriteAllBlockEvents(
 //   event,
@@ -74,11 +109,15 @@ export async function processEvents(customEvents: any) {}
 //   );
 
 //   const currentBlockHeadNumber =
-//     highestBlockMessageFromBatch.bodyObject.arguments.input.event.head.number;
+//     highestBlockMessageFromBatch
+//      .bodyObject
+//      .arguments.input.event.head.number;
 //   console.log("currentBlockHeadNumber", currentBlockHeadNumber);
 
 //   const expectedBatchCount =
-//     currentBlockHeadNumber - lambdaProcessorDecisionCheckForNextBlocknumber + 1;
+//     currentBlockHeadNumber -
+//    lambdaProcessorDecisionCheckForNextBlocknumber +
+//    1;
 
 //   console.log("Entering loop for expectedBatchCount of", expectedBatchCount);
 
@@ -106,7 +145,9 @@ export async function processEvents(customEvents: any) {}
 
 //     // Send BATCH OF 10
 //     if (pendingMessagesBatch.length === 10) {
-//       console.log("sendMessagesAsBatch", JSON.stringify(pendingMessagesBatch));
+//       console.log("sendMessagesAsBatch",
+//             JSON.stringify(pendingMessagesBatch)
+//        );
 //       const sqsResponse = await sqsService.sendMessagesAsBatch(
 //         pendingMessagesBatch
 //       );

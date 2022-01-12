@@ -1,38 +1,40 @@
-"use strict";
+'use strict';
 
+
+// Parameters may be declared in a variety of syntactic forms
+/**
+ * @param {string}  eventPayload - A string param for the EVENTS enum
+ */
 export function getHighestBlockNumberFromRecordBatch(eventPayload) {
   console.log(
-    "Beginning loop iteration in getHighestBlockNumberFromRecordBatch"
+      'Beginning loop iteration in getHighestBlockNumberFromRecordBatch',
   );
 
   let temporaryHighestBlock;
 
   eventPayload.Records.forEach((element) => {
-    console.log("Record element", element);
+    console.log('Record element', element);
 
-    let bodyObject = JSON.parse(element.body);
+    const bodyObject = JSON.parse(element.body);
 
     if (temporaryHighestBlock === undefined) {
       temporaryHighestBlock = {
         message: element,
-        bodyObject: bodyObject    
-      }; 
-    } else {     
+        bodyObject: bodyObject,
+      };
+    } else {
       if (
         bodyObject.arguments.input.event.head.number <
         temporaryHighestBlock.bodyObject.arguments.input.event.head.number
       ) {
         temporaryHighestBlock.message = element;
-        temporaryHighestBlock.bodyObject = bodyObject;  
+        temporaryHighestBlock.bodyObject = bodyObject;
       }
     }
   });
-  
-  console.log("highest block number event is", JSON.stringify(temporaryHighestBlock))
+
+  console.log('highest block number event is', JSON.stringify(temporaryHighestBlock));
 
   return temporaryHighestBlock;
 }
 
-// module.exports = {
-//     getHighestBlockNumberFromRecordBatch   
-// }
