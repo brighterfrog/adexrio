@@ -15,32 +15,89 @@ process.env.DEBUG_ON = "false";
 import { EVENTS } from "../../library/dist/backend/blockchain/constants";
 import { BlockchainEventProcessorService } from '../src/services/blockchain-event-processor-service';
 
+let blockchainEventProcessorService;
+
+/**
+ * Test Setup
+ */
+before(async () => {      
+    console.log('init running..');
+    blockchainEventProcessorService = new BlockchainEventProcessorService();
+    await blockchainEventProcessorService.initialize(); 
+    console.log('init completed');   
+})    
+                     
+
 describe('Can Create blockchain-event-process-service',
     () => {
-        it('should return true', () => {
-            const blockchainEventProcessorService = new BlockchainEventProcessorService();
+        it('should return true', () => {            
             expect(blockchainEventProcessorService).is.not.null.to.equal(true);
         });
 });
 
-describe('Can get production create game events',
+describe('Can get production GameCreatedEvent events',
     ()  => {
         it('should return true', async () => {
                       
-             const blockchainEventProcessorService = new BlockchainEventProcessorService();
+            const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.GameCreatedEvent, 0);                                 
 
-             await blockchainEventProcessorService.initialize();                      
-            
-            const gameCreatedEvents = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.GameCreatedEvent, 0);                                 
+            console.log('Test result events length', events.length);
 
-            console.log('TestArray Length', gameCreatedEvents.length);
+            expect(events.length).is.not.lessThan(1);
+                                
+        });
+});
 
-            // gameCreatedEvents.forEach((item) => {
-            // //   console.log('Decoded item', item.decoded);
-            // });     
-                       
+describe('Can get production PlayerJoinedGameEvent events',
+    ()  => {
+        it('should return true', async () => {
+                      
+            const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.PlayerJoinedGameEvent, 0);                                 
 
-        }).timeout(20000);
+            console.log('events length', events.length);
+
+            expect(events.length).is.not.lessThan(1);
+                                
+        });
+});
+
+describe('Can get production PlayerLeftGameEvent events',
+    ()  => {
+        it('should return true', async () => {
+                      
+            const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.PlayerLeftGameEvent, 0);                                 
+
+            console.log('events length', events.length);
+
+            expect(events.length).is.not.lessThan(1);
+                                
+        });
+});
+
+describe('Can get production GameCompletedEvent events',
+    ()  => {
+        it('should return true', async () => {
+                                    
+            const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.GameCompletedEvent, 0);                                 
+
+            console.log('events length', events.length);
+
+            expect(events.length).is.not.lessThan(1);
+                                
+        });
+});
+
+describe('Can get production GameAwaitingLotteryEvent events',
+    ()  => {
+        it('should return true', async () => {
+                      
+            const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(EVENTS.GameAwaitingLotteryEvent, 0);                                 
+
+            console.log('events length', events.length);
+
+            expect(events.length).is.not.lessThan(1);
+                                
+        });
 });
 
 

@@ -24,13 +24,7 @@ export class BlockChainService {
     contractWrappedEvents: ContractEvent[] = [];
 
     constructor(private walletSecretDetails: WalletSecretDetails) {
-        console.log('PROCESS ENV VECHAIN API NODE');
-        console.log(process.env.VECHAIN_API_NODE);
-
-        console.log('RollItDeployedDevelopmentContractAddress', RollItDeployedDevelopmentContractAddress);
-        console.log('RollItDeployedTestContractAddress', RollItDeployedTestContractAddress);
-        console.log('RollItDeployedProductionContractAddress', RollItDeployedProductionContractAddress);
-
+      
         // const Web3 = require("web3");
         // const web3 = thorify(new Web3(), process.env.VECHAIN_API_NODE);
 
@@ -68,23 +62,9 @@ export class BlockChainService {
     }
 
 
-    // private buildFilterForGettingGameCompletedEvents(
-    //     eventToFilterOn: ContractEvent
-    //   ): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded> {
-    //     const filter = this.connex.thor
-    //       .account(this.getContractAddressForRollIt()).event(eventToFilterOn.abi).filter([{}]);
-    
-    //     filter.range({
-    //       unit: 'block',
-    //       from: this.connex.thor.status.head.number,
-    //       to: this.connex.thor.status.head.number
-    //     });
-    //     return filter;
-    //   }
-    //GetFilterForEventRequest
+   
 
     getFilterForEvent(request: GetFilterForEventRequest): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded>  {
-    // getFilterForEvent(eventName: string, startBlock: number, endBlock: number): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded>  {
         const account = this.getContractAddressForRollIt();
         const eventToFilterOn = this.getSingleContractEventForName(request.eventName, this.contractWrappedEvents);
 

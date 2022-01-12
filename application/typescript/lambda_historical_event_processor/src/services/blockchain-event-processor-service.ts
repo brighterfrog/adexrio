@@ -22,14 +22,14 @@ export class BlockchainEventProcessorService {
 
   async initialize(): Promise<void> {
 
-        this.walletSecretDetails = await this.secretsManager.getSecretValue(
-          'adexrio/wallets/mnemonics',
-        );
-        this.blockchainService = new BlockChainService(
-          JSON.parse(this.walletSecretDetails.SecretString),
-        );
+    this.walletSecretDetails = await this.secretsManager.getSecretValue(
+      'adexrio/wallets/mnemonics',
+    );
+    this.blockchainService = new BlockChainService(
+      JSON.parse(this.walletSecretDetails.SecretString),
+    );
 
-      await this.blockchainService.initializeWallet();     
+    await this.blockchainService.initializeWallet();
   }
 
   /**
@@ -43,42 +43,38 @@ export class BlockchainEventProcessorService {
   async getAllEventsByNameStartingFromBlock(
     eventName: string,
     startingBlock: number,
-  ): Promise<any> {
+  ): Promise<Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>[]> {
 
     return new Promise(async (resolve, reject) => {
 
-      try{
-      const allEventsArray: any[] = [];
+      try {
+        const allEventsArray: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>[] = [];
 
-      const filter = this.blockchainService.getFilterForEvent({
-        eventName: eventName,
-        startBlock: startingBlock,
-        endBlock: this.blockchainService.walletService.connex.thor.status.head.number,
-      });
+        const filter = this.blockchainService.getFilterForEvent({
+          eventName: eventName,
+          startBlock: startingBlock,
+          endBlock: this.blockchainService.walletService.connex.thor.status.head.number,
+        });        
 
-      console.log('filter is', filter);
+        await this.blockchainService.executeFilterForEvent(
+          filter,
+          0,
+          255,
+          async (events: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>[]) => {  
+            console.log(`Events in batch to add: ${events.length}`)         
+            events.map((event: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>) => {
+              allEventsArray.push(event);
+            });            
+          },
+        );
 
-      const result = await this.blockchainService.executeFilterForEvent(
-        filter,
-        0,
-        255,
-        async (events: any) => {
-          //console.log(events.length);
-          events.map((event: any) => {
-            allEventsArray.push(event);
-          });
-          console.log('done 4');        
-        },
-      );
-       
-      resolve(allEventsArray);
-
+        resolve(allEventsArray);
       }
-      catch(err) {
+      catch (err) {
         reject(err);
       }
     });
-    
+
   }
 }
 

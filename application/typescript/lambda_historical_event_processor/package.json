@@ -8,8 +8,8 @@
     "local:dev": "NODE_ENV=dev ts-node-dev src/local.ts",
     "local:test": "NODE_ENV=test ts-node-dev src/index.ts --unhandled-rejections=strict",
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts --unhandled-rejections=strict",
-    "test": "NODE_ENV=dev mocha --exit -r ts-node/register tests/**/*.spec.ts",
-    "test:file": "NODE_ENV=dev mocha --exit -r ts-node/register tests/**/game-summary*.spec.ts",
+    "test": "NODE_ENV=dev mocha --exit --timeout 0 -r ts-node/register tests/**/*.spec.ts",
+    "test:file": "NODE_ENV=dev mocha --exit --timeout 0 -r ts-node/register tests/**/game-summary*.spec.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },
