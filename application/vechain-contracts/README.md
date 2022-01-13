@@ -14,6 +14,7 @@ The applications will read in address and keystore information in the front-end 
 application/vechain-contracts/deploy$ python deploy.py
 
 From the vechain-contracts/deploy workspace directory:
+# RUN FROM WSL #
 `./deploy.sh`
 `Immediately update the library package, and the subscriber version numbers`
 

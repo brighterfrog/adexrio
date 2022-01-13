@@ -4,12 +4,13 @@ from thor_requests.contract import Contract
 
 import os
 import boto3 
-import json 
+import json
+import time
 
 import config;
 
-print('BEGIN Deploy FOR...')
-print(config.ENVIRONMENT['name'])
+print('BEGIN DEPLOYMENT FOR {0}'.format(config.ENVIRONMENT['name']))
+time.sleep(3)
 
 # configure
 client = boto3.client('secretsmanager',  region_name = 'us-east-1' )

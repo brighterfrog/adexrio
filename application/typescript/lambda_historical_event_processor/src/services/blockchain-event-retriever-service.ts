@@ -6,6 +6,8 @@ import {
 import {
   BlockChainService,
 } from '../../../library/dist/backend/blockchain/blockchain-service';
+import { EVENTS } from '../../../library/src/backend/blockchain/constants';
+import { ContractEvent } from '../models/types';
 
 
 /**
@@ -20,6 +22,11 @@ export class BlockchainEventProcessorService {
     this.secretsManager = new SecretsManager();
   }
 
+  /**
+   * @async
+   * @method
+   * Initializes the wallet witht he secret manager details
+   */
   async initialize(): Promise<void> {
 
     this.walletSecretDetails = await this.secretsManager.getSecretValue(
@@ -33,7 +40,25 @@ export class BlockchainEventProcessorService {
   }
 
   /**
-   * Gets all the events by the name passed in starting
+   * 
+   * @param {ContractEvent[]} eventsToRetrieve 
+   * @returns {Promise<ContractEvent[]>}
+   */
+  async getAllEvents(eventsToRetrieve: ContractEvent[] ): Promise<ContractEvent[]> {  
+          
+    const promiseArray = eventsToRetrieve.map( (eventItem) => {      
+      return this.getAllEventsByNameStartingFromBlock(eventItem.name, 0);     
+    }); 
+          
+    const results = (await Promise.all(promiseArray)).map( (item, index) => {
+       eventsToRetrieve[index].result = item;
+       return eventsToRetrieve[index];
+    });
+    
+    return results;            
+  }
+  /**
+   * Gets all the events by the individual name passed in starting
    * at the starting block and processing until the head block
    * @async
    * @method
@@ -48,6 +73,7 @@ export class BlockchainEventProcessorService {
     return new Promise(async (resolve, reject) => {
 
       try {
+
         const allEventsArray: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>[] = [];
 
         const filter = this.blockchainService.getFilterForEvent({
