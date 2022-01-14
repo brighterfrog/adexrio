@@ -5,11 +5,11 @@
 export const onCreateFeedback = /* GraphQL */ `
   subscription OnCreateFeedback {
     onCreateFeedback {
-      id
       comment
       commentType
       status
       wallet
+      id
       createdAt
       updatedAt
     }
@@ -18,11 +18,11 @@ export const onCreateFeedback = /* GraphQL */ `
 export const onUpdateFeedback = /* GraphQL */ `
   subscription OnUpdateFeedback {
     onUpdateFeedback {
-      id
       comment
       commentType
       status
       wallet
+      id
       createdAt
       updatedAt
     }
@@ -31,11 +31,11 @@ export const onUpdateFeedback = /* GraphQL */ `
 export const onDeleteFeedback = /* GraphQL */ `
   subscription OnDeleteFeedback {
     onDeleteFeedback {
-      id
       comment
       commentType
       status
       wallet
+      id
       createdAt
       updatedAt
     }
@@ -74,45 +74,6 @@ export const onDeleteMessage = /* GraphQL */ `
     }
   }
 `;
-export const onCreateGamesSummary = /* GraphQL */ `
-  subscription OnCreateGamesSummary {
-    onCreateGamesSummary {
-      id
-      totalCompletedGames
-      totalUniquePlayers
-      totalPayouts
-      highestPayout
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onUpdateGamesSummary = /* GraphQL */ `
-  subscription OnUpdateGamesSummary {
-    onUpdateGamesSummary {
-      id
-      totalCompletedGames
-      totalUniquePlayers
-      totalPayouts
-      highestPayout
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const onDeleteGamesSummary = /* GraphQL */ `
-  subscription OnDeleteGamesSummary {
-    onDeleteGamesSummary {
-      id
-      totalCompletedGames
-      totalUniquePlayers
-      totalPayouts
-      highestPayout
-      createdAt
-      updatedAt
-    }
-  }
-`;
 export const onCreateErrorLog = /* GraphQL */ `
   subscription OnCreateErrorLog {
     onCreateErrorLog {
@@ -143,12 +104,11 @@ export const onDeleteErrorLog = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePlayer = /* GraphQL */ `
-  subscription OnCreatePlayer {
-    onCreatePlayer {
-      id
+export const onCreatePoolPlayer = /* GraphQL */ `
+  subscription OnCreatePoolPlayer {
+    onCreatePoolPlayer {
+      userWalletId
       userWallet {
-        id
         wallet
         nickname
         chatlogo
@@ -161,7 +121,6 @@ export const onCreatePlayer = /* GraphQL */ `
       }
       status
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -174,18 +133,22 @@ export const onCreatePlayer = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      poolPlayersId
+      poolPlayerUserWalletId
     }
   }
 `;
-export const onUpdatePlayer = /* GraphQL */ `
-  subscription OnUpdatePlayer {
-    onUpdatePlayer {
-      id
+export const onUpdatePoolPlayer = /* GraphQL */ `
+  subscription OnUpdatePoolPlayer {
+    onUpdatePoolPlayer {
+      userWalletId
       userWallet {
-        id
         wallet
         nickname
         chatlogo
@@ -198,7 +161,6 @@ export const onUpdatePlayer = /* GraphQL */ `
       }
       status
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -211,18 +173,22 @@ export const onUpdatePlayer = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      poolPlayersId
+      poolPlayerUserWalletId
     }
   }
 `;
-export const onDeletePlayer = /* GraphQL */ `
-  subscription OnDeletePlayer {
-    onDeletePlayer {
-      id
+export const onDeletePoolPlayer = /* GraphQL */ `
+  subscription OnDeletePoolPlayer {
+    onDeletePoolPlayer {
+      userWalletId
       userWallet {
-        id
         wallet
         nickname
         chatlogo
@@ -235,7 +201,6 @@ export const onDeletePlayer = /* GraphQL */ `
       }
       status
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -248,16 +213,21 @@ export const onDeletePlayer = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      poolPlayersId
+      poolPlayerUserWalletId
     }
   }
 `;
 export const onCreateApiPoolAttributes = /* GraphQL */ `
   subscription OnCreateApiPoolAttributes {
     onCreateApiPoolAttributes {
-      id
+      apiKey
       lockFundsDatetime
       executeWinnerDatetime
       apiUrlForResults
@@ -268,7 +238,6 @@ export const onCreateApiPoolAttributes = /* GraphQL */ `
       poolApiDefaultSchema
       poolApiCustomSchema
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -281,16 +250,20 @@ export const onCreateApiPoolAttributes = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      apiPoolAttributesPoolId
     }
   }
 `;
 export const onUpdateApiPoolAttributes = /* GraphQL */ `
   subscription OnUpdateApiPoolAttributes {
     onUpdateApiPoolAttributes {
-      id
+      apiKey
       lockFundsDatetime
       executeWinnerDatetime
       apiUrlForResults
@@ -301,7 +274,6 @@ export const onUpdateApiPoolAttributes = /* GraphQL */ `
       poolApiDefaultSchema
       poolApiCustomSchema
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -314,16 +286,20 @@ export const onUpdateApiPoolAttributes = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      apiPoolAttributesPoolId
     }
   }
 `;
 export const onDeleteApiPoolAttributes = /* GraphQL */ `
   subscription OnDeleteApiPoolAttributes {
     onDeleteApiPoolAttributes {
-      id
+      apiKey
       lockFundsDatetime
       executeWinnerDatetime
       apiUrlForResults
@@ -334,7 +310,6 @@ export const onDeleteApiPoolAttributes = /* GraphQL */ `
       poolApiDefaultSchema
       poolApiCustomSchema
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -347,21 +322,23 @@ export const onDeleteApiPoolAttributes = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      apiPoolAttributesPoolId
     }
   }
 `;
 export const onCreatePool = /* GraphQL */ `
   subscription OnCreatePool {
     onCreatePool {
-      id
       poolId
       poolTitle
       poolCategory
       poolCreator {
-        id
         wallet
         nickname
         chatlogo
@@ -379,7 +356,7 @@ export const onCreatePool = /* GraphQL */ `
       poolWinningPayout
       allowPlayerLeave
       apiPoolAttributes {
-        id
+        apiKey
         lockFundsDatetime
         executeWinnerDatetime
         apiUrlForResults
@@ -389,8 +366,10 @@ export const onCreatePool = /* GraphQL */ `
         apiwinnerResult
         poolApiDefaultSchema
         poolApiCustomSchema
+        poolId
         createdAt
         updatedAt
+        apiPoolAttributesPoolId
       }
       requestHash
       players {
@@ -398,18 +377,18 @@ export const onCreatePool = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      poolPoolCreatorId
+      poolApiPoolAttributesId
     }
   }
 `;
 export const onUpdatePool = /* GraphQL */ `
   subscription OnUpdatePool {
     onUpdatePool {
-      id
       poolId
       poolTitle
       poolCategory
       poolCreator {
-        id
         wallet
         nickname
         chatlogo
@@ -427,7 +406,7 @@ export const onUpdatePool = /* GraphQL */ `
       poolWinningPayout
       allowPlayerLeave
       apiPoolAttributes {
-        id
+        apiKey
         lockFundsDatetime
         executeWinnerDatetime
         apiUrlForResults
@@ -437,8 +416,10 @@ export const onUpdatePool = /* GraphQL */ `
         apiwinnerResult
         poolApiDefaultSchema
         poolApiCustomSchema
+        poolId
         createdAt
         updatedAt
+        apiPoolAttributesPoolId
       }
       requestHash
       players {
@@ -446,18 +427,18 @@ export const onUpdatePool = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      poolPoolCreatorId
+      poolApiPoolAttributesId
     }
   }
 `;
 export const onDeletePool = /* GraphQL */ `
   subscription OnDeletePool {
     onDeletePool {
-      id
       poolId
       poolTitle
       poolCategory
       poolCreator {
-        id
         wallet
         nickname
         chatlogo
@@ -475,7 +456,7 @@ export const onDeletePool = /* GraphQL */ `
       poolWinningPayout
       allowPlayerLeave
       apiPoolAttributes {
-        id
+        apiKey
         lockFundsDatetime
         executeWinnerDatetime
         apiUrlForResults
@@ -485,8 +466,10 @@ export const onDeletePool = /* GraphQL */ `
         apiwinnerResult
         poolApiDefaultSchema
         poolApiCustomSchema
+        poolId
         createdAt
         updatedAt
+        apiPoolAttributesPoolId
       }
       requestHash
       players {
@@ -494,6 +477,8 @@ export const onDeletePool = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      poolPoolCreatorId
+      poolApiPoolAttributesId
     }
   }
 `;
@@ -590,18 +575,11 @@ export const onDeletePoolSummaries = /* GraphQL */ `
 export const onCreateUserWallet = /* GraphQL */ `
   subscription OnCreateUserWallet {
     onCreateUserWallet {
-      id
       wallet
       nickname
       chatlogo
       brands {
-        id
-        wallet
-        name
-        rating
-        logo
-        createdAt
-        updatedAt
+        nextToken
       }
       totalWinnings
       totalPools
@@ -615,18 +593,11 @@ export const onCreateUserWallet = /* GraphQL */ `
 export const onUpdateUserWallet = /* GraphQL */ `
   subscription OnUpdateUserWallet {
     onUpdateUserWallet {
-      id
       wallet
       nickname
       chatlogo
       brands {
-        id
-        wallet
-        name
-        rating
-        logo
-        createdAt
-        updatedAt
+        nextToken
       }
       totalWinnings
       totalPools
@@ -640,18 +611,11 @@ export const onUpdateUserWallet = /* GraphQL */ `
 export const onDeleteUserWallet = /* GraphQL */ `
   subscription OnDeleteUserWallet {
     onDeleteUserWallet {
-      id
       wallet
       nickname
       chatlogo
       brands {
-        id
-        wallet
-        name
-        rating
-        logo
-        createdAt
-        updatedAt
+        nextToken
       }
       totalWinnings
       totalPools
@@ -670,8 +634,11 @@ export const onCreateBrand = /* GraphQL */ `
       name
       rating
       logo
+      completedPools
+      failedPools
       createdAt
       updatedAt
+      userWalletBrandsId
     }
   }
 `;
@@ -683,8 +650,11 @@ export const onUpdateBrand = /* GraphQL */ `
       name
       rating
       logo
+      completedPools
+      failedPools
       createdAt
       updatedAt
+      userWalletBrandsId
     }
   }
 `;
@@ -696,8 +666,893 @@ export const onDeleteBrand = /* GraphQL */ `
       name
       rating
       logo
+      completedPools
+      failedPools
       createdAt
       updatedAt
+      userWalletBrandsId
+    }
+  }
+`;
+export const onCreateEventLogMeta = /* GraphQL */ `
+  subscription OnCreateEventLogMeta {
+    onCreateEventLogMeta {
+      txID
+      blockID
+      blockNumber
+      blockTimestamp
+      txOrigin
+      clauseIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateEventLogMeta = /* GraphQL */ `
+  subscription OnUpdateEventLogMeta {
+    onUpdateEventLogMeta {
+      txID
+      blockID
+      blockNumber
+      blockTimestamp
+      txOrigin
+      clauseIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteEventLogMeta = /* GraphQL */ `
+  subscription OnDeleteEventLogMeta {
+    onDeleteEventLogMeta {
+      txID
+      blockID
+      blockNumber
+      blockTimestamp
+      txOrigin
+      clauseIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateCreatePoolEventDecoded = /* GraphQL */ `
+  subscription OnCreateCreatePoolEventDecoded {
+    onCreateCreatePoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      createPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        createPoolEventLogMetaId
+        createPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      createPoolEventDecodedCreatePoolEventLogId
+    }
+  }
+`;
+export const onUpdateCreatePoolEventDecoded = /* GraphQL */ `
+  subscription OnUpdateCreatePoolEventDecoded {
+    onUpdateCreatePoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      createPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        createPoolEventLogMetaId
+        createPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      createPoolEventDecodedCreatePoolEventLogId
+    }
+  }
+`;
+export const onDeleteCreatePoolEventDecoded = /* GraphQL */ `
+  subscription OnDeleteCreatePoolEventDecoded {
+    onDeleteCreatePoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      createPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        createPoolEventLogMetaId
+        createPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      createPoolEventDecodedCreatePoolEventLogId
+    }
+  }
+`;
+export const onCreateCreatePoolEventLog = /* GraphQL */ `
+  subscription OnCreateCreatePoolEventLog {
+    onCreateCreatePoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        createPoolEventDecodedCreatePoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      createPoolEventLogMetaId
+      createPoolEventLogDecodedId
+    }
+  }
+`;
+export const onUpdateCreatePoolEventLog = /* GraphQL */ `
+  subscription OnUpdateCreatePoolEventLog {
+    onUpdateCreatePoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        createPoolEventDecodedCreatePoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      createPoolEventLogMetaId
+      createPoolEventLogDecodedId
+    }
+  }
+`;
+export const onDeleteCreatePoolEventLog = /* GraphQL */ `
+  subscription OnDeleteCreatePoolEventLog {
+    onDeleteCreatePoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        createPoolEventDecodedCreatePoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      createPoolEventLogMetaId
+      createPoolEventLogDecodedId
+    }
+  }
+`;
+export const onCreatePlayerJoinedPoolEventDecoded = /* GraphQL */ `
+  subscription OnCreatePlayerJoinedPoolEventDecoded {
+    onCreatePlayerJoinedPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerJoinedPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerJoinedPoolEventLogMetaId
+        playerJoinedPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+    }
+  }
+`;
+export const onUpdatePlayerJoinedPoolEventDecoded = /* GraphQL */ `
+  subscription OnUpdatePlayerJoinedPoolEventDecoded {
+    onUpdatePlayerJoinedPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerJoinedPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerJoinedPoolEventLogMetaId
+        playerJoinedPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+    }
+  }
+`;
+export const onDeletePlayerJoinedPoolEventDecoded = /* GraphQL */ `
+  subscription OnDeletePlayerJoinedPoolEventDecoded {
+    onDeletePlayerJoinedPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerJoinedPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerJoinedPoolEventLogMetaId
+        playerJoinedPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+    }
+  }
+`;
+export const onCreatePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnCreatePlayerJoinedPoolEventLog {
+    onCreatePlayerJoinedPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerJoinedPoolEventLogMetaId
+      playerJoinedPoolEventLogDecodedId
+    }
+  }
+`;
+export const onUpdatePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnUpdatePlayerJoinedPoolEventLog {
+    onUpdatePlayerJoinedPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerJoinedPoolEventLogMetaId
+      playerJoinedPoolEventLogDecodedId
+    }
+  }
+`;
+export const onDeletePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnDeletePlayerJoinedPoolEventLog {
+    onDeletePlayerJoinedPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerJoinedPoolEventLogMetaId
+      playerJoinedPoolEventLogDecodedId
+    }
+  }
+`;
+export const onCreatePlayerLeftPoolEventDecoded = /* GraphQL */ `
+  subscription OnCreatePlayerLeftPoolEventDecoded {
+    onCreatePlayerLeftPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerLeftPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerLeftPoolEventLogMetaId
+        playerLeftPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+    }
+  }
+`;
+export const onUpdatePlayerLeftPoolEventDecoded = /* GraphQL */ `
+  subscription OnUpdatePlayerLeftPoolEventDecoded {
+    onUpdatePlayerLeftPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerLeftPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerLeftPoolEventLogMetaId
+        playerLeftPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+    }
+  }
+`;
+export const onDeletePlayerLeftPoolEventDecoded = /* GraphQL */ `
+  subscription OnDeletePlayerLeftPoolEventDecoded {
+    onDeletePlayerLeftPoolEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      playerLeftPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerLeftPoolEventLogMetaId
+        playerLeftPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+    }
+  }
+`;
+export const onCreatePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnCreatePlayerLeftPoolEventLog {
+    onCreatePlayerLeftPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerLeftPoolEventLogMetaId
+      playerLeftPoolEventLogDecodedId
+    }
+  }
+`;
+export const onUpdatePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnUpdatePlayerLeftPoolEventLog {
+    onUpdatePlayerLeftPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerLeftPoolEventLogMetaId
+      playerLeftPoolEventLogDecodedId
+    }
+  }
+`;
+export const onDeletePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnDeletePlayerLeftPoolEventLog {
+    onDeletePlayerLeftPoolEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerLeftPoolEventLogMetaId
+      playerLeftPoolEventLogDecodedId
+    }
+  }
+`;
+export const onCreatePoolAwaitingExecutionEventDecoded = /* GraphQL */ `
+  subscription OnCreatePoolAwaitingExecutionEventDecoded {
+    onCreatePoolAwaitingExecutionEventDecoded {
+      txID
+      gameId
+      status
+      dateTime
+      poolAwaitingExecutionEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventLogMetaId
+        poolAwaitingExecutionEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+    }
+  }
+`;
+export const onUpdatePoolAwaitingExecutionEventDecoded = /* GraphQL */ `
+  subscription OnUpdatePoolAwaitingExecutionEventDecoded {
+    onUpdatePoolAwaitingExecutionEventDecoded {
+      txID
+      gameId
+      status
+      dateTime
+      poolAwaitingExecutionEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventLogMetaId
+        poolAwaitingExecutionEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+    }
+  }
+`;
+export const onDeletePoolAwaitingExecutionEventDecoded = /* GraphQL */ `
+  subscription OnDeletePoolAwaitingExecutionEventDecoded {
+    onDeletePoolAwaitingExecutionEventDecoded {
+      txID
+      gameId
+      status
+      dateTime
+      poolAwaitingExecutionEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventLogMetaId
+        poolAwaitingExecutionEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+    }
+  }
+`;
+export const onCreatePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnCreatePoolAwaitingExecutionEventLog {
+    onCreatePoolAwaitingExecutionEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        status
+        dateTime
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventLogMetaId
+      poolAwaitingExecutionEventLogDecodedId
+    }
+  }
+`;
+export const onUpdatePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnUpdatePoolAwaitingExecutionEventLog {
+    onUpdatePoolAwaitingExecutionEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        status
+        dateTime
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventLogMetaId
+      poolAwaitingExecutionEventLogDecodedId
+    }
+  }
+`;
+export const onDeletePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnDeletePoolAwaitingExecutionEventLog {
+    onDeletePoolAwaitingExecutionEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        status
+        dateTime
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventLogMetaId
+      poolAwaitingExecutionEventLogDecodedId
+    }
+  }
+`;
+export const onCreatePoolCompletedEventDecoded = /* GraphQL */ `
+  subscription OnCreatePoolCompletedEventDecoded {
+    onCreatePoolCompletedEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      winningPayout
+      transactionId
+      auditRecordDrawId
+      poolCompletedEventLog {
+        txID
+        raw
+        createdAt
+        updatedAt
+        poolCompletedEventLogMetaId
+        poolCompletedEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventDecodedPoolCompletedEventLogId
+    }
+  }
+`;
+export const onUpdatePoolCompletedEventDecoded = /* GraphQL */ `
+  subscription OnUpdatePoolCompletedEventDecoded {
+    onUpdatePoolCompletedEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      winningPayout
+      transactionId
+      auditRecordDrawId
+      poolCompletedEventLog {
+        txID
+        raw
+        createdAt
+        updatedAt
+        poolCompletedEventLogMetaId
+        poolCompletedEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventDecodedPoolCompletedEventLogId
+    }
+  }
+`;
+export const onDeletePoolCompletedEventDecoded = /* GraphQL */ `
+  subscription OnDeletePoolCompletedEventDecoded {
+    onDeletePoolCompletedEventDecoded {
+      txID
+      gameId
+      player
+      dateTime
+      winningPayout
+      transactionId
+      auditRecordDrawId
+      poolCompletedEventLog {
+        txID
+        raw
+        createdAt
+        updatedAt
+        poolCompletedEventLogMetaId
+        poolCompletedEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventDecodedPoolCompletedEventLogId
+    }
+  }
+`;
+export const onCreatePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnCreatePoolCompletedEventLog {
+    onCreatePoolCompletedEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        winningPayout
+        transactionId
+        auditRecordDrawId
+        createdAt
+        updatedAt
+        poolCompletedEventDecodedPoolCompletedEventLogId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventLogMetaId
+      poolCompletedEventLogDecodedId
+    }
+  }
+`;
+export const onUpdatePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnUpdatePoolCompletedEventLog {
+    onUpdatePoolCompletedEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        winningPayout
+        transactionId
+        auditRecordDrawId
+        createdAt
+        updatedAt
+        poolCompletedEventDecodedPoolCompletedEventLogId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventLogMetaId
+      poolCompletedEventLogDecodedId
+    }
+  }
+`;
+export const onDeletePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnDeletePoolCompletedEventLog {
+    onDeletePoolCompletedEventLog {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        winningPayout
+        transactionId
+        auditRecordDrawId
+        createdAt
+        updatedAt
+        poolCompletedEventDecodedPoolCompletedEventLogId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventLogMetaId
+      poolCompletedEventLogDecodedId
     }
   }
 `;

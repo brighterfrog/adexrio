@@ -15,7 +15,7 @@ process.env.DEBUG_ON = "false";
 
 import { EVENTS } from "../../library/dist/backend/blockchain/constants";
 import { BlockchainEventProcessorService } from '../src/services/blockchain-event-retriever-service';
-import { ContractEvent } from '../src/models/types'
+import { ContractRawEvent } from '../src/models/types'
 
 let blockchainEventProcessorService: BlockchainEventProcessorService;
 
@@ -38,21 +38,24 @@ async function getAllEventsByNameStartingFromBlock(eventName: string) {
     expect(events.length).is.not.lessThan(1);
 }
 
-async function getAllEvents(eventsToRetrieve: ContractEvent[]) {
 
-    const events = await blockchainEventProcessorService.getAllEvents(eventsToRetrieve);
+// function sortByBlockAndEventType(eventsToSort: ContractEvent[]) {
 
-    console.log('Events total length', events.length);
-    
-    events.forEach( (item)=> {
-        console.log('Event Result', { 
-            name: item.name,
-            count: item.result.length
-        });
-    })
-        
-    expect(events.length).equals(5);    
-}
+//     eventsToSort.sort((first, second) => {
+//         if (first.result. > first.age) {
+//             return 1;
+//         }
+//         if (n1.age < n2.age) {
+//             return -1;
+//         }
+
+
+//         return 0;
+//     })
+
+
+
+// }
 
 
 
@@ -108,11 +111,54 @@ async function getAllEvents(eventsToRetrieve: ContractEvent[]) {
 //         });
 // });
 
-describe('Can retrieve all pool events',
+// describe('Can retrieve all pool events',
+//     () => {
+//         it('should return true', async () => {
+ 
+//             const events = await blockchainEventProcessorService.getAllEvents([
+//                 {
+//                     name: EVENTS.GameCreatedEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.PlayerJoinedGameEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.PlayerLeftGameEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.GameCompletedEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.GameAwaitingLotteryEvent,
+//                     result: null
+//                 }
+//             ]);
+
+
+//             console.log('getAllEvents array length', events.length);
+    
+//             events.forEach( (item)=> {
+//                   console.log('Array with results', { 
+//                       name: item.name,
+//                       count: item.result.length
+//                   });                  
+//             });
+                            
+
+//             expect(events.length).equals(5); 
+
+//         });
+//     });
+
+describe('Can retrieve a specific type of events by name filter',
     () => {
         it('should return true', async () => {
 
-            await getAllEvents([
+            const eventList = [
                 {
                     name: EVENTS.GameCreatedEvent,
                     result: null
@@ -133,7 +179,23 @@ describe('Can retrieve all pool events',
                     name: EVENTS.GameAwaitingLotteryEvent,
                     result: null
                 }
-            ]);
+            ];
+
+            const randomIndex = Math.floor(Math.random() * eventList.length);
+            const expectedEvent = eventList[randomIndex];
+ 
+            const events = await blockchainEventProcessorService.getAllEvents(eventList);
+            
+            const filteredEvents = blockchainEventProcessorService.filterRawEventsByType(events, expectedEvent.name);
+
+            console.log('filteredEvents result array length', filteredEvents.result.length);    
+            console.log('filteredEvents with name', filteredEvents.name);
+
+            filteredEvents.result.forEach( (item)=> {
+                              
+            });
+
+             expect(filteredEvents.name).eq(expectedEvent.name);            
 
         });
     });

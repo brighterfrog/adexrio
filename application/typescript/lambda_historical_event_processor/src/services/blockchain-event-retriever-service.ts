@@ -7,7 +7,7 @@ import {
   BlockChainService,
 } from '../../../library/dist/backend/blockchain/blockchain-service';
 import { EVENTS } from '../../../library/src/backend/blockchain/constants';
-import { ContractEvent } from '../models/types';
+import { ContractRawEvent } from '../models/types';
 
 
 /**
@@ -39,12 +39,19 @@ export class BlockchainEventProcessorService {
     await this.blockchainService.initializeWallet();
   }
 
+  filterRawEventsByType(eventsToFilter: ContractRawEvent[], filterName: string): ContractRawEvent {
+
+    const filteredEvents = eventsToFilter.filter( (item) => item.name === filterName );
+
+    return filteredEvents[0];
+  }
+
   /**
    * 
-   * @param {ContractEvent[]} eventsToRetrieve 
-   * @returns {Promise<ContractEvent[]>}
+   * @param {ContractRawEvent[]} eventsToRetrieve 
+   * @returns {Promise<ContractRawEvent[]>}
    */
-  async getAllEvents(eventsToRetrieve: ContractEvent[] ): Promise<ContractEvent[]> {  
+  async getAllEvents(eventsToRetrieve: ContractRawEvent[] ): Promise<ContractRawEvent[]> {  
           
     const promiseArray = eventsToRetrieve.map( (eventItem) => {      
       return this.getAllEventsByNameStartingFromBlock(eventItem.name, 0);     

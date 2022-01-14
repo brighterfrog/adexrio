@@ -1,4 +1,4 @@
-type Feedback @model {
+type Feedback @model @auth(rules: [{allow: public}]) {
   comment: String!
   commentType: feedbackType!
   status: feedbackStatus!
@@ -18,22 +18,22 @@ enum feedbackType {
   interest
 }
 
-type Message @model {
+type Message @model @auth(rules: [{allow: public}]) {
   id: ID!
   message: String!
   wallet: String!
   createdAt: String!
 }
 
-type GamesSummary @model @key(fields: ["id"]) {
-  id: Int!
-  totalCompletedGames: Int!
-  totalUniquePlayers: Int!
-  totalPayouts: Float!
-  highestPayout: Float!
-}
+# type GamesSummary @model @auth(rules: [{allow: public}]) {
+#   id: Int!
+#   totalCompletedGames: Int!
+#   totalUniquePlayers: Int!
+#   totalPayouts: Float!
+#   highestPayout: Float!
+# }
 
-type ErrorLog @model {
+type ErrorLog @model @auth(rules: [{allow: public}]) {
   id: ID!
   createdAt: String!
   stackTrace: String!
@@ -42,14 +42,16 @@ type ErrorLog @model {
 enum poolType {
   lottery
   manual
-  api  
+  api
   custom_builder
 }
+
 enum poolStatus {
   awaiting
   completed
   terminated
 }
+
 enum PlayerStatus {
   pending_pool_completion
   withdrew
@@ -57,50 +59,53 @@ enum PlayerStatus {
   lose
 }
 
-type Player @model 
- { 
-  userWallet: UserWallet! @connection
-  status: PlayerStatus!
-  pool: Pool! @connection(name: "PoolPlayers")    
+
+# POOL START #
+enum PoolCategory {
+  other
+  sports
+  esports
+  gaming
+  politics
+  financial
 }
 
-type ApiPoolAttributes @model
- {    
+type PoolPlayer @model {
+  userWalletId: String! @primaryKey(sortKeyFields: ["poolId"])
+  userWallet: UserWallet! @hasOne
+  status: PlayerStatus!
+  pool: Pool! @belongsTo
+  poolId: Int!
+}
+
+type ApiPoolAttributes @model {
+  apiKey: String!
   lockFundsDatetime: AWSDateTime!
   executeWinnerDatetime: AWSDateTime!
   apiUrlForResults: AWSURL!
   verifiedUrlSchema: Boolean!
   poolCreatorPercentFeeToWithold: Int!
   apiWinnerOptionEntries: AWSJSON!
-  apiwinnerResult: String! 
+  apiwinnerResult: String!
   poolApiDefaultSchema: AWSJSON!
   poolApiCustomSchema: AWSJSON
-  pool: Pool @connection(name: "ApiPoolAttributes")
+  pool: Pool! @belongsTo
+  poolId: Int! @primaryKey
 }
-
-enum PoolCategory {
-  other
-  sports
-  gaming
-  politics
-  grudge_match
-}
-
-type Pool @model 
-{  
-  poolId: Int!  
-  poolTitle: String!   
-  poolCategory: PoolCategory! 
-  poolCreator: UserWallet! @connection 
-  poolType: poolType! 
+type Pool @model {
+  poolId: Int! @primaryKey
+  poolTitle: String!
+  poolCategory: PoolCategory!
+  poolCreator: UserWallet! @hasOne
+  poolType: poolType!
   poolStatus: poolStatus!
   poolEntryFee: Int!
   poolTotal: Int!
-  poolWinningPayout: Int!  
+  poolWinningPayout: Int!
   allowPlayerLeave: Boolean!
-  apiPoolAttributes: ApiPoolAttributes @connection(name: "ApiPoolAttributes")
-  requestHash: String!  
-  players: [Player] @connection(name: "PoolPlayers")
+  apiPoolAttributes: ApiPoolAttributes @hasOne
+  requestHash: String!
+  players: [PoolPlayer] @hasMany
 }
 
 type PoolSuccessfullBlockEventsProcessed @model {
@@ -109,10 +114,10 @@ type PoolSuccessfullBlockEventsProcessed @model {
   lastBlockProcessedForCompletedEvents: Int!
   lastBlockProcessedForPlayerJoinedPoolEvents: Int!
   lastBlockProcessedForPlayerLeftPoolEvents: Int!
-  lastBlockProcessedForPoolAwaitingExecution: Int!  
+  lastBlockProcessedForPoolAwaitingExecution: Int!
 
-  lambdaProcessorDecisionCheckForNextBlocknumber: Int! 
-  historicalLastBlockLoadedForEvents: Int! 
+  lambdaProcessorDecisionCheckForNextBlocknumber: Int!
+  historicalLastBlockLoadedForEvents: Int!
 }
 
 type PoolSummaries @model {
@@ -124,37 +129,132 @@ type PoolSummaries @model {
   highestPoolPayout: Int!
 }
 
-type UserWallet @model
-{
-  id: ID!
-  wallet: String!
+type UserWallet @model {
+  wallet: String! @primaryKey
   nickname: String!
   chatlogo: AWSURL
-  brands: Brand @connection
+  brands: [Brand] @hasMany
   totalWinnings: Int!
   totalPools: Int!
   totalCompletedPools: Int!
-  totalPoolsWon: Int!  
+  totalPoolsWon: Int!
 }
-type Brand @model
- {
+type Brand @model {
   id: ID!
   wallet: String!
   name: String!
   rating: Int!
-  logo: AWSURL  
+  logo: AWSURL
+  completedPools: Int!
+  failedPools: Int!
 }
 
-# S3 event ingestion
+type EventLogMeta @model {
+  txID: String!
+  blockID: String!
+  blockNumber: Int!
+  blockTimestamp: Int!
+  txOrigin: String!
+  clauseIndex: Int!
+}
+
+# CreatePoolEvent
+type CreatePoolEventDecoded @model {
+  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
+  gameId: Int!
+  player: String!
+  dateTime: String!
+  createPoolEventLog: CreatePoolEventLog @belongsTo
+}
+
+type CreatePoolEventLog @model {
+  txID: String!
+  raw: AWSJSON!
+  meta: EventLogMeta! @hasOne
+  decoded: CreatePoolEventDecoded @hasOne
+}
+# CreatePoolEvent
+
+# PlayerJoinedPoolEventDecoded
+type PlayerJoinedPoolEventDecoded @model {
+  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
+  gameId: Int!
+  player: String!
+  dateTime: String!
+  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog @belongsTo
+}
+
+type PlayerJoinedPoolEventLog @model {
+  txID: String!
+  raw: AWSJSON!
+  meta: EventLogMeta! @hasOne
+  decoded: PlayerJoinedPoolEventDecoded @hasOne
+}
+# PlayerJoinedPoolEventDecoded
+
+# PlayerJoinedPoolEventDecoded
+type PlayerLeftPoolEventDecoded @model {
+  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
+  gameId: Int!
+  player: String!
+  dateTime: String!
+  playerLeftPoolEventLog: PlayerLeftPoolEventLog @belongsTo
+}
+
+type PlayerLeftPoolEventLog @model {
+  txID: String!
+  raw: AWSJSON!
+  meta: EventLogMeta! @hasOne
+  decoded: PlayerLeftPoolEventDecoded @hasOne
+}
+# PlayerJoinedPoolEventDecoded
+
+# PoolAwaitingExecutionEventDecoded
+type PoolAwaitingExecutionEventDecoded @model {
+  txID: String! @primaryKey(sortKeyFields: ["gameId", "status"])
+  gameId: Int!
+  status: String!
+  dateTime: String!
+  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog @belongsTo
+}
+
+type PoolAwaitingExecutionEventLog @model {
+  txID: String!
+  raw: AWSJSON!
+  meta: EventLogMeta! @hasOne
+  decoded: PoolAwaitingExecutionEventDecoded @hasOne
+}
+# PoolAwaitingExecutionEventDecoded
+
+# PoolCompletedEventDecoded
+type PoolCompletedEventDecoded @model {
+  txID: String! @primaryKey(sortKeyFields: ["gameId", "player", "auditRecordDrawId"])
+  gameId: Int!
+  player: String!
+  dateTime: String!
+  winningPayout: String!
+  transactionId: String!
+  auditRecordDrawId: String!
+  poolCompletedEventLog: PoolCompletedEventLog @belongsTo
+}
+
+type PoolCompletedEventLog @model {
+  txID: String! @primaryKey
+  raw: AWSJSON!
+  meta: EventLogMeta! @hasOne
+  decoded: PoolCompletedEventDecoded @hasOne
+}
+# PoolCompletedEventDecoded
+
 input CreateIngestionBucketEventInput {
   event: AWSJSON!
 }
-type IngestionBucketResponse {	
+
+type IngestionBucketResponse {
   s3: AWSJSON!
   sqs: AWSJSON!
 }
+
 type Mutation {
-  createIngestionEvent(input: CreateIngestionBucketEventInput!): IngestionBucketResponse 
-    @function(name: "addBlocktickerEventToS3-${env}")
-    @function(name: "addBlocktickerEventToSQS-${env}")
+  createIngestionEvent(input: CreateIngestionBucketEventInput!): IngestionBucketResponse @function(name: "addBlocktickerEventToS3-${env}") @function(name: "addBlocktickerEventToSQS-${env}")
 }

@@ -1,0 +1,76 @@
+type Feedback @model {
+  comment: String!
+  commentType: feedbackType!
+  status: feedbackStatus!
+  wallet: String!
+}
+
+enum feedbackStatus {
+  pending
+  reviewed
+  projectItem
+}
+
+enum feedbackType {
+  general
+  enhancement
+  bug
+  interest
+}
+
+type Message @model {
+  id: ID!
+  message: String!
+  wallet: String!
+  createdAt: String!
+}
+
+type GamesSummary @model {
+  id: Int!
+  totalCompletedGames: Int!
+  totalUniquePlayers: Int!
+  totalPayouts: Float!
+  highestPayout: Float!
+}
+
+type ErrorLog @model {
+  id: ID!
+  createdAt: String!
+  stackTrace: String!
+}
+
+enum poolType {
+  lottery
+  manual
+  api
+  custom_builder
+}
+enum poolStatus {
+  awaiting
+  completed
+  terminated
+}
+enum PlayerStatus {
+  pending_pool_completion
+  withdrew
+  win
+  lose
+}
+
+
+# S3 event ingestion Resolvers
+input CreateIngestionBucketEventInput {
+  event: AWSJSON!
+}
+type IngestionBucketResponse {
+  s3: AWSJSON!
+  sqs: AWSJSON!
+}
+type Mutation {
+  createIngestionEvent(
+    input: CreateIngestionBucketEventInput!
+  ): IngestionBucketResponse
+    @function(name: "addBlocktickerEventToS3-${env}")
+    @function(name: "addBlocktickerEventToSQS-${env}")
+}
+# S3 event ingestion

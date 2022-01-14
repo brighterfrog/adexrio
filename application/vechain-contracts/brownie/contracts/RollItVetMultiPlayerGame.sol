@@ -80,7 +80,6 @@ contract RollItVetMultiPlayerGame {
         uint256 indexed dateTime
     );
 
-    //can this be status changed
     event GameCompletedEvent(
         uint256 indexed gameId,
         address indexed player,

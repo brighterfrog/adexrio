@@ -21,13 +21,13 @@
       "function": {
         "addBlocktickerEventToS3": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/addBlocktickerEventToS3-713755557569336a376f-build.zip",
+          "s3Key": "amplify-builds/addBlocktickerEventToS3-74764352562b2b414161-build.zip",
           "ingestionBucket": "ingestion-ingress-bucket",
           "bucketPrefix": "block_ticker"
         },
         "addBlocktickerEventToSQS": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/addBlocktickerEventToSQS-75334f78673172687274-build.zip",
+          "s3Key": "amplify-builds/addBlocktickerEventToSQS-356e5431714b69627066-build.zip",
           "blockLookupTableIdKey": "0",
           "blockEventQueueName": "block_events",
           "historicalEventQueueName": "historical_events"

@@ -1,0 +1,14 @@
+{
+  "version": 1,
+  "serviceConfiguration": {
+    "serviceName": "AppSync",
+    "defaultAuthType": {
+      "mode": "API_KEY",
+      "expirationTime": 365,
+      "keyDescription": "adexr-angular-web-app"
+    },
+    "conflictResolution": {},
+    "apiName": "adexr",
+    "gqlSchemaPath": "D:\\source\\github\\adexrio\\application\\typescript\\library\\amplify\\backend\\api\\adexr\\schema.graphql"
+  }
+}

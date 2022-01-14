@@ -1,12 +1,17 @@
 'use strict';
 
+import { Orchestrator } from "./services/orchestrator";
+
 // import { getHighestBlockNumberFromRecordBatch } from  "./services/sqs-historical-service";
 
 // import { test } from "./services/blockchain-event-processor-service";
 
 
-// export const handler = async (event: any, context: any): Promise<any> => {
+ export const handler = async (event: any, context: any): Promise<any> => {
 //   console.log('lambda historical event process ', event);
+
+    const orchestrator = new Orchestrator();
+    orchestrator.processEvent(event, context);
 
 // //get highest block
 
@@ -28,4 +33,4 @@
 //   //   completed: true
 //   // };
 
-// };
+ };

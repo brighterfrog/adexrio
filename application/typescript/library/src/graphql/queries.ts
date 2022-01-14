@@ -5,11 +5,11 @@
 export const getFeedback = /* GraphQL */ `
   query GetFeedback($id: ID!) {
     getFeedback(id: $id) {
-      id
       comment
       commentType
       status
       wallet
+      id
       createdAt
       updatedAt
     }
@@ -23,11 +23,11 @@ export const listFeedbacks = /* GraphQL */ `
   ) {
     listFeedbacks(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
-        id
         comment
         commentType
         status
         wallet
+        id
         createdAt
         updatedAt
       }
@@ -64,47 +64,6 @@ export const listMessages = /* GraphQL */ `
     }
   }
 `;
-export const getGamesSummary = /* GraphQL */ `
-  query GetGamesSummary($id: Int!) {
-    getGamesSummary(id: $id) {
-      id
-      totalCompletedGames
-      totalUniquePlayers
-      totalPayouts
-      highestPayout
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const listGamesSummarys = /* GraphQL */ `
-  query ListGamesSummarys(
-    $id: Int
-    $filter: ModelGamesSummaryFilterInput
-    $limit: Int
-    $nextToken: String
-    $sortDirection: ModelSortDirection
-  ) {
-    listGamesSummarys(
-      id: $id
-      filter: $filter
-      limit: $limit
-      nextToken: $nextToken
-      sortDirection: $sortDirection
-    ) {
-      items {
-        id
-        totalCompletedGames
-        totalUniquePlayers
-        totalPayouts
-        highestPayout
-        createdAt
-        updatedAt
-      }
-      nextToken
-    }
-  }
-`;
 export const getErrorLog = /* GraphQL */ `
   query GetErrorLog($id: ID!) {
     getErrorLog(id: $id) {
@@ -132,12 +91,11 @@ export const listErrorLogs = /* GraphQL */ `
     }
   }
 `;
-export const getPlayer = /* GraphQL */ `
-  query GetPlayer($id: ID!) {
-    getPlayer(id: $id) {
-      id
+export const getPoolPlayer = /* GraphQL */ `
+  query GetPoolPlayer($userWalletId: String!, $poolId: Int!) {
+    getPoolPlayer(userWalletId: $userWalletId, poolId: $poolId) {
+      userWalletId
       userWallet {
-        id
         wallet
         nickname
         chatlogo
@@ -150,7 +108,6 @@ export const getPlayer = /* GraphQL */ `
       }
       status
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -163,33 +120,51 @@ export const getPlayer = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      poolPlayersId
+      poolPlayerUserWalletId
     }
   }
 `;
-export const listPlayers = /* GraphQL */ `
-  query ListPlayers(
-    $filter: ModelPlayerFilterInput
+export const listPoolPlayers = /* GraphQL */ `
+  query ListPoolPlayers(
+    $userWalletId: String
+    $poolId: ModelIntKeyConditionInput
+    $filter: ModelPoolPlayerFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPoolPlayers(
+      userWalletId: $userWalletId
+      poolId: $poolId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
+        userWalletId
         status
+        poolId
         createdAt
         updatedAt
+        poolPlayersId
+        poolPlayerUserWalletId
       }
       nextToken
     }
   }
 `;
 export const getApiPoolAttributes = /* GraphQL */ `
-  query GetApiPoolAttributes($id: ID!) {
-    getApiPoolAttributes(id: $id) {
-      id
+  query GetApiPoolAttributes($poolId: Int!) {
+    getApiPoolAttributes(poolId: $poolId) {
+      apiKey
       lockFundsDatetime
       executeWinnerDatetime
       apiUrlForResults
@@ -200,7 +175,6 @@ export const getApiPoolAttributes = /* GraphQL */ `
       poolApiDefaultSchema
       poolApiCustomSchema
       pool {
-        id
         poolId
         poolTitle
         poolCategory
@@ -213,25 +187,33 @@ export const getApiPoolAttributes = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
+      apiPoolAttributesPoolId
     }
   }
 `;
-export const listApiPoolAttributess = /* GraphQL */ `
-  query ListApiPoolAttributess(
+export const listApiPoolAttributes = /* GraphQL */ `
+  query ListApiPoolAttributes(
+    $poolId: Int
     $filter: ModelApiPoolAttributesFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listApiPoolAttributess(
+    listApiPoolAttributes(
+      poolId: $poolId
       filter: $filter
       limit: $limit
       nextToken: $nextToken
+      sortDirection: $sortDirection
     ) {
       items {
-        id
+        apiKey
         lockFundsDatetime
         executeWinnerDatetime
         apiUrlForResults
@@ -241,22 +223,22 @@ export const listApiPoolAttributess = /* GraphQL */ `
         apiwinnerResult
         poolApiDefaultSchema
         poolApiCustomSchema
+        poolId
         createdAt
         updatedAt
+        apiPoolAttributesPoolId
       }
       nextToken
     }
   }
 `;
 export const getPool = /* GraphQL */ `
-  query GetPool($id: ID!) {
-    getPool(id: $id) {
-      id
+  query GetPool($poolId: Int!) {
+    getPool(poolId: $poolId) {
       poolId
       poolTitle
       poolCategory
       poolCreator {
-        id
         wallet
         nickname
         chatlogo
@@ -274,7 +256,7 @@ export const getPool = /* GraphQL */ `
       poolWinningPayout
       allowPlayerLeave
       apiPoolAttributes {
-        id
+        apiKey
         lockFundsDatetime
         executeWinnerDatetime
         apiUrlForResults
@@ -284,8 +266,10 @@ export const getPool = /* GraphQL */ `
         apiwinnerResult
         poolApiDefaultSchema
         poolApiCustomSchema
+        poolId
         createdAt
         updatedAt
+        apiPoolAttributesPoolId
       }
       requestHash
       players {
@@ -293,18 +277,27 @@ export const getPool = /* GraphQL */ `
       }
       createdAt
       updatedAt
+      poolPoolCreatorId
+      poolApiPoolAttributesId
     }
   }
 `;
 export const listPools = /* GraphQL */ `
   query ListPools(
+    $poolId: Int
     $filter: ModelPoolFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listPools(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPools(
+      poolId: $poolId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         poolId
         poolTitle
         poolCategory
@@ -317,6 +310,8 @@ export const listPools = /* GraphQL */ `
         requestHash
         createdAt
         updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
       }
       nextToken
     }
@@ -379,13 +374,13 @@ export const getPoolSummaries = /* GraphQL */ `
     }
   }
 `;
-export const listPoolSummariess = /* GraphQL */ `
-  query ListPoolSummariess(
+export const listPoolSummaries = /* GraphQL */ `
+  query ListPoolSummaries(
     $filter: ModelPoolSummariesFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPoolSummariess(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listPoolSummaries(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
         totalCompletedGames
@@ -401,20 +396,13 @@ export const listPoolSummariess = /* GraphQL */ `
   }
 `;
 export const getUserWallet = /* GraphQL */ `
-  query GetUserWallet($id: ID!) {
-    getUserWallet(id: $id) {
-      id
+  query GetUserWallet($wallet: String!) {
+    getUserWallet(wallet: $wallet) {
       wallet
       nickname
       chatlogo
       brands {
-        id
-        wallet
-        name
-        rating
-        logo
-        createdAt
-        updatedAt
+        nextToken
       }
       totalWinnings
       totalPools
@@ -427,13 +415,20 @@ export const getUserWallet = /* GraphQL */ `
 `;
 export const listUserWallets = /* GraphQL */ `
   query ListUserWallets(
+    $wallet: String
     $filter: ModelUserWalletFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
-    listUserWallets(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listUserWallets(
+      wallet: $wallet
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
       items {
-        id
         wallet
         nickname
         chatlogo
@@ -456,8 +451,11 @@ export const getBrand = /* GraphQL */ `
       name
       rating
       logo
+      completedPools
+      failedPools
       createdAt
       updatedAt
+      userWalletBrandsId
     }
   }
 `;
@@ -474,8 +472,641 @@ export const listBrands = /* GraphQL */ `
         name
         rating
         logo
+        completedPools
+        failedPools
         createdAt
         updatedAt
+        userWalletBrandsId
+      }
+      nextToken
+    }
+  }
+`;
+export const getEventLogMeta = /* GraphQL */ `
+  query GetEventLogMeta($id: ID!) {
+    getEventLogMeta(id: $id) {
+      txID
+      blockID
+      blockNumber
+      blockTimestamp
+      txOrigin
+      clauseIndex
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listEventLogMetas = /* GraphQL */ `
+  query ListEventLogMetas(
+    $filter: ModelEventLogMetaFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listEventLogMetas(filter: $filter, limit: $limit, nextToken: $nextToken) {
+      items {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getCreatePoolEventDecoded = /* GraphQL */ `
+  query GetCreatePoolEventDecoded(
+    $txID: String!
+    $gameId: Int!
+    $player: String!
+  ) {
+    getCreatePoolEventDecoded(txID: $txID, gameId: $gameId, player: $player) {
+      txID
+      gameId
+      player
+      dateTime
+      createPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        createPoolEventLogMetaId
+        createPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      createPoolEventDecodedCreatePoolEventLogId
+    }
+  }
+`;
+export const listCreatePoolEventDecodeds = /* GraphQL */ `
+  query ListCreatePoolEventDecodeds(
+    $txID: String
+    $gameIdPlayer: ModelCreatePoolEventDecodedPrimaryCompositeKeyConditionInput
+    $filter: ModelCreatePoolEventDecodedFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listCreatePoolEventDecodeds(
+      txID: $txID
+      gameIdPlayer: $gameIdPlayer
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        createPoolEventDecodedCreatePoolEventLogId
+      }
+      nextToken
+    }
+  }
+`;
+export const getCreatePoolEventLog = /* GraphQL */ `
+  query GetCreatePoolEventLog($id: ID!) {
+    getCreatePoolEventLog(id: $id) {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        createPoolEventDecodedCreatePoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      createPoolEventLogMetaId
+      createPoolEventLogDecodedId
+    }
+  }
+`;
+export const listCreatePoolEventLogs = /* GraphQL */ `
+  query ListCreatePoolEventLogs(
+    $filter: ModelCreatePoolEventLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listCreatePoolEventLogs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        createPoolEventLogMetaId
+        createPoolEventLogDecodedId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPlayerJoinedPoolEventDecoded = /* GraphQL */ `
+  query GetPlayerJoinedPoolEventDecoded(
+    $txID: String!
+    $gameId: Int!
+    $player: String!
+  ) {
+    getPlayerJoinedPoolEventDecoded(
+      txID: $txID
+      gameId: $gameId
+      player: $player
+    ) {
+      txID
+      gameId
+      player
+      dateTime
+      playerJoinedPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerJoinedPoolEventLogMetaId
+        playerJoinedPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+    }
+  }
+`;
+export const listPlayerJoinedPoolEventDecodeds = /* GraphQL */ `
+  query ListPlayerJoinedPoolEventDecodeds(
+    $txID: String
+    $gameIdPlayer: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyConditionInput
+    $filter: ModelPlayerJoinedPoolEventDecodedFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPlayerJoinedPoolEventDecodeds(
+      txID: $txID
+      gameIdPlayer: $gameIdPlayer
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPlayerJoinedPoolEventLog = /* GraphQL */ `
+  query GetPlayerJoinedPoolEventLog($id: ID!) {
+    getPlayerJoinedPoolEventLog(id: $id) {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerJoinedPoolEventLogMetaId
+      playerJoinedPoolEventLogDecodedId
+    }
+  }
+`;
+export const listPlayerJoinedPoolEventLogs = /* GraphQL */ `
+  query ListPlayerJoinedPoolEventLogs(
+    $filter: ModelPlayerJoinedPoolEventLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlayerJoinedPoolEventLogs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerJoinedPoolEventLogMetaId
+        playerJoinedPoolEventLogDecodedId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPlayerLeftPoolEventDecoded = /* GraphQL */ `
+  query GetPlayerLeftPoolEventDecoded(
+    $txID: String!
+    $gameId: Int!
+    $player: String!
+  ) {
+    getPlayerLeftPoolEventDecoded(
+      txID: $txID
+      gameId: $gameId
+      player: $player
+    ) {
+      txID
+      gameId
+      player
+      dateTime
+      playerLeftPoolEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerLeftPoolEventLogMetaId
+        playerLeftPoolEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+    }
+  }
+`;
+export const listPlayerLeftPoolEventDecodeds = /* GraphQL */ `
+  query ListPlayerLeftPoolEventDecodeds(
+    $txID: String
+    $gameIdPlayer: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyConditionInput
+    $filter: ModelPlayerLeftPoolEventDecodedFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPlayerLeftPoolEventDecodeds(
+      txID: $txID
+      gameIdPlayer: $gameIdPlayer
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPlayerLeftPoolEventLog = /* GraphQL */ `
+  query GetPlayerLeftPoolEventLog($id: ID!) {
+    getPlayerLeftPoolEventLog(id: $id) {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        createdAt
+        updatedAt
+        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      playerLeftPoolEventLogMetaId
+      playerLeftPoolEventLogDecodedId
+    }
+  }
+`;
+export const listPlayerLeftPoolEventLogs = /* GraphQL */ `
+  query ListPlayerLeftPoolEventLogs(
+    $filter: ModelPlayerLeftPoolEventLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPlayerLeftPoolEventLogs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        playerLeftPoolEventLogMetaId
+        playerLeftPoolEventLogDecodedId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolAwaitingExecutionEventDecoded = /* GraphQL */ `
+  query GetPoolAwaitingExecutionEventDecoded(
+    $txID: String!
+    $gameId: Int!
+    $status: String!
+  ) {
+    getPoolAwaitingExecutionEventDecoded(
+      txID: $txID
+      gameId: $gameId
+      status: $status
+    ) {
+      txID
+      gameId
+      status
+      dateTime
+      poolAwaitingExecutionEventLog {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventLogMetaId
+        poolAwaitingExecutionEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+    }
+  }
+`;
+export const listPoolAwaitingExecutionEventDecodeds = /* GraphQL */ `
+  query ListPoolAwaitingExecutionEventDecodeds(
+    $txID: String
+    $gameIdStatus: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyConditionInput
+    $filter: ModelPoolAwaitingExecutionEventDecodedFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPoolAwaitingExecutionEventDecodeds(
+      txID: $txID
+      gameIdStatus: $gameIdStatus
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        gameId
+        status
+        dateTime
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolAwaitingExecutionEventLog = /* GraphQL */ `
+  query GetPoolAwaitingExecutionEventLog($id: ID!) {
+    getPoolAwaitingExecutionEventLog(id: $id) {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        status
+        dateTime
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
+      }
+      id
+      createdAt
+      updatedAt
+      poolAwaitingExecutionEventLogMetaId
+      poolAwaitingExecutionEventLogDecodedId
+    }
+  }
+`;
+export const listPoolAwaitingExecutionEventLogs = /* GraphQL */ `
+  query ListPoolAwaitingExecutionEventLogs(
+    $filter: ModelPoolAwaitingExecutionEventLogFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listPoolAwaitingExecutionEventLogs(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        txID
+        raw
+        id
+        createdAt
+        updatedAt
+        poolAwaitingExecutionEventLogMetaId
+        poolAwaitingExecutionEventLogDecodedId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolCompletedEventDecoded = /* GraphQL */ `
+  query GetPoolCompletedEventDecoded(
+    $txID: String!
+    $gameId: Int!
+    $player: String!
+    $auditRecordDrawId: String!
+  ) {
+    getPoolCompletedEventDecoded(
+      txID: $txID
+      gameId: $gameId
+      player: $player
+      auditRecordDrawId: $auditRecordDrawId
+    ) {
+      txID
+      gameId
+      player
+      dateTime
+      winningPayout
+      transactionId
+      auditRecordDrawId
+      poolCompletedEventLog {
+        txID
+        raw
+        createdAt
+        updatedAt
+        poolCompletedEventLogMetaId
+        poolCompletedEventLogDecodedId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventDecodedPoolCompletedEventLogId
+    }
+  }
+`;
+export const listPoolCompletedEventDecodeds = /* GraphQL */ `
+  query ListPoolCompletedEventDecodeds(
+    $txID: String
+    $gameIdPlayerAuditRecordDrawId: ModelPoolCompletedEventDecodedPrimaryCompositeKeyConditionInput
+    $filter: ModelPoolCompletedEventDecodedFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPoolCompletedEventDecodeds(
+      txID: $txID
+      gameIdPlayerAuditRecordDrawId: $gameIdPlayerAuditRecordDrawId
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        gameId
+        player
+        dateTime
+        winningPayout
+        transactionId
+        auditRecordDrawId
+        createdAt
+        updatedAt
+        poolCompletedEventDecodedPoolCompletedEventLogId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolCompletedEventLog = /* GraphQL */ `
+  query GetPoolCompletedEventLog($txID: String!) {
+    getPoolCompletedEventLog(txID: $txID) {
+      txID
+      raw
+      meta {
+        txID
+        blockID
+        blockNumber
+        blockTimestamp
+        txOrigin
+        clauseIndex
+        id
+        createdAt
+        updatedAt
+      }
+      decoded {
+        txID
+        gameId
+        player
+        dateTime
+        winningPayout
+        transactionId
+        auditRecordDrawId
+        createdAt
+        updatedAt
+        poolCompletedEventDecodedPoolCompletedEventLogId
+      }
+      createdAt
+      updatedAt
+      poolCompletedEventLogMetaId
+      poolCompletedEventLogDecodedId
+    }
+  }
+`;
+export const listPoolCompletedEventLogs = /* GraphQL */ `
+  query ListPoolCompletedEventLogs(
+    $txID: String
+    $filter: ModelPoolCompletedEventLogFilterInput
+    $limit: Int
+    $nextToken: String
+    $sortDirection: ModelSortDirection
+  ) {
+    listPoolCompletedEventLogs(
+      txID: $txID
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+      sortDirection: $sortDirection
+    ) {
+      items {
+        txID
+        raw
+        createdAt
+        updatedAt
+        poolCompletedEventLogMetaId
+        poolCompletedEventLogDecodedId
       }
       nextToken
     }
