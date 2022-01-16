@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
-    "types": ["node"],
-    // "typeRoots": ["node_modules/@types"],
+    "types": ["node"],    
     "module": "commonjs",
     "esModuleInterop": true,
     "allowJs": true,
@@ -9,26 +8,33 @@
     "target": "es2017",
     "noImplicitAny": false,
     "moduleResolution": "node",    
-    // "sourceMap": true,
-    "inlineSourceMap": true,
-    "outDir": "dist",
+    "sourceMap": true,       
     "skipLibCheck": true,
     "preserveConstEnums": false,
-    // "rootDir": "src",         
-    // "composite": true,
-    // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
+    "declaration": true,
+    "rootDir": "./src",        
+    "outDir": "../build/lambda_historical_event_processor/dist",
+    // "outDir": "./dist",
+
+    "removeComments": true,      
+    // "baseUrl": ".",
+    // "paths": {
+    //     "@adexr/lib": ["../library/index", "../library/src/index"]      
+    // }          
   },
     // "include": [
-    //      "src/*"         
-    //  ],
-  // "include": [
-  //   "**/*.ts",
-  //   "package.json"
-  //   //  "node_modules/*"
-  // ],
-      //  "exclude": [
-      //   "./node_modules"
-      //  ]   
+    //   "./src/**/*.ts",
+    // ],
+    "exclude": [
+      "./tests",
+      "./dist",
+      "tsconfig.json"
+    ],
+ 
+    // "paths": { "@lambdalib" : ["../library"] },
+    // "files": [
+    //   "../library/src/lambda-lib.ts"
+    // ],
     "references": [
         {
            "path": "../library"

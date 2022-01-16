@@ -3,7 +3,7 @@
 
 // Parameters may be declared in a variety of syntactic forms
 /**
- * @param {string}  eventPayload - A string param for the EVENTS enum
+ * @param {string}  eventPayload - A string param for the SQS event payload
  */
 export function getHighestBlockNumberFromRecordBatch(eventPayload) {
   console.log(
@@ -33,7 +33,7 @@ export function getHighestBlockNumberFromRecordBatch(eventPayload) {
     }
   });
 
-  console.log('highest block number event is', JSON.stringify(temporaryHighestBlock));
+  console.log('highest block number event is', JSON.stringify(temporaryHighestBlock, null, 2));
 
   return temporaryHighestBlock;
 }

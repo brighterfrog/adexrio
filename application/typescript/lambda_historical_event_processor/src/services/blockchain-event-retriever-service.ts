@@ -2,10 +2,10 @@
 
 import {
   SecretsManager,
-} from '../../../library/dist/backend/aws-services/secrets-manager';
+} from '../../../library/src/backend/aws-services/secrets-manager';
 import {
   BlockChainService,
-} from '../../../library/dist/backend/blockchain/blockchain-service';
+} from '../../../library/src/backend/blockchain/blockchain-service';
 import { EVENTS } from '../../../library/src/backend/blockchain/constants';
 import { ContractRawEvent } from '../models/types';
 
@@ -51,10 +51,10 @@ export class BlockchainEventProcessorService {
    * @param {ContractRawEvent[]} eventsToRetrieve 
    * @returns {Promise<ContractRawEvent[]>}
    */
-  async getAllEvents(eventsToRetrieve: ContractRawEvent[] ): Promise<ContractRawEvent[]> {  
+  async getAllEventsStartingAtBlocknumber(eventsToRetrieve: ContractRawEvent[], startingBlockNumber: number ): Promise<ContractRawEvent[]> {  
           
     const promiseArray = eventsToRetrieve.map( (eventItem) => {      
-      return this.getAllEventsByNameStartingFromBlock(eventItem.name, 0);     
+      return this.getAllEventsByNameStartingFromBlock(eventItem.name, startingBlockNumber);     
     }); 
           
     const results = (await Promise.all(promiseArray)).map( (item, index) => {

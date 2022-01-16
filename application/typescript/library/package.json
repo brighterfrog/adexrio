@@ -10,6 +10,7 @@
     "local:dev": "NODE_ENV=dev ts-node-dev src/local.ts",
     "local:test": "NODE_ENV=test ts-node-dev src/local.ts",
     "local:prod": "NODE_ENV=prod ts-node-dev src/local.ts",
+    "local:dist": "NODE_ENV=dev node dist/local.js",
     "test": "NODE_ENV=dev mocha -r ts-node/register tests/**/*.spec.ts",
     "test:file": "NODE_ENV=dev mocha -r ts-node/register tests/**/game-summary*.spec.ts",
     "release:dev": "NODE_ENV=dev node --trace-warnings dist/index.js",

@@ -1,35 +1,43 @@
 {
-    "compilerOptions": {
-         "types": ["node"],
-      //    "typeRoots": [
-      //       "node_modules/@types"
-      //   ],
-        "module": "commonjs",
-        "esModuleInterop": true,
-        "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "es2017",
-        "noImplicitAny": false,
-        "moduleResolution": "node",
-        "sourceMap": true,
-        "outDir": "dist",
-        "rootDir": "src",
-        "skipLibCheck": true
-        // "composite": true,
-        // "tsBuildInfoFile": "./dist/lambda_historical_event_processor/tsconfig.buildinfo"
-        // "outDir": "../dist/backend-blockchain-ticker/src",
-        //  "rootDir": "src",
-        // "composite": true  ,        
-        // "tsBuildInfoFile": "./../dist/backend-blockchain-ticker/tsconfig.buildinfo"   
-     }
-   //   ,
-   //    "include": [
-   //          "**/*.ts",
-   //          "package.json"
-   //          //  "node_modules/*"
-   //     ]
-       //,
-    //  "include": [
-    //      "**/*.ts"
-    //  ]
+  "compilerOptions": {
+    "types": ["node"],    
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "target": "es2017",
+    "noImplicitAny": false,
+    "moduleResolution": "node",    
+    "sourceMap": true,       
+    "skipLibCheck": true,
+    "preserveConstEnums": false,
+    "declaration": true,
+    "rootDir": "./src",        
+     "outDir": "../build/backend-blockchain-ticker/dist",
+    // "outDir": "./dist",
+
+    "removeComments": true,      
+    // "baseUrl": ".",
+    // "paths": {
+    //     "@adexr/lib": ["../library/index", "../library/src/index"]      
+    // }          
+  },
+    // "include": [
+    //   "./src/**/*.ts",
+    // ],
+    "exclude": [
+      "./tests",
+      "./dist",
+      "tsconfig.json"
+    ],
+ 
+    // "paths": { "@lambdalib" : ["../library"] },
+    // "files": [
+    //   "../library/src/lambda-lib.ts"
+    // ],
+    "references": [
+        {
+           "path": "../library"
+        }
+     ],      
 }

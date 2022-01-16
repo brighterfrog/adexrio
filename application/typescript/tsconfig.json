@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {   
+        "types": ["node"],    
+        "module": "commonjs",
+        "esModuleInterop": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "es2017",
+        "noImplicitAny": false,
+        "moduleResolution": "node",    
+        "sourceMap": true,            
+        "outDir": "./build/",
+        "skipLibCheck": true,
+        "preserveConstEnums": false,
+        "declaration": true,
+        "rootDir": ".",   
+        "removeComments": true,  
+        // "watch": true         
+    },
+    "references": [
+        { "path": "./backend-blockchain-ticker" },
+        { "path": "./lambda_block_event_processor" },
+        { "path": "./lambda_dynamodb_stream_processor" },
+        { "path": "./lambda_historical_event_processor" },
+        { "path": "./library" },
+    ],
+    "files": [],
+    
+
+}

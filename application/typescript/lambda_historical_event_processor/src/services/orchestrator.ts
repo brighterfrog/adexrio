@@ -1,6 +1,6 @@
 
 import { getHighestBlockNumberFromRecordBatch } from "./sqs-historical-service"
-import { EVENTS } from "../../../library/dist/backend/blockchain/constants";
+import { EVENTS } from "../../../library/src/backend/blockchain/constants";
 import { BlockchainEventProcessorService } from '../services/blockchain-event-retriever-service';
 import { DynamodbEventProcessorService } from '../services/dynamodb-event-processor-service'
 import { ContractRawEvent } from '../../src/models/types'
@@ -9,16 +9,12 @@ export class Orchestrator {
     
     blockchainEventProcessorService: BlockchainEventProcessorService;
     dynamodbEventProcessorService: DynamodbEventProcessorService;
+    eventsToRetrieve: ContractRawEvent[];
 
     constructor() {
         this.blockchainEventProcessorService = new BlockchainEventProcessorService();
         this.dynamodbEventProcessorService = new DynamodbEventProcessorService();
-    }
-
-    async process(event: any): Promise<void> {
-        const highestBlockMessageFromBatch = getHighestBlockNumberFromRecordBatch(event);
-
-        const eventsToRetrieve = [
+        this.eventsToRetrieve = [
             {
                 name: EVENTS.GameCreatedEvent,
                 result: null
@@ -40,10 +36,10 @@ export class Orchestrator {
                 result: null
             }
         ];
+    }
 
-         //TODO:
+       //TODO:
         /*
-
             Iterate event types by block: orderByBlockSequence
         
             process Event Types by precedence & block sequence
@@ -51,20 +47,19 @@ export class Orchestrator {
 
         */
 
-        const allEvents = await this.blockchainEventProcessorService.getAllEvents(eventsToRetrieve);
-
-        await this.dynamodbEventProcessorService.processContractEvents(allEvents);
-
         // Check Db if event exists
         //     If NOT - write to table
         //     Streaming trigger update Pool Record table
         
+    async process(event: any): Promise<void> {
+           
+        const lastBlockProcessed = 0 + 1;   //+1 to increment so we aren't doing last block twice                
+        const allEvents = await this.blockchainEventProcessorService.getAllEventsStartingAtBlocknumber(this.eventsToRetrieve, lastBlockProcessed);
 
-    }
-
-    async getAllEvents(eventsToRetrieve: ContractRawEvent[]) {
-
-        return await this.blockchainEventProcessorService.getAllEvents(eventsToRetrieve);
-
+        await this.dynamodbEventProcessorService.processContractEvents(allEvents);      
+    }  
+    
+    reportProgress(event) {
+        //const highestBlockMessageFromBatch = getHighestBlockNumberFromRecordBatch(event); 
     }
 }

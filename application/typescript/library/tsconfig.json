@@ -5,24 +5,23 @@
         "module": "commonjs",
         "esModuleInterop": true,
         "allowJs": true,
-        "allowSyntheticDefaultImports": true,
-        // "target": "es2017",
+        "allowSyntheticDefaultImports": true,        
         "target": "es2017",        
         "noImplicitAny": false,
         "moduleResolution": "node",
-        // "sourceMap": true,
-        "inlineSourceMap": true,
-        "outDir": "dist",
-        "rootDir": "src",
-        "declaration": true,
-        "resolveJsonModule": true,
-        "skipDefaultLibCheck": true,
+        "sourceMap": true,
+        //"inlineSourceMap": true,
+        "outDir": "../build/library/src",
+        "rootDir": "./src",       
+        "resolveJsonModule": true,        
         "composite": true,
-        // "tsBuildInfoFile": "./dist/library/tsconfig.buildinfo"     
+        "removeComments": true,
+        "declaration": true,
+        "skipLibCheck": true,
     },
       "include": [
-           "src/**/*",
-           "src/**/*.json",
-           "env.*"
+           "./src/**/*",
+           "./src/**/*.json",         
+           "aws-exports.js"
        ]   
     }

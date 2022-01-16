@@ -47,5 +47,6 @@ application/terraform/modules/shared/ssm/lookup_amplify_dynamodb_table_id.txt
 
 **/handler.zip
 **/dist
+**/typescript/build
 
 *.tgz

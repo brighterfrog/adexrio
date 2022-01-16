@@ -184,7 +184,7 @@ describe('Can retrieve a specific type of events by name filter',
             const randomIndex = Math.floor(Math.random() * eventList.length);
             const expectedEvent = eventList[randomIndex];
  
-            const events = await blockchainEventProcessorService.getAllEvents(eventList);
+            const events = await blockchainEventProcessorService.getAllEventsStartingAtBlocknumber(eventList, 0);
             
             const filteredEvents = blockchainEventProcessorService.filterRawEventsByType(events, expectedEvent.name);
 
