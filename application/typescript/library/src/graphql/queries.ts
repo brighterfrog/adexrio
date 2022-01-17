@@ -318,16 +318,10 @@ export const listPools = /* GraphQL */ `
   }
 `;
 export const getPoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
-  query GetPoolSuccessfullBlockEventsProcessed($id: ID!) {
+  query GetPoolSuccessfullBlockEventsProcessed($id: Int!) {
     getPoolSuccessfullBlockEventsProcessed(id: $id) {
       id
-      lastBlockProcessedForCreatedEvents
-      lastBlockProcessedForCompletedEvents
-      lastBlockProcessedForPlayerJoinedPoolEvents
-      lastBlockProcessedForPlayerLeftPoolEvents
-      lastBlockProcessedForPoolAwaitingExecution
       lambdaProcessorDecisionCheckForNextBlocknumber
-      historicalLastBlockLoadedForEvents
       createdAt
       updatedAt
     }
@@ -335,24 +329,22 @@ export const getPoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
 `;
 export const listPoolSuccessfullBlockEventsProcesseds = /* GraphQL */ `
   query ListPoolSuccessfullBlockEventsProcesseds(
+    $id: Int
     $filter: ModelPoolSuccessfullBlockEventsProcessedFilterInput
     $limit: Int
     $nextToken: String
+    $sortDirection: ModelSortDirection
   ) {
     listPoolSuccessfullBlockEventsProcesseds(
+      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
+      sortDirection: $sortDirection
     ) {
       items {
         id
-        lastBlockProcessedForCreatedEvents
-        lastBlockProcessedForCompletedEvents
-        lastBlockProcessedForPlayerJoinedPoolEvents
-        lastBlockProcessedForPlayerLeftPoolEvents
-        lastBlockProcessedForPoolAwaitingExecution
         lambdaProcessorDecisionCheckForNextBlocknumber
-        historicalLastBlockLoadedForEvents
         createdAt
         updatedAt
       }

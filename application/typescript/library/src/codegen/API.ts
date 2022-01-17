@@ -190,7 +190,7 @@ export type CreatePoolPlayerInput = {
   userWalletId: string,
   status: PlayerStatus,
   poolId: number,
-  poolPlayersId?: string | null,
+  poolPlayersId: string,
   poolPlayerUserWalletId: string,
 };
 
@@ -241,7 +241,7 @@ export type PoolPlayer = {
   poolId: number,
   createdAt: string,
   updatedAt: string,
-  poolPlayersId?: string | null,
+  poolPlayersId: string,
   poolPlayerUserWalletId: string,
 };
 
@@ -500,24 +500,12 @@ export type DeletePoolInput = {
 };
 
 export type CreatePoolSuccessfullBlockEventsProcessedInput = {
-  id?: string | null,
-  lastBlockProcessedForCreatedEvents: number,
-  lastBlockProcessedForCompletedEvents: number,
-  lastBlockProcessedForPlayerJoinedPoolEvents: number,
-  lastBlockProcessedForPlayerLeftPoolEvents: number,
-  lastBlockProcessedForPoolAwaitingExecution: number,
+  id?: number | null,
   lambdaProcessorDecisionCheckForNextBlocknumber: number,
-  historicalLastBlockLoadedForEvents: number,
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
-  lastBlockProcessedForCreatedEvents?: ModelIntInput | null,
-  lastBlockProcessedForCompletedEvents?: ModelIntInput | null,
-  lastBlockProcessedForPlayerJoinedPoolEvents?: ModelIntInput | null,
-  lastBlockProcessedForPlayerLeftPoolEvents?: ModelIntInput | null,
-  lastBlockProcessedForPoolAwaitingExecution?: ModelIntInput | null,
   lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null,
-  historicalLastBlockLoadedForEvents?: ModelIntInput | null,
   and?: Array< ModelPoolSuccessfullBlockEventsProcessedConditionInput | null > | null,
   or?: Array< ModelPoolSuccessfullBlockEventsProcessedConditionInput | null > | null,
   not?: ModelPoolSuccessfullBlockEventsProcessedConditionInput | null,
@@ -525,31 +513,19 @@ export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
 
 export type PoolSuccessfullBlockEventsProcessed = {
   __typename: "PoolSuccessfullBlockEventsProcessed",
-  id: string,
-  lastBlockProcessedForCreatedEvents: number,
-  lastBlockProcessedForCompletedEvents: number,
-  lastBlockProcessedForPlayerJoinedPoolEvents: number,
-  lastBlockProcessedForPlayerLeftPoolEvents: number,
-  lastBlockProcessedForPoolAwaitingExecution: number,
+  id: number,
   lambdaProcessorDecisionCheckForNextBlocknumber: number,
-  historicalLastBlockLoadedForEvents: number,
   createdAt: string,
   updatedAt: string,
 };
 
 export type UpdatePoolSuccessfullBlockEventsProcessedInput = {
-  id: string,
-  lastBlockProcessedForCreatedEvents?: number | null,
-  lastBlockProcessedForCompletedEvents?: number | null,
-  lastBlockProcessedForPlayerJoinedPoolEvents?: number | null,
-  lastBlockProcessedForPlayerLeftPoolEvents?: number | null,
-  lastBlockProcessedForPoolAwaitingExecution?: number | null,
+  id: number,
   lambdaProcessorDecisionCheckForNextBlocknumber?: number | null,
-  historicalLastBlockLoadedForEvents?: number | null,
 };
 
 export type DeletePoolSuccessfullBlockEventsProcessedInput = {
-  id: string,
+  id: number,
 };
 
 export type CreatePoolSummariesInput = {
@@ -726,7 +702,7 @@ export type CreateCreatePoolEventDecodedInput = {
   gameId: number,
   player: string,
   dateTime: string,
-  createPoolEventDecodedCreatePoolEventLogId?: string | null,
+  createPoolEventDecodedCreatePoolEventLogId: string,
 };
 
 export type ModelCreatePoolEventDecodedConditionInput = {
@@ -743,10 +719,10 @@ export type CreatePoolEventDecoded = {
   gameId: number,
   player: string,
   dateTime: string,
-  createPoolEventLog?: CreatePoolEventLog | null,
+  createPoolEventLog: CreatePoolEventLog,
   createdAt: string,
   updatedAt: string,
-  createPoolEventDecodedCreatePoolEventLogId?: string | null,
+  createPoolEventDecodedCreatePoolEventLogId: string,
 };
 
 export type CreatePoolEventLog = {
@@ -754,12 +730,12 @@ export type CreatePoolEventLog = {
   txID: string,
   raw: string,
   meta: EventLogMeta,
-  decoded?: CreatePoolEventDecoded | null,
+  decoded: CreatePoolEventDecoded,
   id: string,
   createdAt: string,
   updatedAt: string,
   createPoolEventLogMetaId: string,
-  createPoolEventLogDecodedId?: string | null,
+  createPoolEventLogDecodedId: string,
 };
 
 export type UpdateCreatePoolEventDecodedInput = {
@@ -781,7 +757,7 @@ export type CreateCreatePoolEventLogInput = {
   raw: string,
   id?: string | null,
   createPoolEventLogMetaId: string,
-  createPoolEventLogDecodedId?: string | null,
+  createPoolEventLogDecodedId: string,
 };
 
 export type ModelCreatePoolEventLogConditionInput = {
@@ -811,7 +787,7 @@ export type CreatePlayerJoinedPoolEventDecodedInput = {
   gameId: number,
   player: string,
   dateTime: string,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
 };
 
 export type ModelPlayerJoinedPoolEventDecodedConditionInput = {
@@ -828,10 +804,10 @@ export type PlayerJoinedPoolEventDecoded = {
   gameId: number,
   player: string,
   dateTime: string,
-  playerJoinedPoolEventLog?: PlayerJoinedPoolEventLog | null,
+  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog,
   createdAt: string,
   updatedAt: string,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
 };
 
 export type PlayerJoinedPoolEventLog = {
@@ -839,12 +815,12 @@ export type PlayerJoinedPoolEventLog = {
   txID: string,
   raw: string,
   meta: EventLogMeta,
-  decoded?: PlayerJoinedPoolEventDecoded | null,
+  decoded: PlayerJoinedPoolEventDecoded,
   id: string,
   createdAt: string,
   updatedAt: string,
   playerJoinedPoolEventLogMetaId: string,
-  playerJoinedPoolEventLogDecodedId?: string | null,
+  playerJoinedPoolEventLogDecodedId: string,
 };
 
 export type UpdatePlayerJoinedPoolEventDecodedInput = {
@@ -866,7 +842,7 @@ export type CreatePlayerJoinedPoolEventLogInput = {
   raw: string,
   id?: string | null,
   playerJoinedPoolEventLogMetaId: string,
-  playerJoinedPoolEventLogDecodedId?: string | null,
+  playerJoinedPoolEventLogDecodedId: string,
 };
 
 export type ModelPlayerJoinedPoolEventLogConditionInput = {
@@ -896,7 +872,7 @@ export type CreatePlayerLeftPoolEventDecodedInput = {
   gameId: number,
   player: string,
   dateTime: string,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
 };
 
 export type ModelPlayerLeftPoolEventDecodedConditionInput = {
@@ -913,10 +889,10 @@ export type PlayerLeftPoolEventDecoded = {
   gameId: number,
   player: string,
   dateTime: string,
-  playerLeftPoolEventLog?: PlayerLeftPoolEventLog | null,
+  playerLeftPoolEventLog: PlayerLeftPoolEventLog,
   createdAt: string,
   updatedAt: string,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
 };
 
 export type PlayerLeftPoolEventLog = {
@@ -924,12 +900,12 @@ export type PlayerLeftPoolEventLog = {
   txID: string,
   raw: string,
   meta: EventLogMeta,
-  decoded?: PlayerLeftPoolEventDecoded | null,
+  decoded: PlayerLeftPoolEventDecoded,
   id: string,
   createdAt: string,
   updatedAt: string,
   playerLeftPoolEventLogMetaId: string,
-  playerLeftPoolEventLogDecodedId?: string | null,
+  playerLeftPoolEventLogDecodedId: string,
 };
 
 export type UpdatePlayerLeftPoolEventDecodedInput = {
@@ -951,7 +927,7 @@ export type CreatePlayerLeftPoolEventLogInput = {
   raw: string,
   id?: string | null,
   playerLeftPoolEventLogMetaId: string,
-  playerLeftPoolEventLogDecodedId?: string | null,
+  playerLeftPoolEventLogDecodedId: string,
 };
 
 export type ModelPlayerLeftPoolEventLogConditionInput = {
@@ -981,7 +957,7 @@ export type CreatePoolAwaitingExecutionEventDecodedInput = {
   gameId: number,
   status: string,
   dateTime: string,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
 };
 
 export type ModelPoolAwaitingExecutionEventDecodedConditionInput = {
@@ -998,10 +974,10 @@ export type PoolAwaitingExecutionEventDecoded = {
   gameId: number,
   status: string,
   dateTime: string,
-  poolAwaitingExecutionEventLog?: PoolAwaitingExecutionEventLog | null,
+  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog,
   createdAt: string,
   updatedAt: string,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
 };
 
 export type PoolAwaitingExecutionEventLog = {
@@ -1009,12 +985,12 @@ export type PoolAwaitingExecutionEventLog = {
   txID: string,
   raw: string,
   meta: EventLogMeta,
-  decoded?: PoolAwaitingExecutionEventDecoded | null,
+  decoded: PoolAwaitingExecutionEventDecoded,
   id: string,
   createdAt: string,
   updatedAt: string,
   poolAwaitingExecutionEventLogMetaId: string,
-  poolAwaitingExecutionEventLogDecodedId?: string | null,
+  poolAwaitingExecutionEventLogDecodedId: string,
 };
 
 export type UpdatePoolAwaitingExecutionEventDecodedInput = {
@@ -1036,7 +1012,7 @@ export type CreatePoolAwaitingExecutionEventLogInput = {
   raw: string,
   id?: string | null,
   poolAwaitingExecutionEventLogMetaId: string,
-  poolAwaitingExecutionEventLogDecodedId?: string | null,
+  poolAwaitingExecutionEventLogDecodedId: string,
 };
 
 export type ModelPoolAwaitingExecutionEventLogConditionInput = {
@@ -1069,7 +1045,7 @@ export type CreatePoolCompletedEventDecodedInput = {
   winningPayout: string,
   transactionId: string,
   auditRecordDrawId: string,
-  poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+  poolCompletedEventDecodedPoolCompletedEventLogId: string,
 };
 
 export type ModelPoolCompletedEventDecodedConditionInput = {
@@ -1091,10 +1067,10 @@ export type PoolCompletedEventDecoded = {
   winningPayout: string,
   transactionId: string,
   auditRecordDrawId: string,
-  poolCompletedEventLog?: PoolCompletedEventLog | null,
+  poolCompletedEventLog: PoolCompletedEventLog,
   createdAt: string,
   updatedAt: string,
-  poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+  poolCompletedEventDecodedPoolCompletedEventLogId: string,
 };
 
 export type PoolCompletedEventLog = {
@@ -1102,11 +1078,11 @@ export type PoolCompletedEventLog = {
   txID: string,
   raw: string,
   meta: EventLogMeta,
-  decoded?: PoolCompletedEventDecoded | null,
+  decoded: PoolCompletedEventDecoded,
   createdAt: string,
   updatedAt: string,
   poolCompletedEventLogMetaId: string,
-  poolCompletedEventLogDecodedId?: string | null,
+  poolCompletedEventLogDecodedId: string,
 };
 
 export type UpdatePoolCompletedEventDecodedInput = {
@@ -1131,7 +1107,7 @@ export type CreatePoolCompletedEventLogInput = {
   txID: string,
   raw: string,
   poolCompletedEventLogMetaId: string,
-  poolCompletedEventLogDecodedId?: string | null,
+  poolCompletedEventLogDecodedId: string,
 };
 
 export type ModelPoolCompletedEventLogConditionInput = {
@@ -1276,14 +1252,8 @@ export type ModelPoolConnection = {
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedFilterInput = {
-  id?: ModelIDInput | null,
-  lastBlockProcessedForCreatedEvents?: ModelIntInput | null,
-  lastBlockProcessedForCompletedEvents?: ModelIntInput | null,
-  lastBlockProcessedForPlayerJoinedPoolEvents?: ModelIntInput | null,
-  lastBlockProcessedForPlayerLeftPoolEvents?: ModelIntInput | null,
-  lastBlockProcessedForPoolAwaitingExecution?: ModelIntInput | null,
+  id?: ModelIntInput | null,
   lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null,
-  historicalLastBlockLoadedForEvents?: ModelIntInput | null,
   and?: Array< ModelPoolSuccessfullBlockEventsProcessedFilterInput | null > | null,
   or?: Array< ModelPoolSuccessfullBlockEventsProcessedFilterInput | null > | null,
   not?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null,
@@ -1809,7 +1779,7 @@ export type CreatePoolPlayerMutation = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -1856,7 +1826,7 @@ export type UpdatePoolPlayerMutation = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -1903,7 +1873,7 @@ export type DeletePoolPlayerMutation = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -2216,14 +2186,8 @@ export type CreatePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type CreatePoolSuccessfullBlockEventsProcessedMutation = {
   createPoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2237,14 +2201,8 @@ export type UpdatePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type UpdatePoolSuccessfullBlockEventsProcessedMutation = {
   updatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2258,14 +2216,8 @@ export type DeletePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type DeletePoolSuccessfullBlockEventsProcessedMutation = {
   deletePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -2535,7 +2487,7 @@ export type CreateCreatePoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -2543,11 +2495,11 @@ export type CreateCreatePoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -2563,7 +2515,7 @@ export type UpdateCreatePoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -2571,11 +2523,11 @@ export type UpdateCreatePoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -2591,7 +2543,7 @@ export type DeleteCreatePoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -2599,11 +2551,11 @@ export type DeleteCreatePoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -2629,7 +2581,7 @@ export type CreateCreatePoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2637,13 +2589,13 @@ export type CreateCreatePoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2669,7 +2621,7 @@ export type UpdateCreatePoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2677,13 +2629,13 @@ export type UpdateCreatePoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2709,7 +2661,7 @@ export type DeleteCreatePoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2717,13 +2669,13 @@ export type DeleteCreatePoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2739,7 +2691,7 @@ export type CreatePlayerJoinedPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -2747,11 +2699,11 @@ export type CreatePlayerJoinedPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -2767,7 +2719,7 @@ export type UpdatePlayerJoinedPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -2775,11 +2727,11 @@ export type UpdatePlayerJoinedPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -2795,7 +2747,7 @@ export type DeletePlayerJoinedPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -2803,11 +2755,11 @@ export type DeletePlayerJoinedPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -2833,7 +2785,7 @@ export type CreatePlayerJoinedPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2841,13 +2793,13 @@ export type CreatePlayerJoinedPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2873,7 +2825,7 @@ export type UpdatePlayerJoinedPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2881,13 +2833,13 @@ export type UpdatePlayerJoinedPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2913,7 +2865,7 @@ export type DeletePlayerJoinedPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -2921,13 +2873,13 @@ export type DeletePlayerJoinedPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2943,7 +2895,7 @@ export type CreatePlayerLeftPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -2951,11 +2903,11 @@ export type CreatePlayerLeftPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -2971,7 +2923,7 @@ export type UpdatePlayerLeftPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -2979,11 +2931,11 @@ export type UpdatePlayerLeftPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -2999,7 +2951,7 @@ export type DeletePlayerLeftPoolEventDecodedMutation = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -3007,11 +2959,11 @@ export type DeletePlayerLeftPoolEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -3037,7 +2989,7 @@ export type CreatePlayerLeftPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -3045,13 +2997,13 @@ export type CreatePlayerLeftPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -3077,7 +3029,7 @@ export type UpdatePlayerLeftPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -3085,13 +3037,13 @@ export type UpdatePlayerLeftPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -3117,7 +3069,7 @@ export type DeletePlayerLeftPoolEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -3125,13 +3077,13 @@ export type DeletePlayerLeftPoolEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -3147,7 +3099,7 @@ export type CreatePoolAwaitingExecutionEventDecodedMutation = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -3155,11 +3107,11 @@ export type CreatePoolAwaitingExecutionEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -3175,7 +3127,7 @@ export type UpdatePoolAwaitingExecutionEventDecodedMutation = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -3183,11 +3135,11 @@ export type UpdatePoolAwaitingExecutionEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -3203,7 +3155,7 @@ export type DeletePoolAwaitingExecutionEventDecodedMutation = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -3211,11 +3163,11 @@ export type DeletePoolAwaitingExecutionEventDecodedMutation = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -3241,7 +3193,7 @@ export type CreatePoolAwaitingExecutionEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -3249,13 +3201,13 @@ export type CreatePoolAwaitingExecutionEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -3281,7 +3233,7 @@ export type UpdatePoolAwaitingExecutionEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -3289,13 +3241,13 @@ export type UpdatePoolAwaitingExecutionEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -3321,7 +3273,7 @@ export type DeletePoolAwaitingExecutionEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -3329,13 +3281,13 @@ export type DeletePoolAwaitingExecutionEventLogMutation = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -3354,18 +3306,18 @@ export type CreatePoolCompletedEventDecodedMutation = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -3384,18 +3336,18 @@ export type UpdatePoolCompletedEventDecodedMutation = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -3414,18 +3366,18 @@ export type DeletePoolCompletedEventDecodedMutation = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -3451,7 +3403,7 @@ export type CreatePoolCompletedEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -3462,12 +3414,12 @@ export type CreatePoolCompletedEventLogMutation = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -3493,7 +3445,7 @@ export type UpdatePoolCompletedEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -3504,12 +3456,12 @@ export type UpdatePoolCompletedEventLogMutation = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -3535,7 +3487,7 @@ export type DeletePoolCompletedEventLogMutation = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -3546,12 +3498,12 @@ export type DeletePoolCompletedEventLogMutation = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -3707,7 +3659,7 @@ export type GetPoolPlayerQuery = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -3731,7 +3683,7 @@ export type ListPoolPlayersQuery = {
       poolId: number,
       createdAt: string,
       updatedAt: string,
-      poolPlayersId?: string | null,
+      poolPlayersId: string,
       poolPlayerUserWalletId: string,
     } | null >,
     nextToken?: string | null,
@@ -3901,29 +3853,25 @@ export type ListPoolsQuery = {
 };
 
 export type GetPoolSuccessfullBlockEventsProcessedQueryVariables = {
-  id: string,
+  id: number,
 };
 
 export type GetPoolSuccessfullBlockEventsProcessedQuery = {
   getPoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
 export type ListPoolSuccessfullBlockEventsProcessedsQueryVariables = {
+  id?: number | null,
   filter?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
@@ -3931,14 +3879,8 @@ export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
     __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection",
     items:  Array< {
       __typename: "PoolSuccessfullBlockEventsProcessed",
-      id: string,
-      lastBlockProcessedForCreatedEvents: number,
-      lastBlockProcessedForCompletedEvents: number,
-      lastBlockProcessedForPlayerJoinedPoolEvents: number,
-      lastBlockProcessedForPlayerLeftPoolEvents: number,
-      lastBlockProcessedForPoolAwaitingExecution: number,
+      id: number,
       lambdaProcessorDecisionCheckForNextBlocknumber: number,
-      historicalLastBlockLoadedForEvents: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -4141,7 +4083,7 @@ export type GetCreatePoolEventDecodedQuery = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -4149,11 +4091,11 @@ export type GetCreatePoolEventDecodedQuery = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -4177,7 +4119,7 @@ export type ListCreatePoolEventDecodedsQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4204,7 +4146,7 @@ export type GetCreatePoolEventLogQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -4212,13 +4154,13 @@ export type GetCreatePoolEventLogQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -4239,7 +4181,7 @@ export type ListCreatePoolEventLogsQuery = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
+      createPoolEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4258,7 +4200,7 @@ export type GetPlayerJoinedPoolEventDecodedQuery = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -4266,11 +4208,11 @@ export type GetPlayerJoinedPoolEventDecodedQuery = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -4294,7 +4236,7 @@ export type ListPlayerJoinedPoolEventDecodedsQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4321,7 +4263,7 @@ export type GetPlayerJoinedPoolEventLogQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -4329,13 +4271,13 @@ export type GetPlayerJoinedPoolEventLogQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -4356,7 +4298,7 @@ export type ListPlayerJoinedPoolEventLogsQuery = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
+      playerJoinedPoolEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4375,7 +4317,7 @@ export type GetPlayerLeftPoolEventDecodedQuery = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -4383,11 +4325,11 @@ export type GetPlayerLeftPoolEventDecodedQuery = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -4411,7 +4353,7 @@ export type ListPlayerLeftPoolEventDecodedsQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4438,7 +4380,7 @@ export type GetPlayerLeftPoolEventLogQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -4446,13 +4388,13 @@ export type GetPlayerLeftPoolEventLogQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -4473,7 +4415,7 @@ export type ListPlayerLeftPoolEventLogsQuery = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
+      playerLeftPoolEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4492,7 +4434,7 @@ export type GetPoolAwaitingExecutionEventDecodedQuery = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -4500,11 +4442,11 @@ export type GetPoolAwaitingExecutionEventDecodedQuery = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -4528,7 +4470,7 @@ export type ListPoolAwaitingExecutionEventDecodedsQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4555,7 +4497,7 @@ export type GetPoolAwaitingExecutionEventLogQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -4563,13 +4505,13 @@ export type GetPoolAwaitingExecutionEventLogQuery = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -4590,7 +4532,7 @@ export type ListPoolAwaitingExecutionEventLogsQuery = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4613,18 +4555,18 @@ export type GetPoolCompletedEventDecodedQuery = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -4651,7 +4593,7 @@ export type ListPoolCompletedEventDecodedsQuery = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4678,7 +4620,7 @@ export type GetPoolCompletedEventLogQuery = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -4689,12 +4631,12 @@ export type GetPoolCompletedEventLogQuery = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -4716,7 +4658,7 @@ export type ListPoolCompletedEventLogsQuery = {
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
+      poolCompletedEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4861,7 +4803,7 @@ export type OnCreatePoolPlayerSubscription = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -4903,7 +4845,7 @@ export type OnUpdatePoolPlayerSubscription = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -4945,7 +4887,7 @@ export type OnDeletePoolPlayerSubscription = {
     poolId: number,
     createdAt: string,
     updatedAt: string,
-    poolPlayersId?: string | null,
+    poolPlayersId: string,
     poolPlayerUserWalletId: string,
   } | null,
 };
@@ -5223,14 +5165,8 @@ export type OnDeletePoolSubscription = {
 export type OnCreatePoolSuccessfullBlockEventsProcessedSubscription = {
   onCreatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5239,14 +5175,8 @@ export type OnCreatePoolSuccessfullBlockEventsProcessedSubscription = {
 export type OnUpdatePoolSuccessfullBlockEventsProcessedSubscription = {
   onUpdatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5255,14 +5185,8 @@ export type OnUpdatePoolSuccessfullBlockEventsProcessedSubscription = {
 export type OnDeletePoolSuccessfullBlockEventsProcessedSubscription = {
   onDeletePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: string,
-    lastBlockProcessedForCreatedEvents: number,
-    lastBlockProcessedForCompletedEvents: number,
-    lastBlockProcessedForPlayerJoinedPoolEvents: number,
-    lastBlockProcessedForPlayerLeftPoolEvents: number,
-    lastBlockProcessedForPoolAwaitingExecution: number,
+    id: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
-    historicalLastBlockLoadedForEvents: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5467,7 +5391,7 @@ export type OnCreateCreatePoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -5475,11 +5399,11 @@ export type OnCreateCreatePoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -5490,7 +5414,7 @@ export type OnUpdateCreatePoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -5498,11 +5422,11 @@ export type OnUpdateCreatePoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -5513,7 +5437,7 @@ export type OnDeleteCreatePoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    createPoolEventLog?:  {
+    createPoolEventLog:  {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
@@ -5521,11 +5445,11 @@ export type OnDeleteCreatePoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId?: string | null,
-    } | null,
+      createPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId?: string | null,
+    createPoolEventDecodedCreatePoolEventLogId: string,
   } | null,
 };
 
@@ -5546,7 +5470,7 @@ export type OnCreateCreatePoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5554,13 +5478,13 @@ export type OnCreateCreatePoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5581,7 +5505,7 @@ export type OnUpdateCreatePoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5589,13 +5513,13 @@ export type OnUpdateCreatePoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5616,7 +5540,7 @@ export type OnDeleteCreatePoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "CreatePoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5624,13 +5548,13 @@ export type OnDeleteCreatePoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId?: string | null,
-    } | null,
+      createPoolEventDecodedCreatePoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId?: string | null,
+    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5641,7 +5565,7 @@ export type OnCreatePlayerJoinedPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -5649,11 +5573,11 @@ export type OnCreatePlayerJoinedPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -5664,7 +5588,7 @@ export type OnUpdatePlayerJoinedPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -5672,11 +5596,11 @@ export type OnUpdatePlayerJoinedPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -5687,7 +5611,7 @@ export type OnDeletePlayerJoinedPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerJoinedPoolEventLog?:  {
+    playerJoinedPoolEventLog:  {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
@@ -5695,11 +5619,11 @@ export type OnDeletePlayerJoinedPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerJoinedPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
+    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -5720,7 +5644,7 @@ export type OnCreatePlayerJoinedPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5728,13 +5652,13 @@ export type OnCreatePlayerJoinedPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5755,7 +5679,7 @@ export type OnUpdatePlayerJoinedPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5763,13 +5687,13 @@ export type OnUpdatePlayerJoinedPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5790,7 +5714,7 @@ export type OnDeletePlayerJoinedPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerJoinedPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5798,13 +5722,13 @@ export type OnDeletePlayerJoinedPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-    } | null,
+      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId?: string | null,
+    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5815,7 +5739,7 @@ export type OnCreatePlayerLeftPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -5823,11 +5747,11 @@ export type OnCreatePlayerLeftPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -5838,7 +5762,7 @@ export type OnUpdatePlayerLeftPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -5846,11 +5770,11 @@ export type OnUpdatePlayerLeftPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -5861,7 +5785,7 @@ export type OnDeletePlayerLeftPoolEventDecodedSubscription = {
     gameId: number,
     player: string,
     dateTime: string,
-    playerLeftPoolEventLog?:  {
+    playerLeftPoolEventLog:  {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
@@ -5869,11 +5793,11 @@ export type OnDeletePlayerLeftPoolEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId?: string | null,
-    } | null,
+      playerLeftPoolEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
+    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -5894,7 +5818,7 @@ export type OnCreatePlayerLeftPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5902,13 +5826,13 @@ export type OnCreatePlayerLeftPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5929,7 +5853,7 @@ export type OnUpdatePlayerLeftPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5937,13 +5861,13 @@ export type OnUpdatePlayerLeftPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5964,7 +5888,7 @@ export type OnDeletePlayerLeftPoolEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PlayerLeftPoolEventDecoded",
       txID: string,
       gameId: number,
@@ -5972,13 +5896,13 @@ export type OnDeletePlayerLeftPoolEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-    } | null,
+      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId?: string | null,
+    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5989,7 +5913,7 @@ export type OnCreatePoolAwaitingExecutionEventDecodedSubscription = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -5997,11 +5921,11 @@ export type OnCreatePoolAwaitingExecutionEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -6012,7 +5936,7 @@ export type OnUpdatePoolAwaitingExecutionEventDecodedSubscription = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -6020,11 +5944,11 @@ export type OnUpdatePoolAwaitingExecutionEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -6035,7 +5959,7 @@ export type OnDeletePoolAwaitingExecutionEventDecodedSubscription = {
     gameId: number,
     status: string,
     dateTime: string,
-    poolAwaitingExecutionEventLog?:  {
+    poolAwaitingExecutionEventLog:  {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
@@ -6043,11 +5967,11 @@ export type OnDeletePoolAwaitingExecutionEventDecodedSubscription = {
       createdAt: string,
       updatedAt: string,
       poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
+    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -6068,7 +5992,7 @@ export type OnCreatePoolAwaitingExecutionEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -6076,13 +6000,13 @@ export type OnCreatePoolAwaitingExecutionEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -6103,7 +6027,7 @@ export type OnUpdatePoolAwaitingExecutionEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -6111,13 +6035,13 @@ export type OnUpdatePoolAwaitingExecutionEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -6138,7 +6062,7 @@ export type OnDeletePoolAwaitingExecutionEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolAwaitingExecutionEventDecoded",
       txID: string,
       gameId: number,
@@ -6146,13 +6070,13 @@ export type OnDeletePoolAwaitingExecutionEventLogSubscription = {
       dateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-    } | null,
+      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+    },
     id: string,
     createdAt: string,
     updatedAt: string,
     poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId?: string | null,
+    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -6166,18 +6090,18 @@ export type OnCreatePoolCompletedEventDecodedSubscription = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -6191,18 +6115,18 @@ export type OnUpdatePoolCompletedEventDecodedSubscription = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -6216,18 +6140,18 @@ export type OnDeletePoolCompletedEventDecodedSubscription = {
     winningPayout: string,
     transactionId: string,
     auditRecordDrawId: string,
-    poolCompletedEventLog?:  {
+    poolCompletedEventLog:  {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
       createdAt: string,
       updatedAt: string,
       poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId?: string | null,
-    } | null,
+      poolCompletedEventLogDecodedId: string,
+    },
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
+    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -6248,7 +6172,7 @@ export type OnCreatePoolCompletedEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -6259,12 +6183,12 @@ export type OnCreatePoolCompletedEventLogSubscription = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -6285,7 +6209,7 @@ export type OnUpdatePoolCompletedEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -6296,12 +6220,12 @@ export type OnUpdatePoolCompletedEventLogSubscription = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -6322,7 +6246,7 @@ export type OnDeletePoolCompletedEventLogSubscription = {
       createdAt: string,
       updatedAt: string,
     },
-    decoded?:  {
+    decoded:  {
       __typename: "PoolCompletedEventDecoded",
       txID: string,
       gameId: number,
@@ -6333,11 +6257,11 @@ export type OnDeletePoolCompletedEventLogSubscription = {
       auditRecordDrawId: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-    } | null,
+      poolCompletedEventDecodedPoolCompletedEventLogId: string,
+    },
     createdAt: string,
     updatedAt: string,
     poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId?: string | null,
+    poolCompletedEventLogDecodedId: string,
   } | null,
 };

@@ -1,3 +1,7 @@
+# DELETE ME
+input AMPLIFY { globalAuthRule: AuthRule = { allow: public } }
+# DELETE ME
+
 type Feedback @model @auth(rules: [{allow: public}]) {
   comment: String!
   commentType: feedbackType!
@@ -105,19 +109,12 @@ type Pool @model {
   allowPlayerLeave: Boolean!
   apiPoolAttributes: ApiPoolAttributes @hasOne
   requestHash: String!
-  players: [PoolPlayer] @hasMany
+  players: [PoolPlayer]! @hasMany
 }
 
 type PoolSuccessfullBlockEventsProcessed @model {
-  id: ID!
-  lastBlockProcessedForCreatedEvents: Int!
-  lastBlockProcessedForCompletedEvents: Int!
-  lastBlockProcessedForPlayerJoinedPoolEvents: Int!
-  lastBlockProcessedForPlayerLeftPoolEvents: Int!
-  lastBlockProcessedForPoolAwaitingExecution: Int!
-
-  lambdaProcessorDecisionCheckForNextBlocknumber: Int!
-  historicalLastBlockLoadedForEvents: Int!
+  id: Int! @primaryKey  
+  lambdaProcessorDecisionCheckForNextBlocknumber: Int!  
 }
 
 type PoolSummaries @model {
@@ -164,14 +161,14 @@ type CreatePoolEventDecoded @model {
   gameId: Int!
   player: String!
   dateTime: String!
-  createPoolEventLog: CreatePoolEventLog @belongsTo
+  createPoolEventLog: CreatePoolEventLog! @belongsTo
 }
 
 type CreatePoolEventLog @model {
   txID: String!
   raw: AWSJSON!
   meta: EventLogMeta! @hasOne
-  decoded: CreatePoolEventDecoded @hasOne
+  decoded: CreatePoolEventDecoded! @hasOne
 }
 # CreatePoolEvent
 
@@ -181,14 +178,14 @@ type PlayerJoinedPoolEventDecoded @model {
   gameId: Int!
   player: String!
   dateTime: String!
-  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog @belongsTo
+  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog! @belongsTo
 }
 
 type PlayerJoinedPoolEventLog @model {
   txID: String!
   raw: AWSJSON!
   meta: EventLogMeta! @hasOne
-  decoded: PlayerJoinedPoolEventDecoded @hasOne
+  decoded: PlayerJoinedPoolEventDecoded! @hasOne
 }
 # PlayerJoinedPoolEventDecoded
 
@@ -198,14 +195,14 @@ type PlayerLeftPoolEventDecoded @model {
   gameId: Int!
   player: String!
   dateTime: String!
-  playerLeftPoolEventLog: PlayerLeftPoolEventLog @belongsTo
+  playerLeftPoolEventLog: PlayerLeftPoolEventLog! @belongsTo
 }
 
 type PlayerLeftPoolEventLog @model {
   txID: String!
   raw: AWSJSON!
   meta: EventLogMeta! @hasOne
-  decoded: PlayerLeftPoolEventDecoded @hasOne
+  decoded: PlayerLeftPoolEventDecoded! @hasOne
 }
 # PlayerJoinedPoolEventDecoded
 
@@ -215,14 +212,14 @@ type PoolAwaitingExecutionEventDecoded @model {
   gameId: Int!
   status: String!
   dateTime: String!
-  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog @belongsTo
+  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog! @belongsTo
 }
 
 type PoolAwaitingExecutionEventLog @model {
   txID: String!
   raw: AWSJSON!
   meta: EventLogMeta! @hasOne
-  decoded: PoolAwaitingExecutionEventDecoded @hasOne
+  decoded: PoolAwaitingExecutionEventDecoded! @hasOne
 }
 # PoolAwaitingExecutionEventDecoded
 
@@ -235,14 +232,14 @@ type PoolCompletedEventDecoded @model {
   winningPayout: String!
   transactionId: String!
   auditRecordDrawId: String!
-  poolCompletedEventLog: PoolCompletedEventLog @belongsTo
+  poolCompletedEventLog: PoolCompletedEventLog! @belongsTo
 }
 
 type PoolCompletedEventLog @model {
   txID: String! @primaryKey
   raw: AWSJSON!
   meta: EventLogMeta! @hasOne
-  decoded: PoolCompletedEventDecoded @hasOne
+  decoded: PoolCompletedEventDecoded! @hasOne
 }
 # PoolCompletedEventDecoded
 

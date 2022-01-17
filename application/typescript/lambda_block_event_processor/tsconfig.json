@@ -13,7 +13,7 @@
     "preserveConstEnums": false,
     "declaration": true,
     "rootDir": "./src",       
-    "outDir": "../build/lambda_block_event_processor/dist",
+    "outDir": "../dist/lambda_block_event_processor/src",
     // "outDir": "./dist",
     "removeComments": true,      
     // "baseUrl": ".",

@@ -12,6 +12,8 @@ From the typescript root folder:
   `1) Run npm install`
 
   ### Regular running ###
-  `2) Run npm run compile:windows OR linux`
-  `3) Run library:up_windows OR linux`
+  `tsc --build -verbose`
+  
+  <!-- `2) Run npm run compile:windows OR linux`
+  `3) Run library:up_windows OR linux` -->
 

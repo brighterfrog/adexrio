@@ -9,11 +9,11 @@
     "noImplicitAny": false,
     "moduleResolution": "node",    
     "sourceMap": true,       
-    "skipLibCheck": true,
+    //"skipLibCheck": true,
     "preserveConstEnums": false,
     "declaration": true,
-    "rootDir": "./src",        
-    "outDir": "../build/lambda_historical_event_processor/dist",
+    // "rootDir": "./src",        
+    "outDir": "../dist/lambda_historical_event_processor/src",
     // "outDir": "./dist",
 
     "removeComments": true,      
@@ -22,9 +22,9 @@
     //     "@adexr/lib": ["../library/index", "../library/src/index"]      
     // }          
   },
-    // "include": [
-    //   "./src/**/*.ts",
-    // ],
+    "include": [
+       "./src/**/*.ts",
+    ],
     "exclude": [
       "./tests",
       "./dist",

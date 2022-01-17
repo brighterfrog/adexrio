@@ -17,13 +17,42 @@ before(async () => {
     // console.log('init completed');
 })
 
+describe('can insert into the block table with amplify api graphql',
+     () => {
+         it('should return true', async () => {            
+
+            const randomNumber = Math.floor(Math.random() * (100 - 0) + 0);
+            const graphql = new GraphQLService();
+            const result = await graphql.upsertPoolSuccessfullBlockEventsProcessed(randomNumber);
+            
+            console.log('test returned result', result);
+            
+             //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
+         });
+ });
+
 describe('can query the last block table with amplify api graphql',
      () => {
          it('should return true', async () => {            
 
             const graphql = new GraphQLService();
-            const result = await graphql.test();
-
+            const result = await graphql.getPoolLastBlockEventsProcessed();
+            
+            console.log('test returned result', result);
+            
              //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
          });
  });
+
+//  describe('can delete test block from the block table',
+//      () => {
+//          it('should return true', async () => {            
+
+//             const graphql = new GraphQLService();
+//             const result = await graphql.deletePoolSuccessfullBlockEventsProcessed();
+//             console.log(result);
+            
+//              //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
+//          });
+//  });
+

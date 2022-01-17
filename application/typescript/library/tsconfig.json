@@ -11,7 +11,7 @@
         "moduleResolution": "node",
         "sourceMap": true,
         //"inlineSourceMap": true,
-        "outDir": "../build/library/src",
+        "outDir": "../dist/library/src",
         "rootDir": "./src",       
         "resolveJsonModule": true,        
         "composite": true,

@@ -13,7 +13,7 @@ process.env.RANDOM_ORG_API_ENDPOINT = "https://api.random.org/json-rpc/2/invoke"
 process.env.DEBUG_ON = "false";
 // Production values
 
-import { EVENTS } from "../../library/dist/backend/blockchain/constants";
+import { EVENTS } from '../../library/src/backend/blockchain/constants';
 import { BlockchainEventProcessorService } from '../src/services/blockchain-event-retriever-service';
 import { ContractRawEvent } from '../src/models/types'
 

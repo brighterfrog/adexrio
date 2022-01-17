@@ -486,13 +486,7 @@ export const onCreatePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnCreatePoolSuccessfullBlockEventsProcessed {
     onCreatePoolSuccessfullBlockEventsProcessed {
       id
-      lastBlockProcessedForCreatedEvents
-      lastBlockProcessedForCompletedEvents
-      lastBlockProcessedForPlayerJoinedPoolEvents
-      lastBlockProcessedForPlayerLeftPoolEvents
-      lastBlockProcessedForPoolAwaitingExecution
       lambdaProcessorDecisionCheckForNextBlocknumber
-      historicalLastBlockLoadedForEvents
       createdAt
       updatedAt
     }
@@ -502,13 +496,7 @@ export const onUpdatePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnUpdatePoolSuccessfullBlockEventsProcessed {
     onUpdatePoolSuccessfullBlockEventsProcessed {
       id
-      lastBlockProcessedForCreatedEvents
-      lastBlockProcessedForCompletedEvents
-      lastBlockProcessedForPlayerJoinedPoolEvents
-      lastBlockProcessedForPlayerLeftPoolEvents
-      lastBlockProcessedForPoolAwaitingExecution
       lambdaProcessorDecisionCheckForNextBlocknumber
-      historicalLastBlockLoadedForEvents
       createdAt
       updatedAt
     }
@@ -518,13 +506,7 @@ export const onDeletePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnDeletePoolSuccessfullBlockEventsProcessed {
     onDeletePoolSuccessfullBlockEventsProcessed {
       id
-      lastBlockProcessedForCreatedEvents
-      lastBlockProcessedForCompletedEvents
-      lastBlockProcessedForPlayerJoinedPoolEvents
-      lastBlockProcessedForPlayerLeftPoolEvents
-      lastBlockProcessedForPoolAwaitingExecution
       lambdaProcessorDecisionCheckForNextBlocknumber
-      historicalLastBlockLoadedForEvents
       createdAt
       updatedAt
     }

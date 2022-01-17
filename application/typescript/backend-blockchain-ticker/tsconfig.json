@@ -13,7 +13,7 @@
     "preserveConstEnums": false,
     "declaration": true,
     "rootDir": "./src",        
-     "outDir": "../build/backend-blockchain-ticker/dist",
+     "outDir": "../dist/backend-blockchain-ticker/src",
     // "outDir": "./dist",
 
     "removeComments": true,      
