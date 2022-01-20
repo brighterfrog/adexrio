@@ -17,9 +17,11 @@ export class BlockchainEventProcessorService {
   private secretsManager: SecretsManager;
   private blockchainService: BlockChainService;
   private walletSecretDetails: any;
+  private isInitialized: boolean;
 
   constructor() {
     this.secretsManager = new SecretsManager();
+    this.isInitialized = false;
   }
 
   /**
@@ -37,13 +39,7 @@ export class BlockchainEventProcessorService {
     );
 
     await this.blockchainService.initializeWallet();
-  }
-
-  filterRawEventsByType(eventsToFilter: ContractRawEvent[], filterName: string): ContractRawEvent {
-
-    const filteredEvents = eventsToFilter.filter( (item) => item.name === filterName );
-
-    return filteredEvents[0];
+    this.isInitialized = true;
   }
 
   /**
@@ -52,7 +48,11 @@ export class BlockchainEventProcessorService {
    * @returns {Promise<ContractRawEvent[]>}
    */
   async getAllEventsStartingAtBlocknumber(eventsToRetrieve: ContractRawEvent[], startingBlockNumber: number ): Promise<ContractRawEvent[]> {  
-          
+    
+    if (!this.isInitialized) {
+      throw new Error("Wallet has not been initialized");
+    }
+
     const promiseArray = eventsToRetrieve.map( (eventItem) => {      
       return this.getAllEventsByNameStartingFromBlock(eventItem.name, startingBlockNumber);     
     }); 
@@ -63,6 +63,8 @@ export class BlockchainEventProcessorService {
     });
     
     return results;            
+
+   
   }
   /**
    * Gets all the events by the individual name passed in starting
@@ -80,6 +82,9 @@ export class BlockchainEventProcessorService {
     return new Promise(async (resolve, reject) => {
 
       try {
+        if (!this.isInitialized) {
+          throw new Error("Wallet has not been initialized");
+        }
 
         const allEventsArray: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>[] = [];
 
@@ -111,11 +116,6 @@ export class BlockchainEventProcessorService {
   }
 }
 
-/**
- * not sure yet
- * @param {any} customEvents
- */
-export async function processEvents(customEvents: any) { }
 
 // async function buildAndWriteAllBlockEvents(
 //   event,

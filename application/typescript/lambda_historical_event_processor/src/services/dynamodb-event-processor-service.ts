@@ -1,15 +1,27 @@
+import { match } from "assert";
 import { EVENTS } from "../../../library/src/backend/blockchain/constants";
 import { ProcessEventsResult, ContractRawEvent, DynamodbEventProcessingList } from "../models/types";
+import { GraphQLService } from "./graphql-service";
 
-export class DynamodbEventProcessorService {
 
-    constructor() {
+export class EventHandlerProcessMapper {
+    eventHandlerFunctionMap: Map<string, Function>;
+    eventProcessingStepsOrder: DynamodbEventProcessingList;
+    graphqlService: GraphQLService;
 
-    }
+    constructor(graphqlService: GraphQLService) {
 
-    async processContractEvents(contractEvents: ContractRawEvent[]): Promise<ProcessEventsResult> {
+        this.graphqlService = graphqlService;
 
-        const eventOrderToProcess: DynamodbEventProcessingList = {
+        this.eventHandlerFunctionMap = new Map<string, Function>([
+            [EVENTS.GameCreatedEvent, this.gameCreatedEvent],
+            [EVENTS.PlayerJoinedGameEvent, this.playerJoinedGameEvent],
+            [EVENTS.PlayerLeftGameEvent, this.playerLeftGameEvent],
+            [EVENTS.GameCompletedEvent, this.gameCompletedEvent],
+            [EVENTS.GameAwaitingLotteryEvent, this.gameAwaitingLotteryEvent]
+        ]);
+
+        this.eventProcessingStepsOrder = {
             steps: [
                 {
                     sequential: [EVENTS.GameCreatedEvent, EVENTS.PlayerJoinedGameEvent, EVENTS.PlayerLeftGameEvent, EVENTS.GameCompletedEvent],
@@ -17,56 +29,131 @@ export class DynamodbEventProcessorService {
                 }
             ]
         };
-
-        await this.processOrderList(eventOrderToProcess);
-
-        return null;
     }
 
-    private async processOrderList(list: DynamodbEventProcessingList): Promise<void> {
+    getHandlerForEventType(eventType: EVENTS): Function {
+        return this.eventHandlerFunctionMap.get(eventType);
+    }
 
-        // Check Db if event exists
-        // If NOT - write to table
-        // Streaming trigger update Pool Record table
+      // Check Db if event exists
+      // If NOT - write to table
+      // Streaming trigger lambda will update Pool Record table
+    private async gameCreatedEvent(eventsToHandle: ContractRawEvent): Promise<number> {
+        console.log('handler gameCreatedEvent with', eventsToHandle.result.length);
+        return Promise.resolve(eventsToHandle.result.length);
+    }
 
-        let allStepsPromiseArray: Promise<void>[] = [];
+    private async playerJoinedGameEvent(eventsToHandle: ContractRawEvent): Promise<number> {
+        console.log('handler playerJoinedGameEvent with ', eventsToHandle.result.length);
+        return Promise.resolve(eventsToHandle.result.length);
+    }
 
-        list.steps.forEach(async (step) => {
+    private async playerLeftGameEvent(eventsToHandle: ContractRawEvent): Promise<number> {
+        console.log('handler playerLeftGameEvent with ', eventsToHandle.result.length);
+        return Promise.resolve(eventsToHandle.result.length);
+    }
 
-            //Parallel items for this step
-            allStepsPromiseArray.concat(
-                this.handleParallelSteps(step.parallel)
-            );
+    private async gameCompletedEvent(eventsToHandle: ContractRawEvent): Promise<number> {
+        console.log('handler gameCompletedEvent with ', eventsToHandle.result.length);
+        return Promise.resolve(eventsToHandle.result.length);
+    }
 
-            //TODO
-            //sequential items for this step
-            //await this.handleSequentialSteps(step.sequential);
+    private async gameAwaitingLotteryEvent(eventsToHandle: ContractRawEvent): Promise<number> {
+        console.log('handler gameAwaitingLotteryEvent with ', eventsToHandle.result.length);
+        return Promise.resolve(eventsToHandle.result.length);
+    }
 
+    filterRawEventsByType(eventsToFilter: ContractRawEvent[], filterName: string): ContractRawEvent {
+        const filteredEvents = eventsToFilter.filter( (item) => item.name === filterName );
+        return filteredEvents[0];
+   }
+}
+
+
+export class DynamodbEventProcessorService {
+    
+    eventHandlerProcessMap: EventHandlerProcessMapper;    
+    
+    constructor(eventHandlerProcessMap: EventHandlerProcessMapper) {
+        this.eventHandlerProcessMap = eventHandlerProcessMap;
+    }
+
+    // return ProcessEventsResult
+    async processContractEvents(contractEvents: ContractRawEvent[]): Promise<void> {              
+       await this.processStepsOrderedList(this.eventHandlerProcessMap.eventProcessingStepsOrder, contractEvents, this.eventHandlerProcessMap);       
+    }
+
+    private async processStepsOrderedList(list: DynamodbEventProcessingList, contractEvents: ContractRawEvent[], eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<void> {      
+
+        let allStepsPromiseArray: Promise<number>[] = [];
+
+        list.steps.forEach(async (step) => {            
+             allStepsPromiseArray.concat(
+                 this.handleParallelSteps(step.parallel, contractEvents, eventHandlerProcessMapper)
+             );
+          
+            await this.handleSequentialSteps(step.sequential, contractEvents, eventHandlerProcessMapper);
+        });
+        
+        await Promise.all(allStepsPromiseArray);
+    }
+
+    private async handleSequentialSteps(
+        sequential: EVENTS[], 
+        contractEvents:  ContractRawEvent[], 
+        eventHandlerProcessMapper: EventHandlerProcessMapper ): Promise<void> {
+
+        sequential.forEach( async(stepEvent) => {
+              const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);              
+              const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);                            
+              await matchedHandler(matchedRawEvents);
         });
 
-        //TODO add in when completed with parallel
-        //await Promise.all(allStepsPromiseArray);
-
     }
 
-    private async handleSequentialSteps(sequential: EVENTS[]): Promise<void> {
-      
-        return null;
-    }
+    /**
+     * @description non-awaited parallel step processing, waits at promise.all
+     * @param parallel 
+     * @param contractEvents 
+     * @param eventHandlerProcessMapper 
+     * @returns 
+     */
+    private async handleParallelSteps(
+        parallel: EVENTS[],
+        contractEvents:  ContractRawEvent[], 
+        eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<any> {
+            
+        const stepParallelPromiseArray = parallel.map(async (stepEvent): Promise<number> =>  {
 
-    private async handleParallelSteps(parallel: EVENTS[]): Promise<void> {
+            const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);
+            const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);
+            return matchedHandler(matchedRawEvents);
+            
+            //***** */
 
-        const stepParallelPromiseArray = parallel.map((eventItem) => {
-            return this.processParallelSteps(eventItem);
+            //return this.internalHandleParallelSteps(stepEvent, contractEvents, eventHandlerProcessMapper)
+
+            //***** */
+
+            // return (async (): Promise<number> => {
+              
+            //     const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);
+            //     const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);
+            //     return matchedHandler(matchedRawEvents);
+            // });
         });
-
-        //return stepParallelPromiseArray;
-        return null;
+              
+        return stepParallelPromiseArray;
     }
-
-    private async processParallelSteps(eventItem: EVENTS): Promise<void> {
-
-    }
-
+    
+    private async internalHandleParallelSteps(stepEvent: EVENTS,
+        contractEvents:  ContractRawEvent[], 
+        eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<number>  {
+              
+        const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);
+        const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);
+        return await matchedHandler(matchedRawEvents);
+    };
+   
 
 }

@@ -2,8 +2,9 @@
 import { getHighestBlockNumberFromRecordBatch } from "./sqs-historical-service"
 import { EVENTS } from "../../../library/src/backend/blockchain/constants";
 import { BlockchainEventProcessorService } from '../services/blockchain-event-retriever-service';
-import { DynamodbEventProcessorService } from '../services/dynamodb-event-processor-service'
+import { DynamodbEventProcessorService, EventHandlerProcessMapper } from '../services/dynamodb-event-processor-service'
 import { ContractRawEvent } from '../../src/models/types'
+import { GraphQLService } from "./graphql-service";
 
 export class Orchestrator {
     
@@ -13,7 +14,7 @@ export class Orchestrator {
 
     constructor() {
         this.blockchainEventProcessorService = new BlockchainEventProcessorService();
-        this.dynamodbEventProcessorService = new DynamodbEventProcessorService();
+        this.dynamodbEventProcessorService = new DynamodbEventProcessorService(new EventHandlerProcessMapper(new GraphQLService()));
         this.eventsToRetrieve = [
             {
                 name: EVENTS.GameCreatedEvent,

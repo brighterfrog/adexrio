@@ -43,8 +43,8 @@ export class GraphQLService {
     async upsertPoolSuccessfullBlockEventsProcessed(latestBlocknumber: number): Promise<PoolSuccessfullBlockEventsProcessed> {
         try {
 
-            const existingEntry = await this.getPoolLastBlockEventsProcessed();
-            console.log('existingEntry', existingEntry);
+            const existingEntry = await this.getPoolLastBlockEventsProcessed();            
+
             if (!existingEntry) {
                 console.log('no existing entry found, adding initial');
                 const result = await API.graphql(graphqlOperation(createPoolSuccessfullBlockEventsProcessed, {
@@ -52,8 +52,7 @@ export class GraphQLService {
                         id: this.poolSuccessfullBlockEventsProcessedTableId,
                         lambdaProcessorDecisionCheckForNextBlocknumber: latestBlocknumber
                     }
-                })) as GraphQLResult<CreatePoolSuccessfullBlockEventsProcessedMutation>;   
-                // console.log('upsertPoolSuccessfullBlockEventsProcessed completed', result);
+                })) as GraphQLResult<CreatePoolSuccessfullBlockEventsProcessedMutation>;                   
                 return result.data?.createPoolSuccessfullBlockEventsProcessed;
             }
             else {
@@ -63,8 +62,7 @@ export class GraphQLService {
                         id: this.poolSuccessfullBlockEventsProcessedTableId,
                         lambdaProcessorDecisionCheckForNextBlocknumber: latestBlocknumber
                     }
-                })) as GraphQLResult<UpdatePoolSuccessfullBlockEventsProcessedMutation>;   
-                // console.log('updatePoolSuccessfullBlockEventsProcessed completed', result);
+                })) as GraphQLResult<UpdatePoolSuccessfullBlockEventsProcessedMutation>;                   
                 return result.data?.updatePoolSuccessfullBlockEventsProcessed;
             }
 

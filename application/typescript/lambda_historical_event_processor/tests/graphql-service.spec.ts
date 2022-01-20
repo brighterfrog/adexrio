@@ -23,11 +23,12 @@ describe('can insert into the block table with amplify api graphql',
 
             const randomNumber = Math.floor(Math.random() * (100 - 0) + 0);
             const graphql = new GraphQLService();
+            
             const result = await graphql.upsertPoolSuccessfullBlockEventsProcessed(randomNumber);
             
             console.log('test returned result', result);
             
-             //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
+             expect(result.lambdaProcessorDecisionCheckForNextBlocknumber).to.equal(randomNumber);
          });
  });
 
@@ -40,7 +41,7 @@ describe('can query the last block table with amplify api graphql',
             
             console.log('test returned result', result);
             
-             //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
+            expect(result.lambdaProcessorDecisionCheckForNextBlocknumber).is.greaterThan(0);
          });
  });
 

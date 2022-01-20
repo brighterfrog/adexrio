@@ -16,8 +16,12 @@ process.env.DEBUG_ON = "false";
 import { EVENTS } from '../../library/src/backend/blockchain/constants';
 import { BlockchainEventProcessorService } from '../src/services/blockchain-event-retriever-service';
 import { ContractRawEvent } from '../src/models/types'
+import { EventHandlerProcessMapper } from '../src/services/dynamodb-event-processor-service';
+import { GraphQLService } from '../src/services/graphql-service';
 
 let blockchainEventProcessorService: BlockchainEventProcessorService;
+let eventHandlerProcessMapper: EventHandlerProcessMapper;
+
 
 /**
  * Test Setup
@@ -25,6 +29,7 @@ let blockchainEventProcessorService: BlockchainEventProcessorService;
 before(async () => {
     console.log('init running..');
     blockchainEventProcessorService = new BlockchainEventProcessorService();
+    eventHandlerProcessMapper = new EventHandlerProcessMapper(new GraphQLService());
     await blockchainEventProcessorService.initialize();
     console.log('init completed');
 })
@@ -186,7 +191,7 @@ describe('Can retrieve a specific type of events by name filter',
  
             const events = await blockchainEventProcessorService.getAllEventsStartingAtBlocknumber(eventList, 0);
             
-            const filteredEvents = blockchainEventProcessorService.filterRawEventsByType(events, expectedEvent.name);
+            const filteredEvents = eventHandlerProcessMapper.filterRawEventsByType(events, expectedEvent.name);
 
             console.log('filteredEvents result array length', filteredEvents.result.length);    
             console.log('filteredEvents with name', filteredEvents.name);
