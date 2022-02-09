@@ -82,15 +82,34 @@ export class EventHandlerProcessMapper {
 
     }
 
-    private async gameCompletedEvent(eventsToHandle: ContractRawEvent, eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<number> {
-        console.log('handler gameCompletedEvent with ', eventsToHandle.result.length);
-        return Promise.resolve(eventsToHandle.result.length);
+    private async gameCompletedEvent(eventsToHandle: ContractRawEvent, eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<void> {
+        eventsToHandle.result.forEach(async (contractRawEvent) => {
+                
+            const existingEntry =  await eventHandlerProcessMapper.graphqlService.getPoolCompletedEventLogByTxId(contractRawEvent.meta.txID);
+            if (existingEntry) {
+                console.log('entry already exists for', existingEntry);
+            }
+            else {
+                await eventHandlerProcessMapper.graphqlService.createPoolCompletedEventLog(contractRawEvent);
+            }
+            
+        });
+
     }
 
-    private async gameAwaitingLotteryEvent(eventsToHandle: ContractRawEvent, eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<number> {
-        console.log('handler gameAwaitingLotteryEvent with', eventsToHandle.result.length);
-        return Promise.resolve(eventsToHandle.result.length);
+    private async gameAwaitingLotteryEvent(eventsToHandle: ContractRawEvent, eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<void> {
+        eventsToHandle.result.forEach(async (contractRawEvent) => {
+                
+            const existingEntry =  await eventHandlerProcessMapper.graphqlService.getAwaitingPoolExecutionEventLogByTxId(contractRawEvent.meta.txID);
+            if (existingEntry) {
+                console.log('entry already exists for', existingEntry);
+            }
+            else {
+                await eventHandlerProcessMapper.graphqlService.createAwaitingPoolExecutionEventLog(contractRawEvent);
+            }            
+        });
     }
+
 
     filterRawEventsByType(eventsToFilter: ContractRawEvent[], filterName: string): ContractRawEvent {
         const filteredEvents = eventsToFilter.filter((item) => item.name === filterName);
@@ -106,8 +125,7 @@ export class DynamodbEventProcessorService {
     constructor(eventHandlerProcessMap: EventHandlerProcessMapper) {
         this.eventHandlerProcessMap = eventHandlerProcessMap;
     }
-
-    // return ProcessEventsResult
+    
     async processContractEvents(contractEvents: ContractRawEvent[]): Promise<void> {
         await this.processStepsOrderedList(this.eventHandlerProcessMap.eventProcessingStepsOrder, contractEvents, this.eventHandlerProcessMap);
     }
@@ -156,6 +174,7 @@ export class DynamodbEventProcessorService {
 
             const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);
             const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);
+            
             return matchedHandler(matchedRawEvents, eventHandlerProcessMapper);          
         });
 

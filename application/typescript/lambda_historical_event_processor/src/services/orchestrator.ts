@@ -7,7 +7,7 @@ import { ContractRawEvent } from '../../src/models/types'
 import { GraphQLService } from "./graphql-service";
 
 export class Orchestrator {
-    
+
     blockchainEventProcessorService: BlockchainEventProcessorService;
     dynamodbEventProcessorService: DynamodbEventProcessorService;
     eventsToRetrieve: ContractRawEvent[];
@@ -39,28 +39,14 @@ export class Orchestrator {
         ];
     }
 
-       //TODO:
-        /*
-            Iterate event types by block: orderByBlockSequence, already ordered
-        
-            process Event Types by precedence & block sequence
-                *blocks are already in sequential block order
+    //TODO:      
+    //Streaming trigger update Pool Record table
 
-        */
-
-        // Check Db if event exists
-        //     If NOT - write to table
-        //     Streaming trigger update Pool Record table
-        
     async process(event: any): Promise<void> {
-           
-        const lastBlockProcessed = 0 + 1;   //+1 to increment so we aren't doing last block twice                
+
+        const lastBlockProcessed = event.lambdaProcessorDecisionCheckForNextBlocknumber + 1;   //+1 to increment so we aren't doing last block twice. This comes from the  library/amplify/backend/function/addBlocktickerEventToSQS              
         const allEvents = await this.blockchainEventProcessorService.getAllEventsStartingAtBlocknumber(this.eventsToRetrieve, lastBlockProcessed);
 
-        await this.dynamodbEventProcessorService.processContractEvents(allEvents);      
-    }  
-    
-    // reportProgress(event) {
-    //     //const highestBlockMessageFromBatch = getHighestBlockNumberFromRecordBatch(event); 
-    // }
+        await this.dynamodbEventProcessorService.processContractEvents(allEvents);
+    }    
 }

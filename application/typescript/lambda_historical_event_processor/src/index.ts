@@ -9,18 +9,6 @@ import { Orchestrator } from "./services/orchestrator";
     
     console.log('lambda historical event process ', event);
 
-    await (new Orchestrator()).process(event);   
-     
-    // console.log(EVENTS.GameAwaitingLotteryEvent);
-
-
-//   //const result = await blockEventService.buildAndWriteAllBlockEvents(event, highestBlockMessageFromBatch);
-
-
-//   //console.log('done with processing historical event batch with result ', result);
-
-//   // return {
-//   //   completed: true
-//   // };
+    await (new Orchestrator()).process(event);           
 
 };

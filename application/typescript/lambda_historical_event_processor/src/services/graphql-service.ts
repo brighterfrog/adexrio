@@ -216,8 +216,10 @@ export class GraphQLService {
                     metaTxOrigin: rawThorEvent.meta.txOrigin,
                     metaClauseIndex: rawThorEvent.meta.clauseIndex,
                     decodedGameId: rawThorEvent.decoded.gameId,
-                    decodedPlayer: rawThorEvent.decoded.player,
+                    decodedStatus: rawThorEvent.decoded.status,
+                    decodedType: rawThorEvent.decoded.type,
                     decodedDateTime: rawThorEvent.decoded.dateTime
+
                 } as CreatePlayerJoinedPoolEventLogMutation
             }
             )) as GraphQLResult<CreatePoolAwaitingExecutionEventLogMutation>;
@@ -252,8 +254,13 @@ export class GraphQLService {
                     metaClauseIndex: rawThorEvent.meta.clauseIndex,
                     decodedGameId: rawThorEvent.decoded.gameId,
                     decodedPlayer: rawThorEvent.decoded.player,
-                    decodedDateTime: rawThorEvent.decoded.dateTime
-                } as CreatePlayerJoinedPoolEventLogMutation
+                    decodedDateTime: rawThorEvent.decoded.dateTime,
+                    decodedWinningPayout: rawThorEvent.decoded.winningPayout,
+                    decodedStatus: rawThorEvent.decoded.status,
+                    decodedAuditRecordDrawId: rawThorEvent.decoded.auditRecordDrawId,
+                    decodedType: rawThorEvent.decoded.type
+
+                } as CreatePoolCompletedEventLogMutation
             }
             )) as GraphQLResult<CreatePoolCompletedEventLogMutation>;
 
