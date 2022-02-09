@@ -763,135 +763,6 @@ export const deleteBrand = /* GraphQL */ `
     }
   }
 `;
-export const createEventLogMeta = /* GraphQL */ `
-  mutation CreateEventLogMeta(
-    $input: CreateEventLogMetaInput!
-    $condition: ModelEventLogMetaConditionInput
-  ) {
-    createEventLogMeta(input: $input, condition: $condition) {
-      txID
-      blockID
-      blockNumber
-      blockTimestamp
-      txOrigin
-      clauseIndex
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const updateEventLogMeta = /* GraphQL */ `
-  mutation UpdateEventLogMeta(
-    $input: UpdateEventLogMetaInput!
-    $condition: ModelEventLogMetaConditionInput
-  ) {
-    updateEventLogMeta(input: $input, condition: $condition) {
-      txID
-      blockID
-      blockNumber
-      blockTimestamp
-      txOrigin
-      clauseIndex
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const deleteEventLogMeta = /* GraphQL */ `
-  mutation DeleteEventLogMeta(
-    $input: DeleteEventLogMetaInput!
-    $condition: ModelEventLogMetaConditionInput
-  ) {
-    deleteEventLogMeta(input: $input, condition: $condition) {
-      txID
-      blockID
-      blockNumber
-      blockTimestamp
-      txOrigin
-      clauseIndex
-      id
-      createdAt
-      updatedAt
-    }
-  }
-`;
-export const createCreatePoolEventDecoded = /* GraphQL */ `
-  mutation CreateCreatePoolEventDecoded(
-    $input: CreateCreatePoolEventDecodedInput!
-    $condition: ModelCreatePoolEventDecodedConditionInput
-  ) {
-    createCreatePoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      createPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        createPoolEventLogMetaId
-        createPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      createPoolEventDecodedCreatePoolEventLogId
-    }
-  }
-`;
-export const updateCreatePoolEventDecoded = /* GraphQL */ `
-  mutation UpdateCreatePoolEventDecoded(
-    $input: UpdateCreatePoolEventDecodedInput!
-    $condition: ModelCreatePoolEventDecodedConditionInput
-  ) {
-    updateCreatePoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      createPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        createPoolEventLogMetaId
-        createPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      createPoolEventDecodedCreatePoolEventLogId
-    }
-  }
-`;
-export const deleteCreatePoolEventDecoded = /* GraphQL */ `
-  mutation DeleteCreatePoolEventDecoded(
-    $input: DeleteCreatePoolEventDecodedInput!
-    $condition: ModelCreatePoolEventDecodedConditionInput
-  ) {
-    deleteCreatePoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      createPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        createPoolEventLogMetaId
-        createPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      createPoolEventDecodedCreatePoolEventLogId
-    }
-  }
-`;
 export const createCreatePoolEventLog = /* GraphQL */ `
   mutation CreateCreatePoolEventLog(
     $input: CreateCreatePoolEventLogInput!
@@ -900,31 +771,16 @@ export const createCreatePoolEventLog = /* GraphQL */ `
     createCreatePoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        createPoolEventDecodedCreatePoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      createPoolEventLogMetaId
-      createPoolEventLogDecodedId
     }
   }
 `;
@@ -936,31 +792,16 @@ export const updateCreatePoolEventLog = /* GraphQL */ `
     updateCreatePoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        createPoolEventDecodedCreatePoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      createPoolEventLogMetaId
-      createPoolEventLogDecodedId
     }
   }
 `;
@@ -972,106 +813,16 @@ export const deleteCreatePoolEventLog = /* GraphQL */ `
     deleteCreatePoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        createPoolEventDecodedCreatePoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      createPoolEventLogMetaId
-      createPoolEventLogDecodedId
-    }
-  }
-`;
-export const createPlayerJoinedPoolEventDecoded = /* GraphQL */ `
-  mutation CreatePlayerJoinedPoolEventDecoded(
-    $input: CreatePlayerJoinedPoolEventDecodedInput!
-    $condition: ModelPlayerJoinedPoolEventDecodedConditionInput
-  ) {
-    createPlayerJoinedPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerJoinedPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerJoinedPoolEventLogMetaId
-        playerJoinedPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
-    }
-  }
-`;
-export const updatePlayerJoinedPoolEventDecoded = /* GraphQL */ `
-  mutation UpdatePlayerJoinedPoolEventDecoded(
-    $input: UpdatePlayerJoinedPoolEventDecodedInput!
-    $condition: ModelPlayerJoinedPoolEventDecodedConditionInput
-  ) {
-    updatePlayerJoinedPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerJoinedPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerJoinedPoolEventLogMetaId
-        playerJoinedPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
-    }
-  }
-`;
-export const deletePlayerJoinedPoolEventDecoded = /* GraphQL */ `
-  mutation DeletePlayerJoinedPoolEventDecoded(
-    $input: DeletePlayerJoinedPoolEventDecodedInput!
-    $condition: ModelPlayerJoinedPoolEventDecodedConditionInput
-  ) {
-    deletePlayerJoinedPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerJoinedPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerJoinedPoolEventLogMetaId
-        playerJoinedPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
     }
   }
 `;
@@ -1083,31 +834,16 @@ export const createPlayerJoinedPoolEventLog = /* GraphQL */ `
     createPlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerJoinedPoolEventLogMetaId
-      playerJoinedPoolEventLogDecodedId
     }
   }
 `;
@@ -1119,31 +855,16 @@ export const updatePlayerJoinedPoolEventLog = /* GraphQL */ `
     updatePlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerJoinedPoolEventLogMetaId
-      playerJoinedPoolEventLogDecodedId
     }
   }
 `;
@@ -1155,106 +876,16 @@ export const deletePlayerJoinedPoolEventLog = /* GraphQL */ `
     deletePlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerJoinedPoolEventLogMetaId
-      playerJoinedPoolEventLogDecodedId
-    }
-  }
-`;
-export const createPlayerLeftPoolEventDecoded = /* GraphQL */ `
-  mutation CreatePlayerLeftPoolEventDecoded(
-    $input: CreatePlayerLeftPoolEventDecodedInput!
-    $condition: ModelPlayerLeftPoolEventDecodedConditionInput
-  ) {
-    createPlayerLeftPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerLeftPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerLeftPoolEventLogMetaId
-        playerLeftPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
-    }
-  }
-`;
-export const updatePlayerLeftPoolEventDecoded = /* GraphQL */ `
-  mutation UpdatePlayerLeftPoolEventDecoded(
-    $input: UpdatePlayerLeftPoolEventDecodedInput!
-    $condition: ModelPlayerLeftPoolEventDecodedConditionInput
-  ) {
-    updatePlayerLeftPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerLeftPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerLeftPoolEventLogMetaId
-        playerLeftPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
-    }
-  }
-`;
-export const deletePlayerLeftPoolEventDecoded = /* GraphQL */ `
-  mutation DeletePlayerLeftPoolEventDecoded(
-    $input: DeletePlayerLeftPoolEventDecodedInput!
-    $condition: ModelPlayerLeftPoolEventDecodedConditionInput
-  ) {
-    deletePlayerLeftPoolEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      playerLeftPoolEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        playerLeftPoolEventLogMetaId
-        playerLeftPoolEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
     }
   }
 `;
@@ -1266,31 +897,16 @@ export const createPlayerLeftPoolEventLog = /* GraphQL */ `
     createPlayerLeftPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerLeftPoolEventLogMetaId
-      playerLeftPoolEventLogDecodedId
     }
   }
 `;
@@ -1302,31 +918,16 @@ export const updatePlayerLeftPoolEventLog = /* GraphQL */ `
     updatePlayerLeftPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerLeftPoolEventLogMetaId
-      playerLeftPoolEventLogDecodedId
     }
   }
 `;
@@ -1338,115 +939,16 @@ export const deletePlayerLeftPoolEventLog = /* GraphQL */ `
     deletePlayerLeftPoolEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        createdAt
-        updatedAt
-        playerLeftPoolEventDecodedPlayerLeftPoolEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedPlayer
+      decodedDateTime
       createdAt
       updatedAt
-      playerLeftPoolEventLogMetaId
-      playerLeftPoolEventLogDecodedId
-    }
-  }
-`;
-export const createPoolAwaitingExecutionEventDecoded = /* GraphQL */ `
-  mutation CreatePoolAwaitingExecutionEventDecoded(
-    $input: CreatePoolAwaitingExecutionEventDecodedInput!
-    $condition: ModelPoolAwaitingExecutionEventDecodedConditionInput
-  ) {
-    createPoolAwaitingExecutionEventDecoded(
-      input: $input
-      condition: $condition
-    ) {
-      txID
-      gameId
-      status
-      dateTime
-      poolAwaitingExecutionEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventLogMetaId
-        poolAwaitingExecutionEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
-    }
-  }
-`;
-export const updatePoolAwaitingExecutionEventDecoded = /* GraphQL */ `
-  mutation UpdatePoolAwaitingExecutionEventDecoded(
-    $input: UpdatePoolAwaitingExecutionEventDecodedInput!
-    $condition: ModelPoolAwaitingExecutionEventDecodedConditionInput
-  ) {
-    updatePoolAwaitingExecutionEventDecoded(
-      input: $input
-      condition: $condition
-    ) {
-      txID
-      gameId
-      status
-      dateTime
-      poolAwaitingExecutionEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventLogMetaId
-        poolAwaitingExecutionEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
-    }
-  }
-`;
-export const deletePoolAwaitingExecutionEventDecoded = /* GraphQL */ `
-  mutation DeletePoolAwaitingExecutionEventDecoded(
-    $input: DeletePoolAwaitingExecutionEventDecodedInput!
-    $condition: ModelPoolAwaitingExecutionEventDecodedConditionInput
-  ) {
-    deletePoolAwaitingExecutionEventDecoded(
-      input: $input
-      condition: $condition
-    ) {
-      txID
-      gameId
-      status
-      dateTime
-      poolAwaitingExecutionEventLog {
-        txID
-        raw
-        id
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventLogMetaId
-        poolAwaitingExecutionEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
     }
   }
 `;
@@ -1458,31 +960,17 @@ export const createPoolAwaitingExecutionEventLog = /* GraphQL */ `
     createPoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        status
-        dateTime
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedStatus
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolAwaitingExecutionEventLogMetaId
-      poolAwaitingExecutionEventLogDecodedId
     }
   }
 `;
@@ -1494,31 +982,17 @@ export const updatePoolAwaitingExecutionEventLog = /* GraphQL */ `
     updatePoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        status
-        dateTime
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedStatus
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolAwaitingExecutionEventLogMetaId
-      poolAwaitingExecutionEventLogDecodedId
     }
   }
 `;
@@ -1530,112 +1004,17 @@ export const deletePoolAwaitingExecutionEventLog = /* GraphQL */ `
     deletePoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        status
-        dateTime
-        createdAt
-        updatedAt
-        poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId
-      }
-      id
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedGameId
+      decodedStatus
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolAwaitingExecutionEventLogMetaId
-      poolAwaitingExecutionEventLogDecodedId
-    }
-  }
-`;
-export const createPoolCompletedEventDecoded = /* GraphQL */ `
-  mutation CreatePoolCompletedEventDecoded(
-    $input: CreatePoolCompletedEventDecodedInput!
-    $condition: ModelPoolCompletedEventDecodedConditionInput
-  ) {
-    createPoolCompletedEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      winningPayout
-      transactionId
-      auditRecordDrawId
-      poolCompletedEventLog {
-        txID
-        raw
-        createdAt
-        updatedAt
-        poolCompletedEventLogMetaId
-        poolCompletedEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolCompletedEventDecodedPoolCompletedEventLogId
-    }
-  }
-`;
-export const updatePoolCompletedEventDecoded = /* GraphQL */ `
-  mutation UpdatePoolCompletedEventDecoded(
-    $input: UpdatePoolCompletedEventDecodedInput!
-    $condition: ModelPoolCompletedEventDecodedConditionInput
-  ) {
-    updatePoolCompletedEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      winningPayout
-      transactionId
-      auditRecordDrawId
-      poolCompletedEventLog {
-        txID
-        raw
-        createdAt
-        updatedAt
-        poolCompletedEventLogMetaId
-        poolCompletedEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolCompletedEventDecodedPoolCompletedEventLogId
-    }
-  }
-`;
-export const deletePoolCompletedEventDecoded = /* GraphQL */ `
-  mutation DeletePoolCompletedEventDecoded(
-    $input: DeletePoolCompletedEventDecodedInput!
-    $condition: ModelPoolCompletedEventDecodedConditionInput
-  ) {
-    deletePoolCompletedEventDecoded(input: $input, condition: $condition) {
-      txID
-      gameId
-      player
-      dateTime
-      winningPayout
-      transactionId
-      auditRecordDrawId
-      poolCompletedEventLog {
-        txID
-        raw
-        createdAt
-        updatedAt
-        poolCompletedEventLogMetaId
-        poolCompletedEventLogDecodedId
-      }
-      createdAt
-      updatedAt
-      poolCompletedEventDecodedPoolCompletedEventLogId
     }
   }
 `;
@@ -1647,33 +1026,20 @@ export const createPoolCompletedEventLog = /* GraphQL */ `
     createPoolCompletedEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        winningPayout
-        transactionId
-        auditRecordDrawId
-        createdAt
-        updatedAt
-        poolCompletedEventDecodedPoolCompletedEventLogId
-      }
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedWinningPayout
+      decodedGameId
+      decodedPlayer
+      decodedStatus
+      decodedAuditRecordDrawId
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolCompletedEventLogMetaId
-      poolCompletedEventLogDecodedId
     }
   }
 `;
@@ -1685,33 +1051,20 @@ export const updatePoolCompletedEventLog = /* GraphQL */ `
     updatePoolCompletedEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        winningPayout
-        transactionId
-        auditRecordDrawId
-        createdAt
-        updatedAt
-        poolCompletedEventDecodedPoolCompletedEventLogId
-      }
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedWinningPayout
+      decodedGameId
+      decodedPlayer
+      decodedStatus
+      decodedAuditRecordDrawId
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolCompletedEventLogMetaId
-      poolCompletedEventLogDecodedId
     }
   }
 `;
@@ -1723,33 +1076,20 @@ export const deletePoolCompletedEventLog = /* GraphQL */ `
     deletePoolCompletedEventLog(input: $input, condition: $condition) {
       txID
       raw
-      meta {
-        txID
-        blockID
-        blockNumber
-        blockTimestamp
-        txOrigin
-        clauseIndex
-        id
-        createdAt
-        updatedAt
-      }
-      decoded {
-        txID
-        gameId
-        player
-        dateTime
-        winningPayout
-        transactionId
-        auditRecordDrawId
-        createdAt
-        updatedAt
-        poolCompletedEventDecodedPoolCompletedEventLogId
-      }
+      metaBlockID
+      metaBlockNumber
+      metaBlockTimestamp
+      metaTxOrigin
+      metaClauseIndex
+      decodedWinningPayout
+      decodedGameId
+      decodedPlayer
+      decodedStatus
+      decodedAuditRecordDrawId
+      decodedType
+      decodedDateTime
       createdAt
       updatedAt
-      poolCompletedEventLogMetaId
-      poolCompletedEventLogDecodedId
     }
   }
 `;

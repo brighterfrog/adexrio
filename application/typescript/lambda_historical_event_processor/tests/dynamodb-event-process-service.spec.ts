@@ -29,11 +29,10 @@ before(async () => {
 describe('can execute sequential events',
      () => {
          it('should return true', async () => {            
-
-            const graphqlService = new GraphQLService();
-            const eventHandlerProcessorMapper = new EventHandlerProcessMapper(graphqlService);
-            const dynamodbEventProcessorService = new DynamodbEventProcessorService(eventHandlerProcessorMapper);
+                    
+            const dynamodbEventProcessorService = new DynamodbEventProcessorService(new EventHandlerProcessMapper(new GraphQLService()));
             const blockChainEventRetrieverService = new BlockchainEventProcessorService();
+            
             await blockChainEventRetrieverService.initialize();
 
             const eventsToRetrieve = [

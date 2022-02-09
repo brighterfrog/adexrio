@@ -33,13 +33,10 @@ export class DynamoDbDatabaseService {
     this.ddbDocClient = DynamoDBDocument.from(this.client, translateConfig);
   }
 
-
-
   async addRecordToTable() {
     console.log("start addRecordToTable");
     let result;
   }
-
 
   async readLastBlockForEventsProcessed() {
     console.log("start readLastBlockForEventsProcessed");

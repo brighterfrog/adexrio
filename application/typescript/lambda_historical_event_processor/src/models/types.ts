@@ -35,28 +35,29 @@ export interface DynamodbEventProcessingList {
   steps: DynamodbEventProcessingStep[]
 }
 
-/* not used */
-type DecodedGameCreatedEvent = {
+
+//Not used?
+export type DecodedGameCreatedEvent = {
   gameId: string;
   player: string;
   dateTime: string;
 }
-type DecodedPlayerJoinedGameEvent = {
+export type DecodedPlayerJoinedGameEvent = {
   gameId: string;
   player: string;
   dateTime: string;
 }
-type DecodedPlayerLeftGameEvent = {
+export type DecodedPlayerLeftGameEvent = {
   gameId: string;
   player: string;
   dateTime: string;
 }
-type DecodedGameAwaitingLotteryEvent = {
+export type DecodedGameAwaitingPoolEvent = {
   gameId: string;
   status: string;
   dateTime: string;
 }
-type DecodedGameCompletedEvent = {
+export type DecodedGameCompletedEvent = {
   gameId: string;
   player: string;
   dateTime: string;

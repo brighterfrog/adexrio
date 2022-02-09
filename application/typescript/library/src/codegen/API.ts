@@ -648,486 +648,756 @@ export type DeleteBrandInput = {
   id: string,
 };
 
-export type CreateEventLogMetaInput = {
+export type CreateCreatePoolEventLogInput = {
   txID: string,
-  blockID: string,
-  blockNumber: number,
-  blockTimestamp: number,
-  txOrigin: string,
-  clauseIndex: number,
-  id?: string | null,
+  raw: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
 };
 
-export type ModelEventLogMetaConditionInput = {
-  txID?: ModelStringInput | null,
-  blockID?: ModelStringInput | null,
-  blockNumber?: ModelIntInput | null,
-  blockTimestamp?: ModelIntInput | null,
-  txOrigin?: ModelStringInput | null,
-  clauseIndex?: ModelIntInput | null,
-  and?: Array< ModelEventLogMetaConditionInput | null > | null,
-  or?: Array< ModelEventLogMetaConditionInput | null > | null,
-  not?: ModelEventLogMetaConditionInput | null,
-};
-
-export type EventLogMeta = {
-  __typename: "EventLogMeta",
-  txID: string,
-  blockID: string,
-  blockNumber: number,
-  blockTimestamp: number,
-  txOrigin: string,
-  clauseIndex: number,
-  id: string,
-  createdAt: string,
-  updatedAt: string,
-};
-
-export type UpdateEventLogMetaInput = {
-  txID?: string | null,
-  blockID?: string | null,
-  blockNumber?: number | null,
-  blockTimestamp?: number | null,
-  txOrigin?: string | null,
-  clauseIndex?: number | null,
-  id: string,
-};
-
-export type DeleteEventLogMetaInput = {
-  id: string,
-};
-
-export type CreateCreatePoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  createPoolEventDecodedCreatePoolEventLogId: string,
-};
-
-export type ModelCreatePoolEventDecodedConditionInput = {
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelCreatePoolEventDecodedConditionInput | null > | null,
-  or?: Array< ModelCreatePoolEventDecodedConditionInput | null > | null,
-  not?: ModelCreatePoolEventDecodedConditionInput | null,
-  createPoolEventDecodedCreatePoolEventLogId?: ModelIDInput | null,
-};
-
-export type CreatePoolEventDecoded = {
-  __typename: "CreatePoolEventDecoded",
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  createPoolEventLog: CreatePoolEventLog,
-  createdAt: string,
-  updatedAt: string,
-  createPoolEventDecodedCreatePoolEventLogId: string,
+export type ModelCreatePoolEventLogConditionInput = {
+  raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
+  and?: Array< ModelCreatePoolEventLogConditionInput | null > | null,
+  or?: Array< ModelCreatePoolEventLogConditionInput | null > | null,
+  not?: ModelCreatePoolEventLogConditionInput | null,
 };
 
 export type CreatePoolEventLog = {
   __typename: "CreatePoolEventLog",
   txID: string,
   raw: string,
-  meta: EventLogMeta,
-  decoded: CreatePoolEventDecoded,
-  id: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
   createdAt: string,
   updatedAt: string,
-  createPoolEventLogMetaId: string,
-  createPoolEventLogDecodedId: string,
-};
-
-export type UpdateCreatePoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime?: string | null,
-  createPoolEventDecodedCreatePoolEventLogId?: string | null,
-};
-
-export type DeleteCreatePoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type CreateCreatePoolEventLogInput = {
-  txID: string,
-  raw: string,
-  id?: string | null,
-  createPoolEventLogMetaId: string,
-  createPoolEventLogDecodedId: string,
-};
-
-export type ModelCreatePoolEventLogConditionInput = {
-  txID?: ModelStringInput | null,
-  raw?: ModelStringInput | null,
-  and?: Array< ModelCreatePoolEventLogConditionInput | null > | null,
-  or?: Array< ModelCreatePoolEventLogConditionInput | null > | null,
-  not?: ModelCreatePoolEventLogConditionInput | null,
-  createPoolEventLogMetaId?: ModelIDInput | null,
-  createPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type UpdateCreatePoolEventLogInput = {
-  txID?: string | null,
+  txID: string,
   raw?: string | null,
-  id: string,
-  createPoolEventLogMetaId?: string | null,
-  createPoolEventLogDecodedId?: string | null,
+  metaBlockID?: string | null,
+  metaBlockNumber?: number | null,
+  metaBlockTimestamp?: number | null,
+  metaTxOrigin?: string | null,
+  metaClauseIndex?: number | null,
+  decodedGameId?: number | null,
+  decodedPlayer?: string | null,
+  decodedDateTime?: string | null,
 };
 
 export type DeleteCreatePoolEventLogInput = {
-  id: string,
-};
-
-export type CreatePlayerJoinedPoolEventDecodedInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
 };
 
-export type ModelPlayerJoinedPoolEventDecodedConditionInput = {
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPlayerJoinedPoolEventDecodedConditionInput | null > | null,
-  or?: Array< ModelPlayerJoinedPoolEventDecodedConditionInput | null > | null,
-  not?: ModelPlayerJoinedPoolEventDecodedConditionInput | null,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: ModelIDInput | null,
-};
-
-export type PlayerJoinedPoolEventDecoded = {
-  __typename: "PlayerJoinedPoolEventDecoded",
+export type CreatePlayerJoinedPoolEventLogInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog,
-  createdAt: string,
-  updatedAt: string,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
+  raw: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
+};
+
+export type ModelPlayerJoinedPoolEventLogConditionInput = {
+  raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
+  and?: Array< ModelPlayerJoinedPoolEventLogConditionInput | null > | null,
+  or?: Array< ModelPlayerJoinedPoolEventLogConditionInput | null > | null,
+  not?: ModelPlayerJoinedPoolEventLogConditionInput | null,
 };
 
 export type PlayerJoinedPoolEventLog = {
   __typename: "PlayerJoinedPoolEventLog",
   txID: string,
   raw: string,
-  meta: EventLogMeta,
-  decoded: PlayerJoinedPoolEventDecoded,
-  id: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
   createdAt: string,
   updatedAt: string,
-  playerJoinedPoolEventLogMetaId: string,
-  playerJoinedPoolEventLogDecodedId: string,
-};
-
-export type UpdatePlayerJoinedPoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime?: string | null,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: string | null,
-};
-
-export type DeletePlayerJoinedPoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type CreatePlayerJoinedPoolEventLogInput = {
-  txID: string,
-  raw: string,
-  id?: string | null,
-  playerJoinedPoolEventLogMetaId: string,
-  playerJoinedPoolEventLogDecodedId: string,
-};
-
-export type ModelPlayerJoinedPoolEventLogConditionInput = {
-  txID?: ModelStringInput | null,
-  raw?: ModelStringInput | null,
-  and?: Array< ModelPlayerJoinedPoolEventLogConditionInput | null > | null,
-  or?: Array< ModelPlayerJoinedPoolEventLogConditionInput | null > | null,
-  not?: ModelPlayerJoinedPoolEventLogConditionInput | null,
-  playerJoinedPoolEventLogMetaId?: ModelIDInput | null,
-  playerJoinedPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type UpdatePlayerJoinedPoolEventLogInput = {
-  txID?: string | null,
+  txID: string,
   raw?: string | null,
-  id: string,
-  playerJoinedPoolEventLogMetaId?: string | null,
-  playerJoinedPoolEventLogDecodedId?: string | null,
+  metaBlockID?: string | null,
+  metaBlockNumber?: number | null,
+  metaBlockTimestamp?: number | null,
+  metaTxOrigin?: string | null,
+  metaClauseIndex?: number | null,
+  decodedGameId?: number | null,
+  decodedPlayer?: string | null,
+  decodedDateTime?: string | null,
 };
 
 export type DeletePlayerJoinedPoolEventLogInput = {
-  id: string,
-};
-
-export type CreatePlayerLeftPoolEventDecodedInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
 };
 
-export type ModelPlayerLeftPoolEventDecodedConditionInput = {
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPlayerLeftPoolEventDecodedConditionInput | null > | null,
-  or?: Array< ModelPlayerLeftPoolEventDecodedConditionInput | null > | null,
-  not?: ModelPlayerLeftPoolEventDecodedConditionInput | null,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: ModelIDInput | null,
-};
-
-export type PlayerLeftPoolEventDecoded = {
-  __typename: "PlayerLeftPoolEventDecoded",
+export type CreatePlayerLeftPoolEventLogInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  playerLeftPoolEventLog: PlayerLeftPoolEventLog,
-  createdAt: string,
-  updatedAt: string,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
+  raw: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
+};
+
+export type ModelPlayerLeftPoolEventLogConditionInput = {
+  raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
+  and?: Array< ModelPlayerLeftPoolEventLogConditionInput | null > | null,
+  or?: Array< ModelPlayerLeftPoolEventLogConditionInput | null > | null,
+  not?: ModelPlayerLeftPoolEventLogConditionInput | null,
 };
 
 export type PlayerLeftPoolEventLog = {
   __typename: "PlayerLeftPoolEventLog",
   txID: string,
   raw: string,
-  meta: EventLogMeta,
-  decoded: PlayerLeftPoolEventDecoded,
-  id: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedDateTime: string,
   createdAt: string,
   updatedAt: string,
-  playerLeftPoolEventLogMetaId: string,
-  playerLeftPoolEventLogDecodedId: string,
-};
-
-export type UpdatePlayerLeftPoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime?: string | null,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: string | null,
-};
-
-export type DeletePlayerLeftPoolEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type CreatePlayerLeftPoolEventLogInput = {
-  txID: string,
-  raw: string,
-  id?: string | null,
-  playerLeftPoolEventLogMetaId: string,
-  playerLeftPoolEventLogDecodedId: string,
-};
-
-export type ModelPlayerLeftPoolEventLogConditionInput = {
-  txID?: ModelStringInput | null,
-  raw?: ModelStringInput | null,
-  and?: Array< ModelPlayerLeftPoolEventLogConditionInput | null > | null,
-  or?: Array< ModelPlayerLeftPoolEventLogConditionInput | null > | null,
-  not?: ModelPlayerLeftPoolEventLogConditionInput | null,
-  playerLeftPoolEventLogMetaId?: ModelIDInput | null,
-  playerLeftPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type UpdatePlayerLeftPoolEventLogInput = {
-  txID?: string | null,
+  txID: string,
   raw?: string | null,
-  id: string,
-  playerLeftPoolEventLogMetaId?: string | null,
-  playerLeftPoolEventLogDecodedId?: string | null,
+  metaBlockID?: string | null,
+  metaBlockNumber?: number | null,
+  metaBlockTimestamp?: number | null,
+  metaTxOrigin?: string | null,
+  metaClauseIndex?: number | null,
+  decodedGameId?: number | null,
+  decodedPlayer?: string | null,
+  decodedDateTime?: string | null,
 };
 
 export type DeletePlayerLeftPoolEventLogInput = {
-  id: string,
-};
-
-export type CreatePoolAwaitingExecutionEventDecodedInput = {
   txID: string,
-  gameId: number,
-  status: string,
-  dateTime: string,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
 };
 
-export type ModelPoolAwaitingExecutionEventDecodedConditionInput = {
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPoolAwaitingExecutionEventDecodedConditionInput | null > | null,
-  or?: Array< ModelPoolAwaitingExecutionEventDecodedConditionInput | null > | null,
-  not?: ModelPoolAwaitingExecutionEventDecodedConditionInput | null,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: ModelIDInput | null,
-};
-
-export type PoolAwaitingExecutionEventDecoded = {
-  __typename: "PoolAwaitingExecutionEventDecoded",
+export type CreatePoolAwaitingExecutionEventLogInput = {
   txID: string,
-  gameId: number,
-  status: string,
-  dateTime: string,
-  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog,
-  createdAt: string,
-  updatedAt: string,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
+  raw: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedStatus: string,
+  decodedType: string,
+  decodedDateTime: string,
+};
+
+export type ModelPoolAwaitingExecutionEventLogConditionInput = {
+  raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedStatus?: ModelStringInput | null,
+  decodedType?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
+  and?: Array< ModelPoolAwaitingExecutionEventLogConditionInput | null > | null,
+  or?: Array< ModelPoolAwaitingExecutionEventLogConditionInput | null > | null,
+  not?: ModelPoolAwaitingExecutionEventLogConditionInput | null,
 };
 
 export type PoolAwaitingExecutionEventLog = {
   __typename: "PoolAwaitingExecutionEventLog",
   txID: string,
   raw: string,
-  meta: EventLogMeta,
-  decoded: PoolAwaitingExecutionEventDecoded,
-  id: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedGameId: number,
+  decodedStatus: string,
+  decodedType: string,
+  decodedDateTime: string,
   createdAt: string,
   updatedAt: string,
-  poolAwaitingExecutionEventLogMetaId: string,
-  poolAwaitingExecutionEventLogDecodedId: string,
-};
-
-export type UpdatePoolAwaitingExecutionEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  status: string,
-  dateTime?: string | null,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: string | null,
-};
-
-export type DeletePoolAwaitingExecutionEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  status: string,
-};
-
-export type CreatePoolAwaitingExecutionEventLogInput = {
-  txID: string,
-  raw: string,
-  id?: string | null,
-  poolAwaitingExecutionEventLogMetaId: string,
-  poolAwaitingExecutionEventLogDecodedId: string,
-};
-
-export type ModelPoolAwaitingExecutionEventLogConditionInput = {
-  txID?: ModelStringInput | null,
-  raw?: ModelStringInput | null,
-  and?: Array< ModelPoolAwaitingExecutionEventLogConditionInput | null > | null,
-  or?: Array< ModelPoolAwaitingExecutionEventLogConditionInput | null > | null,
-  not?: ModelPoolAwaitingExecutionEventLogConditionInput | null,
-  poolAwaitingExecutionEventLogMetaId?: ModelIDInput | null,
-  poolAwaitingExecutionEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type UpdatePoolAwaitingExecutionEventLogInput = {
-  txID?: string | null,
+  txID: string,
   raw?: string | null,
-  id: string,
-  poolAwaitingExecutionEventLogMetaId?: string | null,
-  poolAwaitingExecutionEventLogDecodedId?: string | null,
+  metaBlockID?: string | null,
+  metaBlockNumber?: number | null,
+  metaBlockTimestamp?: number | null,
+  metaTxOrigin?: string | null,
+  metaClauseIndex?: number | null,
+  decodedGameId?: number | null,
+  decodedStatus?: string | null,
+  decodedType?: string | null,
+  decodedDateTime?: string | null,
 };
 
 export type DeletePoolAwaitingExecutionEventLogInput = {
-  id: string,
-};
-
-export type CreatePoolCompletedEventDecodedInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  winningPayout: string,
-  transactionId: string,
-  auditRecordDrawId: string,
-  poolCompletedEventDecodedPoolCompletedEventLogId: string,
 };
 
-export type ModelPoolCompletedEventDecodedConditionInput = {
-  dateTime?: ModelStringInput | null,
-  winningPayout?: ModelStringInput | null,
-  transactionId?: ModelStringInput | null,
-  and?: Array< ModelPoolCompletedEventDecodedConditionInput | null > | null,
-  or?: Array< ModelPoolCompletedEventDecodedConditionInput | null > | null,
-  not?: ModelPoolCompletedEventDecodedConditionInput | null,
-  poolCompletedEventDecodedPoolCompletedEventLogId?: ModelIDInput | null,
-};
-
-export type PoolCompletedEventDecoded = {
-  __typename: "PoolCompletedEventDecoded",
+export type CreatePoolCompletedEventLogInput = {
   txID: string,
-  gameId: number,
-  player: string,
-  dateTime: string,
-  winningPayout: string,
-  transactionId: string,
-  auditRecordDrawId: string,
-  poolCompletedEventLog: PoolCompletedEventLog,
-  createdAt: string,
-  updatedAt: string,
-  poolCompletedEventDecodedPoolCompletedEventLogId: string,
+  raw: string,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedWinningPayout: string,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedStatus: string,
+  decodedAuditRecordDrawId: string,
+  decodedType: string,
+  decodedDateTime: string,
+};
+
+export type ModelPoolCompletedEventLogConditionInput = {
+  raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedWinningPayout?: ModelStringInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedStatus?: ModelStringInput | null,
+  decodedAuditRecordDrawId?: ModelStringInput | null,
+  decodedType?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
+  and?: Array< ModelPoolCompletedEventLogConditionInput | null > | null,
+  or?: Array< ModelPoolCompletedEventLogConditionInput | null > | null,
+  not?: ModelPoolCompletedEventLogConditionInput | null,
 };
 
 export type PoolCompletedEventLog = {
   __typename: "PoolCompletedEventLog",
   txID: string,
   raw: string,
-  meta: EventLogMeta,
-  decoded: PoolCompletedEventDecoded,
+  metaBlockID: string,
+  metaBlockNumber: number,
+  metaBlockTimestamp: number,
+  metaTxOrigin: string,
+  metaClauseIndex: number,
+  decodedWinningPayout: string,
+  decodedGameId: number,
+  decodedPlayer: string,
+  decodedStatus: string,
+  decodedAuditRecordDrawId: string,
+  decodedType: string,
+  decodedDateTime: string,
   createdAt: string,
   updatedAt: string,
-  poolCompletedEventLogMetaId: string,
-  poolCompletedEventLogDecodedId: string,
-};
-
-export type UpdatePoolCompletedEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  dateTime?: string | null,
-  winningPayout?: string | null,
-  transactionId?: string | null,
-  auditRecordDrawId: string,
-  poolCompletedEventDecodedPoolCompletedEventLogId?: string | null,
-};
-
-export type DeletePoolCompletedEventDecodedInput = {
-  txID: string,
-  gameId: number,
-  player: string,
-  auditRecordDrawId: string,
-};
-
-export type CreatePoolCompletedEventLogInput = {
-  txID: string,
-  raw: string,
-  poolCompletedEventLogMetaId: string,
-  poolCompletedEventLogDecodedId: string,
-};
-
-export type ModelPoolCompletedEventLogConditionInput = {
-  raw?: ModelStringInput | null,
-  and?: Array< ModelPoolCompletedEventLogConditionInput | null > | null,
-  or?: Array< ModelPoolCompletedEventLogConditionInput | null > | null,
-  not?: ModelPoolCompletedEventLogConditionInput | null,
-  poolCompletedEventLogMetaId?: ModelIDInput | null,
-  poolCompletedEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type UpdatePoolCompletedEventLogInput = {
   txID: string,
   raw?: string | null,
-  poolCompletedEventLogMetaId?: string | null,
-  poolCompletedEventLogDecodedId?: string | null,
+  metaBlockID?: string | null,
+  metaBlockNumber?: number | null,
+  metaBlockTimestamp?: number | null,
+  metaTxOrigin?: string | null,
+  metaClauseIndex?: number | null,
+  decodedWinningPayout?: string | null,
+  decodedGameId?: number | null,
+  decodedPlayer?: string | null,
+  decodedStatus?: string | null,
+  decodedAuditRecordDrawId?: string | null,
+  decodedType?: string | null,
+  decodedDateTime?: string | null,
 };
 
 export type DeletePoolCompletedEventLogInput = {
   txID: string,
+};
+
+export type SearchableCreatePoolEventLogFilterInput = {
+  txID?: SearchableStringFilterInput | null,
+  raw?: SearchableStringFilterInput | null,
+  metaBlockID?: SearchableStringFilterInput | null,
+  metaBlockNumber?: SearchableIntFilterInput | null,
+  metaBlockTimestamp?: SearchableIntFilterInput | null,
+  metaTxOrigin?: SearchableStringFilterInput | null,
+  metaClauseIndex?: SearchableIntFilterInput | null,
+  decodedGameId?: SearchableIntFilterInput | null,
+  decodedPlayer?: SearchableStringFilterInput | null,
+  decodedDateTime?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchableCreatePoolEventLogFilterInput | null > | null,
+  or?: Array< SearchableCreatePoolEventLogFilterInput | null > | null,
+  not?: SearchableCreatePoolEventLogFilterInput | null,
+};
+
+export type SearchableStringFilterInput = {
+  ne?: string | null,
+  gt?: string | null,
+  lt?: string | null,
+  gte?: string | null,
+  lte?: string | null,
+  eq?: string | null,
+  match?: string | null,
+  matchPhrase?: string | null,
+  matchPhrasePrefix?: string | null,
+  multiMatch?: string | null,
+  exists?: boolean | null,
+  wildcard?: string | null,
+  regexp?: string | null,
+  range?: Array< string | null > | null,
+};
+
+export type SearchableIntFilterInput = {
+  ne?: number | null,
+  gt?: number | null,
+  lt?: number | null,
+  gte?: number | null,
+  lte?: number | null,
+  eq?: number | null,
+  range?: Array< number | null > | null,
+};
+
+export type SearchableCreatePoolEventLogSortInput = {
+  field?: SearchableCreatePoolEventLogSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchableCreatePoolEventLogSortableFields {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export enum SearchableSortDirection {
+  asc = "asc",
+  desc = "desc",
+}
+
+
+export type SearchableCreatePoolEventLogAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchableCreatePoolEventLogAggregateField,
+};
+
+export enum SearchableAggregateType {
+  terms = "terms",
+  avg = "avg",
+  min = "min",
+  max = "max",
+  sum = "sum",
+}
+
+
+export enum SearchableCreatePoolEventLogAggregateField {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchableCreatePoolEventLogConnection = {
+  __typename: "SearchableCreatePoolEventLogConnection",
+  items:  Array<CreatePoolEventLog | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchableAggregateResult = {
+  __typename: "SearchableAggregateResult",
+  name: string,
+  result?: SearchableAggregateGenericResult | null,
+};
+
+export type SearchableAggregateGenericResult = SearchableAggregateScalarResult | SearchableAggregateBucketResult
+
+
+export type SearchableAggregateScalarResult = {
+  __typename: "SearchableAggregateScalarResult",
+  value: number,
+};
+
+export type SearchableAggregateBucketResult = {
+  __typename: "SearchableAggregateBucketResult",
+  buckets?:  Array<SearchableAggregateBucketResultItem | null > | null,
+};
+
+export type SearchableAggregateBucketResultItem = {
+  __typename: "SearchableAggregateBucketResultItem",
+  key: string,
+  doc_count: number,
+};
+
+export type SearchablePlayerJoinedPoolEventLogFilterInput = {
+  txID?: SearchableStringFilterInput | null,
+  raw?: SearchableStringFilterInput | null,
+  metaBlockID?: SearchableStringFilterInput | null,
+  metaBlockNumber?: SearchableIntFilterInput | null,
+  metaBlockTimestamp?: SearchableIntFilterInput | null,
+  metaTxOrigin?: SearchableStringFilterInput | null,
+  metaClauseIndex?: SearchableIntFilterInput | null,
+  decodedGameId?: SearchableIntFilterInput | null,
+  decodedPlayer?: SearchableStringFilterInput | null,
+  decodedDateTime?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchablePlayerJoinedPoolEventLogFilterInput | null > | null,
+  or?: Array< SearchablePlayerJoinedPoolEventLogFilterInput | null > | null,
+  not?: SearchablePlayerJoinedPoolEventLogFilterInput | null,
+};
+
+export type SearchablePlayerJoinedPoolEventLogSortInput = {
+  field?: SearchablePlayerJoinedPoolEventLogSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchablePlayerJoinedPoolEventLogSortableFields {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePlayerJoinedPoolEventLogAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchablePlayerJoinedPoolEventLogAggregateField,
+};
+
+export enum SearchablePlayerJoinedPoolEventLogAggregateField {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePlayerJoinedPoolEventLogConnection = {
+  __typename: "SearchablePlayerJoinedPoolEventLogConnection",
+  items:  Array<PlayerJoinedPoolEventLog | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchablePlayerLeftPoolEventLogFilterInput = {
+  txID?: SearchableStringFilterInput | null,
+  raw?: SearchableStringFilterInput | null,
+  metaBlockID?: SearchableStringFilterInput | null,
+  metaBlockNumber?: SearchableIntFilterInput | null,
+  metaBlockTimestamp?: SearchableIntFilterInput | null,
+  metaTxOrigin?: SearchableStringFilterInput | null,
+  metaClauseIndex?: SearchableIntFilterInput | null,
+  decodedGameId?: SearchableIntFilterInput | null,
+  decodedPlayer?: SearchableStringFilterInput | null,
+  decodedDateTime?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchablePlayerLeftPoolEventLogFilterInput | null > | null,
+  or?: Array< SearchablePlayerLeftPoolEventLogFilterInput | null > | null,
+  not?: SearchablePlayerLeftPoolEventLogFilterInput | null,
+};
+
+export type SearchablePlayerLeftPoolEventLogSortInput = {
+  field?: SearchablePlayerLeftPoolEventLogSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchablePlayerLeftPoolEventLogSortableFields {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePlayerLeftPoolEventLogAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchablePlayerLeftPoolEventLogAggregateField,
+};
+
+export enum SearchablePlayerLeftPoolEventLogAggregateField {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePlayerLeftPoolEventLogConnection = {
+  __typename: "SearchablePlayerLeftPoolEventLogConnection",
+  items:  Array<PlayerLeftPoolEventLog | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchablePoolAwaitingExecutionEventLogFilterInput = {
+  txID?: SearchableStringFilterInput | null,
+  raw?: SearchableStringFilterInput | null,
+  metaBlockID?: SearchableStringFilterInput | null,
+  metaBlockNumber?: SearchableIntFilterInput | null,
+  metaBlockTimestamp?: SearchableIntFilterInput | null,
+  metaTxOrigin?: SearchableStringFilterInput | null,
+  metaClauseIndex?: SearchableIntFilterInput | null,
+  decodedGameId?: SearchableIntFilterInput | null,
+  decodedStatus?: SearchableStringFilterInput | null,
+  decodedType?: SearchableStringFilterInput | null,
+  decodedDateTime?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchablePoolAwaitingExecutionEventLogFilterInput | null > | null,
+  or?: Array< SearchablePoolAwaitingExecutionEventLogFilterInput | null > | null,
+  not?: SearchablePoolAwaitingExecutionEventLogFilterInput | null,
+};
+
+export type SearchablePoolAwaitingExecutionEventLogSortInput = {
+  field?: SearchablePoolAwaitingExecutionEventLogSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchablePoolAwaitingExecutionEventLogSortableFields {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedStatus = "decodedStatus",
+  decodedType = "decodedType",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePoolAwaitingExecutionEventLogAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchablePoolAwaitingExecutionEventLogAggregateField,
+};
+
+export enum SearchablePoolAwaitingExecutionEventLogAggregateField {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedGameId = "decodedGameId",
+  decodedStatus = "decodedStatus",
+  decodedType = "decodedType",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePoolAwaitingExecutionEventLogConnection = {
+  __typename: "SearchablePoolAwaitingExecutionEventLogConnection",
+  items:  Array<PoolAwaitingExecutionEventLog | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
+export type SearchablePoolCompletedEventLogFilterInput = {
+  txID?: SearchableStringFilterInput | null,
+  raw?: SearchableStringFilterInput | null,
+  metaBlockID?: SearchableStringFilterInput | null,
+  metaBlockNumber?: SearchableIntFilterInput | null,
+  metaBlockTimestamp?: SearchableIntFilterInput | null,
+  metaTxOrigin?: SearchableStringFilterInput | null,
+  metaClauseIndex?: SearchableIntFilterInput | null,
+  decodedWinningPayout?: SearchableStringFilterInput | null,
+  decodedGameId?: SearchableIntFilterInput | null,
+  decodedPlayer?: SearchableStringFilterInput | null,
+  decodedStatus?: SearchableStringFilterInput | null,
+  decodedAuditRecordDrawId?: SearchableStringFilterInput | null,
+  decodedType?: SearchableStringFilterInput | null,
+  decodedDateTime?: SearchableStringFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchablePoolCompletedEventLogFilterInput | null > | null,
+  or?: Array< SearchablePoolCompletedEventLogFilterInput | null > | null,
+  not?: SearchablePoolCompletedEventLogFilterInput | null,
+};
+
+export type SearchablePoolCompletedEventLogSortInput = {
+  field?: SearchablePoolCompletedEventLogSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchablePoolCompletedEventLogSortableFields {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedWinningPayout = "decodedWinningPayout",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedStatus = "decodedStatus",
+  decodedAuditRecordDrawId = "decodedAuditRecordDrawId",
+  decodedType = "decodedType",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePoolCompletedEventLogAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchablePoolCompletedEventLogAggregateField,
+};
+
+export enum SearchablePoolCompletedEventLogAggregateField {
+  txID = "txID",
+  raw = "raw",
+  metaBlockID = "metaBlockID",
+  metaBlockNumber = "metaBlockNumber",
+  metaBlockTimestamp = "metaBlockTimestamp",
+  metaTxOrigin = "metaTxOrigin",
+  metaClauseIndex = "metaClauseIndex",
+  decodedWinningPayout = "decodedWinningPayout",
+  decodedGameId = "decodedGameId",
+  decodedPlayer = "decodedPlayer",
+  decodedStatus = "decodedStatus",
+  decodedAuditRecordDrawId = "decodedAuditRecordDrawId",
+  decodedType = "decodedType",
+  decodedDateTime = "decodedDateTime",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchablePoolCompletedEventLogConnection = {
+  __typename: "SearchablePoolCompletedEventLogConnection",
+  items:  Array<PoolCompletedEventLog | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
 };
 
 export type ModelFeedbackFilterInput = {
@@ -1316,64 +1586,20 @@ export type ModelBrandFilterInput = {
   userWalletBrandsId?: ModelIDInput | null,
 };
 
-export type ModelEventLogMetaFilterInput = {
-  txID?: ModelStringInput | null,
-  blockID?: ModelStringInput | null,
-  blockNumber?: ModelIntInput | null,
-  blockTimestamp?: ModelIntInput | null,
-  txOrigin?: ModelStringInput | null,
-  clauseIndex?: ModelIntInput | null,
-  and?: Array< ModelEventLogMetaFilterInput | null > | null,
-  or?: Array< ModelEventLogMetaFilterInput | null > | null,
-  not?: ModelEventLogMetaFilterInput | null,
-};
-
-export type ModelEventLogMetaConnection = {
-  __typename: "ModelEventLogMetaConnection",
-  items:  Array<EventLogMeta | null >,
-  nextToken?: string | null,
-};
-
-export type ModelCreatePoolEventDecodedPrimaryCompositeKeyConditionInput = {
-  eq?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-  le?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-  lt?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-  ge?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-  gt?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-  between?: Array< ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null > | null,
-  beginsWith?: ModelCreatePoolEventDecodedPrimaryCompositeKeyInput | null,
-};
-
-export type ModelCreatePoolEventDecodedPrimaryCompositeKeyInput = {
-  gameId?: number | null,
-  player?: string | null,
-};
-
-export type ModelCreatePoolEventDecodedFilterInput = {
-  txID?: ModelStringInput | null,
-  gameId?: ModelIntInput | null,
-  player?: ModelStringInput | null,
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelCreatePoolEventDecodedFilterInput | null > | null,
-  or?: Array< ModelCreatePoolEventDecodedFilterInput | null > | null,
-  not?: ModelCreatePoolEventDecodedFilterInput | null,
-  createPoolEventDecodedCreatePoolEventLogId?: ModelIDInput | null,
-};
-
-export type ModelCreatePoolEventDecodedConnection = {
-  __typename: "ModelCreatePoolEventDecodedConnection",
-  items:  Array<CreatePoolEventDecoded | null >,
-  nextToken?: string | null,
-};
-
 export type ModelCreatePoolEventLogFilterInput = {
   txID?: ModelStringInput | null,
   raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
   and?: Array< ModelCreatePoolEventLogFilterInput | null > | null,
   or?: Array< ModelCreatePoolEventLogFilterInput | null > | null,
   not?: ModelCreatePoolEventLogFilterInput | null,
-  createPoolEventLogMetaId?: ModelIDInput | null,
-  createPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type ModelCreatePoolEventLogConnection = {
@@ -1382,46 +1608,20 @@ export type ModelCreatePoolEventLogConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyConditionInput = {
-  eq?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-  le?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-  lt?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-  ge?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-  gt?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-  between?: Array< ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null > | null,
-  beginsWith?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput | null,
-};
-
-export type ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyInput = {
-  gameId?: number | null,
-  player?: string | null,
-};
-
-export type ModelPlayerJoinedPoolEventDecodedFilterInput = {
-  txID?: ModelStringInput | null,
-  gameId?: ModelIntInput | null,
-  player?: ModelStringInput | null,
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPlayerJoinedPoolEventDecodedFilterInput | null > | null,
-  or?: Array< ModelPlayerJoinedPoolEventDecodedFilterInput | null > | null,
-  not?: ModelPlayerJoinedPoolEventDecodedFilterInput | null,
-  playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId?: ModelIDInput | null,
-};
-
-export type ModelPlayerJoinedPoolEventDecodedConnection = {
-  __typename: "ModelPlayerJoinedPoolEventDecodedConnection",
-  items:  Array<PlayerJoinedPoolEventDecoded | null >,
-  nextToken?: string | null,
-};
-
 export type ModelPlayerJoinedPoolEventLogFilterInput = {
   txID?: ModelStringInput | null,
   raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
   and?: Array< ModelPlayerJoinedPoolEventLogFilterInput | null > | null,
   or?: Array< ModelPlayerJoinedPoolEventLogFilterInput | null > | null,
   not?: ModelPlayerJoinedPoolEventLogFilterInput | null,
-  playerJoinedPoolEventLogMetaId?: ModelIDInput | null,
-  playerJoinedPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type ModelPlayerJoinedPoolEventLogConnection = {
@@ -1430,46 +1630,20 @@ export type ModelPlayerJoinedPoolEventLogConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyConditionInput = {
-  eq?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-  le?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-  lt?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-  ge?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-  gt?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-  between?: Array< ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null > | null,
-  beginsWith?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput | null,
-};
-
-export type ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyInput = {
-  gameId?: number | null,
-  player?: string | null,
-};
-
-export type ModelPlayerLeftPoolEventDecodedFilterInput = {
-  txID?: ModelStringInput | null,
-  gameId?: ModelIntInput | null,
-  player?: ModelStringInput | null,
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPlayerLeftPoolEventDecodedFilterInput | null > | null,
-  or?: Array< ModelPlayerLeftPoolEventDecodedFilterInput | null > | null,
-  not?: ModelPlayerLeftPoolEventDecodedFilterInput | null,
-  playerLeftPoolEventDecodedPlayerLeftPoolEventLogId?: ModelIDInput | null,
-};
-
-export type ModelPlayerLeftPoolEventDecodedConnection = {
-  __typename: "ModelPlayerLeftPoolEventDecodedConnection",
-  items:  Array<PlayerLeftPoolEventDecoded | null >,
-  nextToken?: string | null,
-};
-
 export type ModelPlayerLeftPoolEventLogFilterInput = {
   txID?: ModelStringInput | null,
   raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
   and?: Array< ModelPlayerLeftPoolEventLogFilterInput | null > | null,
   or?: Array< ModelPlayerLeftPoolEventLogFilterInput | null > | null,
   not?: ModelPlayerLeftPoolEventLogFilterInput | null,
-  playerLeftPoolEventLogMetaId?: ModelIDInput | null,
-  playerLeftPoolEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type ModelPlayerLeftPoolEventLogConnection = {
@@ -1478,46 +1652,21 @@ export type ModelPlayerLeftPoolEventLogConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyConditionInput = {
-  eq?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-  le?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-  lt?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-  ge?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-  gt?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-  between?: Array< ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null > | null,
-  beginsWith?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput | null,
-};
-
-export type ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyInput = {
-  gameId?: number | null,
-  status?: string | null,
-};
-
-export type ModelPoolAwaitingExecutionEventDecodedFilterInput = {
-  txID?: ModelStringInput | null,
-  gameId?: ModelIntInput | null,
-  status?: ModelStringInput | null,
-  dateTime?: ModelStringInput | null,
-  and?: Array< ModelPoolAwaitingExecutionEventDecodedFilterInput | null > | null,
-  or?: Array< ModelPoolAwaitingExecutionEventDecodedFilterInput | null > | null,
-  not?: ModelPoolAwaitingExecutionEventDecodedFilterInput | null,
-  poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId?: ModelIDInput | null,
-};
-
-export type ModelPoolAwaitingExecutionEventDecodedConnection = {
-  __typename: "ModelPoolAwaitingExecutionEventDecodedConnection",
-  items:  Array<PoolAwaitingExecutionEventDecoded | null >,
-  nextToken?: string | null,
-};
-
 export type ModelPoolAwaitingExecutionEventLogFilterInput = {
   txID?: ModelStringInput | null,
   raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedStatus?: ModelStringInput | null,
+  decodedType?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
   and?: Array< ModelPoolAwaitingExecutionEventLogFilterInput | null > | null,
   or?: Array< ModelPoolAwaitingExecutionEventLogFilterInput | null > | null,
   not?: ModelPoolAwaitingExecutionEventLogFilterInput | null,
-  poolAwaitingExecutionEventLogMetaId?: ModelIDInput | null,
-  poolAwaitingExecutionEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type ModelPoolAwaitingExecutionEventLogConnection = {
@@ -1526,50 +1675,24 @@ export type ModelPoolAwaitingExecutionEventLogConnection = {
   nextToken?: string | null,
 };
 
-export type ModelPoolCompletedEventDecodedPrimaryCompositeKeyConditionInput = {
-  eq?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-  le?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-  lt?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-  ge?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-  gt?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-  between?: Array< ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null > | null,
-  beginsWith?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput | null,
-};
-
-export type ModelPoolCompletedEventDecodedPrimaryCompositeKeyInput = {
-  gameId?: number | null,
-  player?: string | null,
-  auditRecordDrawId?: string | null,
-};
-
-export type ModelPoolCompletedEventDecodedFilterInput = {
-  txID?: ModelStringInput | null,
-  gameId?: ModelIntInput | null,
-  player?: ModelStringInput | null,
-  dateTime?: ModelStringInput | null,
-  winningPayout?: ModelStringInput | null,
-  transactionId?: ModelStringInput | null,
-  auditRecordDrawId?: ModelStringInput | null,
-  and?: Array< ModelPoolCompletedEventDecodedFilterInput | null > | null,
-  or?: Array< ModelPoolCompletedEventDecodedFilterInput | null > | null,
-  not?: ModelPoolCompletedEventDecodedFilterInput | null,
-  poolCompletedEventDecodedPoolCompletedEventLogId?: ModelIDInput | null,
-};
-
-export type ModelPoolCompletedEventDecodedConnection = {
-  __typename: "ModelPoolCompletedEventDecodedConnection",
-  items:  Array<PoolCompletedEventDecoded | null >,
-  nextToken?: string | null,
-};
-
 export type ModelPoolCompletedEventLogFilterInput = {
   txID?: ModelStringInput | null,
   raw?: ModelStringInput | null,
+  metaBlockID?: ModelStringInput | null,
+  metaBlockNumber?: ModelIntInput | null,
+  metaBlockTimestamp?: ModelIntInput | null,
+  metaTxOrigin?: ModelStringInput | null,
+  metaClauseIndex?: ModelIntInput | null,
+  decodedWinningPayout?: ModelStringInput | null,
+  decodedGameId?: ModelIntInput | null,
+  decodedPlayer?: ModelStringInput | null,
+  decodedStatus?: ModelStringInput | null,
+  decodedAuditRecordDrawId?: ModelStringInput | null,
+  decodedType?: ModelStringInput | null,
+  decodedDateTime?: ModelStringInput | null,
   and?: Array< ModelPoolCompletedEventLogFilterInput | null > | null,
   or?: Array< ModelPoolCompletedEventLogFilterInput | null > | null,
   not?: ModelPoolCompletedEventLogFilterInput | null,
-  poolCompletedEventLogMetaId?: ModelIDInput | null,
-  poolCompletedEventLogDecodedId?: ModelIDInput | null,
 };
 
 export type ModelPoolCompletedEventLogConnection = {
@@ -2415,150 +2538,6 @@ export type DeleteBrandMutation = {
   } | null,
 };
 
-export type CreateEventLogMetaMutationVariables = {
-  input: CreateEventLogMetaInput,
-  condition?: ModelEventLogMetaConditionInput | null,
-};
-
-export type CreateEventLogMetaMutation = {
-  createEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateEventLogMetaMutationVariables = {
-  input: UpdateEventLogMetaInput,
-  condition?: ModelEventLogMetaConditionInput | null,
-};
-
-export type UpdateEventLogMetaMutation = {
-  updateEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteEventLogMetaMutationVariables = {
-  input: DeleteEventLogMetaInput,
-  condition?: ModelEventLogMetaConditionInput | null,
-};
-
-export type DeleteEventLogMetaMutation = {
-  deleteEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type CreateCreatePoolEventDecodedMutationVariables = {
-  input: CreateCreatePoolEventDecodedInput,
-  condition?: ModelCreatePoolEventDecodedConditionInput | null,
-};
-
-export type CreateCreatePoolEventDecodedMutation = {
-  createCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
-export type UpdateCreatePoolEventDecodedMutationVariables = {
-  input: UpdateCreatePoolEventDecodedInput,
-  condition?: ModelCreatePoolEventDecodedConditionInput | null,
-};
-
-export type UpdateCreatePoolEventDecodedMutation = {
-  updateCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
-export type DeleteCreatePoolEventDecodedMutationVariables = {
-  input: DeleteCreatePoolEventDecodedInput,
-  condition?: ModelCreatePoolEventDecodedConditionInput | null,
-};
-
-export type DeleteCreatePoolEventDecodedMutation = {
-  deleteCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
 export type CreateCreatePoolEventLogMutationVariables = {
   input: CreateCreatePoolEventLogInput,
   condition?: ModelCreatePoolEventLogConditionInput | null,
@@ -2569,33 +2548,16 @@ export type CreateCreatePoolEventLogMutation = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2609,33 +2571,16 @@ export type UpdateCreatePoolEventLogMutation = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2649,117 +2594,16 @@ export type DeleteCreatePoolEventLogMutation = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type CreatePlayerJoinedPoolEventDecodedMutationVariables = {
-  input: CreatePlayerJoinedPoolEventDecodedInput,
-  condition?: ModelPlayerJoinedPoolEventDecodedConditionInput | null,
-};
-
-export type CreatePlayerJoinedPoolEventDecodedMutation = {
-  createPlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-  } | null,
-};
-
-export type UpdatePlayerJoinedPoolEventDecodedMutationVariables = {
-  input: UpdatePlayerJoinedPoolEventDecodedInput,
-  condition?: ModelPlayerJoinedPoolEventDecodedConditionInput | null,
-};
-
-export type UpdatePlayerJoinedPoolEventDecodedMutation = {
-  updatePlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-  } | null,
-};
-
-export type DeletePlayerJoinedPoolEventDecodedMutationVariables = {
-  input: DeletePlayerJoinedPoolEventDecodedInput,
-  condition?: ModelPlayerJoinedPoolEventDecodedConditionInput | null,
-};
-
-export type DeletePlayerJoinedPoolEventDecodedMutation = {
-  deletePlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -2773,33 +2617,16 @@ export type CreatePlayerJoinedPoolEventLogMutation = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2813,33 +2640,16 @@ export type UpdatePlayerJoinedPoolEventLogMutation = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -2853,117 +2663,16 @@ export type DeletePlayerJoinedPoolEventLogMutation = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type CreatePlayerLeftPoolEventDecodedMutationVariables = {
-  input: CreatePlayerLeftPoolEventDecodedInput,
-  condition?: ModelPlayerLeftPoolEventDecodedConditionInput | null,
-};
-
-export type CreatePlayerLeftPoolEventDecodedMutation = {
-  createPlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-  } | null,
-};
-
-export type UpdatePlayerLeftPoolEventDecodedMutationVariables = {
-  input: UpdatePlayerLeftPoolEventDecodedInput,
-  condition?: ModelPlayerLeftPoolEventDecodedConditionInput | null,
-};
-
-export type UpdatePlayerLeftPoolEventDecodedMutation = {
-  updatePlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-  } | null,
-};
-
-export type DeletePlayerLeftPoolEventDecodedMutationVariables = {
-  input: DeletePlayerLeftPoolEventDecodedInput,
-  condition?: ModelPlayerLeftPoolEventDecodedConditionInput | null,
-};
-
-export type DeletePlayerLeftPoolEventDecodedMutation = {
-  deletePlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -2977,33 +2686,16 @@ export type CreatePlayerLeftPoolEventLogMutation = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -3017,33 +2709,16 @@ export type UpdatePlayerLeftPoolEventLogMutation = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -3057,117 +2732,16 @@ export type DeletePlayerLeftPoolEventLogMutation = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type CreatePoolAwaitingExecutionEventDecodedMutationVariables = {
-  input: CreatePoolAwaitingExecutionEventDecodedInput,
-  condition?: ModelPoolAwaitingExecutionEventDecodedConditionInput | null,
-};
-
-export type CreatePoolAwaitingExecutionEventDecodedMutation = {
-  createPoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-  } | null,
-};
-
-export type UpdatePoolAwaitingExecutionEventDecodedMutationVariables = {
-  input: UpdatePoolAwaitingExecutionEventDecodedInput,
-  condition?: ModelPoolAwaitingExecutionEventDecodedConditionInput | null,
-};
-
-export type UpdatePoolAwaitingExecutionEventDecodedMutation = {
-  updatePoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-  } | null,
-};
-
-export type DeletePoolAwaitingExecutionEventDecodedMutationVariables = {
-  input: DeletePoolAwaitingExecutionEventDecodedInput,
-  condition?: ModelPoolAwaitingExecutionEventDecodedConditionInput | null,
-};
-
-export type DeletePoolAwaitingExecutionEventDecodedMutation = {
-  deletePoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -3181,33 +2755,17 @@ export type CreatePoolAwaitingExecutionEventLogMutation = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -3221,33 +2779,17 @@ export type UpdatePoolAwaitingExecutionEventLogMutation = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -3261,123 +2803,17 @@ export type DeletePoolAwaitingExecutionEventLogMutation = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
-  } | null,
-};
-
-export type CreatePoolCompletedEventDecodedMutationVariables = {
-  input: CreatePoolCompletedEventDecodedInput,
-  condition?: ModelPoolCompletedEventDecodedConditionInput | null,
-};
-
-export type CreatePoolCompletedEventDecodedMutation = {
-  createPoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
-  } | null,
-};
-
-export type UpdatePoolCompletedEventDecodedMutationVariables = {
-  input: UpdatePoolCompletedEventDecodedInput,
-  condition?: ModelPoolCompletedEventDecodedConditionInput | null,
-};
-
-export type UpdatePoolCompletedEventDecodedMutation = {
-  updatePoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
-  } | null,
-};
-
-export type DeletePoolCompletedEventDecodedMutationVariables = {
-  input: DeletePoolCompletedEventDecodedInput,
-  condition?: ModelPoolCompletedEventDecodedConditionInput | null,
-};
-
-export type DeletePoolCompletedEventDecodedMutation = {
-  deletePoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -3391,35 +2827,20 @@ export type CreatePoolCompletedEventLogMutation = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -3433,35 +2854,20 @@ export type UpdatePoolCompletedEventLogMutation = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -3475,35 +2881,265 @@ export type DeletePoolCompletedEventLogMutation = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
+  } | null,
+};
+
+export type SearchCreatePoolEventLogsQueryVariables = {
+  filter?: SearchableCreatePoolEventLogFilterInput | null,
+  sort?: Array< SearchableCreatePoolEventLogSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchableCreatePoolEventLogAggregationInput | null > | null,
+};
+
+export type SearchCreatePoolEventLogsQuery = {
+  searchCreatePoolEventLogs?:  {
+    __typename: "SearchableCreatePoolEventLogConnection",
+    items:  Array< {
+      __typename: "CreatePoolEventLog",
+      txID: string,
+      raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
+  } | null,
+};
+
+export type SearchPlayerJoinedPoolEventLogsQueryVariables = {
+  filter?: SearchablePlayerJoinedPoolEventLogFilterInput | null,
+  sort?: Array< SearchablePlayerJoinedPoolEventLogSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchablePlayerJoinedPoolEventLogAggregationInput | null > | null,
+};
+
+export type SearchPlayerJoinedPoolEventLogsQuery = {
+  searchPlayerJoinedPoolEventLogs?:  {
+    __typename: "SearchablePlayerJoinedPoolEventLogConnection",
+    items:  Array< {
+      __typename: "PlayerJoinedPoolEventLog",
+      txID: string,
+      raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
+  } | null,
+};
+
+export type SearchPlayerLeftPoolEventLogsQueryVariables = {
+  filter?: SearchablePlayerLeftPoolEventLogFilterInput | null,
+  sort?: Array< SearchablePlayerLeftPoolEventLogSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchablePlayerLeftPoolEventLogAggregationInput | null > | null,
+};
+
+export type SearchPlayerLeftPoolEventLogsQuery = {
+  searchPlayerLeftPoolEventLogs?:  {
+    __typename: "SearchablePlayerLeftPoolEventLogConnection",
+    items:  Array< {
+      __typename: "PlayerLeftPoolEventLog",
+      txID: string,
+      raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
+  } | null,
+};
+
+export type SearchPoolAwaitingExecutionEventLogsQueryVariables = {
+  filter?: SearchablePoolAwaitingExecutionEventLogFilterInput | null,
+  sort?: Array< SearchablePoolAwaitingExecutionEventLogSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchablePoolAwaitingExecutionEventLogAggregationInput | null > | null,
+};
+
+export type SearchPoolAwaitingExecutionEventLogsQuery = {
+  searchPoolAwaitingExecutionEventLogs?:  {
+    __typename: "SearchablePoolAwaitingExecutionEventLogConnection",
+    items:  Array< {
+      __typename: "PoolAwaitingExecutionEventLog",
+      txID: string,
+      raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedStatus: string,
+      decodedType: string,
+      decodedDateTime: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
+  } | null,
+};
+
+export type SearchPoolCompletedEventLogsQueryVariables = {
+  filter?: SearchablePoolCompletedEventLogFilterInput | null,
+  sort?: Array< SearchablePoolCompletedEventLogSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchablePoolCompletedEventLogAggregationInput | null > | null,
+};
+
+export type SearchPoolCompletedEventLogsQuery = {
+  searchPoolCompletedEventLogs?:  {
+    __typename: "SearchablePoolCompletedEventLogConnection",
+    items:  Array< {
+      __typename: "PoolCompletedEventLog",
+      txID: string,
+      raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedWinningPayout: string,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedStatus: string,
+      decodedAuditRecordDrawId: string,
+      decodedType: string,
+      decodedDateTime: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
   } | null,
 };
 
@@ -4026,107 +3662,8 @@ export type ListBrandsQuery = {
   } | null,
 };
 
-export type GetEventLogMetaQueryVariables = {
-  id: string,
-};
-
-export type GetEventLogMetaQuery = {
-  getEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type ListEventLogMetasQueryVariables = {
-  filter?: ModelEventLogMetaFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-};
-
-export type ListEventLogMetasQuery = {
-  listEventLogMetas?:  {
-    __typename: "ModelEventLogMetaConnection",
-    items:  Array< {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetCreatePoolEventDecodedQueryVariables = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type GetCreatePoolEventDecodedQuery = {
-  getCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
-export type ListCreatePoolEventDecodedsQueryVariables = {
-  txID?: string | null,
-  gameIdPlayer?: ModelCreatePoolEventDecodedPrimaryCompositeKeyConditionInput | null,
-  filter?: ModelCreatePoolEventDecodedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListCreatePoolEventDecodedsQuery = {
-  listCreatePoolEventDecodeds?:  {
-    __typename: "ModelCreatePoolEventDecodedConnection",
-    items:  Array< {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
 export type GetCreatePoolEventLogQueryVariables = {
-  id: string,
+  txID: string,
 };
 
 export type GetCreatePoolEventLogQuery = {
@@ -4134,40 +3671,25 @@ export type GetCreatePoolEventLogQuery = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
   } | null,
 };
 
 export type ListCreatePoolEventLogsQueryVariables = {
+  txID?: string | null,
   filter?: ModelCreatePoolEventLogFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListCreatePoolEventLogsQuery = {
@@ -4177,73 +3699,23 @@ export type ListCreatePoolEventLogsQuery = {
       __typename: "CreatePoolEventLog",
       txID: string,
       raw: string,
-      id: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
       createdAt: string,
       updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetPlayerJoinedPoolEventDecodedQueryVariables = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type GetPlayerJoinedPoolEventDecodedQuery = {
-  getPlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-  } | null,
-};
-
-export type ListPlayerJoinedPoolEventDecodedsQueryVariables = {
-  txID?: string | null,
-  gameIdPlayer?: ModelPlayerJoinedPoolEventDecodedPrimaryCompositeKeyConditionInput | null,
-  filter?: ModelPlayerJoinedPoolEventDecodedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListPlayerJoinedPoolEventDecodedsQuery = {
-  listPlayerJoinedPoolEventDecodeds?:  {
-    __typename: "ModelPlayerJoinedPoolEventDecodedConnection",
-    items:  Array< {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
 export type GetPlayerJoinedPoolEventLogQueryVariables = {
-  id: string,
+  txID: string,
 };
 
 export type GetPlayerJoinedPoolEventLogQuery = {
@@ -4251,40 +3723,25 @@ export type GetPlayerJoinedPoolEventLogQuery = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
 export type ListPlayerJoinedPoolEventLogsQueryVariables = {
+  txID?: string | null,
   filter?: ModelPlayerJoinedPoolEventLogFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPlayerJoinedPoolEventLogsQuery = {
@@ -4294,73 +3751,23 @@ export type ListPlayerJoinedPoolEventLogsQuery = {
       __typename: "PlayerJoinedPoolEventLog",
       txID: string,
       raw: string,
-      id: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetPlayerLeftPoolEventDecodedQueryVariables = {
-  txID: string,
-  gameId: number,
-  player: string,
-};
-
-export type GetPlayerLeftPoolEventDecodedQuery = {
-  getPlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-  } | null,
-};
-
-export type ListPlayerLeftPoolEventDecodedsQueryVariables = {
-  txID?: string | null,
-  gameIdPlayer?: ModelPlayerLeftPoolEventDecodedPrimaryCompositeKeyConditionInput | null,
-  filter?: ModelPlayerLeftPoolEventDecodedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListPlayerLeftPoolEventDecodedsQuery = {
-  listPlayerLeftPoolEventDecodeds?:  {
-    __typename: "ModelPlayerLeftPoolEventDecodedConnection",
-    items:  Array< {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
 export type GetPlayerLeftPoolEventLogQueryVariables = {
-  id: string,
+  txID: string,
 };
 
 export type GetPlayerLeftPoolEventLogQuery = {
@@ -4368,40 +3775,25 @@ export type GetPlayerLeftPoolEventLogQuery = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
 export type ListPlayerLeftPoolEventLogsQueryVariables = {
+  txID?: string | null,
   filter?: ModelPlayerLeftPoolEventLogFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPlayerLeftPoolEventLogsQuery = {
@@ -4411,73 +3803,23 @@ export type ListPlayerLeftPoolEventLogsQuery = {
       __typename: "PlayerLeftPoolEventLog",
       txID: string,
       raw: string,
-      id: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedDateTime: string,
       createdAt: string,
       updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetPoolAwaitingExecutionEventDecodedQueryVariables = {
-  txID: string,
-  gameId: number,
-  status: string,
-};
-
-export type GetPoolAwaitingExecutionEventDecodedQuery = {
-  getPoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-  } | null,
-};
-
-export type ListPoolAwaitingExecutionEventDecodedsQueryVariables = {
-  txID?: string | null,
-  gameIdStatus?: ModelPoolAwaitingExecutionEventDecodedPrimaryCompositeKeyConditionInput | null,
-  filter?: ModelPoolAwaitingExecutionEventDecodedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListPoolAwaitingExecutionEventDecodedsQuery = {
-  listPoolAwaitingExecutionEventDecodeds?:  {
-    __typename: "ModelPoolAwaitingExecutionEventDecodedConnection",
-    items:  Array< {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
 };
 
 export type GetPoolAwaitingExecutionEventLogQueryVariables = {
-  id: string,
+  txID: string,
 };
 
 export type GetPoolAwaitingExecutionEventLogQuery = {
@@ -4485,40 +3827,26 @@ export type GetPoolAwaitingExecutionEventLogQuery = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
 export type ListPoolAwaitingExecutionEventLogsQueryVariables = {
+  txID?: string | null,
   filter?: ModelPoolAwaitingExecutionEventLogFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
+  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPoolAwaitingExecutionEventLogsQuery = {
@@ -4528,72 +3856,17 @@ export type ListPoolAwaitingExecutionEventLogsQuery = {
       __typename: "PoolAwaitingExecutionEventLog",
       txID: string,
       raw: string,
-      id: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedGameId: number,
+      decodedStatus: string,
+      decodedType: string,
+      decodedDateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    } | null >,
-    nextToken?: string | null,
-  } | null,
-};
-
-export type GetPoolCompletedEventDecodedQueryVariables = {
-  txID: string,
-  gameId: number,
-  player: string,
-  auditRecordDrawId: string,
-};
-
-export type GetPoolCompletedEventDecodedQuery = {
-  getPoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
-  } | null,
-};
-
-export type ListPoolCompletedEventDecodedsQueryVariables = {
-  txID?: string | null,
-  gameIdPlayerAuditRecordDrawId?: ModelPoolCompletedEventDecodedPrimaryCompositeKeyConditionInput | null,
-  filter?: ModelPoolCompletedEventDecodedFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
-};
-
-export type ListPoolCompletedEventDecodedsQuery = {
-  listPoolCompletedEventDecodeds?:  {
-    __typename: "ModelPoolCompletedEventDecodedConnection",
-    items:  Array< {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4608,35 +3881,20 @@ export type GetPoolCompletedEventLogQuery = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -4655,10 +3913,20 @@ export type ListPoolCompletedEventLogsQuery = {
       __typename: "PoolCompletedEventLog",
       txID: string,
       raw: string,
+      metaBlockID: string,
+      metaBlockNumber: number,
+      metaBlockTimestamp: number,
+      metaTxOrigin: string,
+      metaClauseIndex: number,
+      decodedWinningPayout: string,
+      decodedGameId: number,
+      decodedPlayer: string,
+      decodedStatus: string,
+      decodedAuditRecordDrawId: string,
+      decodedType: string,
+      decodedDateTime: string,
       createdAt: string,
       updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -5339,152 +4607,21 @@ export type OnDeleteBrandSubscription = {
   } | null,
 };
 
-export type OnCreateEventLogMetaSubscription = {
-  onCreateEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateEventLogMetaSubscription = {
-  onUpdateEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteEventLogMetaSubscription = {
-  onDeleteEventLogMeta?:  {
-    __typename: "EventLogMeta",
-    txID: string,
-    blockID: string,
-    blockNumber: number,
-    blockTimestamp: number,
-    txOrigin: string,
-    clauseIndex: number,
-    id: string,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnCreateCreatePoolEventDecodedSubscription = {
-  onCreateCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
-export type OnUpdateCreatePoolEventDecodedSubscription = {
-  onUpdateCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
-export type OnDeleteCreatePoolEventDecodedSubscription = {
-  onDeleteCreatePoolEventDecoded?:  {
-    __typename: "CreatePoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    createPoolEventLog:  {
-      __typename: "CreatePoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventLogMetaId: string,
-      createPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    createPoolEventDecodedCreatePoolEventLogId: string,
-  } | null,
-};
-
 export type OnCreateCreatePoolEventLogSubscription = {
   onCreateCreatePoolEventLog?:  {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5493,33 +4630,16 @@ export type OnUpdateCreatePoolEventLogSubscription = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5528,102 +4648,16 @@ export type OnDeleteCreatePoolEventLogSubscription = {
     __typename: "CreatePoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "CreatePoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      createPoolEventDecodedCreatePoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    createPoolEventLogMetaId: string,
-    createPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type OnCreatePlayerJoinedPoolEventDecodedSubscription = {
-  onCreatePlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-  } | null,
-};
-
-export type OnUpdatePlayerJoinedPoolEventDecodedSubscription = {
-  onUpdatePlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-  } | null,
-};
-
-export type OnDeletePlayerJoinedPoolEventDecodedSubscription = {
-  onDeletePlayerJoinedPoolEventDecoded?:  {
-    __typename: "PlayerJoinedPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerJoinedPoolEventLog:  {
-      __typename: "PlayerJoinedPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventLogMetaId: string,
-      playerJoinedPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
   } | null,
 };
 
@@ -5632,33 +4666,16 @@ export type OnCreatePlayerJoinedPoolEventLogSubscription = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5667,33 +4684,16 @@ export type OnUpdatePlayerJoinedPoolEventLogSubscription = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5702,102 +4702,16 @@ export type OnDeletePlayerJoinedPoolEventLogSubscription = {
     __typename: "PlayerJoinedPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerJoinedPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerJoinedPoolEventDecodedPlayerJoinedPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerJoinedPoolEventLogMetaId: string,
-    playerJoinedPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type OnCreatePlayerLeftPoolEventDecodedSubscription = {
-  onCreatePlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-  } | null,
-};
-
-export type OnUpdatePlayerLeftPoolEventDecodedSubscription = {
-  onUpdatePlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-  } | null,
-};
-
-export type OnDeletePlayerLeftPoolEventDecodedSubscription = {
-  onDeletePlayerLeftPoolEventDecoded?:  {
-    __typename: "PlayerLeftPoolEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    playerLeftPoolEventLog:  {
-      __typename: "PlayerLeftPoolEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventLogMetaId: string,
-      playerLeftPoolEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
   } | null,
 };
 
@@ -5806,33 +4720,16 @@ export type OnCreatePlayerLeftPoolEventLogSubscription = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5841,33 +4738,16 @@ export type OnUpdatePlayerLeftPoolEventLogSubscription = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
   } | null,
 };
 
@@ -5876,102 +4756,16 @@ export type OnDeletePlayerLeftPoolEventLogSubscription = {
     __typename: "PlayerLeftPoolEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PlayerLeftPoolEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      playerLeftPoolEventDecodedPlayerLeftPoolEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    playerLeftPoolEventLogMetaId: string,
-    playerLeftPoolEventLogDecodedId: string,
-  } | null,
-};
-
-export type OnCreatePoolAwaitingExecutionEventDecodedSubscription = {
-  onCreatePoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-  } | null,
-};
-
-export type OnUpdatePoolAwaitingExecutionEventDecodedSubscription = {
-  onUpdatePoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-  } | null,
-};
-
-export type OnDeletePoolAwaitingExecutionEventDecodedSubscription = {
-  onDeletePoolAwaitingExecutionEventDecoded?:  {
-    __typename: "PoolAwaitingExecutionEventDecoded",
-    txID: string,
-    gameId: number,
-    status: string,
-    dateTime: string,
-    poolAwaitingExecutionEventLog:  {
-      __typename: "PoolAwaitingExecutionEventLog",
-      txID: string,
-      raw: string,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventLogMetaId: string,
-      poolAwaitingExecutionEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
   } | null,
 };
 
@@ -5980,33 +4774,17 @@ export type OnCreatePoolAwaitingExecutionEventLogSubscription = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -6015,33 +4793,17 @@ export type OnUpdatePoolAwaitingExecutionEventLogSubscription = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
   } | null,
 };
 
@@ -6050,108 +4812,17 @@ export type OnDeletePoolAwaitingExecutionEventLogSubscription = {
     __typename: "PoolAwaitingExecutionEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolAwaitingExecutionEventDecoded",
-      txID: string,
-      gameId: number,
-      status: string,
-      dateTime: string,
-      createdAt: string,
-      updatedAt: string,
-      poolAwaitingExecutionEventDecodedPoolAwaitingExecutionEventLogId: string,
-    },
-    id: string,
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedGameId: number,
+    decodedStatus: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolAwaitingExecutionEventLogMetaId: string,
-    poolAwaitingExecutionEventLogDecodedId: string,
-  } | null,
-};
-
-export type OnCreatePoolCompletedEventDecodedSubscription = {
-  onCreatePoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
-  } | null,
-};
-
-export type OnUpdatePoolCompletedEventDecodedSubscription = {
-  onUpdatePoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
-  } | null,
-};
-
-export type OnDeletePoolCompletedEventDecodedSubscription = {
-  onDeletePoolCompletedEventDecoded?:  {
-    __typename: "PoolCompletedEventDecoded",
-    txID: string,
-    gameId: number,
-    player: string,
-    dateTime: string,
-    winningPayout: string,
-    transactionId: string,
-    auditRecordDrawId: string,
-    poolCompletedEventLog:  {
-      __typename: "PoolCompletedEventLog",
-      txID: string,
-      raw: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventLogMetaId: string,
-      poolCompletedEventLogDecodedId: string,
-    },
-    createdAt: string,
-    updatedAt: string,
-    poolCompletedEventDecodedPoolCompletedEventLogId: string,
   } | null,
 };
 
@@ -6160,35 +4831,20 @@ export type OnCreatePoolCompletedEventLogSubscription = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -6197,35 +4853,20 @@ export type OnUpdatePoolCompletedEventLogSubscription = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };
 
@@ -6234,34 +4875,19 @@ export type OnDeletePoolCompletedEventLogSubscription = {
     __typename: "PoolCompletedEventLog",
     txID: string,
     raw: string,
-    meta:  {
-      __typename: "EventLogMeta",
-      txID: string,
-      blockID: string,
-      blockNumber: number,
-      blockTimestamp: number,
-      txOrigin: string,
-      clauseIndex: number,
-      id: string,
-      createdAt: string,
-      updatedAt: string,
-    },
-    decoded:  {
-      __typename: "PoolCompletedEventDecoded",
-      txID: string,
-      gameId: number,
-      player: string,
-      dateTime: string,
-      winningPayout: string,
-      transactionId: string,
-      auditRecordDrawId: string,
-      createdAt: string,
-      updatedAt: string,
-      poolCompletedEventDecodedPoolCompletedEventLogId: string,
-    },
+    metaBlockID: string,
+    metaBlockNumber: number,
+    metaBlockTimestamp: number,
+    metaTxOrigin: string,
+    metaClauseIndex: number,
+    decodedWinningPayout: string,
+    decodedGameId: number,
+    decodedPlayer: string,
+    decodedStatus: string,
+    decodedAuditRecordDrawId: string,
+    decodedType: string,
+    decodedDateTime: string,
     createdAt: string,
     updatedAt: string,
-    poolCompletedEventLogMetaId: string,
-    poolCompletedEventLogDecodedId: string,
   } | null,
 };

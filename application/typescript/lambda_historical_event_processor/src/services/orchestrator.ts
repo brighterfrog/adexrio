@@ -41,7 +41,7 @@ export class Orchestrator {
 
        //TODO:
         /*
-            Iterate event types by block: orderByBlockSequence
+            Iterate event types by block: orderByBlockSequence, already ordered
         
             process Event Types by precedence & block sequence
                 *blocks are already in sequential block order
@@ -60,7 +60,7 @@ export class Orchestrator {
         await this.dynamodbEventProcessorService.processContractEvents(allEvents);      
     }  
     
-    reportProgress(event) {
-        //const highestBlockMessageFromBatch = getHighestBlockNumberFromRecordBatch(event); 
-    }
+    // reportProgress(event) {
+    //     //const highestBlockMessageFromBatch = getHighestBlockNumberFromRecordBatch(event); 
+    // }
 }

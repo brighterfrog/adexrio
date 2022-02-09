@@ -146,7 +146,7 @@ type Brand @model {
   failedPools: Int!
 }
 
-type EventLogMeta @model {
+type EventLogMeta  {   
   txID: String!
   blockID: String!
   blockNumber: Int!
@@ -156,92 +156,152 @@ type EventLogMeta @model {
 }
 
 # CreatePoolEvent
-type CreatePoolEventDecoded @model {
-  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
-  gameId: Int!
-  player: String!
-  dateTime: String!
-  createPoolEventLog: CreatePoolEventLog! @belongsTo
-}
+# type CreatePoolEventDecoded  {  
+#   gameId: Int!
+#   player: String!
+#   dateTime: String!  
+# }
 
-type CreatePoolEventLog @model {
-  txID: String!
+type CreatePoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
+  txID: String! @primaryKey
   raw: AWSJSON!
-  meta: EventLogMeta! @hasOne
-  decoded: CreatePoolEventDecoded! @hasOne
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedGameId: Int!
+  decodedPlayer: String!
+  decodedDateTime: String!  
 }
 # CreatePoolEvent
 
 # PlayerJoinedPoolEventDecoded
-type PlayerJoinedPoolEventDecoded @model {
-  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
-  gameId: Int!
-  player: String!
-  dateTime: String!
-  playerJoinedPoolEventLog: PlayerJoinedPoolEventLog! @belongsTo
-}
+# type PlayerJoinedPoolEventDecoded @model {
+#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
+#   gameId: Int!
+#   player: String!
+#   dateTime: String!
+#   playerJoinedPoolEventLog: PlayerJoinedPoolEventLog! @belongsTo
+# }
 
-type PlayerJoinedPoolEventLog @model {
-  txID: String!
-  raw: AWSJSON!
-  meta: EventLogMeta! @hasOne
-  decoded: PlayerJoinedPoolEventDecoded! @hasOne
-}
+# type PlayerJoinedPoolEventLog @model {
+#   txID: String! @primaryKey
+#   raw: AWSJSON!
+#   meta: EventLogMeta! 
+#   decoded: PlayerJoinedPoolEventDecoded! @hasOne
+# }
 # PlayerJoinedPoolEventDecoded
 
-# PlayerJoinedPoolEventDecoded
-type PlayerLeftPoolEventDecoded @model {
-  txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
-  gameId: Int!
-  player: String!
-  dateTime: String!
-  playerLeftPoolEventLog: PlayerLeftPoolEventLog! @belongsTo
-}
-
-type PlayerLeftPoolEventLog @model {
-  txID: String!
-  raw: AWSJSON!
-  meta: EventLogMeta! @hasOne
-  decoded: PlayerLeftPoolEventDecoded! @hasOne
-}
-# PlayerJoinedPoolEventDecoded
-
-# PoolAwaitingExecutionEventDecoded
-type PoolAwaitingExecutionEventDecoded @model {
-  txID: String! @primaryKey(sortKeyFields: ["gameId", "status"])
-  gameId: Int!
-  status: String!
-  dateTime: String!
-  poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog! @belongsTo
-}
-
-type PoolAwaitingExecutionEventLog @model {
-  txID: String!
-  raw: AWSJSON!
-  meta: EventLogMeta! @hasOne
-  decoded: PoolAwaitingExecutionEventDecoded! @hasOne
-}
-# PoolAwaitingExecutionEventDecoded
-
-# PoolCompletedEventDecoded
-type PoolCompletedEventDecoded @model {
-  txID: String! @primaryKey(sortKeyFields: ["gameId", "player", "auditRecordDrawId"])
-  gameId: Int!
-  player: String!
-  dateTime: String!
-  winningPayout: String!
-  transactionId: String!
-  auditRecordDrawId: String!
-  poolCompletedEventLog: PoolCompletedEventLog! @belongsTo
-}
-
-type PoolCompletedEventLog @model {
+type PlayerJoinedPoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
   txID: String! @primaryKey
   raw: AWSJSON!
-  meta: EventLogMeta! @hasOne
-  decoded: PoolCompletedEventDecoded! @hasOne
-}
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedGameId: Int!
+  decodedPlayer: String!
+  decodedDateTime: String!  
+ }
+
+
+# PlayerJoinedPoolEventDecoded
+# type PlayerLeftPoolEventDecoded @model {
+#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
+#   gameId: Int!
+#   player: String!
+#   dateTime: String!
+#   playerLeftPoolEventLog: PlayerLeftPoolEventLog! @belongsTo
+# }
+
+# type PlayerLeftPoolEventLog @model {
+#   txID: String! @primaryKey
+#   raw: AWSJSON!
+#   meta: EventLogMeta! 
+#   decoded: PlayerLeftPoolEventDecoded! @hasOne
+# }
+# PlayerJoinedPoolEventDecoded
+type PlayerLeftPoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
+  txID: String! @primaryKey
+  raw: AWSJSON!
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedGameId: Int!
+  decodedPlayer: String!
+  decodedDateTime: String!  
+ }
+
+# PoolAwaitingExecutionEventDecoded
+# type PoolAwaitingExecutionEventDecoded @model {
+#   txID: String! @primaryKey(sortKeyFields: ["gameId", "status"])
+#   gameId: Int!
+#   status: String!
+#   dateTime: String!
+#   poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog @belongsTo
+# }
+
+# type PoolAwaitingExecutionEventLog @model {
+#   txID: String! @primaryKey
+#   raw: AWSJSON!
+#   meta: EventLogMeta! 
+#   decoded: PoolAwaitingExecutionEventDecoded! @hasOne
+# }
+# PoolAwaitingExecutionEventDecoded
+
+type PoolAwaitingExecutionEventLog @model @searchable @auth(rules: [{allow: public}]) {
+  txID: String! @primaryKey
+  raw: AWSJSON!
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedGameId: Int!
+  decodedStatus: String!
+  decodedType: String!
+  decodedDateTime: String!  
+ }
+
 # PoolCompletedEventDecoded
+# type PoolCompletedEventDecoded @model {
+#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player", "auditRecordDrawId"])
+#   gameId: Int!
+#   player: String!
+#   dateTime: String!
+#   winningPayout: String!
+#   transactionId: String!
+#   auditRecordDrawId: String!
+#   poolCompletedEventLog: PoolCompletedEventLog @belongsTo
+# }
+
+# type PoolCompletedEventLog @model {
+#   txID: String! @primaryKey
+#   raw: AWSJSON!
+#   meta: EventLogMeta! 
+#   decoded: PoolCompletedEventDecoded! @hasOne
+# }
+# PoolCompletedEventDecoded
+type PoolCompletedEventLog @model @searchable @auth(rules: [{allow: public}]) {
+  txID: String! @primaryKey
+  raw: AWSJSON!
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedWinningPayout: String!
+  decodedGameId: Int!
+  decodedPlayer: String!
+  decodedStatus: String!
+  decodedAuditRecordDrawId: String!
+  decodedType: String!
+  decodedDateTime: String!  
+ }
 
 input CreateIngestionBucketEventInput {
   event: AWSJSON!
