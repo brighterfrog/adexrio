@@ -88,7 +88,8 @@ export class CreatePoolService implements IEventLogProcessor {
         let createdPool: Pool;
 
          /* default to lottery pools to accomodate v1 contract */ 
-        if(!poolJsonData) {                      
+        if(!poolJsonData) {  
+                                
             createdPool = await this.poolService.createPool(
                 {
                     poolId: eventRecord.dynamodb.NewImage.decodedGameId,

@@ -1,30 +1,28 @@
 {
   "AWSTemplateFormatVersion": "2010-09-09",
   "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.19\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
-
   "Mappings": {
     "Environments": {
       "dev": {
-        "VECHAIN_API_NODE": "https://vethor-node-test.vechaindev.com",
-        "RECORD_TYPE": "test",
-        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
-        "DEBUG_ON": "true"
+        "VECHAINAPINODE": "https://vethor-node-test.vechaindev.com",
+        "RECORDTYPE": "test",
+        "RANDOMORGAPIENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUGON": "true"
       },
       "test": {
-        "VECHAIN_API_NODE": "https://vethor-node-test.vechaindev.com",
-        "RECORD_TYPE": "test",
-        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
-        "DEBUG_ON": "true"
+        "VECHAINAPINODE": "https://vethor-node-test.vechaindev.com",
+        "RECORDTYPE": "test",
+        "RANDOMORGAPIENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUGON": "true"
       },
       "prod": {
-        "VECHAIN_API_NODE": "https://vethor-node.vechain.com",
-        "RECORD_TYPE": "public",
-        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
-        "DEBUG_ON": "false"
+        "VECHAINAPINODE": "https://vethor-node.vechain.com",
+        "RECORDTYPE": "public",
+        "RANDOMORGAPIENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUGON": "false"
       }
     }
   },
-
   "Parameters": {
     "CloudWatchRule": {
       "Type": "String",
@@ -129,35 +127,46 @@
             "VECHAIN_API_NODE": {
               "Fn::FindInMap": [
                 "Environments",
-                { "Ref" : "env"},
-                "VECHAIN_API_NODE"             
+                {
+                  "Ref": "env"
+                },
+                "VECHAINAPINODE"
               ]
             },
             "RECORD_TYPE": {
               "Fn::FindInMap": [
                 "Environments",
-                { "Ref" : "env"},
-                "RECORD_TYPE"             
+                {
+                  "Ref": "env"
+                },
+                "RECORDTYPE"
               ]
             },
             "RANDOM_ORG_API_ENDPOINT": {
               "Fn::FindInMap": [
                 "Environments",
-                { "Ref" : "env"},
-                "RANDOM_ORG_API_ENDPOINT"             
+                {
+                  "Ref": "env"
+                },
+                "RANDOMORGAPIENDPOINT"
               ]
             },
             "DEBUG_ON": {
               "Fn::FindInMap": [
                 "Environments",
-                { "Ref" : "env"},
-                "DEBUG_ON"             
+                {
+                  "Ref": "env"
+                },
+                "DEBUGON"
               ]
             }
           }
         },
         "Role": {
-          "Fn::GetAtt": ["LambdaExecutionRole", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaExecutionRole",
+            "Arn"
+          ]
         },
         "Runtime": "nodejs14.x",
         "Layers": [],
@@ -191,16 +200,22 @@
             {
               "Effect": "Allow",
               "Principal": {
-                "Service": ["lambda.amazonaws.com"]
+                "Service": [
+                  "lambda.amazonaws.com"
+                ]
               },
-              "Action": ["sts:AssumeRole"]
+              "Action": [
+                "sts:AssumeRole"
+              ]
             }
           ]
         }
       }
     },
     "lambdaexecutionpolicy": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "lambda-execution-policy",
@@ -241,7 +256,9 @@
       }
     },
     "LambdaTriggerPolicyCreatePoolEventLogV2": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy-CreatePoolEventLogV2",
@@ -286,13 +303,18 @@
           }
         },
         "FunctionName": {
-          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
         },
         "StartingPosition": "LATEST"
       }
     },
     "LambdaTriggerPolicyPlayerJoinedPoolEventLogV2": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy-PlayerJoinedPoolEventLogV2",
@@ -337,13 +359,18 @@
           }
         },
         "FunctionName": {
-          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
         },
         "StartingPosition": "LATEST"
       }
     },
     "LambdaTriggerPolicyPlayerLeftPoolEventLogV2": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy-PlayerLeftPoolEventLogV2",
@@ -388,13 +415,18 @@
           }
         },
         "FunctionName": {
-          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
         },
         "StartingPosition": "LATEST"
       }
     },
     "LambdaTriggerPolicyPoolAwaitingExecutionEventLogV2": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy-PoolAwaitingExecutionEventLogV2",
@@ -439,13 +471,18 @@
           }
         },
         "FunctionName": {
-          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
         },
         "StartingPosition": "LATEST"
       }
     },
     "LambdaTriggerPolicyPoolCompletedEventLogV2": {
-      "DependsOn": ["LambdaExecutionRole"],
+      "DependsOn": [
+        "LambdaExecutionRole"
+      ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
         "PolicyName": "amplify-lambda-execution-policy-PoolCompletedEventLogV2",
@@ -490,7 +527,10 @@
           }
         },
         "FunctionName": {
-          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+          "Fn::GetAtt": [
+            "LambdaFunction",
+            "Arn"
+          ]
         },
         "StartingPosition": "LATEST"
       }
@@ -504,7 +544,10 @@
     },
     "Arn": {
       "Value": {
-        "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        "Fn::GetAtt": [
+          "LambdaFunction",
+          "Arn"
+        ]
       }
     },
     "Region": {
