@@ -2,7 +2,8 @@
 input AMPLIFY { globalAuthRule: AuthRule = { allow: public } }
 # DELETE ME
 
-type Feedback @model @auth(rules: [{allow: public}]) {
+type Feedback @model @searchable {
+  id: ID!
   comment: String!
   commentType: feedbackType!
   status: feedbackStatus!
@@ -22,22 +23,14 @@ enum feedbackType {
   interest
 }
 
-type Message @model @auth(rules: [{allow: public}]) {
-  id: ID!
-  message: String!
-  wallet: String!
-  createdAt: String!
-}
+ type Message @model @searchable {
+   id: ID!
+   message: String!
+   wallet: String!
+   createdAt: String!
+ }
 
-# type GamesSummary @model @auth(rules: [{allow: public}]) {
-#   id: Int!
-#   totalCompletedGames: Int!
-#   totalUniquePlayers: Int!
-#   totalPayouts: Float!
-#   highestPayout: Float!
-# }
-
-type ErrorLog @model @auth(rules: [{allow: public}]) {
+type ErrorLog @model {
   id: ID!
   createdAt: String!
   stackTrace: String!
@@ -63,8 +56,6 @@ enum PlayerStatus {
   lose
 }
 
-
-# POOL START #
 enum PoolCategory {
   other
   sports
@@ -72,17 +63,19 @@ enum PoolCategory {
   gaming
   politics
   financial
+  random_winners
 }
 
-type PoolPlayer @model {
-  userWalletId: String! @primaryKey(sortKeyFields: ["poolId"])
+type PoolPlayer @model @searchable{
+  id: ID!
+  userWalletId: String! 
   userWallet: UserWallet! @hasOne
   status: PlayerStatus!
-  pool: Pool! @belongsTo
-  poolId: Int!
+  pool: Pool! @belongsTo  
 }
 
-type ApiPoolAttributes @model {
+type ApiPoolAttributes @model @searchable {
+  id: ID!
   apiKey: String!
   lockFundsDatetime: AWSDateTime!
   executeWinnerDatetime: AWSDateTime!
@@ -93,11 +86,11 @@ type ApiPoolAttributes @model {
   apiwinnerResult: String!
   poolApiDefaultSchema: AWSJSON!
   poolApiCustomSchema: AWSJSON
-  pool: Pool! @belongsTo
-  poolId: Int! @primaryKey
+  pool: Pool @belongsTo
 }
-type Pool @model {
-  poolId: Int! @primaryKey
+type Pool @model @searchable {
+  id: ID!
+  poolId: Int!
   poolTitle: String!
   poolCategory: PoolCategory!
   poolCreator: UserWallet! @hasOne
@@ -108,7 +101,7 @@ type Pool @model {
   poolWinningPayout: Int!
   allowPlayerLeave: Boolean!
   apiPoolAttributes: ApiPoolAttributes @hasOne
-  requestHash: String!
+  apiRequestHash: String!
   players: [PoolPlayer]! @hasMany
 }
 
@@ -117,7 +110,7 @@ type PoolSuccessfullBlockEventsProcessed @model {
   lambdaProcessorDecisionCheckForNextBlocknumber: Int!  
 }
 
-type PoolSummaries @model {
+type PoolSummaries @model @searchable{
   id: ID!
   totalCompletedGames: Int!
   totalPlayers: Int!
@@ -126,9 +119,10 @@ type PoolSummaries @model {
   highestPoolPayout: Int!
 }
 
-type UserWallet @model {
-  wallet: String! @primaryKey
-  nickname: String!
+type UserWallet @model @searchable {
+  id: ID!
+  wallet: String! 
+  nickname: String
   chatlogo: AWSURL
   brands: [Brand] @hasMany
   totalWinnings: Int!
@@ -136,7 +130,7 @@ type UserWallet @model {
   totalCompletedPools: Int!
   totalPoolsWon: Int!
 }
-type Brand @model {
+type Brand @model @searchable {
   id: ID!
   wallet: String!
   name: String!
@@ -146,24 +140,25 @@ type Brand @model {
   failedPools: Int!
 }
 
-type EventLogMeta  {   
+type CreatePoolEventLogV2 @model @searchable {
+  id: ID!
   txID: String!
-  blockID: String!
-  blockNumber: Int!
-  blockTimestamp: Int!
-  txOrigin: String!
-  clauseIndex: Int!
+  raw: AWSJSON!
+  metaBlockID: String!
+  metaBlockNumber: Int!
+  metaBlockTimestamp: Int!
+  metaTxOrigin: String!
+  metaClauseIndex: Int!
+  decodedGameId: Int!
+  decodedPlayer: String!
+  decodedDateTime: String! 
+  poolJsonData: AWSJSON 
 }
 
-# CreatePoolEvent
-# type CreatePoolEventDecoded  {  
-#   gameId: Int!
-#   player: String!
-#   dateTime: String!  
-# }
 
-type CreatePoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
-  txID: String! @primaryKey
+type PlayerJoinedPoolEventLogV2 @model @searchable {
+  id: ID!
+  txID: String!
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -172,58 +167,12 @@ type CreatePoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
   metaClauseIndex: Int!
   decodedGameId: Int!
   decodedPlayer: String!
-  decodedDateTime: String!  
-}
-# CreatePoolEvent
-
-# PlayerJoinedPoolEventDecoded
-# type PlayerJoinedPoolEventDecoded @model {
-#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
-#   gameId: Int!
-#   player: String!
-#   dateTime: String!
-#   playerJoinedPoolEventLog: PlayerJoinedPoolEventLog! @belongsTo
-# }
-
-# type PlayerJoinedPoolEventLog @model {
-#   txID: String! @primaryKey
-#   raw: AWSJSON!
-#   meta: EventLogMeta! 
-#   decoded: PlayerJoinedPoolEventDecoded! @hasOne
-# }
-# PlayerJoinedPoolEventDecoded
-
-type PlayerJoinedPoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
-  txID: String! @primaryKey
-  raw: AWSJSON!
-  metaBlockID: String!
-  metaBlockNumber: Int!
-  metaBlockTimestamp: Int!
-  metaTxOrigin: String!
-  metaClauseIndex: Int!
-  decodedGameId: Int!
-  decodedPlayer: String!
-  decodedDateTime: String!  
+  decodedDateTime: String!
+  poolJsonData: AWSJSON 
  }
 
-
-# PlayerJoinedPoolEventDecoded
-# type PlayerLeftPoolEventDecoded @model {
-#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player"])
-#   gameId: Int!
-#   player: String!
-#   dateTime: String!
-#   playerLeftPoolEventLog: PlayerLeftPoolEventLog! @belongsTo
-# }
-
-# type PlayerLeftPoolEventLog @model {
-#   txID: String! @primaryKey
-#   raw: AWSJSON!
-#   meta: EventLogMeta! 
-#   decoded: PlayerLeftPoolEventDecoded! @hasOne
-# }
-# PlayerJoinedPoolEventDecoded
-type PlayerLeftPoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
+type PlayerLeftPoolEventLogV2 @model @searchable {
+  id: ID!  
   txID: String! @primaryKey
   raw: AWSJSON!
   metaBlockID: String!
@@ -234,27 +183,12 @@ type PlayerLeftPoolEventLog @model @searchable @auth(rules: [{allow: public}]) {
   decodedGameId: Int!
   decodedPlayer: String!
   decodedDateTime: String!  
+  poolJsonData: AWSJSON 
  }
 
-# PoolAwaitingExecutionEventDecoded
-# type PoolAwaitingExecutionEventDecoded @model {
-#   txID: String! @primaryKey(sortKeyFields: ["gameId", "status"])
-#   gameId: Int!
-#   status: String!
-#   dateTime: String!
-#   poolAwaitingExecutionEventLog: PoolAwaitingExecutionEventLog @belongsTo
-# }
-
-# type PoolAwaitingExecutionEventLog @model {
-#   txID: String! @primaryKey
-#   raw: AWSJSON!
-#   meta: EventLogMeta! 
-#   decoded: PoolAwaitingExecutionEventDecoded! @hasOne
-# }
-# PoolAwaitingExecutionEventDecoded
-
-type PoolAwaitingExecutionEventLog @model @searchable @auth(rules: [{allow: public}]) {
-  txID: String! @primaryKey
+type PoolAwaitingExecutionEventLogV2 @model @searchable {
+  id: ID!  
+  txID: String! 
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -265,29 +199,12 @@ type PoolAwaitingExecutionEventLog @model @searchable @auth(rules: [{allow: publ
   decodedStatus: String!
   decodedType: String!
   decodedDateTime: String!  
+  poolJsonData: AWSJSON 
  }
 
-# PoolCompletedEventDecoded
-# type PoolCompletedEventDecoded @model {
-#   txID: String! @primaryKey(sortKeyFields: ["gameId", "player", "auditRecordDrawId"])
-#   gameId: Int!
-#   player: String!
-#   dateTime: String!
-#   winningPayout: String!
-#   transactionId: String!
-#   auditRecordDrawId: String!
-#   poolCompletedEventLog: PoolCompletedEventLog @belongsTo
-# }
-
-# type PoolCompletedEventLog @model {
-#   txID: String! @primaryKey
-#   raw: AWSJSON!
-#   meta: EventLogMeta! 
-#   decoded: PoolCompletedEventDecoded! @hasOne
-# }
-# PoolCompletedEventDecoded
-type PoolCompletedEventLog @model @searchable @auth(rules: [{allow: public}]) {
-  txID: String! @primaryKey
+type PoolCompletedEventLogV2 @model @searchable {
+  id: ID!
+  txID: String! 
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -300,7 +217,8 @@ type PoolCompletedEventLog @model @searchable @auth(rules: [{allow: public}]) {
   decodedStatus: String!
   decodedAuditRecordDrawId: String!
   decodedType: String!
-  decodedDateTime: String!  
+  decodedDateTime: String!
+  poolJsonData: AWSJSON  
  }
 
 input CreateIngestionBucketEventInput {

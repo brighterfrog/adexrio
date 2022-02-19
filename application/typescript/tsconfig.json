@@ -20,7 +20,6 @@
     "references": [
         { "path": "./backend-blockchain-ticker" },
         { "path": "./lambda_block_event_processor" },
-        { "path": "./lambda_dynamodb_stream_processor" },
         { "path": "./lambda_historical_event_processor" },
         { "path": "./library" },
     ],

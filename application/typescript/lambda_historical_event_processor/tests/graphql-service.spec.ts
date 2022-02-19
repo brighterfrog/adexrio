@@ -9,7 +9,7 @@ import 'mocha';
 import { API, graphqlOperation } from '../../library/src/amplify-bootstrapper/bootstrap-amplify';
 import { GraphQLResult } from '../../library/node_modules/@aws-amplify/api-graphql/lib-esm';
 
-import { getCreatePoolEventLog, getPoolSuccessfullBlockEventsProcessed } from '../../library/src/graphql/queries';
+import { getCreatePoolEventLogV2, getPoolSuccessfullBlockEventsProcessed } from '../../library/src/graphql/queries';
 
 import { 
     //createEventLogMeta,
@@ -20,57 +20,57 @@ import {
 
 import { 
     // CreateCreatePoolEventDecodedInput,
-    CreateCreatePoolEventLogInput,
+    CreateCreatePoolEventLogV2Input,
     // CreateEventLogMetaInput,
     // CreateEventLogMetaMutation,
-    CreatePoolEventLog,
+    CreatePoolEventLogV2,
     CreatePoolSuccessfullBlockEventsProcessedMutation, 
     DeletePoolSuccessfullBlockEventsProcessedMutation, 
     GetPoolSuccessfullBlockEventsProcessedQuery, 
     PoolSuccessfullBlockEventsProcessed, 
-    SearchCreatePoolEventLogsQuery, 
+    SearchCreatePoolEventLogV2sQuery, 
     UpdatePoolSuccessfullBlockEventsProcessedMutation 
 } from '../../library/src/codegen/API';
 
 
 import { 
-    createCreatePoolEventLog,     
+    createCreatePoolEventLogV2,     
     //createCreatePoolEventDecoded,
 
-    createPlayerJoinedPoolEventLog, 
+    createPlayerJoinedPoolEventLogV2, 
     
     
-    createPlayerLeftPoolEventLog, 
-    
-
-    createPoolCompletedEventLog,
+    createPlayerLeftPoolEventLogV2, 
     
 
-    createPoolAwaitingExecutionEventLog,
+    createPoolCompletedEventLogV2,
+    
+
+    createPoolAwaitingExecutionEventLogV2,
     
 
 } from '../../library/src/graphql/mutations';
 
 import { 
-  searchCreatePoolEventLogs
+  searchCreatePoolEventLogV2s
 } from '../../library/src/graphql/queries'
 
 import {     
-    SearchableCreatePoolEventLogConnection,
+    SearchableCreatePoolEventLogV2Connection,
     
-    CreateCreatePoolEventLogMutation, 
+    CreateCreatePoolEventLogV2Mutation, 
     // CreateCreatePoolEventDecodedMutation,    
 
-    CreatePlayerJoinedPoolEventLogMutation,         
+    CreatePlayerJoinedPoolEventLogV2Mutation,         
     
 
-    CreatePlayerLeftPoolEventLogMutation,
+    CreatePlayerLeftPoolEventLogV2Mutation,
     
 
-    CreatePoolCompletedEventLogMutation,
+    CreatePoolCompletedEventLogV2Mutation,
     
 
-    CreatePoolAwaitingExecutionEventLogMutation,
+    CreatePoolAwaitingExecutionEventLogV2Mutation,
     
 
 } from '../../library/src/codegen/API';
@@ -119,46 +119,45 @@ before(async () => {
 //  });
 
 // WORKS
-//  describe('can insert graphql CreateEventLog event',
-//  () => {
-//      it('should return true', async () => {            
+ describe('can insert graphql CreateEventLog event',
+ () => {
+     it('should return true', async () => {            
 
-//         const graphql = new GraphQLService();
+        const graphql = new GraphQLService();
 
-
-//           const rawEvent = {
-//             address: '0x8d99795e74fdcbc1fed412874d04d3ac85808e2e',
-//             topics: [
-//               '0x055c5881ecddd2b670014114d0806730877835ac63b0299a9270f81b00bff672',
-//               '0x00000000000000000000000000000000000000000000000000000000000001ad',
-//               '0x00000000000000000000000080a14141080f878260340986c7cf6e4a6b2ac504',
-//               '0x0000000000000000000000000000000000000000000000000000000061df060e'
-//             ],
-//             data: '0x',
-//             meta: {
-//               blockID: '0x00aa1d71066e37f7bca5ff00393bfbbda8f82466714f50bf8a83a3c0204f1d58',
-//               blockNumber: 11148657,
-//               blockTimestamp: 1642006030,
-//               txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6',
-//               txOrigin: '0x80a14141080f878260340986c7cf6e4a6b2ac504',
-//               clauseIndex: 0
-//             },
-//             decoded: {
-//               '0': '429',
-//               '1': '0x80a14141080f878260340986c7cf6e4a6b2ac504',
-//               '2': '1642006030',
-//               gameId: '429',
-//               player: '0x80a14141080f878260340986c7cf6e4a6b2ac504',
-//               dateTime: '1642006030'
-//             }
-//           };
+          const rawEvent = {
+            address: '0x8d99795e74fdcbc1fed412874d04d3ac85808e2e',
+            topics: [
+              '0x055c5881ecddd2b670014114d0806730877835ac63b0299a9270f81b00bff672',
+              '0x00000000000000000000000000000000000000000000000000000000000001ad',
+              '0x00000000000000000000000080a14141080f878260340986c7cf6e4a6b2ac504',
+              '0x0000000000000000000000000000000000000000000000000000000061df060e'
+            ],
+            data: '0x',
+            meta: {
+              blockID: '0x00aa1d71066e37f7bca5ff00393bfbbda8f82466714f50bf8a83a3c0204f1d58',
+              blockNumber: 11148657,
+              blockTimestamp: 1642006030,
+              txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6',
+              txOrigin: '0x80a14141080f878260340986c7cf6e4a6b2ac504',
+              clauseIndex: 0
+            },
+            decoded: {
+              '0': '429',
+              '1': '0x80a14141080f878260340986c7cf6e4a6b2ac504',
+              '2': '1642006030',
+              gameId: '429',
+              player: '0x80a14141080f878260340986c7cf6e4a6b2ac504',
+              dateTime: '1642006030'
+            }
+          };
    
-//         const result = await graphql.createCreatePoolEventLog(rawEvent);
+        const result = await graphql.createCreatePoolEventLog(rawEvent);
 
-//         console.log('test done', result);              
+        console.log('test done', result);              
                        
-//      });
-// });
+     });
+});
 
 //WORKS
 // describe('can search graphql CreateEventLog event',
@@ -181,17 +180,17 @@ before(async () => {
 //     });
 // });
 
-describe('can get graphql CreateEventLog event by txID',
-() => {
-    it('should return true', async () => {            
+// describe('can get graphql CreateEventLog event by txID',
+// () => {
+//     it('should return true', async () => {            
 
-       const graphql = new GraphQLService();
+//        const graphql = new GraphQLService();
        
-       const result = await API.graphql(graphqlOperation(getCreatePoolEventLog, { txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6' }  )) as GraphQLResult<SearchCreatePoolEventLogsQuery>;
+//        const result = await API.graphql(graphqlOperation(getCreatePoolEventLogV2, { txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6' }  )) as GraphQLResult<SearchCreatePoolEventLogV2sQuery>;
                         
-       console.log('getCreatePoolEventLog done', result);                               
-    });
-});
+//        console.log('getCreatePoolEventLog done', result);                               
+//     });
+// });
 
 //  describe('can delete test block from the block table',
 //      () => {

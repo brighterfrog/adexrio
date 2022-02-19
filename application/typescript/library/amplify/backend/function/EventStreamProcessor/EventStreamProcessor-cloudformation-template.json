@@ -1,0 +1,521 @@
+{
+  "AWSTemplateFormatVersion": "2010-09-09",
+  "Description": "{\"createdOn\":\"Windows\",\"createdBy\":\"Amplify\",\"createdWith\":\"7.6.19\",\"stackType\":\"function-Lambda\",\"metadata\":{}}",
+
+  "Mappings": {
+    "Environments": {
+      "dev": {
+        "VECHAIN_API_NODE": "https://vethor-node-test.vechaindev.com",
+        "RECORD_TYPE": "test",
+        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUG_ON": "true"
+      },
+      "test": {
+        "VECHAIN_API_NODE": "https://vethor-node-test.vechaindev.com",
+        "RECORD_TYPE": "test",
+        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUG_ON": "true"
+      },
+      "prod": {
+        "VECHAIN_API_NODE": "https://vethor-node.vechain.com",
+        "RECORD_TYPE": "public",
+        "RANDOM_ORG_API_ENDPOINT": "https://api.random.org/json-rpc/2/invoke",
+        "DEBUG_ON": "false"
+      }
+    }
+  },
+
+  "Parameters": {
+    "CloudWatchRule": {
+      "Type": "String",
+      "Default": "NONE",
+      "Description": " Schedule Expression"
+    },
+    "deploymentBucketName": {
+      "Type": "String"
+    },
+    "env": {
+      "Type": "String"
+    },
+    "s3Key": {
+      "Type": "String"
+    },
+    "apiadexrGraphQLAPIIdOutput": {
+      "Type": "String",
+      "Default": "apiadexrGraphQLAPIIdOutput"
+    },
+    "apiadexrGraphQLAPIEndpointOutput": {
+      "Type": "String",
+      "Default": "apiadexrGraphQLAPIEndpointOutput"
+    }
+  },
+  "Conditions": {
+    "ShouldNotCreateEnvResources": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "NONE"
+      ]
+    },
+    "IsProductionEnv": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "prod"
+      ]
+    },
+    "IsTestEnv": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "test"
+      ]
+    },
+    "IsDevEnv": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "dev"
+      ]
+    }
+  },
+  "Resources": {
+    "LambdaFunction": {
+      "Type": "AWS::Lambda::Function",
+      "Metadata": {
+        "aws:asset:path": "./src",
+        "aws:asset:property": "Code"
+      },
+      "Properties": {
+        "Code": {
+          "S3Bucket": {
+            "Ref": "deploymentBucketName"
+          },
+          "S3Key": {
+            "Ref": "s3Key"
+          }
+        },
+        "Handler": "index.handler",
+        "FunctionName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "EventStreamProcessor",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "EventStreamProcessor",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "Environment": {
+          "Variables": {
+            "ENV": {
+              "Ref": "env"
+            },
+            "REGION": {
+              "Ref": "AWS::Region"
+            },
+            "VECHAIN_API_NODE": {
+              "Fn::FindInMap": [
+                "Environments",
+                { "Ref" : "env"},
+                "VECHAIN_API_NODE"             
+              ]
+            },
+            "RECORD_TYPE": {
+              "Fn::FindInMap": [
+                "Environments",
+                { "Ref" : "env"},
+                "RECORD_TYPE"             
+              ]
+            },
+            "RANDOM_ORG_API_ENDPOINT": {
+              "Fn::FindInMap": [
+                "Environments",
+                { "Ref" : "env"},
+                "RANDOM_ORG_API_ENDPOINT"             
+              ]
+            },
+            "DEBUG_ON": {
+              "Fn::FindInMap": [
+                "Environments",
+                { "Ref" : "env"},
+                "DEBUG_ON"             
+              ]
+            }
+          }
+        },
+        "Role": {
+          "Fn::GetAtt": ["LambdaExecutionRole", "Arn"]
+        },
+        "Runtime": "nodejs14.x",
+        "Layers": [],
+        "Timeout": 25
+      }
+    },
+    "LambdaExecutionRole": {
+      "Type": "AWS::IAM::Role",
+      "Properties": {
+        "RoleName": {
+          "Fn::If": [
+            "ShouldNotCreateEnvResources",
+            "adexrLambdaRolef4c9a640",
+            {
+              "Fn::Join": [
+                "",
+                [
+                  "adexrLambdaRolef4c9a640",
+                  "-",
+                  {
+                    "Ref": "env"
+                  }
+                ]
+              ]
+            }
+          ]
+        },
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Principal": {
+                "Service": ["lambda.amazonaws.com"]
+              },
+              "Action": ["sts:AssumeRole"]
+            }
+          ]
+        }
+      }
+    },
+    "lambdaexecutionpolicy": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "lambda-execution-policy",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "logs:CreateLogGroup",
+                "logs:CreateLogStream",
+                "logs:PutLogEvents"
+              ],
+              "Resource": {
+                "Fn::Sub": [
+                  "arn:aws:logs:${region}:${account}:log-group:/aws/lambda/${lambda}:log-stream:*",
+                  {
+                    "region": {
+                      "Ref": "AWS::Region"
+                    },
+                    "account": {
+                      "Ref": "AWS::AccountId"
+                    },
+                    "lambda": {
+                      "Ref": "LambdaFunction"
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaTriggerPolicyCreatePoolEventLogV2": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-CreatePoolEventLogV2",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogV2Table:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingCreatePoolEventLogV2": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyCreatePoolEventLogV2",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogV2Table:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "LambdaTriggerPolicyPlayerJoinedPoolEventLogV2": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-PlayerJoinedPoolEventLogV2",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogV2Table:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingPlayerJoinedPoolEventLogV2": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyPlayerJoinedPoolEventLogV2",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogV2Table:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "LambdaTriggerPolicyPlayerLeftPoolEventLogV2": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-PlayerLeftPoolEventLogV2",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogV2Table:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingPlayerLeftPoolEventLogV2": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyPlayerLeftPoolEventLogV2",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogV2Table:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "LambdaTriggerPolicyPoolAwaitingExecutionEventLogV2": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-PoolAwaitingExecutionEventLogV2",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogV2Table:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingPoolAwaitingExecutionEventLogV2": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyPoolAwaitingExecutionEventLogV2",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogV2Table:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        },
+        "StartingPosition": "LATEST"
+      }
+    },
+    "LambdaTriggerPolicyPoolCompletedEventLogV2": {
+      "DependsOn": ["LambdaExecutionRole"],
+      "Type": "AWS::IAM::Policy",
+      "Properties": {
+        "PolicyName": "amplify-lambda-execution-policy-PoolCompletedEventLogV2",
+        "Roles": [
+          {
+            "Ref": "LambdaExecutionRole"
+          }
+        ],
+        "PolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [
+            {
+              "Effect": "Allow",
+              "Action": [
+                "dynamodb:DescribeStream",
+                "dynamodb:GetRecords",
+                "dynamodb:GetShardIterator",
+                "dynamodb:ListStreams"
+              ],
+              "Resource": {
+                "Fn::ImportValue": {
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogV2Table:StreamArn"
+                }
+              }
+            }
+          ]
+        }
+      }
+    },
+    "LambdaEventSourceMappingPoolCompletedEventLogV2": {
+      "Type": "AWS::Lambda::EventSourceMapping",
+      "DependsOn": [
+        "LambdaTriggerPolicyPoolCompletedEventLogV2",
+        "LambdaExecutionRole"
+      ],
+      "Properties": {
+        "BatchSize": 100,
+        "Enabled": true,
+        "EventSourceArn": {
+          "Fn::ImportValue": {
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogV2Table:StreamArn"
+          }
+        },
+        "FunctionName": {
+          "Fn::GetAtt": ["LambdaFunction", "Arn"]
+        },
+        "StartingPosition": "LATEST"
+      }
+    }
+  },
+  "Outputs": {
+    "Name": {
+      "Value": {
+        "Ref": "LambdaFunction"
+      }
+    },
+    "Arn": {
+      "Value": {
+        "Fn::GetAtt": ["LambdaFunction", "Arn"]
+      }
+    },
+    "Region": {
+      "Value": {
+        "Ref": "AWS::Region"
+      }
+    },
+    "LambdaExecutionRole": {
+      "Value": {
+        "Ref": "LambdaExecutionRole"
+      }
+    }
+  }
+}

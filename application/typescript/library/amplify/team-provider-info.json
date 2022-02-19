@@ -31,6 +31,14 @@
           "blockLookupTableIdKey": "0",
           "blockEventQueueName": "block_events",
           "historicalEventQueueName": "historical_events"
+        },
+        "EventLogStreamProcessor": {
+          "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
+          "s3Key": "amplify-builds/EventLogStreamProcessor-73525a376b6637756564-build.zip"
+        },
+        "EventStreamProcessor": {
+          "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
+          "s3Key": "amplify-builds/EventStreamProcessor-7633526d375239374976-build.zip"
         }
       }
     }

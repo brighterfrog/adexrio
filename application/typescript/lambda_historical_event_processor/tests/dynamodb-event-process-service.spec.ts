@@ -26,44 +26,44 @@ before(async () => {
     // console.log('init completed');
 })
 
-describe('can execute sequential events',
-     () => {
-         it('should return true', async () => {            
+// describe('can execute sequential events',
+//      () => {
+//          it('should return true', async () => {            
                     
-            const dynamodbEventProcessorService = new DynamodbEventProcessorService(new EventHandlerProcessMapper(new GraphQLService()));
-            const blockChainEventRetrieverService = new BlockchainEventProcessorService();
+//             const dynamodbEventProcessorService = new DynamodbEventProcessorService(new EventHandlerProcessMapper(new GraphQLService()));
+//             const blockChainEventRetrieverService = new BlockchainEventProcessorService();
             
-            await blockChainEventRetrieverService.initialize();
+//             await blockChainEventRetrieverService.initialize();
 
-            const eventsToRetrieve = [
-                {
-                    name: EVENTS.GameCreatedEvent,
-                    result: null
-                },
-                {
-                    name: EVENTS.PlayerJoinedGameEvent,
-                    result: null
-                },
-                {
-                    name: EVENTS.PlayerLeftGameEvent,
-                    result: null
-                },
-                {
-                    name: EVENTS.GameCompletedEvent,
-                    result: null
-                },
-                {
-                    name: EVENTS.GameAwaitingLotteryEvent,
-                    result: null
-                }
-            ];
+//             const eventsToRetrieve = [
+//                 {
+//                     name: EVENTS.GameCreatedEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.PlayerJoinedGameEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.PlayerLeftGameEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.GameCompletedEvent,
+//                     result: null
+//                 },
+//                 {
+//                     name: EVENTS.GameAwaitingLotteryEvent,
+//                     result: null
+//                 }
+//             ];
 
-            const events = await blockChainEventRetrieverService.getAllEventsStartingAtBlocknumber(eventsToRetrieve, 0);
+//             const events = await blockChainEventRetrieverService.getAllEventsStartingAtBlocknumber(eventsToRetrieve, 0);
             
-            await dynamodbEventProcessorService.processContractEvents(events);
+//             await dynamodbEventProcessorService.processContractEvents(events);
 
-         });
- });
+//          });
+//  });
 
 
 

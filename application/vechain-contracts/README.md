@@ -23,3 +23,6 @@ From the typescript directory
 `npm run library:up_windows`
 
 
+
+# Future adds
+Smart contract pool add event data for:

@@ -34,35 +34,14 @@ before(async () => {
     console.log('init completed');
 })
 
-async function getAllEventsByNameStartingFromBlock(eventName: string) {
-    const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(eventName, 0);
+// async function getAllEventsByNameStartingFromBlock(eventName: string) {
+//     const events = await blockchainEventProcessorService.getAllEventsByNameStartingFromBlock(eventName, 0);
 
-    console.log('Events total length', events.length);
-    console.log('last event is', events[events.length - 1]);
+//     console.log('Events total length', events.length);
+//     console.log('last event is', events[events.length - 1]);
 
-    expect(events.length).is.not.lessThan(1);
-}
-
-
-// function sortByBlockAndEventType(eventsToSort: ContractEvent[]) {
-
-//     eventsToSort.sort((first, second) => {
-//         if (first.result. > first.age) {
-//             return 1;
-//         }
-//         if (n1.age < n2.age) {
-//             return -1;
-//         }
-
-
-//         return 0;
-//     })
-
-
-
+//     expect(events.length).is.not.lessThan(1);
 // }
-
-
 
 // describe('Can Create blockchain-event-process-service',
 //     () => {
