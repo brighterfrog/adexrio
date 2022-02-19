@@ -6,7 +6,8 @@
   "license": "Apache-2.0",
   "scripts": {
     "test": "jest",
-    "build": "bash build.sh && webpack --config ../webpack.config.js"
+    "build": "bash build.sh && webpack --config ../webpack.config.js",
+    "pack": "webpack --stats-error-details --config ../webpack.config.js"
   },
   "jest": {
     "transform": {
@@ -29,7 +30,6 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
-    "@aws-sdk/client-secrets-manager": "^3.52.0",
     "@vechain/connex-driver": "^2.0.8",
     "@vechain/connex-framework": "^2.0.8",
     "aws-amplify": "^4.3.14"

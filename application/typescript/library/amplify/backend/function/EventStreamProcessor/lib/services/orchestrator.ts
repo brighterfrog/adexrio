@@ -37,6 +37,11 @@ export class Orchestrator {
         }        
     }
 
+    async test() {
+        const test = await this.createPoolService.userWalletService.searchUserWalletByWalletAddress({id: { eq: '123'}});
+        return test;
+    }
+
     _getTableNameFromArn(arn) {
         return arn.split('table/')[1].split('-')[0];
       }           

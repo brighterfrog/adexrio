@@ -3,7 +3,7 @@ import { Framework } from '@vechain/connex-framework'
 // import { Driver, SimpleNet } from '@vechain/connex-driver'
 
 import { API, graphqlOperation } from '../../../library/src/amplify-bootstrapper/bootstrap-amplify';
-import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql/lib-esm';
+import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql';
 
 import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessed } from '../../../library/src/graphql/queries';
 

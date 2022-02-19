@@ -3,9 +3,9 @@ import { Framework } from '@vechain/connex-framework'
 // import { Driver, SimpleNet } from '@vechain/connex-driver'
 
 import { API, graphqlOperation } from '../../../library/src/amplify-bootstrapper/bootstrap-amplify';
-import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql/lib-esm';
+import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql';
 
-import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessedV2 } from '../../../library/src/graphql/queries';
+import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessed } from '../../../library/src/graphql/queries';
 
 import {
     // createEventLogMeta,
@@ -29,8 +29,8 @@ import {
     GetPoolAwaitingExecutionEventLogV2Query,
     GetPoolCompletedEventLogV2Query,
     GetPoolSuccessfullBlockEventsProcessedQuery,
-    PlayerJoinedPoolEventV2Log,
-    PlayerLeftPoolEventV2Log,
+    PlayerJoinedPoolEventLogV2,
+    PlayerLeftPoolEventLogV2,
     PoolAwaitingExecutionEventLogV2,
     PoolCompletedEventLogV2,
     PoolSuccessfullBlockEventsProcessed,
@@ -39,19 +39,19 @@ import {
 
 
 import {
-    createCreatePoolEventLog,
+    createCreatePoolEventLogV2,
     // createCreatePoolEventDecoded,
 
-    createPlayerJoinedPoolEventLog,
+    createPlayerJoinedPoolEventLogV2,
 
 
-    createPlayerLeftPoolEventLog,
+    createPlayerLeftPoolEventLogV2,
 
 
-    createPoolCompletedEventLog,
+    createPoolCompletedEventLogV2,
 
 
-    createPoolAwaitingExecutionEventLog,
+    createPoolAwaitingExecutionEventLogV2,
 
 
 } from '../../../library/src/graphql/mutations';
@@ -94,13 +94,13 @@ export class GraphQLService {
     /* CreatePoolEventLog */
     async getCreatePoolEventLogByTxId(txId: string): Promise<CreatePoolEventLogV2> {
         const graphqlResult = await API.graphql(graphqlOperation(getCreatePoolEventLogV2, { txID: txId })) as GraphQLResult<GetCreatePoolEventLogV2Query>;
-        return graphqlResult.data?.getCreatePoolEventLog;
+        return graphqlResult.data?.getCreatePoolEventLogV2;
     }
 
     async createCreatePoolEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<CreatePoolEventLogV2> {
         try {
 
-            const graphqlResult = await API.graphql(graphqlOperation(createCreatePoolEventLog, {
+            const graphqlResult = await API.graphql(graphqlOperation(createCreatePoolEventLogV2, {
                 input: {
                     txID: rawThorEvent.meta.txID,
                     raw: JSON.stringify(rawThorEvent),
@@ -118,7 +118,7 @@ export class GraphQLService {
 
             console.log('createCreatePoolEventLog', graphqlResult);
 
-            return graphqlResult.data?.createCreatePoolEventLog;
+            return graphqlResult.data?.createCreatePoolEventLogV2;
         }
         catch (e) {
             console.log('EXCEPTION OCCURRED', e);
@@ -131,12 +131,12 @@ export class GraphQLService {
     /* PlayerJoinedPoolEventLog */
     async getPlayerJoinedPoolEventLogByTxId(txId: string): Promise<PlayerJoinedPoolEventLogV2> {
         const graphqlResult = await API.graphql(graphqlOperation(getPlayerJoinedPoolEventLogV2, { txID: txId })) as GraphQLResult<GetPlayerJoinedPoolEventLogV2Query>;
-        return graphqlResult.data?.getPlayerJoinedPoolEventLog;
+        return graphqlResult.data?.getPlayerJoinedPoolEventLogV2;
     }
     async createPlayerJoinedPoolEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PlayerJoinedPoolEventLogV2> {
         try {
 
-            const graphqlResult = await API.graphql(graphqlOperation(createPlayerJoinedPoolEventLog, {
+            const graphqlResult = await API.graphql(graphqlOperation(createPlayerJoinedPoolEventLogV2, {
                 input: {
                     txID: rawThorEvent.meta.txID,
                     raw: JSON.stringify(rawThorEvent),
@@ -148,13 +148,13 @@ export class GraphQLService {
                     decodedGameId: rawThorEvent.decoded.gameId,
                     decodedPlayer: rawThorEvent.decoded.player,
                     decodedDateTime: rawThorEvent.decoded.dateTime
-                } as CreatePlayerJoinedPoolEventLogMutation
+                } as CreatePlayerJoinedPoolEventLogV2Mutation
             }
-            )) as GraphQLResult<CreatePlayerJoinedPoolEventLogMutation>;
+            )) as GraphQLResult<CreatePlayerJoinedPoolEventLogV2Mutation>;
 
             console.log('createPlayerJoinedPoolEventLog', graphqlResult);
 
-            return graphqlResult.data?.createPlayerJoinedPoolEventLog;
+            return graphqlResult.data?.createPlayerJoinedPoolEventLogV2;
         }
         catch (e) {
             console.log('EXCEPTION OCCURRED', e);
@@ -164,14 +164,14 @@ export class GraphQLService {
     /* PlayerJoinedPoolEventLog */
 
     /* PlayerLeftPoolEventLog */
-    async getPlayerLeftPoolEventLogByTxId(txId: string): Promise<PlayerLeftPoolEventLog> {
-        const graphqlResult = await API.graphql(graphqlOperation(getPlayerLeftPoolEventLog, { txID: txId })) as GraphQLResult<GetPlayerLeftPoolEventLogQuery>;
-        return graphqlResult.data?.getPlayerLeftPoolEventLog;
+    async getPlayerLeftPoolEventLogByTxId(txId: string): Promise<PlayerLeftPoolEventLogV2> {
+        const graphqlResult = await API.graphql(graphqlOperation(getPlayerLeftPoolEventLogV2, { txID: txId })) as GraphQLResult<GetPlayerLeftPoolEventLogV2Query>;
+        return graphqlResult.data?.getPlayerLeftPoolEventLogV2;
     }
-    async createPlayerLeftPoolEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PlayerLeftPoolEventLog> {
+    async createPlayerLeftPoolEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PlayerLeftPoolEventLogV2> {
         try {
 
-            const graphqlResult = await API.graphql(graphqlOperation(createPlayerLeftPoolEventLog, {
+            const graphqlResult = await API.graphql(graphqlOperation(createPlayerLeftPoolEventLogV2, {
                 input: {
                     txID: rawThorEvent.meta.txID,
                     raw: JSON.stringify(rawThorEvent),
@@ -183,13 +183,13 @@ export class GraphQLService {
                     decodedGameId: rawThorEvent.decoded.gameId,
                     decodedPlayer: rawThorEvent.decoded.player,
                     decodedDateTime: rawThorEvent.decoded.dateTime
-                } as CreatePlayerLeftPoolEventLogMutation
+                } as CreatePlayerLeftPoolEventLogV2Mutation
             }
-            )) as GraphQLResult<CreatePlayerLeftPoolEventLogMutation>;
+            )) as GraphQLResult<CreatePlayerLeftPoolEventLogV2Mutation>;
 
             console.log('createPlayerLeftPoolEventLog', graphqlResult);
 
-            return graphqlResult.data?.createPlayerLeftPoolEventLog;
+            return graphqlResult.data?.createPlayerLeftPoolEventLogV2;
         }
         catch (e) {
             console.log('EXCEPTION OCCURRED', e);
@@ -199,14 +199,14 @@ export class GraphQLService {
     /* PlayerLeftPoolEventLog */
 
     /* AwaitingPoolExecutionEventLog */
-    async getAwaitingPoolExecutionEventLogByTxId(txId: string): Promise<PoolAwaitingExecutionEventLog> {
-        const graphqlResult = await API.graphql(graphqlOperation(getPoolAwaitingExecutionEventLog, { txID: txId })) as GraphQLResult<GetPoolAwaitingExecutionEventLogQuery>;
-        return graphqlResult.data?.getPoolAwaitingExecutionEventLog;
+    async getAwaitingPoolExecutionEventLogByTxId(txId: string): Promise<PoolAwaitingExecutionEventLogV2> {
+        const graphqlResult = await API.graphql(graphqlOperation(getPoolAwaitingExecutionEventLogV2, { txID: txId })) as GraphQLResult<GetPoolAwaitingExecutionEventLogV2Query>;
+        return graphqlResult.data?.getPoolAwaitingExecutionEventLogV2;
     }
-    async createAwaitingPoolExecutionEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PoolAwaitingExecutionEventLog> {
+    async createAwaitingPoolExecutionEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PoolAwaitingExecutionEventLogV2> {
         try {
 
-            const graphqlResult = await API.graphql(graphqlOperation(createPoolAwaitingExecutionEventLog, {
+            const graphqlResult = await API.graphql(graphqlOperation(createPoolAwaitingExecutionEventLogV2, {
                 input: {
                     txID: rawThorEvent.meta.txID,
                     raw: JSON.stringify(rawThorEvent),
@@ -220,13 +220,13 @@ export class GraphQLService {
                     decodedType: rawThorEvent.decoded.type,
                     decodedDateTime: rawThorEvent.decoded.dateTime
 
-                } as CreatePlayerJoinedPoolEventLogMutation
+                } as CreatePlayerJoinedPoolEventLogV2Mutation
             }
-            )) as GraphQLResult<CreatePoolAwaitingExecutionEventLogMutation>;
+            )) as GraphQLResult<CreatePoolAwaitingExecutionEventLogV2Mutation>;
 
             console.log('createAwaitingPoolExecutionEventLog', graphqlResult);
 
-            return graphqlResult.data?.createPoolAwaitingExecutionEventLog;
+            return graphqlResult.data?.createPoolAwaitingExecutionEventLogV2;
         }
         catch (e) {
             console.log('EXCEPTION OCCURRED', e);
@@ -236,14 +236,14 @@ export class GraphQLService {
     /* AwaitingPoolExecutionEventLog */
 
     /* GetPoolCompletedEventLogQuery */
-    async getPoolCompletedEventLogByTxId(txId: string): Promise<PoolCompletedEventLog> {
-        const graphqlResult = await API.graphql(graphqlOperation(getPoolCompletedEventLog, { txID: txId })) as GraphQLResult<GetPoolCompletedEventLogQuery>;
-        return graphqlResult.data?.getPoolCompletedEventLog;
+    async getPoolCompletedEventLogByTxId(txId: string): Promise<PoolCompletedEventLogV2> {
+        const graphqlResult = await API.graphql(graphqlOperation(getPoolCompletedEventLogV2, { txID: txId })) as GraphQLResult<GetPoolCompletedEventLogV2Query>;
+        return graphqlResult.data?.getPoolCompletedEventLogV2;
     }
-    async createPoolCompletedEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PoolCompletedEventLog> {
+    async createPoolCompletedEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PoolCompletedEventLogV2> {
         try {
 
-            const graphqlResult = await API.graphql(graphqlOperation(createPoolCompletedEventLog, {
+            const graphqlResult = await API.graphql(graphqlOperation(createPoolCompletedEventLogV2, {
                 input: {
                     txID: rawThorEvent.meta.txID,
                     raw: JSON.stringify(rawThorEvent),
@@ -260,13 +260,13 @@ export class GraphQLService {
                     decodedAuditRecordDrawId: rawThorEvent.decoded.auditRecordDrawId,
                     decodedType: rawThorEvent.decoded.type
 
-                } as CreatePoolCompletedEventLogMutation
+                } as CreatePoolCompletedEventLogV2Mutation
             }
-            )) as GraphQLResult<CreatePoolCompletedEventLogMutation>;
+            )) as GraphQLResult<CreatePoolCompletedEventLogV2Mutation>;
 
             console.log('createPoolCompletedEventLog', graphqlResult);
 
-            return graphqlResult.data?.createPoolCompletedEventLog;
+            return graphqlResult.data?.createPoolCompletedEventLogV2;
         }
         catch (e) {
             console.log('EXCEPTION OCCURRED', e);

@@ -2,8 +2,7 @@
 
 import crypto from 'crypto';
 
-import { API, graphqlOperation } from '../../amplify-bootstrapper/bootstrap-amplify';
-import { GraphQLResult } from '../../node_modules/@aws-amplify/api-graphql/lib-esm';
+import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
 
 import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolStatus, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
 import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
@@ -89,7 +88,10 @@ export class CreatePoolService implements IEventLogProcessor {
 
          /* default to lottery pools to accomodate v1 contract */ 
         if(!poolJsonData) {  
-                                
+                        
+            /* legacy fetch from contract game info */
+
+            
             createdPool = await this.poolService.createPool(
                 {
                     poolId: eventRecord.dynamodb.NewImage.decodedGameId,
@@ -101,7 +103,7 @@ export class CreatePoolService implements IEventLogProcessor {
                     poolTotal: 100,
                     poolWinningPayout: 0,
                     allowPlayerLeave: true,
-                    apiRequestHash: 'NA_IN_V1_CONTRACT',
+                    apiRequestHash: 'NA_V1_CONTRACT',
                     poolPoolCreatorId: poolCreatorUserWallet.id 
             } as CreatePoolInput);
         }

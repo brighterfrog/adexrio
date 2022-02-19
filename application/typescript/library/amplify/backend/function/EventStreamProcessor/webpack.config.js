@@ -10,12 +10,13 @@ module.exports = {
         }]
     },
     resolve: {
-        extensions: ['.ts', '.js', '.tsx']
+        extensions: ['.ts', '.js', '.tsx']        
     },
     output: {
         filename: 'index.js',
         path: path.resolve(__dirname, './src'),
         libraryTarget: 'commonjs2',
     },
-    target: 'node'
+    target: 'node'    
+    
 };

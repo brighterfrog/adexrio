@@ -16,7 +16,7 @@
     },
     "exclude": [
       "jest.config.js",
-      "webpack.config.js",
-      "src/bundle.js"
+      "webpack.config.js",      
+      "src"     
     ]
   }
