@@ -4,6 +4,7 @@ import { UserWalletService } from './core/user-wallet-service';
 import { ApiPoolAttributesService } from './core/api-pool-attributes-service';
 import { PoolPlayerService } from './core/pool-player-service';
 import { PoolService } from './core/pool-service';
+import { BlockChainService } from './legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
 
 export class Orchestrator {
     
@@ -14,11 +15,17 @@ export class Orchestrator {
         userWalletService: UserWalletService,
         apiPoolAttributesService: ApiPoolAttributesService,
         poolPlayerService: PoolPlayerService,
-        poolService: PoolService
+        poolService: PoolService,
+        legacyBlockchainService: BlockChainService
         ) {
         const self = this;
         
-        this.createPoolService = new CreatePoolService(userWalletService, apiPoolAttributesService, poolPlayerService, poolService);
+        this.createPoolService = new CreatePoolService(
+            userWalletService, 
+            apiPoolAttributesService, 
+            poolPlayerService, 
+            poolService, 
+            legacyBlockchainService);
                 
         this.eventMap = new Map([
             ['CreatePoolEventLogV2', self.createPoolService as IEventLogProcessor]            

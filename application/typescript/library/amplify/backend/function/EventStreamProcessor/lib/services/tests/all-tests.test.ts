@@ -1,14 +1,16 @@
 import 'jest';
-import { ApiPoolAttributesService } from './core/api-pool-attributes-service';
-import { PoolPlayerService } from './core/pool-player-service';
-import { PoolService } from './core/pool-service';
-import { UserWalletService } from './core/user-wallet-service';
+import { ApiPoolAttributesService } from '../core/api-pool-attributes-service';
+import { PoolPlayerService } from '../core/pool-player-service';
+import { PoolService } from '../core/pool-service';
+import { UserWalletService } from '../core/user-wallet-service';
+import { SecretsManager } from '../legacy_contract_v1_helpers/backend/aws-services/secrets-manager';
+import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
 
-import { Orchestrator } from './orchestrator';
+import { Orchestrator } from '../orchestrator';
 
 describe("Orchestrator tests", () => {
     // test('basic working test', async () => {
-      
+
 
     //     const testEvent = {
     //         "Records": [
@@ -144,31 +146,55 @@ describe("Orchestrator tests", () => {
     //             }
     //         ]
     //     }
-        
+
     //     const userWalletService = new UserWalletService();
     //     const apiPoolAttributesService = new ApiPoolAttributesService();
     //     const poolPlayerService = new PoolPlayerService();
     //     const poolService = new PoolService();
-    
+
     //     const orchestrator = new Orchestrator(userWalletService, apiPoolAttributesService, poolPlayerService, poolService);        
 
     //     await orchestrator.handleEventRecord(testEvent.Records[0]);
 
     // });
 
-        test('basic working test', async () => {
-      
-        const userWalletService = new UserWalletService();
-        const apiPoolAttributesService = new ApiPoolAttributesService();
-        const poolPlayerService = new PoolPlayerService();
-        const poolService = new PoolService();
-    
-        const orchestrator = new Orchestrator(userWalletService, apiPoolAttributesService, poolPlayerService, poolService);        
+    //     test('basic working test', async () => {
 
-        const result = await orchestrator.test();
-        console.log(result);
+    //     const userWalletService = new UserWalletService();
+    //     const apiPoolAttributesService = new ApiPoolAttributesService();
+    //     const poolPlayerService = new PoolPlayerService();
+    //     const poolService = new PoolService();
+
+    //     const orchestrator = new Orchestrator(userWalletService, apiPoolAttributesService, poolPlayerService, poolService);        
+
+    //     const result = await orchestrator.test();
+    //     console.log(result);
+    // });
+
+})
+
+describe("blockchain legacy service tests", () => {
+
+    test('blockchain service production retrieve gameId result', async () => {
+
+        const secretsManager = new SecretsManager();
+
+        const secretsData = await secretsManager.getSecretValue("adexrio/wallets/mnemonics");
+
+        const secret = JSON.parse(secretsData.SecretString);
+
+        process.env.NODE_ENV = 'prod';
+        process.env.VECHAIN_API_NODE="https://vethor-node.vechain.com"
+        process.env.RECORD_TYPE="test"
+        process.env.RANDOM_ORG_API_ENDPOINT="https://api.random.org/json-rpc/2/invoke"
+        process.env.DEBUG_ON="false";
+
+        const blockchainLegacyService = new BlockChainService(secret);   
+        await blockchainLegacyService.initializeWallet();
+
+        const blockchainGameDetails = await blockchainLegacyService.getGameById(1);
+
+        console.log('blockchainGameDetails', blockchainGameDetails);
     });
 
-
-    
-})
+});

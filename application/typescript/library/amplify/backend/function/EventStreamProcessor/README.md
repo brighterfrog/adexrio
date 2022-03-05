@@ -1,5 +1,6 @@
 # Testing
-`npm run test -- --silent=false`
+How to run:
+* from the lib directory `npm run test -- --silent=false`
 
 # Build Before deployment
 How to run:

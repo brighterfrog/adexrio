@@ -1,16 +1,24 @@
-// import crypto from 'crypto';
+import crypto from 'crypto';
 
-// import { API, graphqlOperation } from '../../amplify-bootstrapper/bootstrap-amplify';
-// import { GraphQLResult } from '../../node_modules/@aws-amplify/api-graphql';
+import { API, graphqlOperation, GraphQLResult } from './../../amplify-bootstrapper/bootstrap-amplify';
 
-// import { CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolStatus, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
-// import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
-// import { createUserWallet } from '../../graphql/mutations';
+import { CreatePoolPlayerInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolStatus, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet, CreatePoolPlayerMutation } from '../../codegen/API';
+import { getCreatePoolEventLogV2, getPlayerJoinedPoolEventLogV2, getPlayerLeftPoolEventLogV2, getPoolAwaitingExecutionEventLogV2, getPoolCompletedEventLogV2, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
+import { createPool, createPoolPlayer, createUserWallet } from '../../graphql/mutations';
 
 export class PoolPlayerService {
 
     constructor() {
 
+    }
+
+    async createPoolPlayer(createPoolPlayerInput: CreatePoolPlayerInput): Promise<any> { 
+        const graphqlResult = await API.graphql(graphqlOperation(createPoolPlayer,
+            { input: createPoolPlayerInput }
+        )) as GraphQLResult<CreatePoolPlayerMutation>;
+        console.log('graphqlResult', graphqlResult);
+
+        return graphqlResult.data?.createPoolPlayer;
     }
 
     // async createUserWalletIfDoesntExist(createUserWalletInput: CreateUserWalletInput): Promise<any> {

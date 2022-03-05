@@ -38,7 +38,7 @@
         },
         "EventStreamProcessor": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/EventStreamProcessor-4a6a68473659344c5276-build.zip"
+          "s3Key": "amplify-builds/EventStreamProcessor-327451503361384d6d50-build.zip"
         }
       }
     }

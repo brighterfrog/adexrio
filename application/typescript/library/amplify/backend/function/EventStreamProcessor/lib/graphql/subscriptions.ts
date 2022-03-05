@@ -108,7 +108,6 @@ export const onCreatePoolPlayer = /* GraphQL */ `
   subscription OnCreatePoolPlayer {
     onCreatePoolPlayer {
       id
-      userWalletId
       userWallet {
         id
         wallet
@@ -150,7 +149,6 @@ export const onUpdatePoolPlayer = /* GraphQL */ `
   subscription OnUpdatePoolPlayer {
     onUpdatePoolPlayer {
       id
-      userWalletId
       userWallet {
         id
         wallet
@@ -192,7 +190,6 @@ export const onDeletePoolPlayer = /* GraphQL */ `
   subscription OnDeletePoolPlayer {
     onDeletePoolPlayer {
       id
-      userWalletId
       userWallet {
         id
         wallet

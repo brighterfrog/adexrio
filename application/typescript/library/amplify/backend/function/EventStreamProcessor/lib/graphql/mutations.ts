@@ -146,7 +146,6 @@ export const createPoolPlayer = /* GraphQL */ `
   ) {
     createPoolPlayer(input: $input, condition: $condition) {
       id
-      userWalletId
       userWallet {
         id
         wallet
@@ -191,7 +190,6 @@ export const updatePoolPlayer = /* GraphQL */ `
   ) {
     updatePoolPlayer(input: $input, condition: $condition) {
       id
-      userWalletId
       userWallet {
         id
         wallet
@@ -236,7 +234,6 @@ export const deletePoolPlayer = /* GraphQL */ `
   ) {
     deletePoolPlayer(input: $input, condition: $condition) {
       id
-      userWalletId
       userWallet {
         id
         wallet

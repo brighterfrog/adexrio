@@ -188,7 +188,6 @@ export type DeleteErrorLogInput = {
 
 export type CreatePoolPlayerInput = {
   id?: string | null,
-  userWalletId: string,
   status: PlayerStatus,
   poolPlayersId: string,
   poolPlayerUserWalletId: string,
@@ -203,7 +202,6 @@ export enum PlayerStatus {
 
 
 export type ModelPoolPlayerConditionInput = {
-  userWalletId?: ModelStringInput | null,
   status?: ModelPlayerStatusInput | null,
   and?: Array< ModelPoolPlayerConditionInput | null > | null,
   or?: Array< ModelPoolPlayerConditionInput | null > | null,
@@ -236,7 +234,6 @@ export type ModelIDInput = {
 export type PoolPlayer = {
   __typename: "PoolPlayer",
   id: string,
-  userWalletId: string,
   userWallet: UserWallet,
   status: PlayerStatus,
   pool: Pool,
@@ -356,7 +353,6 @@ export type ModelPoolPlayerConnection = {
 
 export type UpdatePoolPlayerInput = {
   id: string,
-  userWalletId?: string | null,
   status?: PlayerStatus | null,
   poolPlayersId?: string | null,
   poolPlayerUserWalletId?: string | null,
@@ -1197,7 +1193,6 @@ export type SearchableMessageConnection = {
 
 export type SearchablePoolPlayerFilterInput = {
   id?: SearchableIDFilterInput | null,
-  userWalletId?: SearchableStringFilterInput | null,
   createdAt?: SearchableStringFilterInput | null,
   updatedAt?: SearchableStringFilterInput | null,
   poolPlayersId?: SearchableIDFilterInput | null,
@@ -1215,7 +1210,6 @@ export type SearchablePoolPlayerSortInput = {
 
 export enum SearchablePoolPlayerSortableFields {
   id = "id",
-  userWalletId = "userWalletId",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
   poolPlayersId = "poolPlayersId",
@@ -1231,7 +1225,6 @@ export type SearchablePoolPlayerAggregationInput = {
 
 export enum SearchablePoolPlayerAggregateField {
   id = "id",
-  userWalletId = "userWalletId",
   status = "status",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
@@ -2036,7 +2029,6 @@ export type ModelErrorLogConnection = {
 
 export type ModelPoolPlayerFilterInput = {
   id?: ModelIDInput | null,
-  userWalletId?: ModelStringInput | null,
   status?: ModelPlayerStatusInput | null,
   and?: Array< ModelPoolPlayerFilterInput | null > | null,
   or?: Array< ModelPoolPlayerFilterInput | null > | null,
@@ -2459,7 +2451,6 @@ export type CreatePoolPlayerMutation = {
   createPoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -2508,7 +2499,6 @@ export type UpdatePoolPlayerMutation = {
   updatePoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -2557,7 +2547,6 @@ export type DeletePoolPlayerMutation = {
   deletePoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -3635,7 +3624,6 @@ export type SearchPoolPlayersQuery = {
     items:  Array< {
       __typename: "PoolPlayer",
       id: string,
-      userWalletId: string,
       status: PlayerStatus,
       createdAt: string,
       updatedAt: string,
@@ -4273,7 +4261,6 @@ export type GetPoolPlayerQuery = {
   getPoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -4325,7 +4312,6 @@ export type ListPoolPlayersQuery = {
     items:  Array< {
       __typename: "PoolPlayer",
       id: string,
-      userWalletId: string,
       status: PlayerStatus,
       createdAt: string,
       updatedAt: string,
@@ -5060,7 +5046,6 @@ export type OnCreatePoolPlayerSubscription = {
   onCreatePoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -5104,7 +5089,6 @@ export type OnUpdatePoolPlayerSubscription = {
   onUpdatePoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,
@@ -5148,7 +5132,6 @@ export type OnDeletePoolPlayerSubscription = {
   onDeletePoolPlayer?:  {
     __typename: "PoolPlayer",
     id: string,
-    userWalletId: string,
     userWallet:  {
       __typename: "UserWallet",
       id: string,

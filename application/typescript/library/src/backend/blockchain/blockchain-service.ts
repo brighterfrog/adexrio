@@ -147,9 +147,9 @@ export class BlockChainService {
 
     async getGameById(gameId: number): Promise<Connex.VM.Output & Connex.Thor.Account.WithDecoded> {
         const account = this.getContractAddressForRollIt();
-        const getEligiblePlayersForLotteryByActiveGameId = this.getContractFunctionABIfor('getGameById');
+        const getGameById = this.getContractFunctionABIfor('getGameById');
 
-        return this.walletService.connex.thor.account(account).method(getEligiblePlayersForLotteryByActiveGameId).call(gameId);
+        return this.walletService.connex.thor.account(account).method(getGameById).call(gameId);
     }
 
     async getEligiblePlayersForLotteryByGameId(gameId: number): Promise<Connex.VM.Output & Connex.Thor.Account.WithDecoded> {

@@ -68,7 +68,6 @@ enum PoolCategory {
 
 type PoolPlayer @model @searchable{
   id: ID!
-  userWalletId: String! 
   userWallet: UserWallet! @hasOne
   status: PlayerStatus!
   pool: Pool! @belongsTo  

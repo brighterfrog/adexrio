@@ -109,7 +109,6 @@ export const searchPoolPlayers = /* GraphQL */ `
     ) {
       items {
         id
-        userWalletId
         status
         createdAt
         updatedAt
@@ -740,7 +739,6 @@ export const getPoolPlayer = /* GraphQL */ `
   query GetPoolPlayer($id: ID!) {
     getPoolPlayer(id: $id) {
       id
-      userWalletId
       userWallet {
         id
         wallet
@@ -787,7 +785,6 @@ export const listPoolPlayers = /* GraphQL */ `
     listPoolPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        userWalletId
         status
         createdAt
         updatedAt
