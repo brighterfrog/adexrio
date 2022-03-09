@@ -778,12 +778,12 @@ export const deleteBrand = /* GraphQL */ `
     }
   }
 `;
-export const createCreatePoolEventLogV2 = /* GraphQL */ `
-  mutation CreateCreatePoolEventLogV2(
-    $input: CreateCreatePoolEventLogV2Input!
-    $condition: ModelCreatePoolEventLogV2ConditionInput
+export const createCreatePoolEventLog = /* GraphQL */ `
+  mutation CreateCreatePoolEventLog(
+    $input: CreateCreatePoolEventLogInput!
+    $condition: ModelCreatePoolEventLogConditionInput
   ) {
-    createCreatePoolEventLogV2(input: $input, condition: $condition) {
+    createCreatePoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -801,12 +801,12 @@ export const createCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const updateCreatePoolEventLogV2 = /* GraphQL */ `
-  mutation UpdateCreatePoolEventLogV2(
-    $input: UpdateCreatePoolEventLogV2Input!
-    $condition: ModelCreatePoolEventLogV2ConditionInput
+export const updateCreatePoolEventLog = /* GraphQL */ `
+  mutation UpdateCreatePoolEventLog(
+    $input: UpdateCreatePoolEventLogInput!
+    $condition: ModelCreatePoolEventLogConditionInput
   ) {
-    updateCreatePoolEventLogV2(input: $input, condition: $condition) {
+    updateCreatePoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -824,12 +824,12 @@ export const updateCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const deleteCreatePoolEventLogV2 = /* GraphQL */ `
-  mutation DeleteCreatePoolEventLogV2(
-    $input: DeleteCreatePoolEventLogV2Input!
-    $condition: ModelCreatePoolEventLogV2ConditionInput
+export const deleteCreatePoolEventLog = /* GraphQL */ `
+  mutation DeleteCreatePoolEventLog(
+    $input: DeleteCreatePoolEventLogInput!
+    $condition: ModelCreatePoolEventLogConditionInput
   ) {
-    deleteCreatePoolEventLogV2(input: $input, condition: $condition) {
+    deleteCreatePoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -847,12 +847,12 @@ export const deleteCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const createPlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  mutation CreatePlayerJoinedPoolEventLogV2(
-    $input: CreatePlayerJoinedPoolEventLogV2Input!
-    $condition: ModelPlayerJoinedPoolEventLogV2ConditionInput
+export const createPlayerJoinedPoolEventLog = /* GraphQL */ `
+  mutation CreatePlayerJoinedPoolEventLog(
+    $input: CreatePlayerJoinedPoolEventLogInput!
+    $condition: ModelPlayerJoinedPoolEventLogConditionInput
   ) {
-    createPlayerJoinedPoolEventLogV2(input: $input, condition: $condition) {
+    createPlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -870,12 +870,12 @@ export const createPlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const updatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  mutation UpdatePlayerJoinedPoolEventLogV2(
-    $input: UpdatePlayerJoinedPoolEventLogV2Input!
-    $condition: ModelPlayerJoinedPoolEventLogV2ConditionInput
+export const updatePlayerJoinedPoolEventLog = /* GraphQL */ `
+  mutation UpdatePlayerJoinedPoolEventLog(
+    $input: UpdatePlayerJoinedPoolEventLogInput!
+    $condition: ModelPlayerJoinedPoolEventLogConditionInput
   ) {
-    updatePlayerJoinedPoolEventLogV2(input: $input, condition: $condition) {
+    updatePlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -893,12 +893,12 @@ export const updatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const deletePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  mutation DeletePlayerJoinedPoolEventLogV2(
-    $input: DeletePlayerJoinedPoolEventLogV2Input!
-    $condition: ModelPlayerJoinedPoolEventLogV2ConditionInput
+export const deletePlayerJoinedPoolEventLog = /* GraphQL */ `
+  mutation DeletePlayerJoinedPoolEventLog(
+    $input: DeletePlayerJoinedPoolEventLogInput!
+    $condition: ModelPlayerJoinedPoolEventLogConditionInput
   ) {
-    deletePlayerJoinedPoolEventLogV2(input: $input, condition: $condition) {
+    deletePlayerJoinedPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -916,12 +916,12 @@ export const deletePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const createPlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  mutation CreatePlayerLeftPoolEventLogV2(
-    $input: CreatePlayerLeftPoolEventLogV2Input!
-    $condition: ModelPlayerLeftPoolEventLogV2ConditionInput
+export const createPlayerLeftPoolEventLog = /* GraphQL */ `
+  mutation CreatePlayerLeftPoolEventLog(
+    $input: CreatePlayerLeftPoolEventLogInput!
+    $condition: ModelPlayerLeftPoolEventLogConditionInput
   ) {
-    createPlayerLeftPoolEventLogV2(input: $input, condition: $condition) {
+    createPlayerLeftPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -939,12 +939,12 @@ export const createPlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const updatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  mutation UpdatePlayerLeftPoolEventLogV2(
-    $input: UpdatePlayerLeftPoolEventLogV2Input!
-    $condition: ModelPlayerLeftPoolEventLogV2ConditionInput
+export const updatePlayerLeftPoolEventLog = /* GraphQL */ `
+  mutation UpdatePlayerLeftPoolEventLog(
+    $input: UpdatePlayerLeftPoolEventLogInput!
+    $condition: ModelPlayerLeftPoolEventLogConditionInput
   ) {
-    updatePlayerLeftPoolEventLogV2(input: $input, condition: $condition) {
+    updatePlayerLeftPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -962,12 +962,12 @@ export const updatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const deletePlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  mutation DeletePlayerLeftPoolEventLogV2(
-    $input: DeletePlayerLeftPoolEventLogV2Input!
-    $condition: ModelPlayerLeftPoolEventLogV2ConditionInput
+export const deletePlayerLeftPoolEventLog = /* GraphQL */ `
+  mutation DeletePlayerLeftPoolEventLog(
+    $input: DeletePlayerLeftPoolEventLogInput!
+    $condition: ModelPlayerLeftPoolEventLogConditionInput
   ) {
-    deletePlayerLeftPoolEventLogV2(input: $input, condition: $condition) {
+    deletePlayerLeftPoolEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -985,15 +985,12 @@ export const deletePlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const createPoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  mutation CreatePoolAwaitingExecutionEventLogV2(
-    $input: CreatePoolAwaitingExecutionEventLogV2Input!
-    $condition: ModelPoolAwaitingExecutionEventLogV2ConditionInput
+export const createPoolAwaitingExecutionEventLog = /* GraphQL */ `
+  mutation CreatePoolAwaitingExecutionEventLog(
+    $input: CreatePoolAwaitingExecutionEventLogInput!
+    $condition: ModelPoolAwaitingExecutionEventLogConditionInput
   ) {
-    createPoolAwaitingExecutionEventLogV2(
-      input: $input
-      condition: $condition
-    ) {
+    createPoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -1012,15 +1009,12 @@ export const createPoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const updatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  mutation UpdatePoolAwaitingExecutionEventLogV2(
-    $input: UpdatePoolAwaitingExecutionEventLogV2Input!
-    $condition: ModelPoolAwaitingExecutionEventLogV2ConditionInput
+export const updatePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  mutation UpdatePoolAwaitingExecutionEventLog(
+    $input: UpdatePoolAwaitingExecutionEventLogInput!
+    $condition: ModelPoolAwaitingExecutionEventLogConditionInput
   ) {
-    updatePoolAwaitingExecutionEventLogV2(
-      input: $input
-      condition: $condition
-    ) {
+    updatePoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -1039,15 +1033,12 @@ export const updatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const deletePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  mutation DeletePoolAwaitingExecutionEventLogV2(
-    $input: DeletePoolAwaitingExecutionEventLogV2Input!
-    $condition: ModelPoolAwaitingExecutionEventLogV2ConditionInput
+export const deletePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  mutation DeletePoolAwaitingExecutionEventLog(
+    $input: DeletePoolAwaitingExecutionEventLogInput!
+    $condition: ModelPoolAwaitingExecutionEventLogConditionInput
   ) {
-    deletePoolAwaitingExecutionEventLogV2(
-      input: $input
-      condition: $condition
-    ) {
+    deletePoolAwaitingExecutionEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -1066,12 +1057,12 @@ export const deletePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const createPoolCompletedEventLogV2 = /* GraphQL */ `
-  mutation CreatePoolCompletedEventLogV2(
-    $input: CreatePoolCompletedEventLogV2Input!
-    $condition: ModelPoolCompletedEventLogV2ConditionInput
+export const createPoolCompletedEventLog = /* GraphQL */ `
+  mutation CreatePoolCompletedEventLog(
+    $input: CreatePoolCompletedEventLogInput!
+    $condition: ModelPoolCompletedEventLogConditionInput
   ) {
-    createPoolCompletedEventLogV2(input: $input, condition: $condition) {
+    createPoolCompletedEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -1093,12 +1084,12 @@ export const createPoolCompletedEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const updatePoolCompletedEventLogV2 = /* GraphQL */ `
-  mutation UpdatePoolCompletedEventLogV2(
-    $input: UpdatePoolCompletedEventLogV2Input!
-    $condition: ModelPoolCompletedEventLogV2ConditionInput
+export const updatePoolCompletedEventLog = /* GraphQL */ `
+  mutation UpdatePoolCompletedEventLog(
+    $input: UpdatePoolCompletedEventLogInput!
+    $condition: ModelPoolCompletedEventLogConditionInput
   ) {
-    updatePoolCompletedEventLogV2(input: $input, condition: $condition) {
+    updatePoolCompletedEventLog(input: $input, condition: $condition) {
       id
       txID
       raw
@@ -1120,12 +1111,12 @@ export const updatePoolCompletedEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const deletePoolCompletedEventLogV2 = /* GraphQL */ `
-  mutation DeletePoolCompletedEventLogV2(
-    $input: DeletePoolCompletedEventLogV2Input!
-    $condition: ModelPoolCompletedEventLogV2ConditionInput
+export const deletePoolCompletedEventLog = /* GraphQL */ `
+  mutation DeletePoolCompletedEventLog(
+    $input: DeletePoolCompletedEventLogInput!
+    $condition: ModelPoolCompletedEventLogConditionInput
   ) {
-    deletePoolCompletedEventLogV2(input: $input, condition: $condition) {
+    deletePoolCompletedEventLog(input: $input, condition: $condition) {
       id
       txID
       raw

@@ -95,13 +95,13 @@ type Pool @model @searchable {
   poolCreator: UserWallet! @hasOne
   poolType: poolType!
   poolStatus: poolStatus!
-  poolEntryFee: Int!
-  poolTotal: Int!
-  poolWinningPayout: Int!
+  poolEntryFee: String!
+  poolTotal: String!
+  poolWinningPayout: String!
   allowPlayerLeave: Boolean!
   apiPoolAttributes: ApiPoolAttributes @hasOne
   apiRequestHash: String!
-  players: [PoolPlayer]! @hasMany
+  players: [PoolPlayer] @hasMany
 }
 
 type PoolSuccessfullBlockEventsProcessed @model {
@@ -139,7 +139,7 @@ type Brand @model @searchable {
   failedPools: Int!
 }
 
-type CreatePoolEventLogV2 @model @searchable {
+type CreatePoolEventLog @model @searchable {
   id: ID!
   txID: String!
   raw: AWSJSON!
@@ -155,7 +155,7 @@ type CreatePoolEventLogV2 @model @searchable {
 }
 
 
-type PlayerJoinedPoolEventLogV2 @model @searchable {
+type PlayerJoinedPoolEventLog @model @searchable {
   id: ID!
   txID: String!
   raw: AWSJSON!
@@ -170,7 +170,7 @@ type PlayerJoinedPoolEventLogV2 @model @searchable {
   poolJsonData: AWSJSON 
  }
 
-type PlayerLeftPoolEventLogV2 @model @searchable {
+type PlayerLeftPoolEventLog @model @searchable {
   id: ID!  
   txID: String! @primaryKey
   raw: AWSJSON!
@@ -185,7 +185,7 @@ type PlayerLeftPoolEventLogV2 @model @searchable {
   poolJsonData: AWSJSON 
  }
 
-type PoolAwaitingExecutionEventLogV2 @model @searchable {
+type PoolAwaitingExecutionEventLog @model @searchable {
   id: ID!  
   txID: String! 
   raw: AWSJSON!
@@ -201,7 +201,7 @@ type PoolAwaitingExecutionEventLogV2 @model @searchable {
   poolJsonData: AWSJSON 
  }
 
-type PoolCompletedEventLogV2 @model @searchable {
+type PoolCompletedEventLog @model @searchable {
   id: ID!
   txID: String! 
   raw: AWSJSON!

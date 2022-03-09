@@ -671,9 +671,9 @@ export const onDeleteBrand = /* GraphQL */ `
     }
   }
 `;
-export const onCreateCreatePoolEventLogV2 = /* GraphQL */ `
-  subscription OnCreateCreatePoolEventLogV2 {
-    onCreateCreatePoolEventLogV2 {
+export const onCreateCreatePoolEventLog = /* GraphQL */ `
+  subscription OnCreateCreatePoolEventLog {
+    onCreateCreatePoolEventLog {
       id
       txID
       raw
@@ -691,9 +691,9 @@ export const onCreateCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onUpdateCreatePoolEventLogV2 = /* GraphQL */ `
-  subscription OnUpdateCreatePoolEventLogV2 {
-    onUpdateCreatePoolEventLogV2 {
+export const onUpdateCreatePoolEventLog = /* GraphQL */ `
+  subscription OnUpdateCreatePoolEventLog {
+    onUpdateCreatePoolEventLog {
       id
       txID
       raw
@@ -711,9 +711,9 @@ export const onUpdateCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onDeleteCreatePoolEventLogV2 = /* GraphQL */ `
-  subscription OnDeleteCreatePoolEventLogV2 {
-    onDeleteCreatePoolEventLogV2 {
+export const onDeleteCreatePoolEventLog = /* GraphQL */ `
+  subscription OnDeleteCreatePoolEventLog {
+    onDeleteCreatePoolEventLog {
       id
       txID
       raw
@@ -731,9 +731,9 @@ export const onDeleteCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  subscription OnCreatePlayerJoinedPoolEventLogV2 {
-    onCreatePlayerJoinedPoolEventLogV2 {
+export const onCreatePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnCreatePlayerJoinedPoolEventLog {
+    onCreatePlayerJoinedPoolEventLog {
       id
       txID
       raw
@@ -751,9 +751,9 @@ export const onCreatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  subscription OnUpdatePlayerJoinedPoolEventLogV2 {
-    onUpdatePlayerJoinedPoolEventLogV2 {
+export const onUpdatePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnUpdatePlayerJoinedPoolEventLog {
+    onUpdatePlayerJoinedPoolEventLog {
       id
       txID
       raw
@@ -771,9 +771,9 @@ export const onUpdatePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  subscription OnDeletePlayerJoinedPoolEventLogV2 {
-    onDeletePlayerJoinedPoolEventLogV2 {
+export const onDeletePlayerJoinedPoolEventLog = /* GraphQL */ `
+  subscription OnDeletePlayerJoinedPoolEventLog {
+    onDeletePlayerJoinedPoolEventLog {
       id
       txID
       raw
@@ -791,9 +791,9 @@ export const onDeletePlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  subscription OnCreatePlayerLeftPoolEventLogV2 {
-    onCreatePlayerLeftPoolEventLogV2 {
+export const onCreatePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnCreatePlayerLeftPoolEventLog {
+    onCreatePlayerLeftPoolEventLog {
       id
       txID
       raw
@@ -811,9 +811,9 @@ export const onCreatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  subscription OnUpdatePlayerLeftPoolEventLogV2 {
-    onUpdatePlayerLeftPoolEventLogV2 {
+export const onUpdatePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnUpdatePlayerLeftPoolEventLog {
+    onUpdatePlayerLeftPoolEventLog {
       id
       txID
       raw
@@ -831,9 +831,9 @@ export const onUpdatePlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  subscription OnDeletePlayerLeftPoolEventLogV2 {
-    onDeletePlayerLeftPoolEventLogV2 {
+export const onDeletePlayerLeftPoolEventLog = /* GraphQL */ `
+  subscription OnDeletePlayerLeftPoolEventLog {
+    onDeletePlayerLeftPoolEventLog {
       id
       txID
       raw
@@ -851,9 +851,9 @@ export const onDeletePlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  subscription OnCreatePoolAwaitingExecutionEventLogV2 {
-    onCreatePoolAwaitingExecutionEventLogV2 {
+export const onCreatePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnCreatePoolAwaitingExecutionEventLog {
+    onCreatePoolAwaitingExecutionEventLog {
       id
       txID
       raw
@@ -872,9 +872,9 @@ export const onCreatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  subscription OnUpdatePoolAwaitingExecutionEventLogV2 {
-    onUpdatePoolAwaitingExecutionEventLogV2 {
+export const onUpdatePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnUpdatePoolAwaitingExecutionEventLog {
+    onUpdatePoolAwaitingExecutionEventLog {
       id
       txID
       raw
@@ -893,9 +893,9 @@ export const onUpdatePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  subscription OnDeletePoolAwaitingExecutionEventLogV2 {
-    onDeletePoolAwaitingExecutionEventLogV2 {
+export const onDeletePoolAwaitingExecutionEventLog = /* GraphQL */ `
+  subscription OnDeletePoolAwaitingExecutionEventLog {
+    onDeletePoolAwaitingExecutionEventLog {
       id
       txID
       raw
@@ -914,9 +914,9 @@ export const onDeletePoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onCreatePoolCompletedEventLogV2 = /* GraphQL */ `
-  subscription OnCreatePoolCompletedEventLogV2 {
-    onCreatePoolCompletedEventLogV2 {
+export const onCreatePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnCreatePoolCompletedEventLog {
+    onCreatePoolCompletedEventLog {
       id
       txID
       raw
@@ -938,9 +938,9 @@ export const onCreatePoolCompletedEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onUpdatePoolCompletedEventLogV2 = /* GraphQL */ `
-  subscription OnUpdatePoolCompletedEventLogV2 {
-    onUpdatePoolCompletedEventLogV2 {
+export const onUpdatePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnUpdatePoolCompletedEventLog {
+    onUpdatePoolCompletedEventLog {
       id
       txID
       raw
@@ -962,9 +962,9 @@ export const onUpdatePoolCompletedEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const onDeletePoolCompletedEventLogV2 = /* GraphQL */ `
-  subscription OnDeletePoolCompletedEventLogV2 {
-    onDeletePoolCompletedEventLogV2 {
+export const onDeletePoolCompletedEventLog = /* GraphQL */ `
+  subscription OnDeletePoolCompletedEventLog {
+    onDeletePoolCompletedEventLog {
       id
       txID
       raw

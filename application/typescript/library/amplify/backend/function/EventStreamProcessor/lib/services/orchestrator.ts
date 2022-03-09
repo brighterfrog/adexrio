@@ -1,5 +1,5 @@
 import { CreatePoolService } from './event-log-processors/create-pool-service';
-import { CreatePoolEventLogV2 } from 'lib/codegen/API';
+import { CreatePoolEventLog } from 'lib/codegen/API';
 import { UserWalletService } from './core/user-wallet-service';
 import { ApiPoolAttributesService } from './core/api-pool-attributes-service';
 import { PoolPlayerService } from './core/pool-player-service';
@@ -42,11 +42,6 @@ export class Orchestrator {
         else {
             console.log(`Not a new record entry event type. Event type is ${eventRecord.eventName}`)
         }        
-    }
-
-    async test() {
-        const test = await this.createPoolService.userWalletService.searchUserWalletByWalletAddress({id: { eq: '123'}});
-        return test;
     }
 
     _getTableNameFromArn(arn) {

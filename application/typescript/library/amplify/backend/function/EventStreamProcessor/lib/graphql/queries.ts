@@ -381,16 +381,16 @@ export const searchBrands = /* GraphQL */ `
     }
   }
 `;
-export const searchCreatePoolEventLogV2s = /* GraphQL */ `
-  query SearchCreatePoolEventLogV2s(
-    $filter: SearchableCreatePoolEventLogV2FilterInput
-    $sort: [SearchableCreatePoolEventLogV2SortInput]
+export const searchCreatePoolEventLogs = /* GraphQL */ `
+  query SearchCreatePoolEventLogs(
+    $filter: SearchableCreatePoolEventLogFilterInput
+    $sort: [SearchableCreatePoolEventLogSortInput]
     $limit: Int
     $nextToken: String
     $from: Int
-    $aggregates: [SearchableCreatePoolEventLogV2AggregationInput]
+    $aggregates: [SearchableCreatePoolEventLogAggregationInput]
   ) {
-    searchCreatePoolEventLogV2s(
+    searchCreatePoolEventLogs(
       filter: $filter
       sort: $sort
       limit: $limit
@@ -433,16 +433,16 @@ export const searchCreatePoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const searchPlayerJoinedPoolEventLogV2s = /* GraphQL */ `
-  query SearchPlayerJoinedPoolEventLogV2s(
-    $filter: SearchablePlayerJoinedPoolEventLogV2FilterInput
-    $sort: [SearchablePlayerJoinedPoolEventLogV2SortInput]
+export const searchPlayerJoinedPoolEventLogs = /* GraphQL */ `
+  query SearchPlayerJoinedPoolEventLogs(
+    $filter: SearchablePlayerJoinedPoolEventLogFilterInput
+    $sort: [SearchablePlayerJoinedPoolEventLogSortInput]
     $limit: Int
     $nextToken: String
     $from: Int
-    $aggregates: [SearchablePlayerJoinedPoolEventLogV2AggregationInput]
+    $aggregates: [SearchablePlayerJoinedPoolEventLogAggregationInput]
   ) {
-    searchPlayerJoinedPoolEventLogV2s(
+    searchPlayerJoinedPoolEventLogs(
       filter: $filter
       sort: $sort
       limit: $limit
@@ -485,16 +485,16 @@ export const searchPlayerJoinedPoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const searchPlayerLeftPoolEventLogV2s = /* GraphQL */ `
-  query SearchPlayerLeftPoolEventLogV2s(
-    $filter: SearchablePlayerLeftPoolEventLogV2FilterInput
-    $sort: [SearchablePlayerLeftPoolEventLogV2SortInput]
+export const searchPlayerLeftPoolEventLogs = /* GraphQL */ `
+  query SearchPlayerLeftPoolEventLogs(
+    $filter: SearchablePlayerLeftPoolEventLogFilterInput
+    $sort: [SearchablePlayerLeftPoolEventLogSortInput]
     $limit: Int
     $nextToken: String
     $from: Int
-    $aggregates: [SearchablePlayerLeftPoolEventLogV2AggregationInput]
+    $aggregates: [SearchablePlayerLeftPoolEventLogAggregationInput]
   ) {
-    searchPlayerLeftPoolEventLogV2s(
+    searchPlayerLeftPoolEventLogs(
       filter: $filter
       sort: $sort
       limit: $limit
@@ -537,16 +537,16 @@ export const searchPlayerLeftPoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const searchPoolAwaitingExecutionEventLogV2s = /* GraphQL */ `
-  query SearchPoolAwaitingExecutionEventLogV2s(
-    $filter: SearchablePoolAwaitingExecutionEventLogV2FilterInput
-    $sort: [SearchablePoolAwaitingExecutionEventLogV2SortInput]
+export const searchPoolAwaitingExecutionEventLogs = /* GraphQL */ `
+  query SearchPoolAwaitingExecutionEventLogs(
+    $filter: SearchablePoolAwaitingExecutionEventLogFilterInput
+    $sort: [SearchablePoolAwaitingExecutionEventLogSortInput]
     $limit: Int
     $nextToken: String
     $from: Int
-    $aggregates: [SearchablePoolAwaitingExecutionEventLogV2AggregationInput]
+    $aggregates: [SearchablePoolAwaitingExecutionEventLogAggregationInput]
   ) {
-    searchPoolAwaitingExecutionEventLogV2s(
+    searchPoolAwaitingExecutionEventLogs(
       filter: $filter
       sort: $sort
       limit: $limit
@@ -590,16 +590,16 @@ export const searchPoolAwaitingExecutionEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const searchPoolCompletedEventLogV2s = /* GraphQL */ `
-  query SearchPoolCompletedEventLogV2s(
-    $filter: SearchablePoolCompletedEventLogV2FilterInput
-    $sort: [SearchablePoolCompletedEventLogV2SortInput]
+export const searchPoolCompletedEventLogs = /* GraphQL */ `
+  query SearchPoolCompletedEventLogs(
+    $filter: SearchablePoolCompletedEventLogFilterInput
+    $sort: [SearchablePoolCompletedEventLogSortInput]
     $limit: Int
     $nextToken: String
     $from: Int
-    $aggregates: [SearchablePoolCompletedEventLogV2AggregationInput]
+    $aggregates: [SearchablePoolCompletedEventLogAggregationInput]
   ) {
-    searchPoolCompletedEventLogV2s(
+    searchPoolCompletedEventLogs(
       filter: $filter
       sort: $sort
       limit: $limit
@@ -1094,9 +1094,9 @@ export const listBrands = /* GraphQL */ `
     }
   }
 `;
-export const getCreatePoolEventLogV2 = /* GraphQL */ `
-  query GetCreatePoolEventLogV2($id: ID!) {
-    getCreatePoolEventLogV2(id: $id) {
+export const getCreatePoolEventLog = /* GraphQL */ `
+  query GetCreatePoolEventLog($id: ID!) {
+    getCreatePoolEventLog(id: $id) {
       id
       txID
       raw
@@ -1114,13 +1114,13 @@ export const getCreatePoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const listCreatePoolEventLogV2s = /* GraphQL */ `
-  query ListCreatePoolEventLogV2s(
-    $filter: ModelCreatePoolEventLogV2FilterInput
+export const listCreatePoolEventLogs = /* GraphQL */ `
+  query ListCreatePoolEventLogs(
+    $filter: ModelCreatePoolEventLogFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listCreatePoolEventLogV2s(
+    listCreatePoolEventLogs(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -1145,9 +1145,9 @@ export const listCreatePoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const getPlayerJoinedPoolEventLogV2 = /* GraphQL */ `
-  query GetPlayerJoinedPoolEventLogV2($id: ID!) {
-    getPlayerJoinedPoolEventLogV2(id: $id) {
+export const getPlayerJoinedPoolEventLog = /* GraphQL */ `
+  query GetPlayerJoinedPoolEventLog($id: ID!) {
+    getPlayerJoinedPoolEventLog(id: $id) {
       id
       txID
       raw
@@ -1165,13 +1165,13 @@ export const getPlayerJoinedPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const listPlayerJoinedPoolEventLogV2s = /* GraphQL */ `
-  query ListPlayerJoinedPoolEventLogV2s(
-    $filter: ModelPlayerJoinedPoolEventLogV2FilterInput
+export const listPlayerJoinedPoolEventLogs = /* GraphQL */ `
+  query ListPlayerJoinedPoolEventLogs(
+    $filter: ModelPlayerJoinedPoolEventLogFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPlayerJoinedPoolEventLogV2s(
+    listPlayerJoinedPoolEventLogs(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -1196,9 +1196,9 @@ export const listPlayerJoinedPoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const getPlayerLeftPoolEventLogV2 = /* GraphQL */ `
-  query GetPlayerLeftPoolEventLogV2($txID: String!) {
-    getPlayerLeftPoolEventLogV2(txID: $txID) {
+export const getPlayerLeftPoolEventLog = /* GraphQL */ `
+  query GetPlayerLeftPoolEventLog($txID: String!) {
+    getPlayerLeftPoolEventLog(txID: $txID) {
       id
       txID
       raw
@@ -1216,15 +1216,15 @@ export const getPlayerLeftPoolEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const listPlayerLeftPoolEventLogV2s = /* GraphQL */ `
-  query ListPlayerLeftPoolEventLogV2s(
+export const listPlayerLeftPoolEventLogs = /* GraphQL */ `
+  query ListPlayerLeftPoolEventLogs(
     $txID: String
-    $filter: ModelPlayerLeftPoolEventLogV2FilterInput
+    $filter: ModelPlayerLeftPoolEventLogFilterInput
     $limit: Int
     $nextToken: String
     $sortDirection: ModelSortDirection
   ) {
-    listPlayerLeftPoolEventLogV2s(
+    listPlayerLeftPoolEventLogs(
       txID: $txID
       filter: $filter
       limit: $limit
@@ -1251,9 +1251,9 @@ export const listPlayerLeftPoolEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const getPoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
-  query GetPoolAwaitingExecutionEventLogV2($id: ID!) {
-    getPoolAwaitingExecutionEventLogV2(id: $id) {
+export const getPoolAwaitingExecutionEventLog = /* GraphQL */ `
+  query GetPoolAwaitingExecutionEventLog($id: ID!) {
+    getPoolAwaitingExecutionEventLog(id: $id) {
       id
       txID
       raw
@@ -1272,13 +1272,13 @@ export const getPoolAwaitingExecutionEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const listPoolAwaitingExecutionEventLogV2s = /* GraphQL */ `
-  query ListPoolAwaitingExecutionEventLogV2s(
-    $filter: ModelPoolAwaitingExecutionEventLogV2FilterInput
+export const listPoolAwaitingExecutionEventLogs = /* GraphQL */ `
+  query ListPoolAwaitingExecutionEventLogs(
+    $filter: ModelPoolAwaitingExecutionEventLogFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPoolAwaitingExecutionEventLogV2s(
+    listPoolAwaitingExecutionEventLogs(
       filter: $filter
       limit: $limit
       nextToken: $nextToken
@@ -1304,9 +1304,9 @@ export const listPoolAwaitingExecutionEventLogV2s = /* GraphQL */ `
     }
   }
 `;
-export const getPoolCompletedEventLogV2 = /* GraphQL */ `
-  query GetPoolCompletedEventLogV2($id: ID!) {
-    getPoolCompletedEventLogV2(id: $id) {
+export const getPoolCompletedEventLog = /* GraphQL */ `
+  query GetPoolCompletedEventLog($id: ID!) {
+    getPoolCompletedEventLog(id: $id) {
       id
       txID
       raw
@@ -1328,13 +1328,13 @@ export const getPoolCompletedEventLogV2 = /* GraphQL */ `
     }
   }
 `;
-export const listPoolCompletedEventLogV2s = /* GraphQL */ `
-  query ListPoolCompletedEventLogV2s(
-    $filter: ModelPoolCompletedEventLogV2FilterInput
+export const listPoolCompletedEventLogs = /* GraphQL */ `
+  query ListPoolCompletedEventLogs(
+    $filter: ModelPoolCompletedEventLogFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listPoolCompletedEventLogV2s(
+    listPoolCompletedEventLogs(
       filter: $filter
       limit: $limit
       nextToken: $nextToken

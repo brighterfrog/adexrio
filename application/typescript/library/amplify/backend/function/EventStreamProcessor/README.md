@@ -1,6 +1,6 @@
 # Testing
 How to run:
-* from the lib directory `npm run test -- --silent=false`
+* from the lib directory `npm run test -- --silent=false --runInBand --detectOpenHandles`
 
 # Build Before deployment
 How to run:

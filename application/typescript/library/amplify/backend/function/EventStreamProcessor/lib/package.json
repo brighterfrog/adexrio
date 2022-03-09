@@ -9,7 +9,8 @@
     "build": "bash build.sh && webpack --config ../webpack.config.js",
     "pack": "webpack --stats-error-details --config ../webpack.config.js"
   },
-  "jest": {
+  "jest": {   
+    "testTimeout": 30000,
     "transform": {
       ".(ts|tsx)": "ts-jest"
     },
@@ -30,8 +31,10 @@
     "webpack-cli": "^4.9.2"
   },
   "dependencies": {
+    "@aws-sdk/client-secrets-manager": "^3.53.0",
     "@vechain/connex-driver": "^2.0.8",
     "@vechain/connex-framework": "^2.0.8",
-    "aws-amplify": "^4.3.14"
+    "aws-amplify": "^4.3.14",
+    "aws-crt": "^1.11.0"
   }
 }
