@@ -5,6 +5,7 @@ import { UserWalletService } from "./services/core/user-wallet-service";
 import { BlockChainService } from "./services/legacy_contract_v1_helpers/backend/blockchain/blockchain-service";
 import { SecretsManager } from "./services/legacy_contract_v1_helpers/backend/aws-services/secrets-manager";
 import { Orchestrator } from "./services/orchestrator";
+import { LotteryPoolAttributesService } from "./services/core/lottery-pool-attributes-service";
 
 async function lambdaHandler(event, context) {  
     console.log(JSON.stringify(event, null, 2));
@@ -13,6 +14,7 @@ async function lambdaHandler(event, context) {
     const apiPoolAttributesService = new ApiPoolAttributesService();
     const poolPlayerService = new PoolPlayerService();
     const poolService = new PoolService();
+    const lotteryPoolAttributesService = new LotteryPoolAttributesService();
     const secretsManager = new SecretsManager();
     
     const secretsData = await secretsManager.getSecretValue("adexrio/wallets/mnemonics");
@@ -25,6 +27,7 @@ async function lambdaHandler(event, context) {
       apiPoolAttributesService, 
       poolPlayerService, 
       poolService, 
+      lotteryPoolAttributesService,
       legacyBlockchainService
       );
     

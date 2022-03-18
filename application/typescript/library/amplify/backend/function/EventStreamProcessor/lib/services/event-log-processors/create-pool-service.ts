@@ -2,7 +2,7 @@
 
 import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
 
-import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, PlayerStatus, Pool, PoolCategory, poolStatus, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
+import { CreateApiPoolAttributesInput, CreateLotteryPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, poolType, SearchablePoolFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
 import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
 import { createPool, createUserWallet } from '../../graphql/mutations';
 
@@ -12,6 +12,7 @@ import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
 import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
 import { DecodedGameEntity } from '../legacy_contract_v1_helpers/backend/models/all-models';
+import { LotteryPoolAttributesService } from '../core/lottery-pool-attributes-service';
 
 export class CreatePoolService implements IEventLogProcessor {
 
@@ -20,19 +21,22 @@ export class CreatePoolService implements IEventLogProcessor {
     poolPlayerService: PoolPlayerService;
     poolService: PoolService;
     legacyBlockchainService: BlockChainService;
+    lotteryPoolAttributesService: LotteryPoolAttributesService
 
     constructor(
         userWalletService: UserWalletService,
         apiPoolAttributesService: ApiPoolAttributesService,
         poolPlayerService: PoolPlayerService,
         poolService: PoolService,
-        legacyBlockchainService: BlockChainService
+        lotteryPoolAttributesService: LotteryPoolAttributesService,
+        legacyBlockchainService: BlockChainService      
     ) {
         this.userWalletService = userWalletService;
         this.apiPoolAttributesService = apiPoolAttributesService;
         this.poolPlayerService = poolPlayerService;
         this.poolService = poolService;
-        this.legacyBlockchainService = legacyBlockchainService;
+        this.lotteryPoolAttributesService = lotteryPoolAttributesService;
+        this.legacyBlockchainService = legacyBlockchainService;      
     }
 
     async handleEventRecord(eventRecord): Promise<any> {
@@ -45,26 +49,13 @@ export class CreatePoolService implements IEventLogProcessor {
         /* Pool */
         //TODO: Contract Update. New contract will have EVENTS contain poolJsonData: { poolType: {} } to check for pool type among other fields   
         /* default to ONLY create lottery pools to accomodate v1 contract */
-        if (!isContractVersion2()) {
+        if (!isContractVersion2()) {         
             const handleLegacyContractCreateEventResult = await this.handleLegacyContractEvent(eventRecord, poolCreatorUserWallet);
         }
         else {
             /* ApiPoolAttributes */
             /* create */
-            //TODO: UI update. apiPoolAttributes created in the UI prior to game creation    
-            //const poolId = crypto.randomUUID();              
-            //const apiPoolAttributes  = this.apiPoolAttributesService.createApiPoolAttributes({                               
-            // id: ?
-            // apiKey: string;
-            // lockFundsDatetime: string;
-            // executeWinnerDatetime: string;
-            // apiUrlForResults: string;
-            // verifiedUrlSchema: boolean;
-            // poolCreatorPercentFeeToWithold: number;
-            // poolApiDefaultSchema: string;
-            // poolApiCustomSchema?: string | null;            
-            // apiPoolAttributesPoolId?: string | null; 
-            //} as CreateApiPoolAttributesInput)
+            //TODO: UI update. apiPoolAttributes created in the UI prior to game creation              
 
             const handleContractCreateEventResult = await this.handleContractEventV2(eventRecord, poolCreatorUserWallet);
         }
@@ -76,16 +67,14 @@ export class CreatePoolService implements IEventLogProcessor {
             if (doNotHaveExistingWallet(searchForExistingCreatorUserWallet)) {
                 poolCreatorUserWallet = await userWalletService.createUserWallet({
                     wallet: decodedPlayer.S,
-                    totalWinnings: 0,
-                    totalPools: 1,
-                    totalCompletedPools: 0,
-                    totalPoolsWon: 0
+                    nickname: null,
+                    chatlogo: null                       
                 } as CreateUserWalletInput);
             }
             else {
                 poolCreatorUserWallet = searchForExistingCreatorUserWallet.items[0];
             }
-            return searchForExistingCreatorUserWallet;
+            return poolCreatorUserWallet;
         }
 
         function isContractVersion2() {
@@ -94,93 +83,110 @@ export class CreatePoolService implements IEventLogProcessor {
 
         function doNotHaveExistingWallet(searchForExistingCreatorUserWallet) {
             return searchForExistingCreatorUserWallet.items.length === 0;
-        }
-        // id: ID!
-        // poolId: Int!
-        // poolTitle: String!
-        // poolCategory: PoolCategory!
-        // poolCreator: UserWallet! @hasOne
-        // poolType: poolType!
-        // poolStatus: poolStatus!
-        // poolEntryFee: Int!
-        // poolTotal: Int!
-        // poolWinningPayout: Int!
-        // allowPlayerLeave: Boolean!
-        // apiPoolAttributes: ApiPoolAttributes @hasOne
-        // apiRequestHash: String!
-        // players: [PoolPlayer]! @hasMany
-
-        /* PoolPlayer */
-        /* create */
-
-        // const result = await this.createPoolFromEvent({
-        //     poolId: parseInt((Math.random() * 100).toString(), 10),
-        //     poolTitle: 'Test title',
-        //     poolCategory: PoolCategory.gaming,
-        //     poolType: poolType.lottery,
-        //     poolStatus: poolStatus.awaiting,
-        //     poolEntryFee: 100,
-        //     poolTotal: 100,
-        //     poolWinningPayout: 0,
-        //     allowPlayerLeave: true,
-        //     apiRequestHash: 'test',
-        //     poolPoolCreatorId: userwalletResult.id               
-        // } as CreatePoolInput);
-
-        // return result;
+        }    
     }
 
     async handleContractEventV2(eventRecord, poolCreatorUserWallet): Promise<any> {
 
-    }
+    }    
 
     async handleLegacyContractEvent(eventRecord, poolCreatorUserWallet): Promise<any> {
         const crypto = await import('crypto');
         const createdPoolId = crypto.randomUUID();
 
-        const decodedGameId = eventRecord.dynamodb.NewImage.decodedGameId.N;
+        const decodedGameId = eventRecord.dynamodb.NewImage.decodedGameId.N;           
 
-        console.log('calling getGameById with value of', decodedGameId);
+        const existingPools =  await this.poolService.searchPoolByPoolId({ poolId: { eq: decodedGameId } } as SearchablePoolFilterInput);
+        console.log('existingPools', existingPools);
 
-        const blockchainGameDetails = await this.legacyBlockchainService.getGameById(decodedGameId);
+        if(existingPools.total === null || existingPools.total === 0) {
+            console.log('existing pool not found, processing...', decodedGameId);
+            console.log('calling getGameById with value of', decodedGameId);
+  
+            const blockchainGameDetails = await this.legacyBlockchainService.getGameById(decodedGameId); 
 
-        const blockchainGameDetailsDecoded = {
-            gameId: parseInt(blockchainGameDetails.decoded.gameId),
-            gameStatus: parseInt(blockchainGameDetails.decoded.gameStatus),
-            gameTotalWagers: blockchainGameDetails.decoded.gameTotalWagers,
-            gameWinningPayout: blockchainGameDetails.decoded.gameWinningPayout,
-            gameWinnerAddress: blockchainGameDetails.decoded.gameWinnerAddress,
-            gameTotalEligiblePlayers: blockchainGameDetails.decoded.gameTotalEligiblePlayers,
-            gcsMinGamePlayers: blockchainGameDetails.decoded.gcsMinGamePlayers,
-            gcsGameBetSize: blockchainGameDetails.decoded.gcsGameBetSize,
-            gcsIsAuditEnabled: blockchainGameDetails.decoded.gcsIsAuditEnabled
-        } as DecodedGameEntity;
+            const blockchainGameDetailsDecoded = {
+                gameId: parseInt(blockchainGameDetails.decoded.gameId),
+                gameStatus: blockchainGameDetails.decoded.gameStatus,
+                gameTotalWagers: blockchainGameDetails.decoded.gameTotalWagers,
+                gameWinningPayout: blockchainGameDetails.decoded.gameWinningPayout,
+                gameWinnerAddress: blockchainGameDetails.decoded.gameWinnerAddress,
+                gameTotalEligiblePlayers: blockchainGameDetails.decoded.gameTotalEligiblePlayers,
+                gcsMinGamePlayers: blockchainGameDetails.decoded.gcsMinGamePlayers,
+                gcsGameBetSize: blockchainGameDetails.decoded.gcsGameBetSize,
+                gcsIsAuditEnabled: blockchainGameDetails.decoded.gcsIsAuditEnabled
+            } as DecodedGameEntity;
+               
+            const createdPool = await this._createPool(blockchainGameDetailsDecoded, createdPoolId, decodedGameId, poolCreatorUserWallet);
+            const lotteryPoolAttributes = await this._createLotteryPoolAttributes(createdPool, blockchainGameDetailsDecoded);               
+            const poolPlayerServiceResult = await this._createPoolPlayer(createdPool, poolCreatorUserWallet);            
+        }
+        else {
+            console.log('Existing Pools found matching this pool id, skipping processing for ', existingPools);
+        }        
+    }    
 
-        console.log('before create pool entry fee is', blockchainGameDetailsDecoded.gcsGameBetSize);
+    private async _createLotteryPoolAttributes(createdPool: Pool, blockchainGameDetails: DecodedGameEntity): Promise<LotteryPoolAttributes> {
 
-        console.log('decoded game entity is ', blockchainGameDetailsDecoded);
+        const lotteryPoolAttributesInput = {
+            auditRecordDrawId: null,
+            isAuditEnabled: blockchainGameDetails.gcsIsAuditEnabled,
+            randomOrgUrlForResults: null,            
+        } as CreateLotteryPoolAttributesInput;
 
-        // const createdPool = await this.poolService.createPool(   
-        //     {
-        //         id: createdPoolId,
-        //         poolId: decodedGameId,
-        //         poolTitle: `Lottery Game # ${decodedGameId}`,
-        //         poolCategory: PoolCategory.random_winners,
-        //         poolType: poolType.lottery,
-        //         poolStatus: poolStatus.awaiting,
-        //         poolEntryFee: blockchainGameDetailsDecoded.gcsGameBetSize,
-        //         poolTotal: blockchainGameDetailsDecoded.gameTotalWagers,
-        //         poolWinningPayout: '0',
-        //         allowPlayerLeave: true,
-        //         apiRequestHash: 'NA_V1_CONTRACT',
-        //         poolPoolCreatorId: poolCreatorUserWallet.id
-        //     } as CreatePoolInput);
+        console.log('lotteryPoolAttributesInput with', lotteryPoolAttributesInput);
 
-        // const poolPlayerServiceResult = await this.poolPlayerService.createPoolPlayer(
-        //     {
-        //         status: PlayerStatus.pending_pool_completion,
-        //         poolPlayersId: createdPool.id,
-        //         poolPlayerUserWalletId: poolCreatorUserWallet.id
-        //     } as CreatePoolPlayerInput);
+        const createdLotteryPoolAttributesResult = await this.lotteryPoolAttributesService.createLotteryPoolAttributes(lotteryPoolAttributesInput);
+
+        console.log('createdLotteryPoolAttributesResult', createdLotteryPoolAttributesResult);
+
+        return createdLotteryPoolAttributesResult as LotteryPoolAttributes;    
+         
+    }
+
+    private async _createPoolPlayer(createdPool: any, poolCreatorUserWallet: any) {
+
+        const poolPlayerInput = {
+            status: PlayerStatus.pending_pool_completion,
+            poolPlayersId: createdPool.id,
+            poolPlayerUserWalletId: poolCreatorUserWallet.id
+        } as CreatePoolPlayerInput;
+
+        console.log('poolplayerserivce createpool player with', poolPlayerInput);
+
+        const createdPoolPlayerResult = await this.poolPlayerService.createPoolPlayer(poolPlayerInput);
+
+        console.log('createdPoolPlayerResult', createdPoolPlayerResult);
+
+        return createdPoolPlayerResult;          
+    }
+
+    private async _createPool(blockchainGameDetails: DecodedGameEntity, createdPoolId: string, decodedGameId: any, poolCreatorUserWallet: any) {
+       
+
+        console.log('before create pool entry fee is', blockchainGameDetails.gcsGameBetSize);
+
+        console.log('decoded game entity is ', blockchainGameDetails);
+
+        const createPoolInput = {
+            id: createdPoolId,
+            poolId: decodedGameId,
+            poolTitle: `Lottery Game # ${decodedGameId}`,
+            poolCategory: PoolCategory.random_winners,
+            poolType: poolType.lottery,
+            poolStatus: blockchainGameDetails.gameStatus,
+            poolEntryFee: blockchainGameDetails.gcsGameBetSize,
+            poolTotal: blockchainGameDetails.gameTotalWagers,
+            poolWinningPayout: '0',
+            allowPlayerLeave: true,
+            apiRequestHash: 'NA_V1_CONTRACT',
+            poolPoolCreatorId: poolCreatorUserWallet.id
+        } as CreatePoolInput;
+
+        console.log('createPoolInput', createPoolInput);
+
+        const createdPool = await this.poolService.createPool(createPoolInput);
+
+        return createdPool;
     }
 }

@@ -250,10 +250,6 @@ export type UserWallet = {
   nickname?: string | null,
   chatlogo?: string | null,
   brands?: ModelBrandConnection | null,
-  totalWinnings: number,
-  totalPools: number,
-  totalCompletedPools: number,
-  totalPoolsWon: number,
   createdAt: string,
   updatedAt: string,
 };
@@ -286,18 +282,19 @@ export type Pool = {
   poolCategory: PoolCategory,
   poolCreator: UserWallet,
   poolType: poolType,
-  poolStatus: poolStatus,
+  poolStatus: string,
   poolEntryFee: string,
   poolTotal: string,
   poolWinningPayout: string,
   allowPlayerLeave: boolean,
   apiPoolAttributes?: ApiPoolAttributes | null,
-  apiRequestHash: string,
+  lotteryPoolAttributes?: LotteryPoolAttributes | null,
   players?: ModelPoolPlayerConnection | null,
   createdAt: string,
   updatedAt: string,
   poolPoolCreatorId: string,
   poolApiPoolAttributesId?: string | null,
+  poolLotteryPoolAttributesId?: string | null,
 };
 
 export enum PoolCategory {
@@ -316,13 +313,6 @@ export enum poolType {
   manual = "manual",
   api = "api",
   custom_builder = "custom_builder",
-}
-
-
-export enum poolStatus {
-  awaiting = "awaiting",
-  completed = "completed",
-  terminated = "terminated",
 }
 
 
@@ -345,6 +335,16 @@ export type ApiPoolAttributes = {
   apiPoolAttributesPoolId?: string | null,
 };
 
+export type LotteryPoolAttributes = {
+  __typename: "LotteryPoolAttributes",
+  auditRecordDrawId: string,
+  isAuditEnabled: boolean,
+  randomOrgUrlForResults?: string | null,
+  id: string,
+  createdAt: string,
+  updatedAt: string,
+};
+
 export type ModelPoolPlayerConnection = {
   __typename: "ModelPoolPlayerConnection",
   items:  Array<PoolPlayer | null >,
@@ -359,6 +359,40 @@ export type UpdatePoolPlayerInput = {
 };
 
 export type DeletePoolPlayerInput = {
+  id: string,
+};
+
+export type CreateLotteryPoolAttributesInput = {
+  auditRecordDrawId: string,
+  isAuditEnabled: boolean,
+  randomOrgUrlForResults?: string | null,
+  id?: string | null,
+};
+
+export type ModelLotteryPoolAttributesConditionInput = {
+  auditRecordDrawId?: ModelStringInput | null,
+  isAuditEnabled?: ModelBooleanInput | null,
+  randomOrgUrlForResults?: ModelStringInput | null,
+  and?: Array< ModelLotteryPoolAttributesConditionInput | null > | null,
+  or?: Array< ModelLotteryPoolAttributesConditionInput | null > | null,
+  not?: ModelLotteryPoolAttributesConditionInput | null,
+};
+
+export type ModelBooleanInput = {
+  ne?: boolean | null,
+  eq?: boolean | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
+};
+
+export type UpdateLotteryPoolAttributesInput = {
+  auditRecordDrawId?: string | null,
+  isAuditEnabled?: boolean | null,
+  randomOrgUrlForResults?: string | null,
+  id: string,
+};
+
+export type DeleteLotteryPoolAttributesInput = {
   id: string,
 };
 
@@ -392,13 +426,6 @@ export type ModelApiPoolAttributesConditionInput = {
   or?: Array< ModelApiPoolAttributesConditionInput | null > | null,
   not?: ModelApiPoolAttributesConditionInput | null,
   apiPoolAttributesPoolId?: ModelIDInput | null,
-};
-
-export type ModelBooleanInput = {
-  ne?: boolean | null,
-  eq?: boolean | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
 };
 
 export type ModelIntInput = {
@@ -438,14 +465,14 @@ export type CreatePoolInput = {
   poolTitle: string,
   poolCategory: PoolCategory,
   poolType: poolType,
-  poolStatus: poolStatus,
+  poolStatus: string,
   poolEntryFee: string,
   poolTotal: string,
   poolWinningPayout: string,
   allowPlayerLeave: boolean,
-  apiRequestHash: string,
   poolPoolCreatorId: string,
   poolApiPoolAttributesId?: string | null,
+  poolLotteryPoolAttributesId?: string | null,
 };
 
 export type ModelPoolConditionInput = {
@@ -453,17 +480,17 @@ export type ModelPoolConditionInput = {
   poolTitle?: ModelStringInput | null,
   poolCategory?: ModelPoolCategoryInput | null,
   poolType?: ModelpoolTypeInput | null,
-  poolStatus?: ModelpoolStatusInput | null,
+  poolStatus?: ModelStringInput | null,
   poolEntryFee?: ModelStringInput | null,
   poolTotal?: ModelStringInput | null,
   poolWinningPayout?: ModelStringInput | null,
   allowPlayerLeave?: ModelBooleanInput | null,
-  apiRequestHash?: ModelStringInput | null,
   and?: Array< ModelPoolConditionInput | null > | null,
   or?: Array< ModelPoolConditionInput | null > | null,
   not?: ModelPoolConditionInput | null,
   poolPoolCreatorId?: ModelIDInput | null,
   poolApiPoolAttributesId?: ModelIDInput | null,
+  poolLotteryPoolAttributesId?: ModelIDInput | null,
 };
 
 export type ModelPoolCategoryInput = {
@@ -476,25 +503,20 @@ export type ModelpoolTypeInput = {
   ne?: poolType | null,
 };
 
-export type ModelpoolStatusInput = {
-  eq?: poolStatus | null,
-  ne?: poolStatus | null,
-};
-
 export type UpdatePoolInput = {
   id: string,
   poolId?: number | null,
   poolTitle?: string | null,
   poolCategory?: PoolCategory | null,
   poolType?: poolType | null,
-  poolStatus?: poolStatus | null,
+  poolStatus?: string | null,
   poolEntryFee?: string | null,
   poolTotal?: string | null,
   poolWinningPayout?: string | null,
   allowPlayerLeave?: boolean | null,
-  apiRequestHash?: string | null,
   poolPoolCreatorId?: string | null,
   poolApiPoolAttributesId?: string | null,
+  poolLotteryPoolAttributesId?: string | null,
 };
 
 export type DeletePoolInput = {
@@ -580,20 +602,12 @@ export type CreateUserWalletInput = {
   wallet: string,
   nickname?: string | null,
   chatlogo?: string | null,
-  totalWinnings: number,
-  totalPools: number,
-  totalCompletedPools: number,
-  totalPoolsWon: number,
 };
 
 export type ModelUserWalletConditionInput = {
   wallet?: ModelStringInput | null,
   nickname?: ModelStringInput | null,
   chatlogo?: ModelStringInput | null,
-  totalWinnings?: ModelIntInput | null,
-  totalPools?: ModelIntInput | null,
-  totalCompletedPools?: ModelIntInput | null,
-  totalPoolsWon?: ModelIntInput | null,
   and?: Array< ModelUserWalletConditionInput | null > | null,
   or?: Array< ModelUserWalletConditionInput | null > | null,
   not?: ModelUserWalletConditionInput | null,
@@ -604,10 +618,6 @@ export type UpdateUserWalletInput = {
   wallet?: string | null,
   nickname?: string | null,
   chatlogo?: string | null,
-  totalWinnings?: number | null,
-  totalPools?: number | null,
-  totalCompletedPools?: number | null,
-  totalPoolsWon?: number | null,
 };
 
 export type DeleteUserWalletInput = {
@@ -1241,6 +1251,62 @@ export type SearchablePoolPlayerConnection = {
   aggregateItems:  Array<SearchableAggregateResult | null >,
 };
 
+export type SearchableLotteryPoolAttributesFilterInput = {
+  auditRecordDrawId?: SearchableStringFilterInput | null,
+  isAuditEnabled?: SearchableBooleanFilterInput | null,
+  randomOrgUrlForResults?: SearchableStringFilterInput | null,
+  id?: SearchableIDFilterInput | null,
+  createdAt?: SearchableStringFilterInput | null,
+  updatedAt?: SearchableStringFilterInput | null,
+  and?: Array< SearchableLotteryPoolAttributesFilterInput | null > | null,
+  or?: Array< SearchableLotteryPoolAttributesFilterInput | null > | null,
+  not?: SearchableLotteryPoolAttributesFilterInput | null,
+};
+
+export type SearchableBooleanFilterInput = {
+  eq?: boolean | null,
+  ne?: boolean | null,
+};
+
+export type SearchableLotteryPoolAttributesSortInput = {
+  field?: SearchableLotteryPoolAttributesSortableFields | null,
+  direction?: SearchableSortDirection | null,
+};
+
+export enum SearchableLotteryPoolAttributesSortableFields {
+  auditRecordDrawId = "auditRecordDrawId",
+  isAuditEnabled = "isAuditEnabled",
+  randomOrgUrlForResults = "randomOrgUrlForResults",
+  id = "id",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchableLotteryPoolAttributesAggregationInput = {
+  name: string,
+  type: SearchableAggregateType,
+  field: SearchableLotteryPoolAttributesAggregateField,
+};
+
+export enum SearchableLotteryPoolAttributesAggregateField {
+  auditRecordDrawId = "auditRecordDrawId",
+  isAuditEnabled = "isAuditEnabled",
+  randomOrgUrlForResults = "randomOrgUrlForResults",
+  id = "id",
+  createdAt = "createdAt",
+  updatedAt = "updatedAt",
+}
+
+
+export type SearchableLotteryPoolAttributesConnection = {
+  __typename: "SearchableLotteryPoolAttributesConnection",
+  items:  Array<LotteryPoolAttributes | null >,
+  nextToken?: string | null,
+  total?: number | null,
+  aggregateItems:  Array<SearchableAggregateResult | null >,
+};
+
 export type SearchableApiPoolAttributesFilterInput = {
   id?: SearchableIDFilterInput | null,
   apiKey?: SearchableStringFilterInput | null,
@@ -1259,11 +1325,6 @@ export type SearchableApiPoolAttributesFilterInput = {
   and?: Array< SearchableApiPoolAttributesFilterInput | null > | null,
   or?: Array< SearchableApiPoolAttributesFilterInput | null > | null,
   not?: SearchableApiPoolAttributesFilterInput | null,
-};
-
-export type SearchableBooleanFilterInput = {
-  eq?: boolean | null,
-  ne?: boolean | null,
 };
 
 export type SearchableIntFilterInput = {
@@ -1335,18 +1396,18 @@ export type SearchablePoolFilterInput = {
   id?: SearchableIDFilterInput | null,
   poolId?: SearchableIntFilterInput | null,
   poolTitle?: SearchableStringFilterInput | null,
+  poolStatus?: SearchableStringFilterInput | null,
   poolEntryFee?: SearchableStringFilterInput | null,
   poolTotal?: SearchableStringFilterInput | null,
   poolWinningPayout?: SearchableStringFilterInput | null,
   allowPlayerLeave?: SearchableBooleanFilterInput | null,
-  apiRequestHash?: SearchableStringFilterInput | null,
   createdAt?: SearchableStringFilterInput | null,
   updatedAt?: SearchableStringFilterInput | null,
   poolPoolCreatorId?: SearchableIDFilterInput | null,
   poolApiPoolAttributesId?: SearchableIDFilterInput | null,
+  poolLotteryPoolAttributesId?: SearchableIDFilterInput | null,
   poolCategory?: SearchableStringFilterInput | null,
   poolType?: SearchableStringFilterInput | null,
-  poolStatus?: SearchableStringFilterInput | null,
   and?: Array< SearchablePoolFilterInput | null > | null,
   or?: Array< SearchablePoolFilterInput | null > | null,
   not?: SearchablePoolFilterInput | null,
@@ -1361,15 +1422,16 @@ export enum SearchablePoolSortableFields {
   id = "id",
   poolId = "poolId",
   poolTitle = "poolTitle",
+  poolStatus = "poolStatus",
   poolEntryFee = "poolEntryFee",
   poolTotal = "poolTotal",
   poolWinningPayout = "poolWinningPayout",
   allowPlayerLeave = "allowPlayerLeave",
-  apiRequestHash = "apiRequestHash",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
   poolPoolCreatorId = "poolPoolCreatorId",
   poolApiPoolAttributesId = "poolApiPoolAttributesId",
+  poolLotteryPoolAttributesId = "poolLotteryPoolAttributesId",
 }
 
 
@@ -1390,11 +1452,11 @@ export enum SearchablePoolAggregateField {
   poolTotal = "poolTotal",
   poolWinningPayout = "poolWinningPayout",
   allowPlayerLeave = "allowPlayerLeave",
-  apiRequestHash = "apiRequestHash",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
   poolPoolCreatorId = "poolPoolCreatorId",
   poolApiPoolAttributesId = "poolApiPoolAttributesId",
+  poolLotteryPoolAttributesId = "poolLotteryPoolAttributesId",
 }
 
 
@@ -1468,10 +1530,6 @@ export type SearchableUserWalletFilterInput = {
   wallet?: SearchableStringFilterInput | null,
   nickname?: SearchableStringFilterInput | null,
   chatlogo?: SearchableStringFilterInput | null,
-  totalWinnings?: SearchableIntFilterInput | null,
-  totalPools?: SearchableIntFilterInput | null,
-  totalCompletedPools?: SearchableIntFilterInput | null,
-  totalPoolsWon?: SearchableIntFilterInput | null,
   createdAt?: SearchableStringFilterInput | null,
   updatedAt?: SearchableStringFilterInput | null,
   and?: Array< SearchableUserWalletFilterInput | null > | null,
@@ -1489,10 +1547,6 @@ export enum SearchableUserWalletSortableFields {
   wallet = "wallet",
   nickname = "nickname",
   chatlogo = "chatlogo",
-  totalWinnings = "totalWinnings",
-  totalPools = "totalPools",
-  totalCompletedPools = "totalCompletedPools",
-  totalPoolsWon = "totalPoolsWon",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
 }
@@ -1509,10 +1563,6 @@ export enum SearchableUserWalletAggregateField {
   wallet = "wallet",
   nickname = "nickname",
   chatlogo = "chatlogo",
-  totalWinnings = "totalWinnings",
-  totalPools = "totalPools",
-  totalCompletedPools = "totalCompletedPools",
-  totalPoolsWon = "totalPoolsWon",
   createdAt = "createdAt",
   updatedAt = "updatedAt",
 }
@@ -2037,6 +2087,21 @@ export type ModelPoolPlayerFilterInput = {
   poolPlayerUserWalletId?: ModelIDInput | null,
 };
 
+export type ModelLotteryPoolAttributesFilterInput = {
+  auditRecordDrawId?: ModelStringInput | null,
+  isAuditEnabled?: ModelBooleanInput | null,
+  randomOrgUrlForResults?: ModelStringInput | null,
+  and?: Array< ModelLotteryPoolAttributesFilterInput | null > | null,
+  or?: Array< ModelLotteryPoolAttributesFilterInput | null > | null,
+  not?: ModelLotteryPoolAttributesFilterInput | null,
+};
+
+export type ModelLotteryPoolAttributesConnection = {
+  __typename: "ModelLotteryPoolAttributesConnection",
+  items:  Array<LotteryPoolAttributes | null >,
+  nextToken?: string | null,
+};
+
 export type ModelApiPoolAttributesFilterInput = {
   id?: ModelIDInput | null,
   apiKey?: ModelStringInput | null,
@@ -2067,17 +2132,17 @@ export type ModelPoolFilterInput = {
   poolTitle?: ModelStringInput | null,
   poolCategory?: ModelPoolCategoryInput | null,
   poolType?: ModelpoolTypeInput | null,
-  poolStatus?: ModelpoolStatusInput | null,
+  poolStatus?: ModelStringInput | null,
   poolEntryFee?: ModelStringInput | null,
   poolTotal?: ModelStringInput | null,
   poolWinningPayout?: ModelStringInput | null,
   allowPlayerLeave?: ModelBooleanInput | null,
-  apiRequestHash?: ModelStringInput | null,
   and?: Array< ModelPoolFilterInput | null > | null,
   or?: Array< ModelPoolFilterInput | null > | null,
   not?: ModelPoolFilterInput | null,
   poolPoolCreatorId?: ModelIDInput | null,
   poolApiPoolAttributesId?: ModelIDInput | null,
+  poolLotteryPoolAttributesId?: ModelIDInput | null,
 };
 
 export type ModelPoolConnection = {
@@ -2129,10 +2194,6 @@ export type ModelUserWalletFilterInput = {
   wallet?: ModelStringInput | null,
   nickname?: ModelStringInput | null,
   chatlogo?: ModelStringInput | null,
-  totalWinnings?: ModelIntInput | null,
-  totalPools?: ModelIntInput | null,
-  totalCompletedPools?: ModelIntInput | null,
-  totalPoolsWon?: ModelIntInput | null,
   and?: Array< ModelUserWalletFilterInput | null > | null,
   or?: Array< ModelUserWalletFilterInput | null > | null,
   not?: ModelUserWalletFilterInput | null,
@@ -2457,10 +2518,6 @@ export type CreatePoolPlayerMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -2472,16 +2529,16 @@ export type CreatePoolPlayerMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -2505,10 +2562,6 @@ export type UpdatePoolPlayerMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -2520,16 +2573,16 @@ export type UpdatePoolPlayerMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -2553,10 +2606,6 @@ export type DeletePoolPlayerMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -2568,21 +2617,72 @@ export type DeletePoolPlayerMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
     poolPlayersId?: string | null,
     poolPlayerUserWalletId: string,
+  } | null,
+};
+
+export type CreateLotteryPoolAttributesMutationVariables = {
+  input: CreateLotteryPoolAttributesInput,
+  condition?: ModelLotteryPoolAttributesConditionInput | null,
+};
+
+export type CreateLotteryPoolAttributesMutation = {
+  createLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateLotteryPoolAttributesMutationVariables = {
+  input: UpdateLotteryPoolAttributesInput,
+  condition?: ModelLotteryPoolAttributesConditionInput | null,
+};
+
+export type UpdateLotteryPoolAttributesMutation = {
+  updateLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteLotteryPoolAttributesMutationVariables = {
+  input: DeleteLotteryPoolAttributesInput,
+  condition?: ModelLotteryPoolAttributesConditionInput | null,
+};
+
+export type DeleteLotteryPoolAttributesMutation = {
+  deleteLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -2612,16 +2712,16 @@ export type CreateApiPoolAttributesMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2655,16 +2755,16 @@ export type UpdateApiPoolAttributesMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2698,16 +2798,16 @@ export type DeleteApiPoolAttributesMutation = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -2733,15 +2833,11 @@ export type CreatePoolMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -2763,7 +2859,15 @@ export type CreatePoolMutation = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -2772,6 +2876,7 @@ export type CreatePoolMutation = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -2793,15 +2898,11 @@ export type UpdatePoolMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -2823,7 +2924,15 @@ export type UpdatePoolMutation = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -2832,6 +2941,7 @@ export type UpdatePoolMutation = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -2853,15 +2963,11 @@ export type DeletePoolMutation = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -2883,7 +2989,15 @@ export type DeletePoolMutation = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -2892,6 +3006,7 @@ export type DeletePoolMutation = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -3013,10 +3128,6 @@ export type CreateUserWalletMutation = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3038,10 +3149,6 @@ export type UpdateUserWalletMutation = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3063,10 +3170,6 @@ export type DeleteUserWalletMutation = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -3651,6 +3754,48 @@ export type SearchPoolPlayersQuery = {
   } | null,
 };
 
+export type SearchLotteryPoolAttributesQueryVariables = {
+  filter?: SearchableLotteryPoolAttributesFilterInput | null,
+  sort?: Array< SearchableLotteryPoolAttributesSortInput | null > | null,
+  limit?: number | null,
+  nextToken?: string | null,
+  from?: number | null,
+  aggregates?: Array< SearchableLotteryPoolAttributesAggregationInput | null > | null,
+};
+
+export type SearchLotteryPoolAttributesQuery = {
+  searchLotteryPoolAttributes?:  {
+    __typename: "SearchableLotteryPoolAttributesConnection",
+    items:  Array< {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+    total?: number | null,
+    aggregateItems:  Array< {
+      __typename: "SearchableAggregateResult",
+      name: string,
+      result: ( {
+          __typename: "SearchableAggregateScalarResult",
+          value: number,
+        } | {
+          __typename: "SearchableAggregateBucketResult",
+          buckets?:  Array< {
+            __typename: string,
+            key: string,
+            doc_count: number,
+          } | null > | null,
+        }
+      ) | null,
+    } | null >,
+  } | null,
+};
+
 export type SearchApiPoolAttributesQueryVariables = {
   filter?: SearchableApiPoolAttributesFilterInput | null,
   sort?: Array< SearchableApiPoolAttributesSortInput | null > | null,
@@ -3720,16 +3865,16 @@ export type SearchPoolsQuery = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null >,
     nextToken?: string | null,
     total?: number | null,
@@ -3814,10 +3959,6 @@ export type SearchUserWalletsQuery = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -4267,10 +4408,6 @@ export type GetPoolPlayerQuery = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -4282,16 +4419,16 @@ export type GetPoolPlayerQuery = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -4322,6 +4459,44 @@ export type ListPoolPlayersQuery = {
   } | null,
 };
 
+export type GetLotteryPoolAttributesQueryVariables = {
+  id: string,
+};
+
+export type GetLotteryPoolAttributesQuery = {
+  getLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListLotteryPoolAttributesQueryVariables = {
+  filter?: ModelLotteryPoolAttributesFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListLotteryPoolAttributesQuery = {
+  listLotteryPoolAttributes?:  {
+    __typename: "ModelLotteryPoolAttributesConnection",
+    items:  Array< {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
 export type GetApiPoolAttributesQueryVariables = {
   id: string,
 };
@@ -4347,16 +4522,16 @@ export type GetApiPoolAttributesQuery = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -4411,15 +4586,11 @@ export type GetPoolQuery = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -4441,7 +4612,15 @@ export type GetPoolQuery = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -4450,6 +4629,7 @@ export type GetPoolQuery = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -4469,16 +4649,16 @@ export type ListPoolsQuery = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null >,
     nextToken?: string | null,
   } | null,
@@ -4577,10 +4757,6 @@ export type GetUserWalletQuery = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -4601,10 +4777,6 @@ export type ListUserWalletsQuery = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -5052,10 +5224,6 @@ export type OnCreatePoolPlayerSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -5067,16 +5235,16 @@ export type OnCreatePoolPlayerSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -5095,10 +5263,6 @@ export type OnUpdatePoolPlayerSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -5110,16 +5274,16 @@ export type OnUpdatePoolPlayerSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
@@ -5138,10 +5302,6 @@ export type OnDeletePoolPlayerSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
@@ -5153,21 +5313,57 @@ export type OnDeletePoolPlayerSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     },
     createdAt: string,
     updatedAt: string,
     poolPlayersId?: string | null,
     poolPlayerUserWalletId: string,
+  } | null,
+};
+
+export type OnCreateLotteryPoolAttributesSubscription = {
+  onCreateLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateLotteryPoolAttributesSubscription = {
+  onUpdateLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteLotteryPoolAttributesSubscription = {
+  onDeleteLotteryPoolAttributes?:  {
+    __typename: "LotteryPoolAttributes",
+    auditRecordDrawId: string,
+    isAuditEnabled: boolean,
+    randomOrgUrlForResults?: string | null,
+    id: string,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -5192,16 +5388,16 @@ export type OnCreateApiPoolAttributesSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -5230,16 +5426,16 @@ export type OnUpdateApiPoolAttributesSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -5268,16 +5464,16 @@ export type OnDeleteApiPoolAttributesSubscription = {
       poolTitle: string,
       poolCategory: PoolCategory,
       poolType: poolType,
-      poolStatus: poolStatus,
+      poolStatus: string,
       poolEntryFee: string,
       poolTotal: string,
       poolWinningPayout: string,
       allowPlayerLeave: boolean,
-      apiRequestHash: string,
       createdAt: string,
       updatedAt: string,
       poolPoolCreatorId: string,
       poolApiPoolAttributesId?: string | null,
+      poolLotteryPoolAttributesId?: string | null,
     } | null,
     createdAt: string,
     updatedAt: string,
@@ -5298,15 +5494,11 @@ export type OnCreatePoolSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -5328,7 +5520,15 @@ export type OnCreatePoolSubscription = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -5337,6 +5537,7 @@ export type OnCreatePoolSubscription = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -5353,15 +5554,11 @@ export type OnUpdatePoolSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -5383,7 +5580,15 @@ export type OnUpdatePoolSubscription = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -5392,6 +5597,7 @@ export type OnUpdatePoolSubscription = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -5408,15 +5614,11 @@ export type OnDeletePoolSubscription = {
       wallet: string,
       nickname?: string | null,
       chatlogo?: string | null,
-      totalWinnings: number,
-      totalPools: number,
-      totalCompletedPools: number,
-      totalPoolsWon: number,
       createdAt: string,
       updatedAt: string,
     },
     poolType: poolType,
-    poolStatus: poolStatus,
+    poolStatus: string,
     poolEntryFee: string,
     poolTotal: string,
     poolWinningPayout: string,
@@ -5438,7 +5640,15 @@ export type OnDeletePoolSubscription = {
       updatedAt: string,
       apiPoolAttributesPoolId?: string | null,
     } | null,
-    apiRequestHash: string,
+    lotteryPoolAttributes?:  {
+      __typename: "LotteryPoolAttributes",
+      auditRecordDrawId: string,
+      isAuditEnabled: boolean,
+      randomOrgUrlForResults?: string | null,
+      id: string,
+      createdAt: string,
+      updatedAt: string,
+    } | null,
     players?:  {
       __typename: "ModelPoolPlayerConnection",
       nextToken?: string | null,
@@ -5447,6 +5657,7 @@ export type OnDeletePoolSubscription = {
     updatedAt: string,
     poolPoolCreatorId: string,
     poolApiPoolAttributesId?: string | null,
+    poolLotteryPoolAttributesId?: string | null,
   } | null,
 };
 
@@ -5533,10 +5744,6 @@ export type OnCreateUserWalletSubscription = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5553,10 +5760,6 @@ export type OnUpdateUserWalletSubscription = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -5573,10 +5776,6 @@ export type OnDeleteUserWalletSubscription = {
       __typename: "ModelBrandConnection",
       nextToken?: string | null,
     } | null,
-    totalWinnings: number,
-    totalPools: number,
-    totalCompletedPools: number,
-    totalPoolsWon: number,
     createdAt: string,
     updatedAt: string,
   } | null,

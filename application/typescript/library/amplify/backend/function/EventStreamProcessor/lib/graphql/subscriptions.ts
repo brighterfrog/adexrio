@@ -113,10 +113,6 @@ export const onCreatePoolPlayer = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -132,11 +128,11 @@ export const onCreatePoolPlayer = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
@@ -154,10 +150,6 @@ export const onUpdatePoolPlayer = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -173,11 +165,11 @@ export const onUpdatePoolPlayer = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
@@ -195,10 +187,6 @@ export const onDeletePoolPlayer = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -214,16 +202,52 @@ export const onDeletePoolPlayer = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
       poolPlayersId
       poolPlayerUserWalletId
+    }
+  }
+`;
+export const onCreateLotteryPoolAttributes = /* GraphQL */ `
+  subscription OnCreateLotteryPoolAttributes {
+    onCreateLotteryPoolAttributes {
+      auditRecordDrawId
+      isAuditEnabled
+      randomOrgUrlForResults
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateLotteryPoolAttributes = /* GraphQL */ `
+  subscription OnUpdateLotteryPoolAttributes {
+    onUpdateLotteryPoolAttributes {
+      auditRecordDrawId
+      isAuditEnabled
+      randomOrgUrlForResults
+      id
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteLotteryPoolAttributes = /* GraphQL */ `
+  subscription OnDeleteLotteryPoolAttributes {
+    onDeleteLotteryPoolAttributes {
+      auditRecordDrawId
+      isAuditEnabled
+      randomOrgUrlForResults
+      id
+      createdAt
+      updatedAt
     }
   }
 `;
@@ -252,11 +276,11 @@ export const onCreateApiPoolAttributes = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
@@ -289,11 +313,11 @@ export const onUpdateApiPoolAttributes = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
@@ -326,11 +350,11 @@ export const onDeleteApiPoolAttributes = /* GraphQL */ `
         poolTotal
         poolWinningPayout
         allowPlayerLeave
-        apiRequestHash
         createdAt
         updatedAt
         poolPoolCreatorId
         poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
       }
       createdAt
       updatedAt
@@ -350,10 +374,6 @@ export const onCreatePool = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -379,7 +399,14 @@ export const onCreatePool = /* GraphQL */ `
         updatedAt
         apiPoolAttributesPoolId
       }
-      apiRequestHash
+      lotteryPoolAttributes {
+        auditRecordDrawId
+        isAuditEnabled
+        randomOrgUrlForResults
+        id
+        createdAt
+        updatedAt
+      }
       players {
         nextToken
       }
@@ -387,6 +414,7 @@ export const onCreatePool = /* GraphQL */ `
       updatedAt
       poolPoolCreatorId
       poolApiPoolAttributesId
+      poolLotteryPoolAttributesId
     }
   }
 `;
@@ -402,10 +430,6 @@ export const onUpdatePool = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -431,7 +455,14 @@ export const onUpdatePool = /* GraphQL */ `
         updatedAt
         apiPoolAttributesPoolId
       }
-      apiRequestHash
+      lotteryPoolAttributes {
+        auditRecordDrawId
+        isAuditEnabled
+        randomOrgUrlForResults
+        id
+        createdAt
+        updatedAt
+      }
       players {
         nextToken
       }
@@ -439,6 +470,7 @@ export const onUpdatePool = /* GraphQL */ `
       updatedAt
       poolPoolCreatorId
       poolApiPoolAttributesId
+      poolLotteryPoolAttributesId
     }
   }
 `;
@@ -454,10 +486,6 @@ export const onDeletePool = /* GraphQL */ `
         wallet
         nickname
         chatlogo
-        totalWinnings
-        totalPools
-        totalCompletedPools
-        totalPoolsWon
         createdAt
         updatedAt
       }
@@ -483,7 +511,14 @@ export const onDeletePool = /* GraphQL */ `
         updatedAt
         apiPoolAttributesPoolId
       }
-      apiRequestHash
+      lotteryPoolAttributes {
+        auditRecordDrawId
+        isAuditEnabled
+        randomOrgUrlForResults
+        id
+        createdAt
+        updatedAt
+      }
       players {
         nextToken
       }
@@ -491,6 +526,7 @@ export const onDeletePool = /* GraphQL */ `
       updatedAt
       poolPoolCreatorId
       poolApiPoolAttributesId
+      poolLotteryPoolAttributesId
     }
   }
 `;
@@ -576,10 +612,6 @@ export const onCreateUserWallet = /* GraphQL */ `
       brands {
         nextToken
       }
-      totalWinnings
-      totalPools
-      totalCompletedPools
-      totalPoolsWon
       createdAt
       updatedAt
     }
@@ -595,10 +627,6 @@ export const onUpdateUserWallet = /* GraphQL */ `
       brands {
         nextToken
       }
-      totalWinnings
-      totalPools
-      totalCompletedPools
-      totalPoolsWon
       createdAt
       updatedAt
     }
@@ -614,10 +642,6 @@ export const onDeleteUserWallet = /* GraphQL */ `
       brands {
         nextToken
       }
-      totalWinnings
-      totalPools
-      totalCompletedPools
-      totalPoolsWon
       createdAt
       updatedAt
     }

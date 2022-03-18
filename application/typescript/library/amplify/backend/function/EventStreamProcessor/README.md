@@ -5,7 +5,7 @@ How to run:
 # Build Before deployment
 How to run:
 * 1 from the lib directory `npm run build` prior to amplify push
-* 2 `amplify push`
+* 2 `amplify push --yes`
 
 
 

@@ -59,13 +59,13 @@ export interface DecodedGameEntries {
 
 export interface DecodedGameEntity {
     gameId: number;
-    gameStatus: number;
-    gameTotalWagers: number;
-    gameWinningPayout?: number;
+    gameStatus: string;
+    gameTotalWagers: string;
+    gameWinningPayout?: string;
     gameWinnerAddress?: string;
-    gameTotalEligiblePlayers: number;
-    gcsMinGamePlayers: number;
-    gcsGameBetSize: number;
+    gameTotalEligiblePlayers: string;
+    gcsMinGamePlayers: string;
+    gcsGameBetSize: string;
     gcsIsAuditEnabled: boolean;
 }
 

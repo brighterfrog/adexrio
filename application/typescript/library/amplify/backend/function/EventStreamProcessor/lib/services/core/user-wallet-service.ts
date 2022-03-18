@@ -2,7 +2,7 @@ import crypto from 'crypto';
 
 import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
 
-import { CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolStatus, poolType, SearchableUserWalletConnection, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
+import { CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolType, SearchableUserWalletConnection, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
 import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, getUserWallet, searchUserWallets } from '../../graphql/queries';
 import { createUserWallet } from '../../graphql/mutations';
 
@@ -17,7 +17,7 @@ export class UserWalletService {
             { input: createUserWalletInput }
         )) as GraphQLResult<CreateUserWalletMutation>;
        
-        console.log('createUserWallet', graphqlResult);
+        console.log('createUserWallet', JSON.stringify(graphqlResult), null, 2);
         return graphqlResult.data?.createUserWallet as UserWallet;
     }
 
@@ -26,7 +26,7 @@ export class UserWalletService {
             { input: searchableUserWalletFilterInput }
         )) as GraphQLResult<SearchUserWalletsQuery>;
         
-        console.log('searchUserWalletByWalletAddress', graphqlResult);
+        console.log('searchUserWalletByWalletAddress', JSON.stringify(graphqlResult), null, 2);
         return graphqlResult.data.searchUserWallets as SearchableUserWalletConnection;
     }
 }

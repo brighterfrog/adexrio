@@ -43,12 +43,6 @@ enum poolType {
   custom_builder
 }
 
-enum poolStatus {
-  awaiting
-  completed
-  terminated
-}
-
 enum PlayerStatus {
   pending_pool_completion
   withdrew
@@ -73,6 +67,14 @@ type PoolPlayer @model @searchable{
   pool: Pool! @belongsTo  
 }
 
+type LotteryPoolAttributes @model @searchable {
+  id: ID!
+  auditRecordDrawId: String!
+  isAuditEnabled: Boolean!
+  randomOrgUrlForResults: AWSURL
+  pool: Pool! @belongsTo
+}
+
 type ApiPoolAttributes @model @searchable {
   id: ID!
   apiKey: String!
@@ -94,13 +96,13 @@ type Pool @model @searchable {
   poolCategory: PoolCategory!
   poolCreator: UserWallet! @hasOne
   poolType: poolType!
-  poolStatus: poolStatus!
+  poolStatus: String!
   poolEntryFee: String!
   poolTotal: String!
   poolWinningPayout: String!
   allowPlayerLeave: Boolean!
   apiPoolAttributes: ApiPoolAttributes @hasOne
-  apiRequestHash: String!
+  lotteryPoolAttributes: LotteryPoolAttributes @hasOne  
   players: [PoolPlayer] @hasMany
 }
 
@@ -124,11 +126,8 @@ type UserWallet @model @searchable {
   nickname: String
   chatlogo: AWSURL
   brands: [Brand] @hasMany
-  totalWinnings: Int!
-  totalPools: Int!
-  totalCompletedPools: Int!
-  totalPoolsWon: Int!
 }
+
 type Brand @model @searchable {
   id: ID!
   wallet: String!

@@ -5,6 +5,7 @@ import { ApiPoolAttributesService } from './core/api-pool-attributes-service';
 import { PoolPlayerService } from './core/pool-player-service';
 import { PoolService } from './core/pool-service';
 import { BlockChainService } from './legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
+import { LotteryPoolAttributesService } from './core/lottery-pool-attributes-service';
 
 export class Orchestrator {
     
@@ -16,7 +17,8 @@ export class Orchestrator {
         apiPoolAttributesService: ApiPoolAttributesService,
         poolPlayerService: PoolPlayerService,
         poolService: PoolService,
-        legacyBlockchainService: BlockChainService
+        lotteryPoolAttributesService: LotteryPoolAttributesService,
+        legacyBlockchainService: BlockChainService,        
         ) {
         const self = this;
         
@@ -25,6 +27,7 @@ export class Orchestrator {
             apiPoolAttributesService, 
             poolPlayerService, 
             poolService, 
+            lotteryPoolAttributesService,
             legacyBlockchainService);
                 
         this.eventMap = new Map([
