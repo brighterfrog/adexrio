@@ -265,12 +265,30 @@ export const createLotteryPoolAttributes = /* GraphQL */ `
     $condition: ModelLotteryPoolAttributesConditionInput
   ) {
     createLotteryPoolAttributes(input: $input, condition: $condition) {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
@@ -280,12 +298,30 @@ export const updateLotteryPoolAttributes = /* GraphQL */ `
     $condition: ModelLotteryPoolAttributesConditionInput
   ) {
     updateLotteryPoolAttributes(input: $input, condition: $condition) {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
@@ -295,12 +331,30 @@ export const deleteLotteryPoolAttributes = /* GraphQL */ `
     $condition: ModelLotteryPoolAttributesConditionInput
   ) {
     deleteLotteryPoolAttributes(input: $input, condition: $condition) {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
@@ -465,12 +519,13 @@ export const createPool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken
@@ -524,12 +579,13 @@ export const updatePool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken
@@ -583,12 +639,13 @@ export const deletePool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken

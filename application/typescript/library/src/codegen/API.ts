@@ -194,10 +194,9 @@ export type CreatePoolPlayerInput = {
 };
 
 export enum PlayerStatus {
-  pending_pool_completion = "pending_pool_completion",
   withdrew = "withdrew",
-  win = "win",
-  lose = "lose",
+  joined = "joined",
+  winner = "winner",
 }
 
 

@@ -43,11 +43,10 @@ enum poolType {
   custom_builder
 }
 
-enum PlayerStatus {
-  pending_pool_completion
+enum PlayerStatus {  
   withdrew
-  win
-  lose
+  joined
+  winner  
 }
 
 enum PoolCategory {

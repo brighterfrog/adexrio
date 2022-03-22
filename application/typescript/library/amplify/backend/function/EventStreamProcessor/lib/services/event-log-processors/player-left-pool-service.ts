@@ -113,9 +113,10 @@ export class PlayerLeftPoolService implements IEventLogProcessor {
            
             /* update pool totals */                       
             poolToUpdate.poolTotal = (BigInt(poolToUpdate.poolTotal) - BigInt(poolToUpdate.poolEntryFee)).toString();
-            const updatePoolResult = await this.poolService.updatePool(poolToUpdate);  
+            const updatePoolResult = await this.poolService.updatePool(poolToUpdate); 
+            console.log('updatePoolResult', updatePoolResult); 
             
-            console.log('Done processing player joined pool event');
+            console.log('Done processing player left pool event');
         }        
     }
 
@@ -126,44 +127,5 @@ export class PlayerLeftPoolService implements IEventLogProcessor {
         console.log('createdPoolPlayerResult', updatePoolPlayerResult);
 
         return updatePoolPlayerResult;          
-    }
-
-    private async _createPool(blockchainGameDetails: Connex.VM.Output & Connex.Thor.Account.WithDecoded, createdPoolId: string, decodedGameId: any, poolCreatorUserWallet: any) {
-        const blockchainGameDetailsDecoded = {
-            gameId: parseInt(blockchainGameDetails.decoded.gameId),
-            gameStatus: blockchainGameDetails.decoded.gameStatus,
-            gameTotalWagers: blockchainGameDetails.decoded.gameTotalWagers,
-            gameWinningPayout: blockchainGameDetails.decoded.gameWinningPayout,
-            gameWinnerAddress: blockchainGameDetails.decoded.gameWinnerAddress,
-            gameTotalEligiblePlayers: blockchainGameDetails.decoded.gameTotalEligiblePlayers,
-            gcsMinGamePlayers: blockchainGameDetails.decoded.gcsMinGamePlayers,
-            gcsGameBetSize: blockchainGameDetails.decoded.gcsGameBetSize,
-            gcsIsAuditEnabled: blockchainGameDetails.decoded.gcsIsAuditEnabled
-        } as DecodedGameEntity;
-
-        console.log('before create pool entry fee is', blockchainGameDetailsDecoded.gcsGameBetSize);
-
-        console.log('decoded game entity is ', blockchainGameDetailsDecoded);
-
-        const createPoolInput = {
-            id: createdPoolId,
-            poolId: decodedGameId,
-            poolTitle: `Lottery Game # ${decodedGameId}`,
-            poolCategory: PoolCategory.random_winners,
-            poolType: poolType.lottery,
-            poolStatus: blockchainGameDetailsDecoded.gameStatus,
-            poolEntryFee: blockchainGameDetailsDecoded.gcsGameBetSize,
-            poolTotal: blockchainGameDetailsDecoded.gameTotalWagers,
-            poolWinningPayout: '0',
-            allowPlayerLeave: true,
-            apiRequestHash: 'NA_V1_CONTRACT',
-            poolPoolCreatorId: poolCreatorUserWallet.id
-        } as CreatePoolInput;
-
-        console.log('createPoolInput', createPoolInput);
-
-        const createdPool = await this.poolService.createPool(createPoolInput);
-
-        return createdPool;
-    }
+    } 
 }

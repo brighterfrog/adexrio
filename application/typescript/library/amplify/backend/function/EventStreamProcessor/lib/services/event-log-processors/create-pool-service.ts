@@ -147,7 +147,7 @@ export class CreatePoolService implements IEventLogProcessor {
     private async _createPoolPlayer(createdPool: any, poolCreatorUserWallet: any) {
 
         const poolPlayerInput = {
-            status: PlayerStatus.pending_pool_completion,
+            status: PlayerStatus.joined,
             poolPlayersId: createdPool.id,
             poolPlayerUserWalletId: poolCreatorUserWallet.id
         } as CreatePoolPlayerInput;

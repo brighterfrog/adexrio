@@ -218,36 +218,90 @@ export const onDeletePoolPlayer = /* GraphQL */ `
 export const onCreateLotteryPoolAttributes = /* GraphQL */ `
   subscription OnCreateLotteryPoolAttributes {
     onCreateLotteryPoolAttributes {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
 export const onUpdateLotteryPoolAttributes = /* GraphQL */ `
   subscription OnUpdateLotteryPoolAttributes {
     onUpdateLotteryPoolAttributes {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
 export const onDeleteLotteryPoolAttributes = /* GraphQL */ `
   subscription OnDeleteLotteryPoolAttributes {
     onDeleteLotteryPoolAttributes {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
@@ -400,12 +454,13 @@ export const onCreatePool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken
@@ -456,12 +511,13 @@ export const onUpdatePool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken
@@ -512,12 +568,13 @@ export const onDeletePool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken

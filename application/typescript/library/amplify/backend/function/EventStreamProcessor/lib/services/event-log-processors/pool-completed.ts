@@ -2,7 +2,7 @@
 
 import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
 
-import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, PlayerStatus, Pool, PoolCategory, PoolPlayer, poolType, SearchablePoolFilterInput, SearchablePoolPlayerFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
+import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, PoolPlayer, poolType, SearchableLotteryPoolAttributesFilterInput, SearchablePoolFilterInput, SearchablePoolPlayerFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UpdateLotteryPoolAttributesInput, UserWallet } from '../../codegen/API';
 import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, listPoolPlayers, searchUserWallets } from '../../graphql/queries';
 import { createPool, createUserWallet } from '../../graphql/mutations';
 
@@ -12,6 +12,7 @@ import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
 import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
 import { DecodedGameEntity } from '../legacy_contract_v1_helpers/backend/models/all-models';
+import { LotteryPoolAttributesService } from '../core/lottery-pool-attributes-service';
 
 export class PoolCompletedService implements IEventLogProcessor {
 
@@ -19,6 +20,7 @@ export class PoolCompletedService implements IEventLogProcessor {
     apiPoolAttributesService: ApiPoolAttributesService;
     poolPlayerService: PoolPlayerService;
     poolService: PoolService;
+    lotteryPoolAttributesService: LotteryPoolAttributesService;
     legacyBlockchainService: BlockChainService;
 
     constructor(
@@ -26,12 +28,14 @@ export class PoolCompletedService implements IEventLogProcessor {
         apiPoolAttributesService: ApiPoolAttributesService,
         poolPlayerService: PoolPlayerService,
         poolService: PoolService,
+        lotteryPoolAttributesService: LotteryPoolAttributesService,
         legacyBlockchainService: BlockChainService
     ) {
         this.userWalletService = userWalletService;
         this.apiPoolAttributesService = apiPoolAttributesService;
         this.poolPlayerService = poolPlayerService;
         this.poolService = poolService;
+        this.lotteryPoolAttributesService = lotteryPoolAttributesService;
         this.legacyBlockchainService = legacyBlockchainService;
     }
   
@@ -82,9 +86,7 @@ export class PoolCompletedService implements IEventLogProcessor {
     }    
 
     async handleLegacyContractEvent(eventRecord, userWallet): Promise<any> {
-        const crypto = await import('crypto');
-        const createdPoolId = crypto.randomUUID();
-
+        
         const decodedGameId = eventRecord.dynamodb.NewImage.decodedGameId.N;      
 
         const existingPools =  await this.poolService.searchPoolByPoolId({ poolId: { eq: decodedGameId } } as SearchablePoolFilterInput);
@@ -102,7 +104,7 @@ export class PoolCompletedService implements IEventLogProcessor {
 
             // Completed Event properties emitted
             // uint256 indexed gameId,
-            // address indexed player,
+            // address indexed player, --playerWinner
             // uint256 indexed dateTime,
             // uint256 winningPayout,
             // bytes32 transactionId,
@@ -114,14 +116,13 @@ export class PoolCompletedService implements IEventLogProcessor {
             // CRITERIA_MET_AWAITING_LOTTERY = 2
 
             // Update Pool record
-            // Update PoolPlayers status for winners/losers            
+            // Update LotteryPoolAttributes record for legacy
+            // Update PoolPlayers status for winner done            
             // Update Summary Table
 
-              /* update pool totals */                       
-              poolToUpdate.poolTotal = (BigInt(poolToUpdate.poolTotal) - BigInt(poolToUpdate.poolEntryFee)).toString();
+              /* update pool totals */                                     
               poolToUpdate.poolStatus = GAME_STATUS_COMPLETE;
               poolToUpdate.poolWinningPayout = eventRecord.dynamodb.NewImage.decodedWinningPayout.S;
-
 
               const updatePoolResult = await this.poolService.updatePool(poolToUpdate);  
                         
@@ -136,58 +137,44 @@ export class PoolCompletedService implements IEventLogProcessor {
             /* update existing pool player */
             const poolPlayer = existingPoolPlayerSearchResults.items[0];
             const poolPlayerServiceResult = await this._updatePoolPlayer(poolPlayer);
-           
+
           
-            
+            /* retrieve existing lottery pool attributes */
+            /* update lottery pool attributes */
+
+            const existingLotteryPoolAttributesSearchResult = await this.lotteryPoolAttributesService.searchLotteryPoolAttributes({ lotteryPoolAttributesPoolId: { eq: poolToUpdate.id } } as SearchableLotteryPoolAttributesFilterInput);
+
+            const existingLotteryPoolAttributes = existingLotteryPoolAttributesSearchResult.items[0];
+
+            const lotteryPoolAttributesUpdateInput = {
+                id: existingLotteryPoolAttributes.id,
+                auditRecordDrawId: eventRecord.dynamodb.NewImage.decodedAuditRecordDrawId.S,
+                isAuditEnabled: existingLotteryPoolAttributes.isAuditEnabled,
+                randomOrgUrlForResults: `https://www.random.org/draws/details/?draw=${eventRecord.dynamodb.NewImage.decodedAuditRecordDrawId.S}`,            
+            } as UpdateLotteryPoolAttributesInput;
+
+            const lotteryPoolAttributesUpdateResult = await this._updateLotteryPoolAttributes(lotteryPoolAttributesUpdateInput);   
+                                                                
             console.log('Done processing player joined pool event');
         }        
     }
 
+    private async _updateLotteryPoolAttributes(lotteryPoolAttributesUpdateInput: UpdateLotteryPoolAttributesInput): Promise<LotteryPoolAttributes> {       
+        console.log('lotteryPoolAttributesUpdateInput with', lotteryPoolAttributesUpdateInput);
+
+        const updateLotteryPoolAttributesResult = await this.lotteryPoolAttributesService.updateLotteryPoolAttributes(lotteryPoolAttributesUpdateInput);
+
+        console.log('updateLotteryPoolAttributesResult', updateLotteryPoolAttributesResult);
+
+        return updateLotteryPoolAttributesResult as LotteryPoolAttributes;             
+    }
+
     private async _updatePoolPlayer(poolPlayer: PoolPlayer): Promise<PoolPlayer> {      
-        poolPlayer.status = PlayerStatus.withdrew;
+        poolPlayer.status = PlayerStatus.winner;
         const updatePoolPlayerResult = await this.poolPlayerService.updatePoolPlayer(poolPlayer);
 
         console.log('createdPoolPlayerResult', updatePoolPlayerResult);
 
         return updatePoolPlayerResult;          
-    }
-
-    private async _createPool(blockchainGameDetails: Connex.VM.Output & Connex.Thor.Account.WithDecoded, createdPoolId: string, decodedGameId: any, poolCreatorUserWallet: any) {
-        const blockchainGameDetailsDecoded = {
-            gameId: parseInt(blockchainGameDetails.decoded.gameId),
-            gameStatus: blockchainGameDetails.decoded.gameStatus,
-            gameTotalWagers: blockchainGameDetails.decoded.gameTotalWagers,
-            gameWinningPayout: blockchainGameDetails.decoded.gameWinningPayout,
-            gameWinnerAddress: blockchainGameDetails.decoded.gameWinnerAddress,
-            gameTotalEligiblePlayers: blockchainGameDetails.decoded.gameTotalEligiblePlayers,
-            gcsMinGamePlayers: blockchainGameDetails.decoded.gcsMinGamePlayers,
-            gcsGameBetSize: blockchainGameDetails.decoded.gcsGameBetSize,
-            gcsIsAuditEnabled: blockchainGameDetails.decoded.gcsIsAuditEnabled
-        } as DecodedGameEntity;
-
-        console.log('before create pool entry fee is', blockchainGameDetailsDecoded.gcsGameBetSize);
-
-        console.log('decoded game entity is ', blockchainGameDetailsDecoded);
-
-        const createPoolInput = {
-            id: createdPoolId,
-            poolId: decodedGameId,
-            poolTitle: `Lottery Game # ${decodedGameId}`,
-            poolCategory: PoolCategory.random_winners,
-            poolType: poolType.lottery,
-            poolStatus: blockchainGameDetailsDecoded.gameStatus,
-            poolEntryFee: blockchainGameDetailsDecoded.gcsGameBetSize,
-            poolTotal: blockchainGameDetailsDecoded.gameTotalWagers,
-            poolWinningPayout: '0',
-            allowPlayerLeave: true,
-            apiRequestHash: 'NA_V1_CONTRACT',
-            poolPoolCreatorId: poolCreatorUserWallet.id
-        } as CreatePoolInput;
-
-        console.log('createPoolInput', createPoolInput);
-
-        const createdPool = await this.poolService.createPool(createPoolInput);
-
-        return createdPool;
-    }
+    }  
 }

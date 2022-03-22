@@ -152,12 +152,13 @@ export const searchLotteryPoolAttributes = /* GraphQL */ `
       aggregates: $aggregates
     ) {
       items {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       nextToken
       total
@@ -834,12 +835,30 @@ export const listPoolPlayers = /* GraphQL */ `
 export const getLotteryPoolAttributes = /* GraphQL */ `
   query GetLotteryPoolAttributes($id: ID!) {
     getLotteryPoolAttributes(id: $id) {
+      id
       auditRecordDrawId
       isAuditEnabled
       randomOrgUrlForResults
-      id
+      pool {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
       createdAt
       updatedAt
+      lotteryPoolAttributesPoolId
     }
   }
 `;
@@ -855,12 +874,13 @@ export const listLotteryPoolAttributes = /* GraphQL */ `
       nextToken: $nextToken
     ) {
       items {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       nextToken
     }
@@ -972,12 +992,13 @@ export const getPool = /* GraphQL */ `
         apiPoolAttributesPoolId
       }
       lotteryPoolAttributes {
+        id
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
-        id
         createdAt
         updatedAt
+        lotteryPoolAttributesPoolId
       }
       players {
         nextToken
