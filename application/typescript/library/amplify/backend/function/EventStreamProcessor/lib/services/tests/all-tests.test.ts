@@ -69,7 +69,7 @@ describe("create pool service tests", () => {
                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
                             },
                             "__typename": {
-                                "S": "CreatePoolEventLogV2"
+                                "S": "CreatePoolEventLog"
                             },
                             "metaTxOrigin": {
                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
@@ -176,7 +176,7 @@ describe("create pool service tests", () => {
                         "SizeBytes": 1275,
                         "StreamViewType": "NEW_AND_OLD_IMAGES"
                     },
-                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLogV2-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-02-13T23:15:31.456"
+                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-02-13T23:15:31.456"
                 }
             ]
         }
@@ -232,7 +232,7 @@ describe("create pool service tests", () => {
     //                             "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
     //                         },
     //                         "__typename": {
-    //                             "S": "CreatePoolEventLogV2"
+    //                             "S": "CreatePoolEventLog"
     //                         },
     //                         "metaTxOrigin": {
     //                             "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
@@ -339,7 +339,7 @@ describe("create pool service tests", () => {
     //                     "SizeBytes": 1275,
     //                     "StreamViewType": "NEW_AND_OLD_IMAGES"
     //                 },
-    //                 "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLogV2-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-02-13T23:15:31.456"
+    //                 "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-02-13T23:15:31.456"
     //             }
     //         ]
     //     }

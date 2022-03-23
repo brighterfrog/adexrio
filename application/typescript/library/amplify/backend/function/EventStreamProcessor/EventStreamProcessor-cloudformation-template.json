@@ -255,13 +255,13 @@
         }
       }
     },
-    "LambdaTriggerPolicyCreatePoolEventLogV2": {
+    "LambdaTriggerPolicyCreatePoolEventLog": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-CreatePoolEventLogV2",
+        "PolicyName": "amplify-lambda-execution-policy-CreatePoolEventLog",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -280,7 +280,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogV2Table:StreamArn"
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogTable:StreamArn"
                 }
               }
             }
@@ -288,10 +288,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingCreatePoolEventLogV2": {
+    "LambdaEventSourceMappingCreatePoolEventLog": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyCreatePoolEventLogV2",
+        "LambdaTriggerPolicyCreatePoolEventLog",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -299,7 +299,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogV2Table:StreamArn"
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:CreatePoolEventLogTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -311,13 +311,13 @@
         "StartingPosition": "LATEST"
       }
     },
-    "LambdaTriggerPolicyPlayerJoinedPoolEventLogV2": {
+    "LambdaTriggerPolicyPlayerJoinedPoolEventLog": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-PlayerJoinedPoolEventLogV2",
+        "PolicyName": "amplify-lambda-execution-policy-PlayerJoinedPoolEventLog",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -336,7 +336,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogV2Table:StreamArn"
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogTable:StreamArn"
                 }
               }
             }
@@ -344,10 +344,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingPlayerJoinedPoolEventLogV2": {
+    "LambdaEventSourceMappingPlayerJoinedPoolEventLog": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyPlayerJoinedPoolEventLogV2",
+        "LambdaTriggerPolicyPlayerJoinedPoolEventLog",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -355,7 +355,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogV2Table:StreamArn"
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerJoinedPoolEventLogTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -367,13 +367,13 @@
         "StartingPosition": "LATEST"
       }
     },
-    "LambdaTriggerPolicyPlayerLeftPoolEventLogV2": {
+    "LambdaTriggerPolicyPlayerLeftPoolEventLog": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-PlayerLeftPoolEventLogV2",
+        "PolicyName": "amplify-lambda-execution-policy-PlayerLeftPoolEventLog",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -392,7 +392,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogV2Table:StreamArn"
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogTable:StreamArn"
                 }
               }
             }
@@ -400,10 +400,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingPlayerLeftPoolEventLogV2": {
+    "LambdaEventSourceMappingPlayerLeftPoolEventLog": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyPlayerLeftPoolEventLogV2",
+        "LambdaTriggerPolicyPlayerLeftPoolEventLog",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -411,7 +411,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogV2Table:StreamArn"
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PlayerLeftPoolEventLogTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -423,13 +423,13 @@
         "StartingPosition": "LATEST"
       }
     },
-    "LambdaTriggerPolicyPoolAwaitingExecutionEventLogV2": {
+    "LambdaTriggerPolicyPoolAwaitingExecutionEventLog": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-PoolAwaitingExecutionEventLogV2",
+        "PolicyName": "amplify-lambda-execution-policy-PoolAwaitingExecutionEventLog",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -448,7 +448,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogV2Table:StreamArn"
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogTable:StreamArn"
                 }
               }
             }
@@ -456,10 +456,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingPoolAwaitingExecutionEventLogV2": {
+    "LambdaEventSourceMappingPoolAwaitingExecutionEventLog": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyPoolAwaitingExecutionEventLogV2",
+        "LambdaTriggerPolicyPoolAwaitingExecutionEventLog",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -467,7 +467,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogV2Table:StreamArn"
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolAwaitingExecutionEventLogTable:StreamArn"
           }
         },
         "FunctionName": {
@@ -479,13 +479,13 @@
         "StartingPosition": "LATEST"
       }
     },
-    "LambdaTriggerPolicyPoolCompletedEventLogV2": {
+    "LambdaTriggerPolicyPoolCompletedEventLog": {
       "DependsOn": [
         "LambdaExecutionRole"
       ],
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "amplify-lambda-execution-policy-PoolCompletedEventLogV2",
+        "PolicyName": "amplify-lambda-execution-policy-PoolCompletedEventLog",
         "Roles": [
           {
             "Ref": "LambdaExecutionRole"
@@ -504,7 +504,7 @@
               ],
               "Resource": {
                 "Fn::ImportValue": {
-                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogV2Table:StreamArn"
+                  "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogTable:StreamArn"
                 }
               }
             }
@@ -512,10 +512,10 @@
         }
       }
     },
-    "LambdaEventSourceMappingPoolCompletedEventLogV2": {
+    "LambdaEventSourceMappingPoolCompletedEventLog": {
       "Type": "AWS::Lambda::EventSourceMapping",
       "DependsOn": [
-        "LambdaTriggerPolicyPoolCompletedEventLogV2",
+        "LambdaTriggerPolicyPoolCompletedEventLog",
         "LambdaExecutionRole"
       ],
       "Properties": {
@@ -523,7 +523,7 @@
         "Enabled": true,
         "EventSourceArn": {
           "Fn::ImportValue": {
-            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogV2Table:StreamArn"
+            "Fn::Sub": "${apiadexrGraphQLAPIIdOutput}:GetAtt:PoolCompletedEventLogTable:StreamArn"
           }
         },
         "FunctionName": {

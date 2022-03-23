@@ -9,7 +9,7 @@ import 'mocha';
 import { API, graphqlOperation } from '../../library/src/amplify-bootstrapper/bootstrap-amplify';
 import { GraphQLResult } from '../../library/node_modules/@aws-amplify/api-graphql';
 
-import { getCreatePoolEventLogV2, getPoolSuccessfullBlockEventsProcessed } from '../../library/src/graphql/queries';
+import { getCreatePoolEventLog, getPoolSuccessfullBlockEventsProcessed } from '../../library/src/graphql/queries';
 
 import { 
     //createEventLogMeta,
@@ -20,57 +20,57 @@ import {
 
 import { 
     // CreateCreatePoolEventDecodedInput,
-    CreateCreatePoolEventLogV2Input,
+    CreateCreatePoolEventLogInput,
     // CreateEventLogMetaInput,
     // CreateEventLogMetaMutation,
-    CreatePoolEventLogV2,
+    CreatePoolEventLog,
     CreatePoolSuccessfullBlockEventsProcessedMutation, 
     DeletePoolSuccessfullBlockEventsProcessedMutation, 
     GetPoolSuccessfullBlockEventsProcessedQuery, 
     PoolSuccessfullBlockEventsProcessed, 
-    SearchCreatePoolEventLogV2sQuery, 
+    SearchCreatePoolEventLogsQuery, 
     UpdatePoolSuccessfullBlockEventsProcessedMutation 
 } from '../../library/src/codegen/API';
 
 
 import { 
-    createCreatePoolEventLogV2,     
+    createCreatePoolEventLog,     
     //createCreatePoolEventDecoded,
 
-    createPlayerJoinedPoolEventLogV2, 
+    createPlayerJoinedPoolEventLog, 
     
     
-    createPlayerLeftPoolEventLogV2, 
-    
-
-    createPoolCompletedEventLogV2,
+    createPlayerLeftPoolEventLog, 
     
 
-    createPoolAwaitingExecutionEventLogV2,
+    createPoolCompletedEventLog,
+    
+
+    createPoolAwaitingExecutionEventLog,
     
 
 } from '../../library/src/graphql/mutations';
 
 import { 
-  searchCreatePoolEventLogV2s
+  searchCreatePoolEventLogs
 } from '../../library/src/graphql/queries'
 
 import {     
-    SearchableCreatePoolEventLogV2Connection,
+    SearchableCreatePoolEventLogConnection,
     
-    CreateCreatePoolEventLogV2Mutation, 
+    CreateCreatePoolEventLogMutation, 
     // CreateCreatePoolEventDecodedMutation,    
 
-    CreatePlayerJoinedPoolEventLogV2Mutation,         
+    CreatePlayerJoinedPoolEventLogMutation,         
     
 
-    CreatePlayerLeftPoolEventLogV2Mutation,
+    CreatePlayerLeftPoolEventLogMutation,
     
 
-    CreatePoolCompletedEventLogV2Mutation,
+    CreatePoolCompletedEventLogMutation,
     
 
-    CreatePoolAwaitingExecutionEventLogV2Mutation,
+    CreatePoolAwaitingExecutionEventLogMutation,
     
 
 } from '../../library/src/codegen/API';
@@ -186,7 +186,7 @@ before(async () => {
 
 //        const graphql = new GraphQLService();
        
-//        const result = await API.graphql(graphqlOperation(getCreatePoolEventLogV2, { txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6' }  )) as GraphQLResult<SearchCreatePoolEventLogV2sQuery>;
+//        const result = await API.graphql(graphqlOperation(getCreatePoolEventLog, { txID: '0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6' }  )) as GraphQLResult<SearchCreatePoolEventLogsQuery>;
                         
 //        console.log('getCreatePoolEventLog done', result);                               
 //     });

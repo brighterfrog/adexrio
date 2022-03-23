@@ -31,7 +31,7 @@ export class Orchestrator {
             legacyBlockchainService);
                 
         this.eventMap = new Map([
-            ['CreatePoolEventLogV2', self.createPoolService as IEventLogProcessor]            
+            ['CreatePoolEventLog', self.createPoolService as IEventLogProcessor]            
           ]);
     }
     async handleEventRecord(eventRecord) {
