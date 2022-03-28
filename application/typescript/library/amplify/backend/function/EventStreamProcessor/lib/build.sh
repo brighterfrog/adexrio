@@ -8,7 +8,7 @@ cp -r ../../../../../../library/src/codegen ../lib/
 cp -r ../../../../../../library/src/graphql ../lib/
 
 cp -r ../../../../../../library/src/aws-exports.js ../lib/
-# cp -r ../../../../../../library/src/amplify-bootstrapper ../lib
+cp -r ../../../../../../library/src/amplify-bootstrapper ../lib
 
 cp -r ../../../../../../library/src/backend ../lib/services/legacy_contract_v1_helpers
 cp -r ../../../../../../library/src/contract-builds ../lib/services/legacy_contract_v1_helpers

@@ -1,43 +1,22 @@
 {
   "compilerOptions": {
-    "types": ["node"],    
-    "module": "commonjs",
-    "esModuleInterop": true,
-    "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "target": "es2017",
-    "noImplicitAny": false,
-    "moduleResolution": "node",    
-    "sourceMap": true,       
+    "lib": ["dom", "esnext"],
+    "module": "commonjs",
+    "moduleResolution": "node",
     "skipLibCheck": true,
-    "preserveConstEnums": false,
-    "declaration": true,
-    "rootDir": "./src",        
-     "outDir": "../dist/backend-blockchain-ticker/src",
-    // "outDir": "./dist",
-
-    "removeComments": true,      
-    // "baseUrl": ".",
-    // "paths": {
-    //     "@adexr/lib": ["../library/index", "../library/src/index"]      
-    // }          
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "outDir": "./src",
+    "baseUrl": "./",
+    "rootDir": "./lib",
+    "paths": {
+      "src": ["./lib"]
+    }      
   },
-    // "include": [
-    //   "./src/**/*.ts",
-    // ],
-    "exclude": [
-      "./tests",
-      "./dist",
-      "tsconfig.json"
-    ],
- 
-    // "paths": { "@lambdalib" : ["../library"] },
-    // "files": [
-    //   "../library/src/lambda-lib.ts"
-    // ],
-    "references": [
-        {
-           "path": "../library"
-        }
-     ],      
+  "exclude": [
+    "jest.config.js",
+    "webpack.config.js",      
+    "src"     
+  ]
 }
