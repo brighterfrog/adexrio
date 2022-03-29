@@ -31,25 +31,16 @@ resource "aws_iam_role_policy_attachment" "lambda_attachment" {
 }
 
 data "archive_file" "lambda_zip" {
-   type        = "zip"
-   source_dir  = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/"
-   output_path = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"
-   excludes = [
-     "test/*",
-     "handler.zip",    
-     "src/*",
-     "*.zip",
-     "README.md",
-     "tsconfig.json",
-     "package*.json"
-   ]
- }
+  type        = "zip"
+  source_dir  = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/src"
+  output_path = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"  
+}
 
 resource "aws_lambda_function" "lambda" {
   function_name    = "${var.lambda_name}_${var.globals[terraform.workspace].resource_suffix}"
-  tags             = var.globals.tags                      
-  filename         = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"   
-  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)  
+  tags             = var.globals.tags
+  filename         = "${path.module}/../../../../../typescript/${var.lambda_directory_name}/handler.zip"
+  source_code_hash = filebase64sha256(data.archive_file.lambda_zip.output_path)
   role             = aws_iam_role.lambda_role.arn
   handler          = "dist/index.handler"
   runtime          = "nodejs14.x"
