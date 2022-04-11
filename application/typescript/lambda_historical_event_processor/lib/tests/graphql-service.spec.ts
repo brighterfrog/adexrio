@@ -105,14 +105,33 @@ before(async () => {
 //          });
 //  });
 
+// describe('can query the last block table with amplify api graphql',
+//      () => {
+//          it('should return true', async () => {            
+
+//             const graphql = new GraphQLService();
+//             try{
+//                 const result = await graphql.getPoolLastBlockEventsProcessed();
+//                 console.log('test returned result', result);     
+//             }
+//             catch(err) {
+//                 console.log('TEST EXCEPTION CAUGHT', err);
+//             }                                          
+//          });
+//  });
+
 describe('can query the last block table with amplify api graphql',
      () => {
          it('should return true', async () => {            
 
             const graphql = new GraphQLService();
-            const result = await graphql.getPoolLastBlockEventsProcessed();
-            
-            console.log('test returned result', result);                        
+            try{
+                const result = await graphql.getCreatePoolEventLogByTxId("0");
+                console.log('test returned result', result);     
+            }
+            catch(err) {
+                console.log('TEST EXCEPTION CAUGHT', err);
+            }                                          
          });
  });
 

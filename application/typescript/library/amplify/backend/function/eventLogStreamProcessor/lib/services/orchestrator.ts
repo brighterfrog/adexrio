@@ -6,48 +6,82 @@ import { PoolPlayerService } from './core/pool-player-service';
 import { PoolService } from './core/pool-service';
 import { BlockChainService } from './legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
 import { LotteryPoolAttributesService } from './core/lottery-pool-attributes-service';
+import { PlayerJoinedPoolService } from './event-log-processors/player-joined-pool-service';
+import { PlayerLeftPoolService } from './event-log-processors/player-left-pool-service';
+import { PoolCompletedService } from './event-log-processors/pool-completed';
 
 export class Orchestrator {
-    
+
     eventMap: Map<string, IEventLogProcessor>;
+
     createPoolService: CreatePoolService;
-              
+    createPlayerJoinedPoolService: PlayerJoinedPoolService;
+    createPlayerLeftPoolService: PlayerLeftPoolService;
+    createPoolCompletedService: PoolCompletedService;
+
+    // createPlayerAwaitingPoolService: PlayerAwaitingExecutionPoolService;
+
     constructor(
         userWalletService: UserWalletService,
         apiPoolAttributesService: ApiPoolAttributesService,
         poolPlayerService: PoolPlayerService,
         poolService: PoolService,
         lotteryPoolAttributesService: LotteryPoolAttributesService,
-        legacyBlockchainService: BlockChainService,        
-        ) {
+        legacyBlockchainService: BlockChainService,
+    ) {
         const self = this;
-        
+
         this.createPoolService = new CreatePoolService(
-            userWalletService, 
-            apiPoolAttributesService, 
-            poolPlayerService, 
-            poolService, 
+            userWalletService,
+            apiPoolAttributesService,
+            poolPlayerService,
+            poolService,
             lotteryPoolAttributesService,
             legacyBlockchainService);
-                
+
+        this.createPlayerJoinedPoolService = new PlayerJoinedPoolService(
+            userWalletService,
+            apiPoolAttributesService,
+            poolPlayerService,
+            poolService,
+            legacyBlockchainService);
+
+        this.createPlayerLeftPoolService = new PlayerLeftPoolService(
+            userWalletService,
+            apiPoolAttributesService,
+            poolPlayerService,
+            poolService,
+            legacyBlockchainService);
+
+        this.createPoolCompletedService = new PoolCompletedService(
+            userWalletService,
+            apiPoolAttributesService,
+            poolPlayerService,
+            poolService,
+            lotteryPoolAttributesService,
+            legacyBlockchainService);
+
         this.eventMap = new Map([
-            ['CreatePoolEventLog', self.createPoolService as IEventLogProcessor]            
-          ]);
+            ['CreatePoolEventLog', self.createPoolService as IEventLogProcessor],
+            ['PlayerJoinedPool', self.createPlayerJoinedPoolService as IEventLogProcessor],
+            ['PlayerLeftPool', self.createPlayerLeftPoolService as IEventLogProcessor],
+            ['PoolCompleted', self.createPoolCompletedService as IEventLogProcessor]
+        ]);
     }
     async handleEventRecord(eventRecord) {
-        const self = this;                           
+        const self = this;
         const service = self.eventMap.get(self._getTableNameFromArn(eventRecord.eventSourceARN));
         console.log('orchestrator handleEventRecord self.eventMap.get service', service);
 
-        if(eventRecord.eventName === 'INSERT') {
+        if (eventRecord.eventName === 'INSERT') {
             await service.handleEventRecord(eventRecord);
         }
         else {
             console.log(`Not a new record entry event type. Event type is ${eventRecord.eventName}`)
-        }        
+        }
     }
 
     _getTableNameFromArn(arn) {
         return arn.split('table/')[1].split('-')[0];
-      }           
+    }
 }

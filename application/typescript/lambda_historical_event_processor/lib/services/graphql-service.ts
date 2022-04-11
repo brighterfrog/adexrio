@@ -5,7 +5,7 @@ import { Framework } from '@vechain/connex-framework'
 import { API, graphqlOperation, GraphQLResult } from './../library/amplify-bootstrapper/bootstrap-amplify';
 // import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql';
 
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, poolSuccessfullBlockEventsProcessedByPositionFieldIndex, searchPlayerJoinedPoolEventLogs } from './../library/graphql/queries';
+import { getCreatePoolEventLog, getCreatePoolEventLogbyTxId, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, poolSuccessfullBlockEventsProcessedByPositionFieldIndex, searchPlayerJoinedPoolEventLogs } from './../library/graphql/queries';
 
 import {
     createPlayerJoinedPoolEventLog,
@@ -25,6 +25,7 @@ import {
     CreatePoolEventLog,
     CreatePoolSuccessfullBlockEventsProcessedMutation,
     DeletePoolSuccessfullBlockEventsProcessedMutation,
+    GetCreatePoolEventLogbyTxIdQuery,
     GetCreatePoolEventLogQuery,
     GetPlayerJoinedPoolEventLogQuery,
     GetPlayerLeftPoolEventLogQuery,
@@ -95,15 +96,18 @@ export class GraphQLService {
 
     /* CreatePoolEventLog */  
     
-    /* no longer txID */
+    /* getCreatePoolEventLog  no longer txID */
+      /* getCreatePoolEventLog  no longer txID */
+        /* getCreatePoolEventLog  no longer txID */
 
     async getCreatePoolEventLogByTxId(txId: string): Promise<CreatePoolEventLog> {
         console.log('before getCreatePoolEventLogByTxId');
         try {
-                const graphqlResult = await API.graphql(graphqlOperation(getCreatePoolEventLog, { txID: txId })) as GraphQLResult<GetCreatePoolEventLogQuery>;
+                const graphqlResult = await API.graphql(graphqlOperation(getCreatePoolEventLogbyTxId, { txID: txId })) as GraphQLResult<GetCreatePoolEventLogbyTxIdQuery>;
                 console.log('after getCreatePoolEventLogByTxId', graphqlResult);
 
-                return graphqlResult.data?.getCreatePoolEventLog;
+                const item = graphqlResult.data.getCreatePoolEventLogbyTxId.items.length > 0 ? graphqlResult.data.getCreatePoolEventLogbyTxId.items[0] : null;
+                return item;
             }
             catch (e) {
                 console.log('EXCEPTION OCCURRED', e);
@@ -317,11 +321,11 @@ export class GraphQLService {
   
 
     async getPoolLastBlockEventsProcessed(): Promise<PoolSuccessfullBlockEventsProcessed> {
-        console.log('getPoolLastBlockEventsProcessed');
+        console.log('getPoolLastBlockEventsProcessed 2');
 
         try {
             const graphqlResult = await API.graphql(graphqlOperation(poolSuccessfullBlockEventsProcessedByPositionFieldIndex,
-                { positionField: this.poolSuccessfullBlockEventsProcessedPositionFieldIndex }
+                { positionField: 0 }
             )) as GraphQLResult<PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery>;
             
             console.log('poolSuccessfullBlockEventsProcessedByPositionFieldIndex', JSON.stringify(graphqlResult), null, 4);

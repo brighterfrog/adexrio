@@ -39,13 +39,17 @@ export class EventHandlerProcessMapper {
 
         console.log('entering gameCreatedEvent loop');
         
-            for (const contractRawEvent of eventsToHandle.result) {                        
+            for (const contractRawEvent of eventsToHandle.result) {   
+                console.log('inner loop call for txId of', contractRawEvent.meta.txID);
                 const existingEntry =  await eventHandlerProcessMapper.graphqlService.getCreatePoolEventLogByTxId(contractRawEvent.meta.txID);
+
+                console.log('existing entry check is', existingEntry);
+                
                 if (existingEntry) {
                     console.log('gameCreatedEvent entry already exists for', existingEntry);
                 }
                 else {
-                    console.log('createCreatePoolEventLog entry called for', existingEntry);
+                    console.log('createCreatePoolEventLog entry called for', contractRawEvent);
                     await eventHandlerProcessMapper.graphqlService.createCreatePoolEventLog(contractRawEvent);
                 }                
         }
@@ -61,6 +65,7 @@ export class EventHandlerProcessMapper {
                 console.log('playerJoinedGameEvent entry already exists for', existingEntry);
             }
             else {
+                console.log('createPlayerJoinedPoolEventLog entry called for', contractRawEvent);
                 await eventHandlerProcessMapper.graphqlService.createPlayerJoinedPoolEventLog(contractRawEvent);
             }
             
@@ -77,6 +82,7 @@ export class EventHandlerProcessMapper {
                 console.log('entry already exists for', existingEntry);
             }
             else {
+                console.log('createPlayerLeftPoolEventLog entry called for', contractRawEvent);
                 await eventHandlerProcessMapper.graphqlService.createPlayerLeftPoolEventLog(contractRawEvent);
             }
         }
@@ -93,6 +99,7 @@ export class EventHandlerProcessMapper {
                 console.log('entry already exists for', existingEntry);
             }
             else {
+                console.log('createPoolCompletedEventLog entry called for', contractRawEvent);
                 await eventHandlerProcessMapper.graphqlService.createPoolCompletedEventLog(contractRawEvent);
             }
             
@@ -108,6 +115,7 @@ export class EventHandlerProcessMapper {
                 console.log('entry already exists for', existingEntry);
             }
             else {
+                console.log('createAwaitingPoolExecutionEventLog entry called for', contractRawEvent);
                 await eventHandlerProcessMapper.graphqlService.createAwaitingPoolExecutionEventLog(contractRawEvent);
             }            
         };
@@ -131,7 +139,7 @@ export class DynamodbEventProcessorService {
     
     async processContractEvents(contractEvents: ContractRawEvent[]): Promise<void> {
         console.log('processContractEvents');
-        console.log('contractEvents', contractEvents.length, JSON.stringify(contractEvents, null, 4));
+        //console.log('contractEvents', contractEvents.length, JSON.stringify(contractEvents, null, 4));
         await this.processStepsOrderedList(this.eventHandlerProcessMap.eventProcessingStepsOrder, contractEvents, this.eventHandlerProcessMap);
     }
 
@@ -139,13 +147,15 @@ export class DynamodbEventProcessorService {
 
         let allStepsPromiseArray: Promise<number>[] = [];
 
-        list.steps.forEach(async (step) => {
+        for(const step of list.steps) {
+        // list.steps.forEach(async (step) => {
             allStepsPromiseArray.concat(
                 this.handleParallelSteps(step.parallel, contractEvents, eventHandlerProcessMapper)
             );
 
             await this.handleSequentialSteps(step.sequential, contractEvents, eventHandlerProcessMapper);
-        });
+        // });
+        }
 
         await Promise.all(allStepsPromiseArray);
     }
@@ -155,13 +165,21 @@ export class DynamodbEventProcessorService {
         contractEvents: ContractRawEvent[],
         eventHandlerProcessMapper: EventHandlerProcessMapper): Promise<void> {
 
-        sequential.forEach(async (stepEvent) => {
+        //* throws circular ref error
+        //console.log('handleSequentialSteps eventHandlerProcessMapper',  JSON.stringify(eventHandlerProcessMapper, null, 4));
+
+        for(const stepEvent of sequential) {
+        // sequential.forEach(async (stepEvent) => {
             const matchedRawEvents = eventHandlerProcessMapper.filterRawEventsByType(contractEvents, stepEvent);
+
+            console.log('stepEvent is', stepEvent);
+
             const matchedHandler = eventHandlerProcessMapper.getHandlerForEventType(stepEvent);
-            console.log('matchedHandler is', matchedHandler);
+            //console.log('matchedHandler is', JSON.stringify(matchedHandler, null, 4));
 
             await matchedHandler(matchedRawEvents, eventHandlerProcessMapper);
-        });
+        // });
+        }
 
     }
 
