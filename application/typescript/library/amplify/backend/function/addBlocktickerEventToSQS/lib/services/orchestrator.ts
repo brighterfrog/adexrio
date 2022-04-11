@@ -22,6 +22,8 @@ export class Orchestrator {
     }
           
     async handleEvent(event) {
+        console.log('handleEvent', event);
+
         const lastBlock = await this.dbService.readLastBlockForEventsProcessed();
         event.lambdaProcessorDecisionCheckForNextBlocknumber = lastBlock;  
         
@@ -29,6 +31,7 @@ export class Orchestrator {
         const eventType = this.sqsDecisionService.getEventTypeBasedOnBlocksProcessed(event.arguments.input.event.head.number, lastBlock);
         
         //write event to queue      
+        console.log('before sendMessage', eventType, event);
         const sendMessageSqsResult = await this.sqsService.sendMessage(eventType, event);
         
         const result = {

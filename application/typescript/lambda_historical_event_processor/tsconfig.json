@@ -17,6 +17,7 @@
     "exclude": [
       "jest.config.js",
       "webpack.config.js",      
-      "src"     
+      "src",
+      "tests"    
     ]
   }

@@ -1040,9 +1040,10 @@ export const listPools = /* GraphQL */ `
   }
 `;
 export const getPoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
-  query GetPoolSuccessfullBlockEventsProcessed($id: Int!) {
+  query GetPoolSuccessfullBlockEventsProcessed($id: ID!) {
     getPoolSuccessfullBlockEventsProcessed(id: $id) {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt
@@ -1051,21 +1052,18 @@ export const getPoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
 `;
 export const listPoolSuccessfullBlockEventsProcesseds = /* GraphQL */ `
   query ListPoolSuccessfullBlockEventsProcesseds(
-    $id: Int
     $filter: ModelPoolSuccessfullBlockEventsProcessedFilterInput
     $limit: Int
     $nextToken: String
-    $sortDirection: ModelSortDirection
   ) {
     listPoolSuccessfullBlockEventsProcesseds(
-      id: $id
       filter: $filter
       limit: $limit
       nextToken: $nextToken
-      sortDirection: $sortDirection
     ) {
       items {
         id
+        positionField
         lambdaProcessorDecisionCheckForNextBlocknumber
         createdAt
         updatedAt
@@ -1444,6 +1442,32 @@ export const listPoolCompletedEventLogs = /* GraphQL */ `
         decodedType
         decodedDateTime
         poolJsonData
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const poolSuccessfullBlockEventsProcessedByPositionFieldIndex = /* GraphQL */ `
+  query PoolSuccessfullBlockEventsProcessedByPositionFieldIndex(
+    $positionField: Int!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPoolSuccessfullBlockEventsProcessedFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    poolSuccessfullBlockEventsProcessedByPositionFieldIndex(
+      positionField: $positionField
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        positionField
+        lambdaProcessorDecisionCheckForNextBlocknumber
         createdAt
         updatedAt
       }

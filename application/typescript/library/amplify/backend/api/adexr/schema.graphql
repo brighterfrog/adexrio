@@ -105,10 +105,11 @@ type Pool @model @searchable {
   players: [PoolPlayer] @hasMany
 }
 
-type PoolSuccessfullBlockEventsProcessed @model {
-  id: Int! @primaryKey  
-  lambdaProcessorDecisionCheckForNextBlocknumber: Int!  
-}
+ type PoolSuccessfullBlockEventsProcessed @model {
+   id: ID!
+   positionField: Int! @index(name: "byPositionField", queryField: "poolSuccessfullBlockEventsProcessedByPositionFieldIndex")
+   lambdaProcessorDecisionCheckForNextBlocknumber: Int!  
+ }
 
 type PoolSummaries @model @searchable{
   id: ID!
@@ -139,7 +140,7 @@ type Brand @model @searchable {
 
 type CreatePoolEventLog @model @searchable {
   id: ID!
-  txID: String!
+  txID: String! @index(name: "byTxId", queryField: "getCreatePoolEventLogbyTxId")
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -155,7 +156,7 @@ type CreatePoolEventLog @model @searchable {
 
 type PlayerJoinedPoolEventLog @model @searchable {
   id: ID!
-  txID: String!
+  txID: String! @index(name: "byTxId", queryField: "getPlayerJoinedPoolEventLogbyTxId")
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -170,7 +171,7 @@ type PlayerJoinedPoolEventLog @model @searchable {
 
 type PlayerLeftPoolEventLog @model @searchable {
   id: ID!  
-  txID: String! @primaryKey
+  txID: String! @index(name: "byTxId", queryField: "getPlayerLeftPoolEventLogbyTxId")
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -185,7 +186,7 @@ type PlayerLeftPoolEventLog @model @searchable {
 
 type PoolAwaitingExecutionEventLog @model @searchable {
   id: ID!  
-  txID: String! 
+  txID: String! @index(name: "byTxId", queryField: "getPoolAwaitingExecutionEventLogbyTxId")
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!
@@ -201,7 +202,7 @@ type PoolAwaitingExecutionEventLog @model @searchable {
 
 type PoolCompletedEventLog @model @searchable {
   id: ID!
-  txID: String! 
+  txID: String!  @index(name: "byTxId", queryField: "getPoolCompletedEventLogbyTxId")
   raw: AWSJSON!
   metaBlockID: String!
   metaBlockNumber: Int!

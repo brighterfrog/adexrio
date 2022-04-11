@@ -1,7 +1,6 @@
 import { Framework } from '@vechain/connex-framework';
 import { Driver, SimpleNet, SimpleWallet } from '@vechain/connex-driver';
 import { mnemonic, Keystore, HDNode } from 'thor-devkit';
-// import { SecretsManager } from '../aws-services/secrets-manager';
 import { WalletInfo, WalletSecretDetails } from '../models/all-models';
 
 export class BlockchainWalletService {
@@ -15,6 +14,8 @@ export class BlockchainWalletService {
     }
 
     private buildKeystore(walletInfo: WalletInfo): Promise<Keystore> {
+        console.log('walletInfo is', walletInfo);
+
         var pkBytes = mnemonic.derivePrivateKey(walletInfo.words.split(' '));
         return Keystore.encrypt(pkBytes, walletInfo.password).then(keystore => {
             return keystore;
@@ -24,14 +25,21 @@ export class BlockchainWalletService {
     private getKeyStore(): Promise<any> {
         let keyStore: any;
 
+        console.log(`getKeyStore ${process.env.NODE_ENV}`)
+
         switch (process.env.NODE_ENV) {
             case 'dev':
+            case 'development':
+                console.log('getting main-network-contract-owner details')
                 keyStore = this.buildKeystore(this.walletSecretDetails['development-network']['contract-owner']);
                 break;
             case 'test':
+                console.log('getting main-network-contract-owner details')
                 keyStore = this.buildKeystore(this.walletSecretDetails['test-network']['contract-owner']);
                 break;
             case 'prod':
+            case 'production':
+                console.log('getting main-network-contract-owner details')
                 keyStore = this.buildKeystore(this.walletSecretDetails['main-network']['contract-owner']);
                 break;
 
@@ -81,6 +89,7 @@ export class BlockchainWalletService {
         let password = '';
         switch (process.env.NODE_ENV) {
             case 'dev':
+            case 'development':
                 //keyStore = require('./../../../wallets/keystore/vechain.dev.owner.account.json');
                 password = this.walletSecretDetails['development-network']['contract-owner'].password;
                 break;
@@ -89,6 +98,7 @@ export class BlockchainWalletService {
                 password = this.walletSecretDetails['test-network']['contract-owner'].password;
                 break;
             case 'prod':
+            case 'production':
                 //keyStore = require('./../../../wallets/keystore/vechain.prod.owner.account.json');
                 password = this.walletSecretDetails['main-network']['contract-owner'].password;
                 break;

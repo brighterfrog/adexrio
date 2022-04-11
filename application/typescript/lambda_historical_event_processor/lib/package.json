@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build": "bash build.sh && webpack --config ../webpack.config.js",
+    "build:dev": "bash build.sh && webpack --config ../webpack.config.js",
+    "build:test": "bash build.sh && webpack --config ../webpack.config.js",
+    "build:prod": "bash build.sh && webpack --config ../webpack.config.js",
     "local:dev": "NODE_ENV=dev ts-node-dev src/local.ts",
     "local:test": "NODE_ENV=test ts-node-dev src/index.ts --unhandled-rejections=strict",
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts --unhandled-rejections=strict",
     "test": "NODE_ENV=dev mocha --exit --timeout 0 -r ts-node/register tests/**/*.spec.ts",
-    "test:file": "NODE_ENV=prod mocha --exit --timeout 0 -r ts-node/register tests/**/graph*.spec.ts",
+    "test:file": "NODE_ENV=prod mocha --exit --timeout 0 -r ts-node/register tests/**/dynamodb*.spec.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },

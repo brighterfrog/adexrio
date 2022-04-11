@@ -43,6 +43,7 @@ export class Orchestrator {
     
     async process(event: any): Promise<void> {
 
+        await this.blockchainEventProcessorService.initialize();
         //+1 to increment so we aren't doing last block twice. This comes from the  library/amplify/backend/function/addBlocktickerEventToSQS        
         const lastBlockProcessed = event.lambdaProcessorDecisionCheckForNextBlocknumber + 1;         
         const allEvents = await this.blockchainEventProcessorService.getAllEventsStartingAtBlocknumber(this.eventsToRetrieve, lastBlockProcessed);

@@ -60,7 +60,7 @@
         }
       ]
     },
-    "EventStreamProcessor": {
+    "eventLogStreamProcessor": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda",

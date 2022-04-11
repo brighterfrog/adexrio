@@ -1,10 +1,11 @@
 // import { API, graphqlOperation, Amplify } from 'aws-amplify';
-import { API, graphqlOperation, Amplify } from './amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, Amplify, GraphQLResult } from './amplify-bootstrapper/bootstrap-amplify';
 import { createIngestionEvent } from './graphql/mutations';
-import { getPoolSuccessfullBlockEventsProcessed } from './graphql/queries';
+import { getPoolSuccessfullBlockEventsProcessed, poolSuccessfullBlockEventsProcessedByPositionFieldIndex } from './graphql/queries';
 import { SecretsManager } from './backend/aws-services/secrets-manager';
 import { BlockChainService } from './backend/blockchain/blockchain-service';
 import { BlockchainWalletService } from './backend/blockchain/blockchain-wallet-service';
+import { ModelPoolSuccessfullBlockEventsProcessedConnection, PoolSuccessfullBlockEventsProcessed, PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery } from './codegen/API';
 
 const util = require('util');
 
@@ -23,8 +24,21 @@ const testObject = {
         //  const foobar = await API.graphql(graphqlOperation(createIngestionEvent, {input: testObject}));
         //  console.log('completed', foobar);
 
-        const foobar = await API.graphql(graphqlOperation(getPoolSuccessfullBlockEventsProcessed, {id: 0} ));
-        console.log('completed', foobar);
+        // const foobar = await API.graphql(graphqlOperation(getPoolSuccessfullBlockEventsProcessed, {id: 0} ));
+        // console.log('completed', foobar);
+
+
+        const graphqlResult = await API.graphql(graphqlOperation(poolSuccessfullBlockEventsProcessedByPositionFieldIndex,
+            { positionField: 0 }
+        )) as GraphQLResult<PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery>;
+        
+        console.log('searchUserWalletByWalletAddress', JSON.stringify(graphqlResult), null, 2);
+        const connectionResult = graphqlResult.data.poolSuccessfullBlockEventsProcessedByPositionFieldIndex as ModelPoolSuccessfullBlockEventsProcessedConnection;
+
+        console.log('graphqlResult.data.poolSuccessfullBlockEventsProcessedByPositionFieldIndex', connectionResult);
+        
+        return connectionResult.items.length > 0 ? connectionResult.items[0] as PoolSuccessfullBlockEventsProcessed : null;
+
      }
      catch(e) {
          console.log(e);

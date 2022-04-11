@@ -53,6 +53,16 @@ data "aws_iam_policy_document" "lambda_template_historical_events_processor_poli
     ]
     effect = "Allow"
   }
+
+  statement {
+    actions = [
+      "secretsmanager:GetSecretValue"
+    ]
+    resources = [
+      "arn:aws:secretsmanager:us-east-1:891289117461:secret:adexrio/*"
+    ]
+    effect = "Allow"
+  }
 }
 
 module "lambda_template_historical_event_processor" {
@@ -76,6 +86,7 @@ module "lambda_template_historical_event_processor" {
     "BLOCK_EVENT_QUEUE_NAME" = var.block_event_queue.name
     "ACCOUNTID"              = "${var.globals[terraform.workspace].account_id}"
     "VECHAIN_API_NODE"       = "${var.globals[terraform.workspace].vechain_api_node}"
+    "KEYSTORE_SECRET"        = "${var.globals[terraform.workspace].keystore_name}"
   }
 }
 
@@ -84,6 +95,8 @@ resource "aws_lambda_event_source_mapping" "queue_event_trigger" {
   function_name    = module.lambda_template_historical_event_processor.lambda.arn
 }
 # name used in addBlocktickerEventToSQS lambda
+
+
 
 
 # module "historical_step_function" {

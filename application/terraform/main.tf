@@ -47,8 +47,8 @@ module "historical_events" {
   globals                   = var.globals
   queue_name                = "historical_events"
   block_event_queue         = module.block_events.queue
-  lambda_timeout_in_seconds = 900
-  queue_timeout_in_seconds  = 900
+  lambda_timeout_in_seconds = 180 #900 
+  queue_timeout_in_seconds  = 180
 }
 
 module "shared" {

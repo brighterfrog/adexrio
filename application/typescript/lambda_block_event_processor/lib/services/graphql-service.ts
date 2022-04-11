@@ -5,7 +5,7 @@ import { Framework } from '@vechain/connex-framework'
 import { API, graphqlOperation } from './../library/amplify-bootstrapper/bootstrap-amplify';
 import { GraphQLResult } from '../../../library/node_modules/@aws-amplify/api-graphql';
 
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed } from './../library/graphql/queries';
+import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, poolSuccessfullBlockEventsProcessedByPositionFieldIndex } from './../library/graphql/queries';
 
 import {
     createPlayerJoinedPoolEventLog,
@@ -31,11 +31,13 @@ import {
     GetPoolAwaitingExecutionEventLogQuery,
     GetPoolCompletedEventLogQuery,
     GetPoolSuccessfullBlockEventsProcessedQuery,
+    ModelPoolSuccessfullBlockEventsProcessedConnection,
     PlayerJoinedPoolEventLog,
     PlayerLeftPoolEventLog,
     PoolAwaitingExecutionEventLog,
     PoolCompletedEventLog,
     PoolSuccessfullBlockEventsProcessed,
+    PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery,
     UpdatePoolSuccessfullBlockEventsProcessedMutation
 } from './../library/codegen/API';
 
@@ -83,10 +85,10 @@ import {
 export class GraphQLService {
 
     API: any;
-    poolSuccessfullBlockEventsProcessedTableId: number;
+    poolSuccessfullBlockEventsProcessedPositionFieldIndex: number;
 
     constructor() {
-        this.poolSuccessfullBlockEventsProcessedTableId = 0;
+        this.poolSuccessfullBlockEventsProcessedPositionFieldIndex = 0;
         this.API = API;
     }
 
@@ -280,7 +282,7 @@ export class GraphQLService {
     ///FOR TESTING
     async deletePoolSuccessfullBlockEventsProcessed(): Promise<PoolSuccessfullBlockEventsProcessed> {
         try {
-            const result = await API.graphql(graphqlOperation(deletePoolSuccessfullBlockEventsProcessed, { input: { id: this.poolSuccessfullBlockEventsProcessedTableId } })) as GraphQLResult<DeletePoolSuccessfullBlockEventsProcessedMutation>;
+            const result = await API.graphql(graphqlOperation(deletePoolSuccessfullBlockEventsProcessed, { input: { id: this.poolSuccessfullBlockEventsProcessedPositionFieldIndex } })) as GraphQLResult<DeletePoolSuccessfullBlockEventsProcessedMutation>;
             console.log('delete completed', result);
             return result.data?.deletePoolSuccessfullBlockEventsProcessed;
         }
@@ -292,18 +294,28 @@ export class GraphQLService {
     ///FOR TESTING
 
     async getPoolLastBlockEventsProcessed(): Promise<PoolSuccessfullBlockEventsProcessed> {
+        console.log('getPoolLastBlockEventsProcessed');
+
         try {
-            const result = await API.graphql(graphqlOperation(getPoolSuccessfullBlockEventsProcessed, { id: this.poolSuccessfullBlockEventsProcessedTableId })) as GraphQLResult<GetPoolSuccessfullBlockEventsProcessedQuery>;
-            console.log('get completed', result);
-            return result.data?.getPoolSuccessfullBlockEventsProcessed;
+            const graphqlResult = await API.graphql(graphqlOperation(poolSuccessfullBlockEventsProcessedByPositionFieldIndex,
+                { positionField: 0 }
+            )) as GraphQLResult<PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery>;
+            
+            console.log('poolSuccessfullBlockEventsProcessedByPositionFieldIndex', JSON.stringify(graphqlResult), null, 4);
+
+            const connectionResult = graphqlResult.data.poolSuccessfullBlockEventsProcessedByPositionFieldIndex as ModelPoolSuccessfullBlockEventsProcessedConnection;
+
+            console.log('graphqlResult.data.poolSuccessfullBlockEventsProcessedByPositionFieldIndex', connectionResult);
+            
+            return connectionResult.items.length > 0 ? connectionResult.items[0] as PoolSuccessfullBlockEventsProcessed : null;
         }
         catch (e) {
-            console.log(e);
+            console.log(JSON.stringify(e, null, 4));
             throw e;
         }
     }
 
-    async upsertPoolSuccessfullBlockEventsProcessed(latestBlocknumber: number): Promise<PoolSuccessfullBlockEventsProcessed> {
+    async upsertPoolSuccessfullBlockEventsProcessed(currentThorHeadBlockNumber: number): Promise<PoolSuccessfullBlockEventsProcessed> {
         try {
 
             const existingEntry = await this.getPoolLastBlockEventsProcessed();
@@ -312,8 +324,8 @@ export class GraphQLService {
                 console.log('no existing entry found, adding initial');
                 const result = await API.graphql(graphqlOperation(createPoolSuccessfullBlockEventsProcessed, {
                     input: {
-                        id: this.poolSuccessfullBlockEventsProcessedTableId,
-                        lambdaProcessorDecisionCheckForNextBlocknumber: latestBlocknumber
+                        positionField: this.poolSuccessfullBlockEventsProcessedPositionFieldIndex,
+                        lambdaProcessorDecisionCheckForNextBlocknumber: currentThorHeadBlockNumber
                     }
                 })) as GraphQLResult<CreatePoolSuccessfullBlockEventsProcessedMutation>;
                 return result.data?.createPoolSuccessfullBlockEventsProcessed;
@@ -322,8 +334,9 @@ export class GraphQLService {
                 console.log('existing entry found, updating');
                 const result = await API.graphql(graphqlOperation(updatePoolSuccessfullBlockEventsProcessed, {
                     input: {
-                        id: this.poolSuccessfullBlockEventsProcessedTableId,
-                        lambdaProcessorDecisionCheckForNextBlocknumber: latestBlocknumber
+                        id: existingEntry.id,
+                        positionField: existingEntry.positionField,
+                        lambdaProcessorDecisionCheckForNextBlocknumber: currentThorHeadBlockNumber
                     }
                 })) as GraphQLResult<UpdatePoolSuccessfullBlockEventsProcessedMutation>;
                 return result.data?.updatePoolSuccessfullBlockEventsProcessed;

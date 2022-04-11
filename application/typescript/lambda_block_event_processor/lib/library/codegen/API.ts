@@ -528,11 +528,13 @@ export type DeletePoolInput = {
 };
 
 export type CreatePoolSuccessfullBlockEventsProcessedInput = {
-  id?: number | null,
+  id?: string | null,
+  positionField: number,
   lambdaProcessorDecisionCheckForNextBlocknumber: number,
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
+  positionField?: ModelIntInput | null,
   lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null,
   and?: Array< ModelPoolSuccessfullBlockEventsProcessedConditionInput | null > | null,
   or?: Array< ModelPoolSuccessfullBlockEventsProcessedConditionInput | null > | null,
@@ -541,19 +543,21 @@ export type ModelPoolSuccessfullBlockEventsProcessedConditionInput = {
 
 export type PoolSuccessfullBlockEventsProcessed = {
   __typename: "PoolSuccessfullBlockEventsProcessed",
-  id: number,
+  id: string,
+  positionField: number,
   lambdaProcessorDecisionCheckForNextBlocknumber: number,
   createdAt: string,
   updatedAt: string,
 };
 
 export type UpdatePoolSuccessfullBlockEventsProcessedInput = {
-  id: number,
+  id: string,
+  positionField?: number | null,
   lambdaProcessorDecisionCheckForNextBlocknumber?: number | null,
 };
 
 export type DeletePoolSuccessfullBlockEventsProcessedInput = {
-  id: number,
+  id: string,
 };
 
 export type CreatePoolSummariesInput = {
@@ -2161,18 +2165,13 @@ export type ModelPoolConnection = {
 };
 
 export type ModelPoolSuccessfullBlockEventsProcessedFilterInput = {
-  id?: ModelIntInput | null,
+  id?: ModelIDInput | null,
+  positionField?: ModelIntInput | null,
   lambdaProcessorDecisionCheckForNextBlocknumber?: ModelIntInput | null,
   and?: Array< ModelPoolSuccessfullBlockEventsProcessedFilterInput | null > | null,
   or?: Array< ModelPoolSuccessfullBlockEventsProcessedFilterInput | null > | null,
   not?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null,
 };
-
-export enum ModelSortDirection {
-  ASC = "ASC",
-  DESC = "DESC",
-}
-
 
 export type ModelPoolSuccessfullBlockEventsProcessedConnection = {
   __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection",
@@ -2293,6 +2292,12 @@ export type ModelPlayerLeftPoolEventLogFilterInput = {
   or?: Array< ModelPlayerLeftPoolEventLogFilterInput | null > | null,
   not?: ModelPlayerLeftPoolEventLogFilterInput | null,
 };
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
 
 export type ModelPlayerLeftPoolEventLogConnection = {
   __typename: "ModelPlayerLeftPoolEventLogConnection",
@@ -3087,7 +3092,8 @@ export type CreatePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type CreatePoolSuccessfullBlockEventsProcessedMutation = {
   createPoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -3102,7 +3108,8 @@ export type UpdatePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type UpdatePoolSuccessfullBlockEventsProcessedMutation = {
   updatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -3117,7 +3124,8 @@ export type DeletePoolSuccessfullBlockEventsProcessedMutationVariables = {
 export type DeletePoolSuccessfullBlockEventsProcessedMutation = {
   deletePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -4756,13 +4764,14 @@ export type ListPoolsQuery = {
 };
 
 export type GetPoolSuccessfullBlockEventsProcessedQueryVariables = {
-  id: number,
+  id: string,
 };
 
 export type GetPoolSuccessfullBlockEventsProcessedQuery = {
   getPoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -4770,11 +4779,9 @@ export type GetPoolSuccessfullBlockEventsProcessedQuery = {
 };
 
 export type ListPoolSuccessfullBlockEventsProcessedsQueryVariables = {
-  id?: number | null,
   filter?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
-  sortDirection?: ModelSortDirection | null,
 };
 
 export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
@@ -4782,7 +4789,8 @@ export type ListPoolSuccessfullBlockEventsProcessedsQuery = {
     __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection",
     items:  Array< {
       __typename: "PoolSuccessfullBlockEventsProcessed",
-      id: number,
+      id: string,
+      positionField: number,
       lambdaProcessorDecisionCheckForNextBlocknumber: number,
       createdAt: string,
       updatedAt: string,
@@ -5196,6 +5204,29 @@ export type ListPoolCompletedEventLogsQuery = {
       decodedType: string,
       decodedDateTime: string,
       poolJsonData?: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null >,
+    nextToken?: string | null,
+  } | null,
+};
+
+export type PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQueryVariables = {
+  positionField: number,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelPoolSuccessfullBlockEventsProcessedFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type PoolSuccessfullBlockEventsProcessedByPositionFieldIndexQuery = {
+  poolSuccessfullBlockEventsProcessedByPositionFieldIndex?:  {
+    __typename: "ModelPoolSuccessfullBlockEventsProcessedConnection",
+    items:  Array< {
+      __typename: "PoolSuccessfullBlockEventsProcessed",
+      id: string,
+      positionField: number,
+      lambdaProcessorDecisionCheckForNextBlocknumber: number,
       createdAt: string,
       updatedAt: string,
     } | null >,
@@ -5815,7 +5846,8 @@ export type OnDeletePoolSubscription = {
 export type OnCreatePoolSuccessfullBlockEventsProcessedSubscription = {
   onCreatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -5825,7 +5857,8 @@ export type OnCreatePoolSuccessfullBlockEventsProcessedSubscription = {
 export type OnUpdatePoolSuccessfullBlockEventsProcessedSubscription = {
   onUpdatePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,
@@ -5835,7 +5868,8 @@ export type OnUpdatePoolSuccessfullBlockEventsProcessedSubscription = {
 export type OnDeletePoolSuccessfullBlockEventsProcessedSubscription = {
   onDeletePoolSuccessfullBlockEventsProcessed?:  {
     __typename: "PoolSuccessfullBlockEventsProcessed",
-    id: number,
+    id: string,
+    positionField: number,
     lambdaProcessorDecisionCheckForNextBlocknumber: number,
     createdAt: string,
     updatedAt: string,

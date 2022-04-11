@@ -27,7 +27,7 @@ export class SQSService {
     }
 
     async sendMessage(eventType, event) {                 
-        const responseFromSqs = await client.send(this.getSendMessageCommand(eventType, event));
+        const responseFromSqs = await this.client.send(this.getSendMessageCommand(eventType, event));
 
         console.log('responseFromSqs', responseFromSqs);
 
@@ -36,26 +36,26 @@ export class SQSService {
 
     getSendMessageCommand(eventType, event) {    
 
-    let sendMessageInput = {
-        MessageBody: JSON.stringify(event),
-        MessageDeduplicationId: event.arguments.input.event.head.number,  // Required for FIFO queues
-        MessageGroupId: "Group1",
-        QueueUrl: null,
-        createdFromHistoricalQueue: null
-    };
+        let sendMessageInput = {
+            MessageBody: JSON.stringify(event),
+            MessageDeduplicationId: event.arguments.input.event.head.number,  // Required for FIFO queues
+            MessageGroupId: "Group1",
+            QueueUrl: null,
+            createdFromHistoricalQueue: null
+        };
 
-    if(eventType === EVENT_TYPE.CURRENT_BLOCK) {
-        sendMessageInput.QueueUrl = this.block_events_queue_url;
-        sendMessageInput.createdFromHistoricalQueue = false;
-    }
-    else if(eventType === EVENT_TYPE.HISTORICAL_BLOCKS) {
-        sendMessageInput.QueueUrl = this.historical_events_queue_url;
-        sendMessageInput.createdFromHistoricalQueue = true;
-    }
-    else {
-        throw Error(`UNKNOWN EVENT - FAILED TO WRITE TO SQS WITH eventType ${eventType}`);
-    }
-       
-    return new SendMessageCommand(sendMessageInput);
+        if(eventType === EVENT_TYPE.CURRENT_BLOCK) {
+            sendMessageInput.QueueUrl = this.block_events_queue_url;
+            sendMessageInput.createdFromHistoricalQueue = false;
+        }
+        else if(eventType === EVENT_TYPE.HISTORICAL_BLOCKS) {
+            sendMessageInput.QueueUrl = this.historical_events_queue_url;
+            sendMessageInput.createdFromHistoricalQueue = true;
+        }
+        else {
+            throw Error(`UNKNOWN EVENT - FAILED TO WRITE TO SQS WITH eventType ${eventType}`);
+        }
+        
+        return new SendMessageCommand(sendMessageInput);
     }
 }

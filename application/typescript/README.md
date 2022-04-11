@@ -17,3 +17,9 @@ From the typescript root folder:
   <!-- `2) Run npm run compile:windows OR linux`
   `3) Run library:up_windows OR linux` -->
 
+  # Removing Dynamodb stream triggers
+  1) Delete the function first
+  2) Remove the model tables from schema
+  3) Add back new model tables with updated keys / indexes
+  4) Add back function trigger
+

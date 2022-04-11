@@ -591,6 +591,7 @@ export const onCreatePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnCreatePoolSuccessfullBlockEventsProcessed {
     onCreatePoolSuccessfullBlockEventsProcessed {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt
@@ -601,6 +602,7 @@ export const onUpdatePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnUpdatePoolSuccessfullBlockEventsProcessed {
     onUpdatePoolSuccessfullBlockEventsProcessed {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt
@@ -611,6 +613,7 @@ export const onDeletePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
   subscription OnDeletePoolSuccessfullBlockEventsProcessed {
     onDeletePoolSuccessfullBlockEventsProcessed {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt

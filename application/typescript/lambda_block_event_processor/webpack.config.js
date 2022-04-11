@@ -17,6 +17,6 @@ module.exports = {
         path: path.resolve(__dirname, './src'),
         libraryTarget: 'commonjs2',
     },
-    target: 'node'    
-    
+    target: 'node',    
+    mode: 'none'    
 };

@@ -19,7 +19,7 @@ export type AmplifyDependentResourcesAttributes = {
             "Region": "string",
             "LambdaExecutionRole": "string"
         },
-        "EventStreamProcessor": {
+        "eventLogStreamProcessor": {
             "Name": "string",
             "Arn": "string",
             "Region": "string",

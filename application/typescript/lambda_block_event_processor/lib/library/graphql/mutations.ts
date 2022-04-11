@@ -668,6 +668,7 @@ export const createPoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
       condition: $condition
     ) {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt
@@ -684,6 +685,7 @@ export const updatePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
       condition: $condition
     ) {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt
@@ -700,6 +702,7 @@ export const deletePoolSuccessfullBlockEventsProcessed = /* GraphQL */ `
       condition: $condition
     ) {
       id
+      positionField
       lambdaProcessorDecisionCheckForNextBlocknumber
       createdAt
       updatedAt

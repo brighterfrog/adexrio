@@ -27,7 +27,7 @@
         },
         "addBlocktickerEventToSQS": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/addBlocktickerEventToSQS-69487a6a797865305748-build.zip",
+          "s3Key": "amplify-builds/addBlocktickerEventToSQS-32716c48366350796f45-build.zip",
           "blockLookupTableIdKey": "0",
           "blockEventQueueName": "block_events",
           "historicalEventQueueName": "historical_events"
@@ -36,9 +36,9 @@
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
           "s3Key": "amplify-builds/EventLogStreamProcessor-73525a376b6637756564-build.zip"
         },
-        "EventStreamProcessor": {
+        "eventLogStreamProcessor": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/EventStreamProcessor-6b6c5575335257566c67-build.zip"
+          "s3Key": "amplify-builds/eventLogStreamProcessor-5a5a4a494b3268427446-build.zip"
         }
       }
     }

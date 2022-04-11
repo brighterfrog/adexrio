@@ -23,20 +23,7 @@ export class BlockChainService {
 
     contractWrappedEvents: ContractEvent[] = [];
 
-    constructor(private walletSecretDetails: WalletSecretDetails) {
-      
-        // const Web3 = require("web3");
-        // const web3 = thorify(new Web3(), process.env.VECHAIN_API_NODE);
-
-        // this.contractInstance = new web3.eth.Contract(
-        //     RollItVetMultiPlayerGameDefinition.abi,
-        //     this.getContractAddressForRollIt()
-        // );
-
-        // console.log(this.contractInstance);
-
-        // this.eventListener = new BlockchainEventListener(this.contractInstance);
-        
+    constructor(private walletSecretDetails: WalletSecretDetails) {                  
         this.walletService = new BlockchainWalletService(this.walletSecretDetails);
         this.contractWrappedEvents = this.getAndBuildEventsFromContract();
     }
@@ -65,8 +52,13 @@ export class BlockChainService {
    
 
     getFilterForEvent(request: GetFilterForEventRequest): Connex.Thor.Filter<'event', Connex.Thor.Account.WithDecoded>  {
+
+        console.log('getFilterForEvent', request);
+
         const account = this.getContractAddressForRollIt();
-        const eventToFilterOn = this.getSingleContractEventForName(request.eventName, this.contractWrappedEvents);
+        const eventToFilterOn = this.getSingleContractEventForName(request.eventName, this.contractWrappedEvents);   
+        
+        console.log('account and eventToFilterOn', account, eventToFilterOn);
 
         if (!eventToFilterOn) {
             throw Error(`Cant find ${request.eventName}`);
@@ -166,14 +158,24 @@ export class BlockChainService {
 
     private getContractAddressForRollIt(): string { 
         
-        if(process.env.NODE_ENV.trim() === 'prod') {
-          return RollItDeployedProductionContractAddress.address;
-        }else if (process.env.NODE_ENV.trim() === 'test') {
-          return RollItDeployedTestContractAddress.address;
-        }
-        else {
-         return RollItDeployedDevelopmentContractAddress.address;
-        }                      
+        switch (process.env.NODE_ENV) {
+          case 'dev':
+          case 'development':
+              console.log('case development', RollItDeployedDevelopmentContractAddress.address);
+              return RollItDeployedDevelopmentContractAddress.address;
+              break;
+          case 'test':
+              console.log('case test', RollItDeployedTestContractAddress.address);
+              return RollItDeployedTestContractAddress.address;
+              break;
+          case 'prod':
+          case 'production':
+              console.log('case production', RollItDeployedProductionContractAddress.address);
+              return RollItDeployedProductionContractAddress.address;
+              break;
+
+          default: throw Error(`getContractAddressForRollIt not found for environment ${process.env.NODE_ENV}`);
+      }
     }
 
     private getSingleContractEventForName(eventName: string, wrappedEvents: ContractEvent[]): ContractEvent | undefined {
