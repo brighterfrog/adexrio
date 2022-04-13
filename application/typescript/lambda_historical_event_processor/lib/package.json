@@ -11,7 +11,7 @@
     "local:test": "NODE_ENV=test ts-node-dev src/index.ts --unhandled-rejections=strict",
     "local:prod": "NODE_ENV=prod ts-node-dev src/index.ts --unhandled-rejections=strict",
     "test": "NODE_ENV=dev mocha --exit --timeout 0 -r ts-node/register tests/**/*.spec.ts",
-    "test:file": "NODE_ENV=prod mocha --exit --timeout 0 -r ts-node/register tests/**/dynamodb*.spec.ts",
+    "test:file": "NODE_ENV=prod mocha --exit --timeout 0 -r ts-node/register tests/**/orche*.spec.ts",
     "lint": "eslint ./src",
     "lint:fix": "eslint ./src --fix"
   },

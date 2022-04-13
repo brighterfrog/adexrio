@@ -71,7 +71,7 @@ describe('can execute sequential events',
                 steps: [
                     {
                         sequential: [EVENTS.GameCreatedEvent],
-                        parallel: []
+                        // parallel: []
                     }
                 ]
             };

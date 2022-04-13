@@ -28,7 +28,7 @@ export interface BlockchainEventResult {
 
 export interface DynamodbEventProcessingStep {
   sequential: EVENTS[];
-  parallel: EVENTS[];
+  // parallel: EVENTS[];
 }
 
 export interface DynamodbEventProcessingList {

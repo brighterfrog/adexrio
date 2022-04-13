@@ -126,7 +126,7 @@ describe('can query the last block table with amplify api graphql',
 
             const graphql = new GraphQLService();
             try{
-                const result = await graphql.getCreatePoolEventLogByTxId("0");
+                const result = await graphql.getCreatePoolEventLogByTxId("0x54e7f3d470d73fb659cd9b22301894322ebb87120f3994e592a32f460a830852");
                 console.log('test returned result', result);     
             }
             catch(err) {

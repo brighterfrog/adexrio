@@ -48,7 +48,7 @@ resource "aws_lambda_function" "lambda" {
   timeout          = var.lambda_timeout_in_seconds
   architectures    = ["arm64"]
   description      = var.lambda_description
-  memory_size      = 256
+  memory_size      = 384
 
   environment {
     variables = var.environment_variables
