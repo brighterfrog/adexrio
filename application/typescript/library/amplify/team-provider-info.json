@@ -38,7 +38,7 @@
         },
         "eventLogStreamProcessor": {
           "deploymentBucketName": "amplify-adexr-dev-145601-deployment",
-          "s3Key": "amplify-builds/eventLogStreamProcessor-79514d33667143796877-build.zip"
+          "s3Key": "amplify-builds/eventLogStreamProcessor-584e6739586b7a2b436f-build.zip"
         }
       }
     }

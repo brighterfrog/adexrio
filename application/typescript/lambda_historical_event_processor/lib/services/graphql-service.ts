@@ -324,7 +324,7 @@ export class GraphQLService {
 
 
     async getPoolLastBlockEventsProcessed(): Promise<PoolSuccessfullBlockEventsProcessed> {
-        console.log('getPoolLastBlockEventsProcessed 2');
+        console.log('getPoolLastBlockEventsProcessed');
 
         try {
             const graphqlResult = await API.graphql(graphqlOperation(poolSuccessfullBlockEventsProcessedByPositionFieldIndex,
@@ -352,7 +352,7 @@ export class GraphQLService {
             const existingEntry = await this.getPoolLastBlockEventsProcessed();
 
             if (!existingEntry) {
-                console.log('no existing entry found, adding initial');
+                console.log('no existing entry found');
                 const result = await API.graphql(graphqlOperation(createPoolSuccessfullBlockEventsProcessed, {
                     input: {
                         positionField: this.poolSuccessfullBlockEventsProcessedPositionFieldIndex,

@@ -63,12 +63,12 @@ export class Orchestrator {
 
         this.eventMap = new Map([
             ['CreatePoolEventLog', self.createPoolService as IEventLogProcessor],
-            ['PlayerJoinedPool', self.createPlayerJoinedPoolService as IEventLogProcessor],
-            ['PlayerLeftPool', self.createPlayerLeftPoolService as IEventLogProcessor],
-            ['PoolCompleted', self.createPoolCompletedService as IEventLogProcessor]
+            ['PlayerJoinedPoolEventLog', self.createPlayerJoinedPoolService as IEventLogProcessor],
+            ['PlayerLeftPoolEventLog', self.createPlayerLeftPoolService as IEventLogProcessor],
+            ['PoolCompletedEventLog', self.createPoolCompletedService as IEventLogProcessor]
         ]);
     }
-    async handleEventRecord(eventRecord) {
+    async handleEventRecord(eventRecord): Promise<void> {
         const self = this;
         const service = self.eventMap.get(self._getTableNameFromArn(eventRecord.eventSourceARN));
         console.log('orchestrator handleEventRecord self.eventMap.get service', service);

@@ -95,48 +95,51 @@ before(async () => {
 //         });
 // });
 
-// describe('Can retrieve all pool events',
-//     () => {
-//         it('should return true', async () => {
+describe('Can retrieve all pool events',
+    () => {
+        it('should return true', async () => {
  
-//             const events = await blockchainEventProcessorService.getAllEvents([
-//                 {
-//                     name: EVENTS.GameCreatedEvent,
-//                     result: null
-//                 },
-//                 {
-//                     name: EVENTS.PlayerJoinedGameEvent,
-//                     result: null
-//                 },
-//                 {
-//                     name: EVENTS.PlayerLeftGameEvent,
-//                     result: null
-//                 },
-//                 {
-//                     name: EVENTS.GameCompletedEvent,
-//                     result: null
-//                 },
-//                 {
-//                     name: EVENTS.GameAwaitingLotteryEvent,
-//                     result: null
-//                 }
-//             ]);
+            const events = await blockchainEventProcessorService.getAllEventsStartingAtBlocknumber([
+                {
+                    name: EVENTS.GameCreatedEvent,
+                    result: null
+                },
+                {
+                    name: EVENTS.PlayerJoinedGameEvent,
+                    result: null
+                },
+                {
+                    name: EVENTS.PlayerLeftGameEvent,
+                    result: null
+                },
+                {
+                    name: EVENTS.GameCompletedEvent,
+                    result: null
+                },
+                {
+                    name: EVENTS.GameAwaitingLotteryEvent,
+                    result: null
+                }
+            ],
+            0,
+            blockchainEventProcessorService.getCurrentHeadBlockNumber()
+            );
 
 
-//             console.log('getAllEvents array length', events.length);
+            console.log('getAllEvents array length', events.length);
     
-//             events.forEach( (item)=> {
-//                   console.log('Array with results', { 
-//                       name: item.name,
-//                       count: item.result.length
-//                   });                  
-//             });
+            events.forEach( (item)=> {
+                  console.log('Array with results', { 
+                      name: item.name,
+                      count: item.result.length
+                  });                  
+            });
                             
 
-//             expect(events.length).equals(5); 
+            expect(events.length).equals(5); 
 
-//         });
-//     });
+        });
+    });
 
 // describe('Can retrieve a specific type of events by name filter',
 //     () => {

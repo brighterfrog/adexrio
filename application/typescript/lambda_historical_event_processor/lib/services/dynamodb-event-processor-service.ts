@@ -21,20 +21,14 @@ export class EventHandlerProcessMapper {
             [EVENTS.GameAwaitingLotteryEvent, this.gameAwaitingLotteryEvent]
         ]);
 
-        // this.eventProcessingStepsOrder = {
-        //     steps: [
-        //         {
-        //             sequential: [EVENTS.GameAwaitingLotteryEvent, EVENTS.GameCreatedEvent, EVENTS.PlayerJoinedGameEvent, EVENTS.PlayerLeftGameEvent, EVENTS.GameCompletedEvent],                    
-        //         }
-        //     ]
-        // };
         this.eventProcessingStepsOrder = {
             steps: [
                 {
-                    sequential: [EVENTS.GameCompletedEvent],                    
+                    sequential: [EVENTS.GameAwaitingLotteryEvent, EVENTS.GameCreatedEvent, EVENTS.PlayerJoinedGameEvent, EVENTS.PlayerLeftGameEvent, EVENTS.GameCompletedEvent],                    
                 }
             ]
         };
+
     }
 
     getHandlerForEventType(eventType: EVENTS): Function {
