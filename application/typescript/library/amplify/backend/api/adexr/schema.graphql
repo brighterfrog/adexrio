@@ -211,8 +211,7 @@ type PoolCompletedEventLog @model @searchable {
   metaClauseIndex: Int!
   decodedWinningPayout: String!
   decodedGameId: Int!
-  decodedPlayer: String!
-  decodedStatus: String!
+  decodedPlayer: String!  
   decodedAuditRecordDrawId: String!
   decodedType: String!
   decodedDateTime: String!

@@ -660,7 +660,6 @@ export const searchPoolCompletedEventLogs = /* GraphQL */ `
         decodedWinningPayout
         decodedGameId
         decodedPlayer
-        decodedStatus
         decodedAuditRecordDrawId
         decodedType
         decodedDateTime
@@ -1400,7 +1399,6 @@ export const getPoolCompletedEventLog = /* GraphQL */ `
       decodedWinningPayout
       decodedGameId
       decodedPlayer
-      decodedStatus
       decodedAuditRecordDrawId
       decodedType
       decodedDateTime
@@ -1433,7 +1431,6 @@ export const listPoolCompletedEventLogs = /* GraphQL */ `
         decodedWinningPayout
         decodedGameId
         decodedPlayer
-        decodedStatus
         decodedAuditRecordDrawId
         decodedType
         decodedDateTime
@@ -1639,7 +1636,6 @@ export const getPoolCompletedEventLogbyTxId = /* GraphQL */ `
         decodedWinningPayout
         decodedGameId
         decodedPlayer
-        decodedStatus
         decodedAuditRecordDrawId
         decodedType
         decodedDateTime

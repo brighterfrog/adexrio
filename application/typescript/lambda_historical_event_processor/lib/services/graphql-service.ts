@@ -20,6 +20,7 @@ import {
     CreateCreatePoolEventLogInput,
     CreatePlayerJoinedPoolEventLogInput,
     CreatePoolAwaitingExecutionEventLogMutationVariables,
+    CreatePoolCompletedEventLogInput,
     //CreateEventLogMetaInput,
     //CreateEventLogMetaMutation,
     CreatePoolEventLog,
@@ -269,26 +270,29 @@ export class GraphQLService {
     }
     async createPoolCompletedEventLog(rawThorEvent: Connex.Thor.Filter.Row<"event", Connex.Thor.Account.WithDecoded>): Promise<PoolCompletedEventLog> {
         try {
-            const graphqlResult = await API.graphql(graphqlOperation(createPoolCompletedEventLog, {
-                input: {
-                    txID: rawThorEvent.meta.txID,
-                    raw: JSON.stringify(rawThorEvent),
-                    metaBlockID: rawThorEvent.meta.blockID,
-                    metaBlockNumber: rawThorEvent.meta.blockNumber,
-                    metaBlockTimestamp: rawThorEvent.meta.blockTimestamp,
-                    metaTxOrigin: rawThorEvent.meta.txOrigin,
-                    metaClauseIndex: rawThorEvent.meta.clauseIndex,
-                    decodedGameId: rawThorEvent.decoded.gameId,
-                    decodedPlayer: rawThorEvent.decoded.player,
-                    decodedDateTime: rawThorEvent.decoded.dateTime,
-                    decodedWinningPayout: rawThorEvent.decoded.winningPayout,
-                    decodedStatus: rawThorEvent.decoded.status,
-                    decodedAuditRecordDrawId: rawThorEvent.decoded.auditRecordDrawId,
-                    decodedType: rawThorEvent.decoded?.type ?? 'NA',
-                    poolJsonData: null
+            const createdPoolCompletedEventLogInput = {
+                txID: rawThorEvent.meta.txID,
+                raw: JSON.stringify(rawThorEvent),
+                metaBlockID: rawThorEvent.meta.blockID,
+                metaBlockNumber: rawThorEvent.meta.blockNumber,
+                metaBlockTimestamp: rawThorEvent.meta.blockTimestamp,
+                metaTxOrigin: rawThorEvent.meta.txOrigin,
+                metaClauseIndex: rawThorEvent.meta.clauseIndex,
+                decodedGameId: rawThorEvent.decoded.gameId,
+                decodedPlayer: rawThorEvent.decoded.player,
+                decodedDateTime: rawThorEvent.decoded.dateTime,
+                decodedWinningPayout: rawThorEvent.decoded.winningPayout,
+                decodedAuditRecordDrawId: rawThorEvent.decoded.auditRecordDrawId,
+                decodedType: rawThorEvent.decoded?.type ?? 'NA',
+                poolJsonData: null
 
-                } as CreatePoolCompletedEventLogMutation
-            }
+            } as CreatePoolCompletedEventLogInput;
+                                
+            console.log('CreatePoolCompletedEventLogInput', createdPoolCompletedEventLogInput);
+
+            const graphqlResult = await API.graphql(graphqlOperation(createPoolCompletedEventLog, {
+                input: createdPoolCompletedEventLogInput
+                }
             )) as GraphQLResult<CreatePoolCompletedEventLogMutation>;
 
             console.log('createPoolCompletedEventLog', graphqlResult);

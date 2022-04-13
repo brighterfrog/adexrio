@@ -1012,7 +1012,6 @@ export const onCreatePoolCompletedEventLog = /* GraphQL */ `
       decodedWinningPayout
       decodedGameId
       decodedPlayer
-      decodedStatus
       decodedAuditRecordDrawId
       decodedType
       decodedDateTime
@@ -1036,7 +1035,6 @@ export const onUpdatePoolCompletedEventLog = /* GraphQL */ `
       decodedWinningPayout
       decodedGameId
       decodedPlayer
-      decodedStatus
       decodedAuditRecordDrawId
       decodedType
       decodedDateTime
@@ -1060,7 +1058,6 @@ export const onDeletePoolCompletedEventLog = /* GraphQL */ `
       decodedWinningPayout
       decodedGameId
       decodedPlayer
-      decodedStatus
       decodedAuditRecordDrawId
       decodedType
       decodedDateTime
