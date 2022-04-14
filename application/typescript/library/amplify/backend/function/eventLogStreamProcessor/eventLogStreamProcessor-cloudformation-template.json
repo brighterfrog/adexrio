@@ -23,6 +23,30 @@
     "apiadexrGraphQLAPIEndpointOutput": {
       "Type": "String",
       "Default": "apiadexrGraphQLAPIEndpointOutput"
+    },
+    "devNodeEnv": {
+      "Type": "String",
+      "Default": "dev"
+    },
+    "devVechainApiNode": {
+      "Type": "String",
+      "Default": "https://vethor-node-test.vechaindev.com"
+    },
+    "testNodeEnv": {
+      "Type": "String",
+      "Default": "test"
+    },
+    "testVechainApiNode": {
+      "Type": "String",
+      "Default": "https://vethor-node-test.vechaindev.com"
+    },
+    "prodNodeEnv": {
+      "Type": "String",
+      "Default": "prod"
+    },
+    "prodVechainApiNode": {
+      "Type": "String",
+      "Default": "https://vethor-node.vechain.com"
     }
   },
   "Conditions": {
@@ -32,6 +56,30 @@
           "Ref": "env"
         },
         "NONE"
+      ]
+    },
+    "IsDev": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "dev"
+      ]
+    },
+    "IsTest": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "test"
+      ]
+    },
+    "IsProd": {
+      "Fn::Equals": [
+        {
+          "Ref": "env"
+        },
+        "prod"
       ]
     }
   },
@@ -77,6 +125,56 @@
             },
             "REGION": {
               "Ref": "AWS::Region"
+            },
+            "NODE_ENV": {
+              "Fn::If": [
+                "IsDev",
+                {
+                  "Ref": "prodNodeEnv"
+                },
+                {
+                  "Fn::If": [
+                    "IsTest",
+                    {
+                      "Ref": "testNodeEnv"
+                    },
+                    {
+                      "Fn::If": [
+                        "IsProd",
+                        {
+                          "Ref": "prodNodeEnv"
+                        },
+                        "NONE"
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            "VECHAIN_API_NODE": {
+              "Fn::If": [
+                "IsDev",
+                {
+                  "Ref": "prodVechainApiNode"
+                },
+                {
+                  "Fn::If": [
+                    "IsTest",
+                    {
+                      "Ref": "testVechainApiNode"
+                    },
+                    {
+                      "Fn::If": [
+                        "IsProd",
+                        {
+                          "Ref": "prodVechainApiNode"
+                        },
+                        "NONE"
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           }
         },
@@ -88,7 +186,8 @@
         },
         "Runtime": "nodejs14.x",
         "Layers": [],
-        "Timeout": 25
+        "Timeout": 25,
+        "MemorySize": 384
       }
     },
     "LambdaExecutionRole": {

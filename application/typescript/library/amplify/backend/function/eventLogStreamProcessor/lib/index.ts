@@ -21,6 +21,7 @@ async function lambdaHandler(event, context) {
     const secret = JSON.parse(secretsData.SecretString);
 
     const legacyBlockchainService = new BlockChainService(secret);
+    legacyBlockchainService.initializeWallet();
 
     const orchestrator = new Orchestrator(
       userWalletService, 

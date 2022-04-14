@@ -192,15 +192,15 @@ before(async () => {
 //     });
 // });
 
-//  describe('can delete test block from the block table',
-//      () => {
-//          it('should return true', async () => {            
+ describe('can delete test block from the block table',
+     () => {
+         it('should return true', async () => {            
 
-//             const graphql = new GraphQLService();
-//             const result = await graphql.deletePoolSuccessfullBlockEventsProcessed();
-//             console.log(result);
-            
-//              //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
-//          });
-//  });
+            const graphql = new GraphQLService();
+            const result = await graphql.deletePoolSuccessfullBlockEventsProcessed();            
+            console.log(result);            
+                        
+             //expect(blockchainEventProcessorService).is.not.null.to.equal(true);
+         });
+ });
 

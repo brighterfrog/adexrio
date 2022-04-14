@@ -31,7 +31,7 @@ export class Orchestrator {
     ) {
         const self = this;
 
-        this.createPoolService = new CreatePoolService(
+        self.createPoolService = new CreatePoolService(
             userWalletService,
             apiPoolAttributesService,
             poolPlayerService,
@@ -39,21 +39,21 @@ export class Orchestrator {
             lotteryPoolAttributesService,
             legacyBlockchainService);
 
-        this.createPlayerJoinedPoolService = new PlayerJoinedPoolService(
+            self.createPlayerJoinedPoolService = new PlayerJoinedPoolService(
             userWalletService,
             apiPoolAttributesService,
             poolPlayerService,
             poolService,
             legacyBlockchainService);
 
-        this.createPlayerLeftPoolService = new PlayerLeftPoolService(
+            self.createPlayerLeftPoolService = new PlayerLeftPoolService(
             userWalletService,
             apiPoolAttributesService,
             poolPlayerService,
             poolService,
             legacyBlockchainService);
 
-        this.createPoolCompletedService = new PoolCompletedService(
+            self.createPoolCompletedService = new PoolCompletedService(
             userWalletService,
             apiPoolAttributesService,
             poolPlayerService,
@@ -61,7 +61,7 @@ export class Orchestrator {
             lotteryPoolAttributesService,
             legacyBlockchainService);
 
-        this.eventMap = new Map([
+            self.eventMap = new Map([
             ['CreatePoolEventLog', self.createPoolService as IEventLogProcessor],
             ['PlayerJoinedPoolEventLog', self.createPlayerJoinedPoolService as IEventLogProcessor],
             ['PlayerLeftPoolEventLog', self.createPlayerLeftPoolService as IEventLogProcessor],
