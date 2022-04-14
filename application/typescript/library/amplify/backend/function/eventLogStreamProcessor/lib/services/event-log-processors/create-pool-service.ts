@@ -1,17 +1,17 @@
 'use strict';
 
-import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, GraphQLResult } from '../../library/amplify-bootstrapper/bootstrap-amplify';
 
-import { CreateApiPoolAttributesInput, CreateLotteryPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, poolType, SearchablePoolFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
-import { createPool, createUserWallet } from '../../graphql/mutations';
+import { CreateApiPoolAttributesInput, CreateLotteryPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, poolType, SearchablePoolFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../library/codegen/API';
+import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../library/graphql/queries';
+import { createPool, createUserWallet } from '../../library/graphql/mutations';
 
 import { ApiPoolAttributesService } from '../core/api-pool-attributes-service';
 import { PoolPlayerService } from '../core/pool-player-service';
 import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
-import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
-import { DecodedGameEntity } from '../legacy_contract_v1_helpers/backend/models/all-models';
+import { BlockChainService } from '../../library/backend/blockchain/blockchain-service';
+import { DecodedGameEntity } from '../../library/backend/models/all-models';
 import { LotteryPoolAttributesService } from '../core/lottery-pool-attributes-service';
 
 export class CreatePoolService implements IEventLogProcessor {
@@ -178,8 +178,7 @@ export class CreatePoolService implements IEventLogProcessor {
             poolEntryFee: blockchainGameDetails.gcsGameBetSize,
             poolTotal: blockchainGameDetails.gameTotalWagers,
             poolWinningPayout: '0',
-            allowPlayerLeave: true,
-            apiRequestHash: 'NA_V1_CONTRACT',
+            allowPlayerLeave: true,            
             poolPoolCreatorId: poolCreatorUserWallet.id
         } as CreatePoolInput;
 

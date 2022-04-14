@@ -1,10 +1,10 @@
 import crypto from 'crypto';
 
-import { API, graphqlOperation, GraphQLResult } from './../../amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, GraphQLResult } from '../../library/amplify-bootstrapper/bootstrap-amplify';
 
-import { CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, SearchPoolsQuery, UserWallet, SearchablePoolFilterInput, SearchablePoolConnection, UpdatePoolInput, UpdatePoolMutation } from '../../codegen/API';
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchPools } from '../../graphql/queries';
-import { createPool, createUserWallet, updatePool } from '../../graphql/mutations';
+import { CreatePoolInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, SearchPoolsQuery, UserWallet, SearchablePoolFilterInput, SearchablePoolConnection, UpdatePoolInput, UpdatePoolMutation } from '../../library/codegen/API';
+import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchPools } from '../../library/graphql/queries';
+import { createPool, createUserWallet, updatePool } from '../../library/graphql/mutations';
 
 export class PoolService {
 

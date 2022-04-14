@@ -1,17 +1,17 @@
 'use strict';
 
-import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, GraphQLResult } from '../../library/amplify-bootstrapper/bootstrap-amplify';
 
-import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, PlayerStatus, Pool, PoolCategory, poolType, SearchablePoolFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../codegen/API';
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../graphql/queries';
-import { createPool, createUserWallet } from '../../graphql/mutations';
+import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, PlayerStatus, Pool, PoolCategory, poolType, SearchablePoolFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet } from '../../library/codegen/API';
+import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchUserWallets } from '../../library/graphql/queries';
+import { createPool, createUserWallet } from '../../library/graphql/mutations';
 
 import { ApiPoolAttributesService } from '../core/api-pool-attributes-service';
 import { PoolPlayerService } from '../core/pool-player-service';
 import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
-import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
-import { DecodedGameEntity } from '../legacy_contract_v1_helpers/backend/models/all-models';
+import { BlockChainService } from '../../library/backend/blockchain/blockchain-service';
+import { DecodedGameEntity } from '../../library/backend/models/all-models';
 
 export class PlayerJoinedPoolService implements IEventLogProcessor {
 

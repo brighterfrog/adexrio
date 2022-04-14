@@ -1,16 +1,17 @@
 #!/usr/bin/env bash
-mkdir -p ../lib/codegen
-mkdir -p ../lib/graphql
-mkdir -p ../lib/services/legacy_contract_v1_helpers/backend
-mkdir -p ../lib/services/legacy_contract_v1_helpers/contract-builds
-
-cp -r ../../../../../../library/src/codegen ../lib/
-cp -r ../../../../../../library/src/graphql ../lib/
-
-cp -r ../../../../../../library/src/aws-exports.js ../lib/
-cp -r ../../../../../../library/src/amplify-bootstrapper ../lib
-
-cp -r ../../../../../../library/src/backend ../lib/services/legacy_contract_v1_helpers
-cp -r ../../../../../../library/src/contract-builds ../lib/services/legacy_contract_v1_helpers
-
 rm -rf ../src/*
+rm -rf ../dist/*
+
+mkdir -p ../lib/library/codegen
+mkdir -p ../lib/library/graphql
+
+\cp -Rf ../../../../../src/aws-services ../lib/library
+
+\cp -Rf ../../../../../src/codegen ../lib/library
+\cp -Rf ../../../../../src/graphql ../lib/library
+
+\cp -Rf ../../../../../src/aws-exports.js ../lib/library
+\cp -Rf ../../../../../src/amplify-bootstrapper ../lib/library
+
+\cp -Rf ../../../../../src/backend ../lib/library
+\cp -Rf ../../../../../src/contract-builds ../lib/library

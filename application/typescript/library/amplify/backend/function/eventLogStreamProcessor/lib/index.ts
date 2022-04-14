@@ -2,13 +2,19 @@ import { ApiPoolAttributesService } from "./services/core/api-pool-attributes-se
 import { PoolPlayerService } from "./services/core/pool-player-service";
 import { PoolService } from "./services/core/pool-service";
 import { UserWalletService } from "./services/core/user-wallet-service";
-import { BlockChainService } from "./services/legacy_contract_v1_helpers/backend/blockchain/blockchain-service";
-import { SecretsManager } from "./services/legacy_contract_v1_helpers/backend/aws-services/secrets-manager";
+import { BlockChainService } from "./library/backend/blockchain/blockchain-service";
+import { SecretsManager } from "./library/backend/aws-services/secrets-manager";
 import { Orchestrator } from "./services/orchestrator";
 import { LotteryPoolAttributesService } from "./services/core/lottery-pool-attributes-service";
 
 async function lambdaHandler(event, context) {  
-    console.log(JSON.stringify(event, null, 2));
+    console.log(JSON.stringify(event, null, 4));
+
+    console.log(process.env.NODE_ENV);
+    console.log(process.env.VECHAIN_API_NODE);
+    console.log(process.env.RECORD_TYPE);
+    console.log(process.env.RANDOM_ORG_API_ENDPOINT);
+    console.log(process.env.DEBUG_ON);  
     
     const userWalletService = new UserWalletService();
     const apiPoolAttributesService = new ApiPoolAttributesService();
@@ -21,7 +27,7 @@ async function lambdaHandler(event, context) {
     const secret = JSON.parse(secretsData.SecretString);
 
     const legacyBlockchainService = new BlockChainService(secret);
-    legacyBlockchainService.initializeWallet();
+    await legacyBlockchainService.initializeWallet();
 
     const orchestrator = new Orchestrator(
       userWalletService, 

@@ -1,12 +1,12 @@
 import 'jest';
-import { SearchablePoolFilterInput } from 'lib/codegen/API';
+import { SearchablePoolFilterInput } from '../../library/codegen/API';
 import { ApiPoolAttributesService } from '../core/api-pool-attributes-service';
 import { LotteryPoolAttributesService } from '../core/lottery-pool-attributes-service';
 import { PoolPlayerService } from '../core/pool-player-service';
 import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
-import { SecretsManager } from '../legacy_contract_v1_helpers/backend/aws-services/secrets-manager';
-import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
+import { SecretsManager } from '../../library//backend/aws-services/secrets-manager';
+import { BlockChainService } from '../../library/backend/blockchain/blockchain-service';
 
 import { Orchestrator } from '../orchestrator';
 
@@ -49,21 +49,21 @@ describe("create pool service tests", () => {
         const testEvent = {
             "Records": [
                 {
-                    "eventID": "99488eb1efdb2f793082980b2df9d36d",
+                    "eventID": "e0b7cae185d96f018cc06f4e11614ce4",
                     "eventName": "INSERT",
                     "eventVersion": "1.1",
                     "eventSource": "aws:dynamodb",
                     "awsRegion": "us-east-1",
                     "dynamodb": {
-                        "ApproximateCreationDateTime": 1645150368,
+                        "ApproximateCreationDateTime": 1649908067,
                         "Keys": {
                             "id": {
-                                "S": "37f77e87-e419-45ce-a472-62aebaa7fb7f"
+                                "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
                             }
                         },
                         "NewImage": {
                             "decodedGameId": {
-                                "N": "429"
+                                "N": "2"
                             },
                             "decodedPlayer": {
                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
@@ -88,20 +88,20 @@ describe("create pool service tests", () => {
                                                 "S": "0x055c5881ecddd2b670014114d0806730877835ac63b0299a9270f81b00bff672"
                                             },
                                             {
-                                                "S": "0x00000000000000000000000000000000000000000000000000000000000001ad"
+                                                "S": "0x0000000000000000000000000000000000000000000000000000000000000002"
                                             },
                                             {
                                                 "S": "0x00000000000000000000000080a14141080f878260340986c7cf6e4a6b2ac504"
                                             },
                                             {
-                                                "S": "0x0000000000000000000000000000000000000000000000000000000061df060e"
+                                                "S": "0x000000000000000000000000000000000000000000000000000000006170b8b6"
                                             }
                                         ]
                                     },
                                     "meta": {
                                         "M": {
                                             "blockID": {
-                                                "S": "0x00aa1d71066e37f7bca5ff00393bfbbda8f82466714f50bf8a83a3c0204f1d58"
+                                                "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
                                             },
                                             "txOrigin": {
                                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
@@ -110,32 +110,32 @@ describe("create pool service tests", () => {
                                                 "N": "0"
                                             },
                                             "blockNumber": {
-                                                "N": "11148657"
+                                                "N": "10426405"
                                             },
                                             "txID": {
-                                                "S": "0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6"
+                                                "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
                                             },
                                             "blockTimestamp": {
-                                                "N": "1642006030"
+                                                "N": "1634777270"
                                             }
                                         }
                                     },
                                     "decoded": {
                                         "M": {
                                             "0": {
-                                                "S": "429"
+                                                "S": "2"
                                             },
                                             "1": {
                                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
                                             },
                                             "2": {
-                                                "S": "1642006030"
+                                                "S": "1634777270"
                                             },
                                             "gameId": {
-                                                "S": "429"
+                                                "S": "2"
                                             },
                                             "dateTime": {
-                                                "S": "1642006030"
+                                                "S": "1634777270"
                                             },
                                             "player": {
                                                 "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
@@ -145,38 +145,38 @@ describe("create pool service tests", () => {
                                 }
                             },
                             "txID": {
-                                "S": "0x31991f6e50d3acc2cde1862303936875b5ab704beccd369104a649988538aea6"
+                                "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
                             },
                             "createdAt": {
-                                "S": "2022-02-18T02:12:47.564Z"
+                                "S": "2022-04-14T03:47:47.131Z"
                             },
                             "metaBlockNumber": {
-                                "N": "11148657"
+                                "N": "10426405"
                             },
                             "decodedDateTime": {
-                                "S": "1642006030"
+                                "S": "1634777270"
                             },
                             "metaBlockTimestamp": {
-                                "N": "1642006030"
+                                "N": "1634777270"
                             },
                             "metaClauseIndex": {
                                 "N": "0"
                             },
                             "id": {
-                                "S": "37f77e87-e419-45ce-a472-62aebaa7fb7f"
+                                "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
                             },
                             "metaBlockID": {
-                                "S": "0x00aa1d71066e37f7bca5ff00393bfbbda8f82466714f50bf8a83a3c0204f1d58"
+                                "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
                             },
                             "updatedAt": {
-                                "S": "2022-02-18T02:12:47.564Z"
+                                "S": "2022-04-14T03:47:47.131Z"
                             }
                         },
-                        "SequenceNumber": "19582300000000046949764648",
-                        "SizeBytes": 1275,
+                        "SequenceNumber": "15376600000000022163615583",
+                        "SizeBytes": 1268,
                         "StreamViewType": "NEW_AND_OLD_IMAGES"
                     },
-                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-02-13T23:15:31.456"
+                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-04-10T18:54:05.834"
                 }
             ]
         }

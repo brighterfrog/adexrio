@@ -1,10 +1,10 @@
 import crypto from 'crypto';
 
-import { API, graphqlOperation, GraphQLResult } from './../../amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, GraphQLResult } from '../../library/amplify-bootstrapper/bootstrap-amplify';
 
-import { CreatePoolPlayerInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet, CreatePoolPlayerMutation, UpdatePoolPlayerInput, UpdatePoolPlayerMutation, SearchPoolPlayersQuery, SearchablePoolPlayerConnection, SearchablePoolPlayerFilterInput, PoolPlayer, CreateLotteryPoolAttributesInput, CreateLotteryPoolAttributesMutation, LotteryPoolAttributes, UpdateLotteryPoolAttributesInput, SearchableLotteryPoolAttributesFilterInput, SearchLotteryPoolAttributesQuery, SearchableLotteryPoolAttributesConnection } from '../../codegen/API';
-import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchLotteryPoolAttributes, searchPoolPlayers, searchUserWallets } from '../../graphql/queries';
-import { createLotteryPoolAttributes, createPool, createPoolPlayer, createUserWallet, updateLotteryPoolAttributes, updatePoolPlayer } from '../../graphql/mutations';
+import { CreatePoolPlayerInput, CreatePoolMutation, CreateUserWalletInput, CreateUserWalletMutation, Pool, PoolCategory, poolType, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UserWallet, CreatePoolPlayerMutation, UpdatePoolPlayerInput, UpdatePoolPlayerMutation, SearchPoolPlayersQuery, SearchablePoolPlayerConnection, SearchablePoolPlayerFilterInput, PoolPlayer, CreateLotteryPoolAttributesInput, CreateLotteryPoolAttributesMutation, LotteryPoolAttributes, UpdateLotteryPoolAttributesInput, SearchableLotteryPoolAttributesFilterInput, SearchLotteryPoolAttributesQuery, SearchableLotteryPoolAttributesConnection } from '../../library/codegen/API';
+import { getCreatePoolEventLog, getPlayerJoinedPoolEventLog, getPlayerLeftPoolEventLog, getPoolAwaitingExecutionEventLog, getPoolCompletedEventLog, getPoolSuccessfullBlockEventsProcessed, searchLotteryPoolAttributes, searchPoolPlayers, searchUserWallets } from '../../library/graphql/queries';
+import { createLotteryPoolAttributes, createPool, createPoolPlayer, createUserWallet, updateLotteryPoolAttributes, updatePoolPlayer } from '../../library/graphql/mutations';
 
  export class LotteryPoolAttributesService {
      

@@ -68,7 +68,7 @@ type PoolPlayer @model @searchable{
 
 type LotteryPoolAttributes @model @searchable {
   id: ID!
-  auditRecordDrawId: String!
+  auditRecordDrawId: String
   isAuditEnabled: Boolean!
   randomOrgUrlForResults: AWSURL
   pool: Pool! @belongsTo

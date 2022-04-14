@@ -1,17 +1,17 @@
 'use strict';
 
-import { API, graphqlOperation, GraphQLResult } from '../../amplify-bootstrapper/bootstrap-amplify';
+import { API, graphqlOperation, GraphQLResult } from '../../library/amplify-bootstrapper/bootstrap-amplify';
 
-import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, PoolPlayer, poolType, SearchableLotteryPoolAttributesFilterInput, SearchablePoolFilterInput, SearchablePoolPlayerFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UpdateLotteryPoolAttributesInput, UserWallet } from '../../codegen/API';
-import { getCreatePoolEventLog } from '../../graphql/queries';
-import { createPool, createUserWallet } from '../../graphql/mutations';
+import { CreateApiPoolAttributesInput, CreatePoolInput, CreatePoolMutation, CreatePoolPlayerInput, CreateUserWalletInput, CreateUserWalletMutation, LotteryPoolAttributes, PlayerStatus, Pool, PoolCategory, PoolPlayer, poolType, SearchableLotteryPoolAttributesFilterInput, SearchablePoolFilterInput, SearchablePoolPlayerFilterInput, SearchableUserWalletFilterInput, SearchUserWalletsQuery, UpdateLotteryPoolAttributesInput, UserWallet } from '../../library/codegen/API';
+import { getCreatePoolEventLog } from '../../library/graphql/queries';
+import { createPool, createUserWallet } from '../../library/graphql/mutations';
 
 import { ApiPoolAttributesService } from '../core/api-pool-attributes-service';
 import { PoolPlayerService } from '../core/pool-player-service';
 import { PoolService } from '../core/pool-service';
 import { UserWalletService } from '../core/user-wallet-service';
-import { BlockChainService } from '../legacy_contract_v1_helpers/backend/blockchain/blockchain-service';
-import { DecodedGameEntity } from '../legacy_contract_v1_helpers/backend/models/all-models';
+import { BlockChainService } from '../../library//backend/blockchain/blockchain-service';
+import { DecodedGameEntity } from '../../library//backend/models/all-models';
 import { LotteryPoolAttributesService } from '../core/lottery-pool-attributes-service';
 
 export class PoolCompletedService implements IEventLogProcessor {

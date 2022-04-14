@@ -337,7 +337,7 @@ export type ApiPoolAttributes = {
 export type LotteryPoolAttributes = {
   __typename: "LotteryPoolAttributes",
   id: string,
-  auditRecordDrawId: string,
+  auditRecordDrawId?: string | null,
   isAuditEnabled: boolean,
   randomOrgUrlForResults?: string | null,
   pool: Pool,
@@ -365,7 +365,7 @@ export type DeletePoolPlayerInput = {
 
 export type CreateLotteryPoolAttributesInput = {
   id?: string | null,
-  auditRecordDrawId: string,
+  auditRecordDrawId?: string | null,
   isAuditEnabled: boolean,
   randomOrgUrlForResults?: string | null,
   lotteryPoolAttributesPoolId: string,
@@ -2651,7 +2651,7 @@ export type CreateLotteryPoolAttributesMutation = {
   createLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -2687,7 +2687,7 @@ export type UpdateLotteryPoolAttributesMutation = {
   updateLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -2723,7 +2723,7 @@ export type DeleteLotteryPoolAttributesMutation = {
   deleteLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -2926,7 +2926,7 @@ export type CreatePoolMutation = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -2992,7 +2992,7 @@ export type UpdatePoolMutation = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -3058,7 +3058,7 @@ export type DeletePoolMutation = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -3836,7 +3836,7 @@ export type SearchLotteryPoolAttributesQuery = {
     items:  Array< {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -4534,7 +4534,7 @@ export type GetLotteryPoolAttributesQuery = {
   getLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -4573,7 +4573,7 @@ export type ListLotteryPoolAttributesQuery = {
     items:  Array< {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -4702,7 +4702,7 @@ export type GetPoolQuery = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -5606,7 +5606,7 @@ export type OnCreateLotteryPoolAttributesSubscription = {
   onCreateLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -5637,7 +5637,7 @@ export type OnUpdateLotteryPoolAttributesSubscription = {
   onUpdateLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -5668,7 +5668,7 @@ export type OnDeleteLotteryPoolAttributesSubscription = {
   onDeleteLotteryPoolAttributes?:  {
     __typename: "LotteryPoolAttributes",
     id: string,
-    auditRecordDrawId: string,
+    auditRecordDrawId?: string | null,
     isAuditEnabled: boolean,
     randomOrgUrlForResults?: string | null,
     pool:  {
@@ -5851,7 +5851,7 @@ export type OnCreatePoolSubscription = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -5912,7 +5912,7 @@ export type OnUpdatePoolSubscription = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
@@ -5973,7 +5973,7 @@ export type OnDeletePoolSubscription = {
     lotteryPoolAttributes?:  {
       __typename: "LotteryPoolAttributes",
       id: string,
-      auditRecordDrawId: string,
+      auditRecordDrawId?: string | null,
       isAuditEnabled: boolean,
       randomOrgUrlForResults?: string | null,
       createdAt: string,
