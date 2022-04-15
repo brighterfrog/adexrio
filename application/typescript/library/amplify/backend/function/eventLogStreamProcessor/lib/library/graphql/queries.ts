@@ -109,7 +109,9 @@ export const searchPoolPlayers = /* GraphQL */ `
     ) {
       items {
         id
+        userWalletId
         status
+        poolId
         createdAt
         updatedAt
         poolPlayersId
@@ -156,6 +158,7 @@ export const searchLotteryPoolAttributes = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId
@@ -779,6 +782,7 @@ export const getPoolPlayer = /* GraphQL */ `
   query GetPoolPlayer($id: ID!) {
     getPoolPlayer(id: $id) {
       id
+      userWalletId
       userWallet {
         id
         wallet
@@ -805,6 +809,7 @@ export const getPoolPlayer = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       poolPlayersId
@@ -821,7 +826,9 @@ export const listPoolPlayers = /* GraphQL */ `
     listPoolPlayers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        userWalletId
         status
+        poolId
         createdAt
         updatedAt
         poolPlayersId
@@ -855,6 +862,7 @@ export const getLotteryPoolAttributes = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       lotteryPoolAttributesPoolId
@@ -877,6 +885,7 @@ export const listLotteryPoolAttributes = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId
@@ -995,6 +1004,7 @@ export const getPool = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId
@@ -1442,6 +1452,133 @@ export const listPoolCompletedEventLogs = /* GraphQL */ `
     }
   }
 `;
+export const getPoolPlayerbyUserWalletIdPoolIdStatusIdIndex = /* GraphQL */ `
+  query GetPoolPlayerbyUserWalletIdPoolIdStatusIdIndex(
+    $userWalletId: String!
+    $poolIdStatus: ModelPoolPlayerByUserWalletIdPoolIdStatusIdCompositeKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPoolPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPoolPlayerbyUserWalletIdPoolIdStatusIdIndex(
+      userWalletId: $userWalletId
+      poolIdStatus: $poolIdStatus
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userWalletId
+        status
+        poolId
+        createdAt
+        updatedAt
+        poolPlayersId
+        poolPlayerUserWalletId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolPlayerbyPoolIdWalletIdIndex = /* GraphQL */ `
+  query GetPoolPlayerbyPoolIdWalletIdIndex(
+    $poolId: String!
+    $userWalletId: ModelStringKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelPoolPlayerFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPoolPlayerbyPoolIdWalletIdIndex(
+      poolId: $poolId
+      userWalletId: $userWalletId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        userWalletId
+        status
+        poolId
+        createdAt
+        updatedAt
+        poolPlayersId
+        poolPlayerUserWalletId
+      }
+      nextToken
+    }
+  }
+`;
+export const getLotteryPoolAttributesByPoolIdIndex = /* GraphQL */ `
+  query GetLotteryPoolAttributesByPoolIdIndex(
+    $poolId: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelLotteryPoolAttributesFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getLotteryPoolAttributesByPoolIdIndex(
+      poolId: $poolId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        auditRecordDrawId
+        isAuditEnabled
+        randomOrgUrlForResults
+        poolId
+        createdAt
+        updatedAt
+        lotteryPoolAttributesPoolId
+      }
+      nextToken
+    }
+  }
+`;
+export const getPoolByPoolIdIndex = /* GraphQL */ `
+  query GetPoolByPoolIdIndex(
+    $poolId: Int!
+    $sortDirection: ModelSortDirection
+    $filter: ModelPoolFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getPoolByPoolIdIndex(
+      poolId: $poolId
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        poolId
+        poolTitle
+        poolCategory
+        poolType
+        poolStatus
+        poolEntryFee
+        poolTotal
+        poolWinningPayout
+        allowPlayerLeave
+        createdAt
+        updatedAt
+        poolPoolCreatorId
+        poolApiPoolAttributesId
+        poolLotteryPoolAttributesId
+      }
+      nextToken
+    }
+  }
+`;
 export const poolSuccessfullBlockEventsProcessedByPositionFieldIndex = /* GraphQL */ `
   query PoolSuccessfullBlockEventsProcessedByPositionFieldIndex(
     $positionField: Int!
@@ -1461,6 +1598,33 @@ export const poolSuccessfullBlockEventsProcessedByPositionFieldIndex = /* GraphQ
         id
         positionField
         lambdaProcessorDecisionCheckForNextBlocknumber
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const userWalletByWalletAddressIndex = /* GraphQL */ `
+  query UserWalletByWalletAddressIndex(
+    $wallet: String!
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserWalletFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    userWalletByWalletAddressIndex(
+      wallet: $wallet
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        wallet
+        nickname
+        chatlogo
         createdAt
         updatedAt
       }

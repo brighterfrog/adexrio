@@ -101,7 +101,7 @@ export class EventHandlerProcessMapper {
         for (const contractRawEvent of eventsToHandle.result) {           
             const existingEntry =  await self.graphqlService.getPlayerLeftPoolEventLogByTxId(contractRawEvent.meta.txID);
             if (existingEntry) {
-                console.log('entry already exists for', existingEntry);
+                console.log('playerLeftGameEvent entry already exists for', existingEntry);
             }
             else {
                 console.log('createPlayerLeftPoolEventLog entry called for', contractRawEvent);
@@ -120,7 +120,7 @@ export class EventHandlerProcessMapper {
                 
             const existingEntry =  await self.graphqlService.getPoolCompletedEventLogByTxId(contractRawEvent.meta.txID);
             if (existingEntry) {
-                console.log('entry already exists for', existingEntry);
+                console.log('gameCompletedEvent entry already exists for', existingEntry);
             }
             else {
                 console.log('createPoolCompletedEventLog entry called for', contractRawEvent);
@@ -136,7 +136,7 @@ export class EventHandlerProcessMapper {
                 
             const existingEntry =  await self.graphqlService.getAwaitingPoolExecutionEventLogByTxId(contractRawEvent.meta.txID);
             if (existingEntry) {
-                console.log('entry already exists for', existingEntry);
+                console.log('gameAwaitingLotteryEvent entry already exists for', existingEntry);
             }
             else {
                 console.log('createAwaitingPoolExecutionEventLog entry called for', contractRawEvent);

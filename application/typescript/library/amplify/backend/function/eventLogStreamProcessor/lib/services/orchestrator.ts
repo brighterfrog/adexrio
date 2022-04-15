@@ -9,6 +9,7 @@ import { LotteryPoolAttributesService } from './core/lottery-pool-attributes-ser
 import { PlayerJoinedPoolService } from './event-log-processors/player-joined-pool-service';
 import { PlayerLeftPoolService } from './event-log-processors/player-left-pool-service';
 import { PoolCompletedService } from './event-log-processors/pool-completed';
+import { IEventLogProcessor } from './event-log-processors/models';
 
 export class Orchestrator {
 

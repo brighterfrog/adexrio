@@ -59,11 +59,13 @@ enum PoolCategory {
   random_winners
 }
 
-type PoolPlayer @model @searchable{
+type PoolPlayer @model @searchable {
   id: ID!
-  userWallet: UserWallet! @hasOne
-  status: PlayerStatus!
-  pool: Pool! @belongsTo  
+  userWalletId: String! @index(name: "byUserWalletIdPoolIdStatusId", sortKeyFields: ["poolId", "status"], queryField: "getPoolPlayerbyUserWalletIdPoolIdStatusIdIndex")
+  userWallet: UserWallet! @hasOne 
+  status: PlayerStatus!  
+  pool: Pool! @belongsTo 
+  poolId: String! @index(name: "byPoolIdWalletId", sortKeyFields: ["userWalletId"], queryField: "getPoolPlayerbyPoolIdWalletIdIndex")
 }
 
 type LotteryPoolAttributes @model @searchable {
@@ -71,7 +73,8 @@ type LotteryPoolAttributes @model @searchable {
   auditRecordDrawId: String
   isAuditEnabled: Boolean!
   randomOrgUrlForResults: AWSURL
-  pool: Pool! @belongsTo
+  pool: Pool! @belongsTo 
+  poolId: String! @index(name: "byPoolId", queryField: "getLotteryPoolAttributesByPoolIdIndex")
 }
 
 type ApiPoolAttributes @model @searchable {
@@ -90,7 +93,7 @@ type ApiPoolAttributes @model @searchable {
 }
 type Pool @model @searchable {
   id: ID!
-  poolId: Int!
+  poolId: Int! @index(name: "byPoolId", queryField: "getPoolByPoolIdIndex")
   poolTitle: String!
   poolCategory: PoolCategory!
   poolCreator: UserWallet! @hasOne
@@ -122,7 +125,7 @@ type PoolSummaries @model @searchable{
 
 type UserWallet @model @searchable {
   id: ID!
-  wallet: String! 
+  wallet: String!  @index(name: "byWalletAddress", queryField: "userWalletByWalletAddressIndex")
   nickname: String
   chatlogo: AWSURL
   brands: [Brand] @hasMany

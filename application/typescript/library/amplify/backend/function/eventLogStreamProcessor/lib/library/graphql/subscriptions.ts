@@ -108,6 +108,7 @@ export const onCreatePoolPlayer = /* GraphQL */ `
   subscription OnCreatePoolPlayer {
     onCreatePoolPlayer {
       id
+      userWalletId
       userWallet {
         id
         wallet
@@ -134,6 +135,7 @@ export const onCreatePoolPlayer = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       poolPlayersId
@@ -145,6 +147,7 @@ export const onUpdatePoolPlayer = /* GraphQL */ `
   subscription OnUpdatePoolPlayer {
     onUpdatePoolPlayer {
       id
+      userWalletId
       userWallet {
         id
         wallet
@@ -171,6 +174,7 @@ export const onUpdatePoolPlayer = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       poolPlayersId
@@ -182,6 +186,7 @@ export const onDeletePoolPlayer = /* GraphQL */ `
   subscription OnDeletePoolPlayer {
     onDeletePoolPlayer {
       id
+      userWalletId
       userWallet {
         id
         wallet
@@ -208,6 +213,7 @@ export const onDeletePoolPlayer = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       poolPlayersId
@@ -239,6 +245,7 @@ export const onCreateLotteryPoolAttributes = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       lotteryPoolAttributesPoolId
@@ -269,6 +276,7 @@ export const onUpdateLotteryPoolAttributes = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       lotteryPoolAttributesPoolId
@@ -299,6 +307,7 @@ export const onDeleteLotteryPoolAttributes = /* GraphQL */ `
         poolApiPoolAttributesId
         poolLotteryPoolAttributesId
       }
+      poolId
       createdAt
       updatedAt
       lotteryPoolAttributesPoolId
@@ -458,6 +467,7 @@ export const onCreatePool = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId
@@ -515,6 +525,7 @@ export const onUpdatePool = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId
@@ -572,6 +583,7 @@ export const onDeletePool = /* GraphQL */ `
         auditRecordDrawId
         isAuditEnabled
         randomOrgUrlForResults
+        poolId
         createdAt
         updatedAt
         lotteryPoolAttributesPoolId

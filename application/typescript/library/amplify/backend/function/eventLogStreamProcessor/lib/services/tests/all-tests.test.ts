@@ -46,33 +46,168 @@ describe("create pool service tests", () => {
         process.env.RANDOM_ORG_API_ENDPOINT="https://api.random.org/json-rpc/2/invoke"
         process.env.DEBUG_ON="false";
 
+        // const testEvent = {
+        //     "Records": [
+        //         {
+        //             "eventID": "e0b7cae185d96f018cc06f4e11614ce4",
+        //             "eventName": "INSERT",
+        //             "eventVersion": "1.1",
+        //             "eventSource": "aws:dynamodb",
+        //             "awsRegion": "us-east-1",
+        //             "dynamodb": {
+        //                 "ApproximateCreationDateTime": 1649908067,
+        //                 "Keys": {
+        //                     "id": {
+        //                         "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
+        //                     }
+        //                 },
+        //                 "NewImage": {
+        //                     "decodedGameId": {
+        //                         "N": "2"
+        //                     },
+        //                     "decodedPlayer": {
+        //                         "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+        //                     },
+        //                     "__typename": {
+        //                         "S": "CreatePoolEventLog"
+        //                     },
+        //                     "metaTxOrigin": {
+        //                         "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+        //                     },
+        //                     "raw": {
+        //                         "M": {
+        //                             "address": {
+        //                                 "S": "0x8d99795e74fdcbc1fed412874d04d3ac85808e2e"
+        //                             },
+        //                             "data": {
+        //                                 "S": "0x"
+        //                             },
+        //                             "topics": {
+        //                                 "L": [
+        //                                     {
+        //                                         "S": "0x055c5881ecddd2b670014114d0806730877835ac63b0299a9270f81b00bff672"
+        //                                     },
+        //                                     {
+        //                                         "S": "0x0000000000000000000000000000000000000000000000000000000000000002"
+        //                                     },
+        //                                     {
+        //                                         "S": "0x00000000000000000000000080a14141080f878260340986c7cf6e4a6b2ac504"
+        //                                     },
+        //                                     {
+        //                                         "S": "0x000000000000000000000000000000000000000000000000000000006170b8b6"
+        //                                     }
+        //                                 ]
+        //                             },
+        //                             "meta": {
+        //                                 "M": {
+        //                                     "blockID": {
+        //                                         "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
+        //                                     },
+        //                                     "txOrigin": {
+        //                                         "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+        //                                     },
+        //                                     "clauseIndex": {
+        //                                         "N": "0"
+        //                                     },
+        //                                     "blockNumber": {
+        //                                         "N": "10426405"
+        //                                     },
+        //                                     "txID": {
+        //                                         "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
+        //                                     },
+        //                                     "blockTimestamp": {
+        //                                         "N": "1634777270"
+        //                                     }
+        //                                 }
+        //                             },
+        //                             "decoded": {
+        //                                 "M": {
+        //                                     "0": {
+        //                                         "S": "2"
+        //                                     },
+        //                                     "1": {
+        //                                         "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+        //                                     },
+        //                                     "2": {
+        //                                         "S": "1634777270"
+        //                                     },
+        //                                     "gameId": {
+        //                                         "S": "2"
+        //                                     },
+        //                                     "dateTime": {
+        //                                         "S": "1634777270"
+        //                                     },
+        //                                     "player": {
+        //                                         "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+        //                                     }
+        //                                 }
+        //                             }
+        //                         }
+        //                     },
+        //                     "txID": {
+        //                         "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
+        //                     },
+        //                     "createdAt": {
+        //                         "S": "2022-04-14T03:47:47.131Z"
+        //                     },
+        //                     "metaBlockNumber": {
+        //                         "N": "10426405"
+        //                     },
+        //                     "decodedDateTime": {
+        //                         "S": "1634777270"
+        //                     },
+        //                     "metaBlockTimestamp": {
+        //                         "N": "1634777270"
+        //                     },
+        //                     "metaClauseIndex": {
+        //                         "N": "0"
+        //                     },
+        //                     "id": {
+        //                         "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
+        //                     },
+        //                     "metaBlockID": {
+        //                         "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
+        //                     },
+        //                     "updatedAt": {
+        //                         "S": "2022-04-14T03:47:47.131Z"
+        //                     }
+        //                 },
+        //                 "SequenceNumber": "15376600000000022163615583",
+        //                 "SizeBytes": 1268,
+        //                 "StreamViewType": "NEW_AND_OLD_IMAGES"
+        //             },
+        //             "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-04-10T18:54:05.834"
+        //         }
+        //     ]
+        // }
+
         const testEvent = {
             "Records": [
                 {
-                    "eventID": "e0b7cae185d96f018cc06f4e11614ce4",
+                    "eventID": "8e6fabef236e9b05809c9ca4bc3655fe",
                     "eventName": "INSERT",
                     "eventVersion": "1.1",
                     "eventSource": "aws:dynamodb",
                     "awsRegion": "us-east-1",
                     "dynamodb": {
-                        "ApproximateCreationDateTime": 1649908067,
+                        "ApproximateCreationDateTime": 1649974682,
                         "Keys": {
                             "id": {
-                                "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
+                                "S": "f4f662c3-90d9-4f12-bcfe-97d593c2c309"
                             }
                         },
                         "NewImage": {
                             "decodedGameId": {
-                                "N": "2"
+                                "N": "7"
                             },
                             "decodedPlayer": {
-                                "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+                                "S": "0xc4073dbea8a59c47d8f4e06939edc9fed868929c"
                             },
                             "__typename": {
-                                "S": "CreatePoolEventLog"
+                                "S": "PlayerJoinedPoolEventLog"
                             },
                             "metaTxOrigin": {
-                                "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+                                "S": "0xc4073dbea8a59c47d8f4e06939edc9fed868929c"
                             },
                             "raw": {
                                 "M": {
@@ -85,101 +220,101 @@ describe("create pool service tests", () => {
                                     "topics": {
                                         "L": [
                                             {
-                                                "S": "0x055c5881ecddd2b670014114d0806730877835ac63b0299a9270f81b00bff672"
+                                                "S": "0xaf826dfc28710e789b457fdaf15b1d85f98319d34d1af1a3760eb0ef295912cd"
                                             },
                                             {
-                                                "S": "0x0000000000000000000000000000000000000000000000000000000000000002"
+                                                "S": "0x0000000000000000000000000000000000000000000000000000000000000007"
                                             },
                                             {
-                                                "S": "0x00000000000000000000000080a14141080f878260340986c7cf6e4a6b2ac504"
+                                                "S": "0x000000000000000000000000c4073dbea8a59c47d8f4e06939edc9fed868929c"
                                             },
                                             {
-                                                "S": "0x000000000000000000000000000000000000000000000000000000006170b8b6"
+                                                "S": "0x0000000000000000000000000000000000000000000000000000000061727386"
                                             }
                                         ]
                                     },
                                     "meta": {
                                         "M": {
                                             "blockID": {
-                                                "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
+                                                "S": "0x009f4469677df20de9324157b653aa7e567008c4facc5370ad872e17ba381a4b"
                                             },
                                             "txOrigin": {
-                                                "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+                                                "S": "0xc4073dbea8a59c47d8f4e06939edc9fed868929c"
                                             },
                                             "clauseIndex": {
                                                 "N": "0"
                                             },
                                             "blockNumber": {
-                                                "N": "10426405"
+                                                "N": "10437737"
                                             },
                                             "txID": {
-                                                "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
+                                                "S": "0xa9a4be28fbef844bdf281adcdcf41046ca9f68cff51c04f2d3f741582f9bcd5e"
                                             },
                                             "blockTimestamp": {
-                                                "N": "1634777270"
+                                                "N": "1634890630"
                                             }
                                         }
                                     },
                                     "decoded": {
                                         "M": {
                                             "0": {
-                                                "S": "2"
+                                                "S": "7"
                                             },
                                             "1": {
-                                                "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+                                                "S": "0xc4073dbea8a59c47d8f4e06939edc9fed868929c"
                                             },
                                             "2": {
-                                                "S": "1634777270"
+                                                "S": "1634890630"
                                             },
                                             "gameId": {
-                                                "S": "2"
+                                                "S": "7"
                                             },
                                             "dateTime": {
-                                                "S": "1634777270"
+                                                "S": "1634890630"
                                             },
                                             "player": {
-                                                "S": "0x80a14141080f878260340986c7cf6e4a6b2ac504"
+                                                "S": "0xc4073dbea8a59c47d8f4e06939edc9fed868929c"
                                             }
                                         }
                                     }
                                 }
                             },
                             "txID": {
-                                "S": "0x67c340225ce41a3b036f71a3bf26747944e22b819aaba3a3a28ba3fef790adda"
+                                "S": "0xa9a4be28fbef844bdf281adcdcf41046ca9f68cff51c04f2d3f741582f9bcd5e"
                             },
                             "createdAt": {
-                                "S": "2022-04-14T03:47:47.131Z"
+                                "S": "2022-04-14T22:18:02.240Z"
                             },
                             "metaBlockNumber": {
-                                "N": "10426405"
+                                "N": "10437737"
                             },
                             "decodedDateTime": {
-                                "S": "1634777270"
+                                "S": "1634890630"
                             },
                             "metaBlockTimestamp": {
-                                "N": "1634777270"
+                                "N": "1634890630"
                             },
                             "metaClauseIndex": {
                                 "N": "0"
                             },
                             "id": {
-                                "S": "98700bd8-4880-49f4-842d-b19b7e6f9428"
+                                "S": "f4f662c3-90d9-4f12-bcfe-97d593c2c309"
                             },
                             "metaBlockID": {
-                                "S": "0x009f1825bea0fd60919d2da5a555fe0ce585b6fffc641c98860dda239e12ec46"
+                                "S": "0x009f4469677df20de9324157b653aa7e567008c4facc5370ad872e17ba381a4b"
                             },
                             "updatedAt": {
-                                "S": "2022-04-14T03:47:47.131Z"
+                                "S": "2022-04-14T22:18:02.240Z"
                             }
                         },
-                        "SequenceNumber": "15376600000000022163615583",
-                        "SizeBytes": 1268,
+                        "SequenceNumber": "19298000000000022490543353",
+                        "SizeBytes": 1274,
                         "StreamViewType": "NEW_AND_OLD_IMAGES"
                     },
-                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/CreatePoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-04-10T18:54:05.834"
+                    "eventSourceARN": "arn:aws:dynamodb:us-east-1:891289117461:table/PlayerJoinedPoolEventLog-plrkzmrkj5bmbjslf67bwgzcfu-dev/stream/2022-04-10T18:54:05.496"
                 }
             ]
-        }
+        };
 
         const userWalletService = new UserWalletService();
         const apiPoolAttributesService = new ApiPoolAttributesService();
