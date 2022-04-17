@@ -107,7 +107,7 @@ export class GraphQLService {
     /* getCreatePoolEventLog  no longer txID */
 
     async getCreatePoolEventLogByTxId(txId: string): Promise<CreatePoolEventLog> {
-        console.log('before getCreatePoolEventLogByTxId 3');
+        console.log('before getCreatePoolEventLogByTxId');
 
         const graphqlResult = await API.graphql(graphqlOperation(getCreatePoolEventLogbyTxId, { txID: txId })) as GraphQLResult<GetCreatePoolEventLogbyTxIdQuery>;
         const items = graphqlResult.data?.getCreatePoolEventLogbyTxId.items;
@@ -352,7 +352,7 @@ export class GraphQLService {
             const existingEntry = await this.getPoolLastBlockEventsProcessed();
 
             if (!existingEntry) {
-                console.log('no existing entry found');
+                console.log('no existing PoolSuccessfullBlockEventsProcessed entry found');
                 const result = await API.graphql(graphqlOperation(createPoolSuccessfullBlockEventsProcessed, {
                     input: {
                         positionField: this.poolSuccessfullBlockEventsProcessedPositionFieldIndex,
@@ -362,7 +362,7 @@ export class GraphQLService {
                 return result.data?.createPoolSuccessfullBlockEventsProcessed;
             }
             else {
-                console.log('existing entry found, updating');
+                console.log('existing entry PoolSuccessfullBlockEventsProcessed found, updating');
                 const result = await API.graphql(graphqlOperation(updatePoolSuccessfullBlockEventsProcessed, {
                     input: {
                         id: existingEntry.id,

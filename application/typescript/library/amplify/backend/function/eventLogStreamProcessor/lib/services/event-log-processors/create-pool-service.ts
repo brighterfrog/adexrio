@@ -66,7 +66,7 @@ export class CreatePoolService implements IEventLogProcessor {
             let poolCreatorUserWallet: UserWallet;
 
             let existingUserWallet = await userWalletService.getUserWalletByWalletAddressIndex(decodedPlayer) as UserWallet;
-            if (doNotHaveExistingWallet(existingUserWallet)) {
+            if (!existingUserWallet) {
                 poolCreatorUserWallet = await userWalletService.createUserWallet({
                     wallet: decodedPlayer,
                     nickname: null,
@@ -83,12 +83,8 @@ export class CreatePoolService implements IEventLogProcessor {
             const isLegacy = eventRecord.dynamodb.NewImage?.poolJsonData?.S ? false : true;
             console.log('isContractLegacy', isLegacy);
             return isLegacy;
-        }
-
-        function doNotHaveExistingWallet(existingUserWallet) {
-            return existingUserWallet === null || existingUserWallet === 'undefined';
-        }    
-    }
+        }       
+    }    
 
     async handleContractEventV2(eventRecord, poolCreatorUserWallet): Promise<any> {
         throw new Error('ERROR handleContractEventV2')
@@ -101,10 +97,11 @@ export class CreatePoolService implements IEventLogProcessor {
 
         const decodedGameId = eventRecord.dynamodb.NewImage.decodedGameId.N;           
 
+        console.log('before getPoolByPoolIdIndex with decodedGameId', decodedGameId);
         const existingPool =  await this.poolService.getPoolByPoolIdIndex(decodedGameId);
         console.log('existingPool', existingPool);
 
-        if(existingPool) {
+        if(!existingPool) {
             console.log('existing pool not found, processing...', decodedGameId);
             console.log('calling getGameById with value of', decodedGameId);
   

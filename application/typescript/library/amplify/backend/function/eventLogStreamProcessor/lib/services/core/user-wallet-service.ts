@@ -29,7 +29,7 @@ export class UserWalletService {
         console.log('getUserWalletByWalletAddressIndex', JSON.stringify(graphqlResult), null, 2);
         const items = graphqlResult.data.userWalletByWalletAddressIndex.items;
 
-        return items.length > 0 ? items[0] : null;
+        return items.length === 1 ? items[0] : null;
     }
 
     // async searchUserWalletByWalletAddress(searchableUserWalletFilterInput: SearchableUserWalletFilterInput): Promise<SearchableUserWalletConnection> {

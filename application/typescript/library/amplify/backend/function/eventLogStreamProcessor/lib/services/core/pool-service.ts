@@ -22,7 +22,7 @@ export class PoolService {
         const graphqlResult = await API.graphql(graphqlOperation(updatePool,
             { input: updatedPool as UpdatePoolInput } 
         )) as GraphQLResult<UpdatePoolMutation>;
-        console.log('updatePool graphqlResult', JSON.stringify(graphqlResult), null, 2);
+        console.log('updatePool graphqlResult', JSON.stringify(graphqlResult, null, 2));
 
         return graphqlResult.data?.updatePool as Pool;
     }
@@ -31,17 +31,17 @@ export class PoolService {
         const graphqlResult = await API.graphql(graphqlOperation(createPool,
             { input: createPoolInput as CreatePoolInput }
         )) as GraphQLResult<CreatePoolMutation>;
-        console.log('graphqlResult', JSON.stringify(graphqlResult), null, 2);
+        console.log('graphqlResult', JSON.stringify(graphqlResult, null, 2));
 
         return graphqlResult.data?.createPool as Pool;
     }
 
-    async getPoolByPoolIdIndex(poolId: String): Promise<Pool> {
+    async getPoolByPoolIdIndex(poolId: String): Promise<Pool> {        
         const graphqlResult = await API.graphql(graphqlOperation(getPoolByPoolIdIndex,
-            { poolByPoolIdIndex: poolId }
+            { poolId: poolId }
         )) as GraphQLResult<GetPoolByPoolIdIndexQuery>;
         
-        console.log('poolByPoolIdIndex', JSON.stringify(graphqlResult), null, 2);
+        console.log('poolId', JSON.stringify(graphqlResult, null, 2));
         const items = graphqlResult.data?.getPoolByPoolIdIndex.items;
 
         return items.length === 1 ? items[0] as Pool : null;

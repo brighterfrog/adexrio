@@ -28,7 +28,6 @@ export class EventHandlerProcessMapper {
                 }
             ]
         };
-
     }
 
     getHandlerForEventType(eventType: EVENTS): Function {

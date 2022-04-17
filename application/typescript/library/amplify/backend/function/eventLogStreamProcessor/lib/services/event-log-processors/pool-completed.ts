@@ -61,7 +61,7 @@ export class PoolCompletedService implements IEventLogProcessor {
             let poolCreatorUserWallet: UserWallet;
 
             let existingUserWallet = await userWalletService.getUserWalletByWalletAddressIndex(decodedPlayer) as UserWallet;
-            if (doNotHaveExistingWallet(existingUserWallet)) {
+            if (!existingUserWallet) {
                 poolCreatorUserWallet = await userWalletService.createUserWallet({
                     wallet: decodedPlayer,
                     nickname: null,
@@ -96,13 +96,11 @@ export class PoolCompletedService implements IEventLogProcessor {
         const existingPool =  await this.poolService.getPoolByPoolIdIndex(decodedGameId);
         console.log('existingPool', existingPool);
 
-        if(existingPool) {
+        if(!existingPool) {
             console.log('existing pool not found', decodedGameId);
             throw new Error(`existing pool ${decodedGameId} not found`)                          
         }
-        else {
-            let poolToUpdate = existingPool;
-
+        else {            
             console.log('Existing Pool found matching this pool id');    
             
             // Completed Event properties emitted
@@ -124,13 +122,12 @@ export class PoolCompletedService implements IEventLogProcessor {
             // Update Summary Table
 
               /* update pool totals */                                     
-             poolToUpdate.poolStatus = GAME_STATUS_COMPLETE;
-            poolToUpdate.poolWinningPayout = eventRecord.dynamodb.NewImage.decodedWinningPayout.S;
+              existingPool.poolStatus = GAME_STATUS_COMPLETE;
+              existingPool.poolWinningPayout = eventRecord.dynamodb.NewImage.decodedWinningPayout.S;
 
-            const updatePoolResult = await this.poolService.updatePool(poolToUpdate);  
+            const updatePoolResult = await this.poolService.updatePool(existingPool);  
                                           
-
-            const existingPoolPlayer = await this.poolPlayerService.getPoolPlayerbyPoolIdWalletIdIndex(userWallet.id, poolToUpdate.id);
+            const existingPoolPlayer = await this.poolPlayerService.getPoolPlayerbyPoolIdWalletIdIndex(userWallet.id, existingPool.id);
                         
             const poolPlayerServiceResult = await this._updatePoolPlayer(existingPoolPlayer);
 
@@ -138,7 +135,7 @@ export class PoolCompletedService implements IEventLogProcessor {
             /* retrieve existing lottery pool attributes */
             /* update lottery pool attributes */
 
-            const existingLotteryPoolAttributes = await this.lotteryPoolAttributesService.getLotteryPoolAttributesByIndex(poolToUpdate.id);
+            const existingLotteryPoolAttributes = await this.lotteryPoolAttributesService.getLotteryPoolAttributesByIndex(existingPool.id);
     
             const lotteryPoolAttributesUpdateInput = {
                 id: existingLotteryPoolAttributes.id,
@@ -168,9 +165,12 @@ export class PoolCompletedService implements IEventLogProcessor {
     private async _updatePoolPlayer(poolPlayer: PoolPlayer): Promise<PoolPlayer> {   
            
         poolPlayer.status = PlayerStatus.winner;
+
+        console.log('_updatePoolPlayer entity', JSON.stringify(poolPlayer, null, 2));
+
         const updatePoolPlayerResult = await this.poolPlayerService.updatePoolPlayer(poolPlayer);
 
-        console.log('createdPoolPlayerResult', updatePoolPlayerResult);
+        console.log('_updatePoolPlayer result', updatePoolPlayerResult);
 
         return updatePoolPlayerResult;          
     }  
