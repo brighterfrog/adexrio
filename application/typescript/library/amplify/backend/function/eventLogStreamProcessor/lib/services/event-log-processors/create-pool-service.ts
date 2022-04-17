@@ -184,7 +184,8 @@ export class CreatePoolService implements IEventLogProcessor {
             poolType: poolType.lottery,
             poolStatus: blockchainGameDetails.gameStatus,
             poolEntryFee: blockchainGameDetails.gcsGameBetSize,
-            poolTotal: blockchainGameDetails.gameTotalWagers,
+            // poolTotal: blockchainGameDetails.gameTotalWagers,
+            poolTotal: blockchainGameDetails.gcsGameBetSize, //blockchainGameDetails.gameTotalWagers, - replaying historical events cant start at total pool wagers and add event entry fees
             poolWinningPayout: '0',
             allowPlayerLeave: true,            
             poolPoolCreatorId: poolCreatorUserWallet.id,
